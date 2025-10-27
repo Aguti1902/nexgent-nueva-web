@@ -212,7 +212,7 @@ export default function Header() {
 
           {/* Botones a la derecha */}
           <div className="hidden lg:flex items-center gap-3">
-            <Button href="/contacto" variant="outline" size="sm">
+            <Button href="https://dashboard.nexgent.io/" variant="outline" size="sm">
               Iniciar sesión
             </Button>
             <Button href="/demo" variant="primary" size="sm">
@@ -324,7 +324,7 @@ export default function Header() {
             </Link>
 
             <div className="flex flex-col gap-3 pt-4 px-2">
-              <Button href="/contacto" variant="outline" className="w-full">
+              <Button href="https://dashboard.nexgent.io/" variant="outline" className="w-full">
                 Iniciar sesión
               </Button>
               <Button href="/demo" variant="primary" className="w-full">
