@@ -204,7 +204,7 @@ export default function BlogPage() {
             </div>
 
             <div className="text-center">
-              <Button variant="outline" size="lg" href="/blog">
+              <Button variant="outline" size="lg" href="/recursos/blog/articulos">
                 Ver todos los artículos
               </Button>
             </div>
