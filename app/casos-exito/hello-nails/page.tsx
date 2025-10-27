@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { FaCheckCircle, FaArrowRight, FaCalendarAlt } from 'react-icons/fa'
 import Link from 'next/link'
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 
 export default function HelloNailsCaseStudy() {
   const timeline = [
@@ -19,6 +20,27 @@ export default function HelloNailsCaseStudy() {
     { metric: 'Reservas mensuales', before: '2,400', after: '3,408', improvement: '+42%' },
     { metric: 'Tiempo de gestión/día', before: '4h', after: '25min', improvement: '-89%' },
   ]
+
+  // Datos para gráficos
+  const evolutionData = [
+    { mes: 'Mes 1', ocupacion: 68, reservas: 2400, noShows: 30 },
+    { mes: 'Mes 2', ocupacion: 75, reservas: 2700, noShows: 22 },
+    { mes: 'Mes 3', ocupacion: 85, reservas: 3000, noShows: 15 },
+    { mes: 'Mes 4', ocupacion: 92, reservas: 3300, noShows: 12 },
+    { mes: 'Mes 5', ocupacion: 95, reservas: 3408, noShows: 9.6 },
+  ]
+
+  const comparisonData = [
+    { categoria: 'Ocupación', antes: 68, despues: 95 },
+    { categoria: 'Reservas/mes', antes: 2400, despues: 3408 },
+  ]
+
+  const pieData = [
+    { name: 'Citas completadas', value: 90.4 },
+    { name: 'No-shows', value: 9.6 },
+  ]
+
+  const COLORS = ['#10b981', '#ef4444']
 
   return (
     <>
@@ -158,6 +180,128 @@ export default function HelloNailsCaseStudy() {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gráficos Interactivos */}
+      <section className="py-20 bg-white">
+        <div className="container-custom px-6">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <h2 className="font-monda text-4xl md:text-5xl font-bold text-black mb-4">
+                Evolución de Métricas
+              </h2>
+              <p className="text-gray-600 text-lg">Datos en tiempo real de la transformación</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-12 mb-16">
+              {/* Gráfico de Evolución */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-xl border border-gray-200"
+              >
+                <h3 className="font-bold text-xl text-black mb-6">Ocupación Mensual (%)</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={evolutionData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="mes" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                    />
+                    <Legend />
+                    <Line 
+                      type="monotone" 
+                      dataKey="ocupacion" 
+                      stroke="#ec4899" 
+                      strokeWidth={3}
+                      name="Ocupación (%)"
+                      dot={{ fill: '#ec4899', r: 6 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </motion.div>
+
+              {/* Gráfico de Comparación */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-xl border border-gray-200"
+              >
+                <h3 className="font-bold text-xl text-black mb-6">Antes vs Después</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={comparisonData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="categoria" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                    />
+                    <Legend />
+                    <Bar dataKey="antes" fill="#ef4444" name="Antes" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="despues" fill="#10b981" name="Después" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </motion.div>
+            </div>
+
+            {/* Gráfico Circular */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8 shadow-xl border-2 border-pink-200"
+            >
+              <h3 className="font-bold text-2xl text-black mb-8 text-center">Tasa de Asistencia Actual</h3>
+              <div className="flex flex-col md:flex-row items-center justify-center gap-12">
+                <ResponsiveContainer width="100%" height={300} className="max-w-md">
+                  <PieChart>
+                    <Pie
+                      data={pieData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, value }) => `${name}: ${value}%`}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {pieData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-green-500"></div>
+                    <div>
+                      <p className="font-bold text-lg text-black">90.4% Citas completadas</p>
+                      <p className="text-gray-600">Clientes que asisten a su cita</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-red-500"></div>
+                    <div>
+                      <p className="font-bold text-lg text-black">9.6% No-shows</p>
+                      <p className="text-gray-600">Reducción del 68% vs antes</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
