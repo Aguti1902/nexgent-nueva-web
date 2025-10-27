@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { FaCheckCircle, FaArrowRight, FaCalendarAlt } from 'react-icons/fa'
 import Link from 'next/link'
+import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 export default function ClinicaDentalCaseStudy() {
   const timeline = [
@@ -18,6 +19,28 @@ export default function ClinicaDentalCaseStudy() {
     { metric: 'Ingresos adicionales', before: '€0', after: '€8.5K/mes', improvement: '+100%' },
     { metric: 'Satisfacción pacientes', before: '85%', after: '98%', improvement: '+13 puntos' },
   ]
+
+  // Datos para gráficos
+  const citasEvolution = [
+    { mes: 'Antes', citas: 680, noShows: 22 },
+    { mes: 'Mes 1', citas: 800, noShows: 15 },
+    { mes: 'Mes 2', citas: 950, noShows: 10 },
+    { mes: 'Mes 3', citas: 1050, noShows: 6 },
+    { mes: 'Mes 4', citas: 1122, noShows: 4.8 },
+  ]
+
+  const ingresosData = [
+    { categoria: 'Citas Completadas', antes: 680, despues: 1122 },
+    { categoria: 'Ingresos (€K)', antes: 28, despues: 36.5 },
+  ]
+
+  const satisfactionData = [
+    { name: 'Muy Satisfechos', value: 78 },
+    { name: 'Satisfechos', value: 20 },
+    { name: 'Otros', value: 2 },
+  ]
+
+  const COLORS_SATISFACTION = ['#10b981', '#3b82f6', '#ef4444']
 
   return (
     <>
@@ -145,6 +168,140 @@ export default function ClinicaDentalCaseStudy() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gráficos Interactivos */}
+      <section className="py-20 bg-white">
+        <div className="container-custom px-6">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <h2 className="font-monda text-4xl md:text-5xl font-bold text-black mb-4">
+                Dashboard de Métricas
+              </h2>
+              <p className="text-gray-600 text-lg">Seguimiento completo del rendimiento de la clínica</p>
+            </motion.div>
+
+            {/* Gráfico de Citas y No-shows */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl p-8 shadow-xl border-2 border-blue-200 mb-12"
+            >
+              <h3 className="font-bold text-2xl text-black mb-6">Evolución de Citas y No-Shows</h3>
+              <ResponsiveContainer width="100%" height={350}>
+                <LineChart data={citasEvolution}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis dataKey="mes" stroke="#6b7280" />
+                  <YAxis stroke="#6b7280" />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                  />
+                  <Legend />
+                  <Line 
+                    type="monotone" 
+                    dataKey="citas" 
+                    stroke="#10b981" 
+                    strokeWidth={3}
+                    name="Citas Completadas"
+                    dot={{ fill: '#10b981', r: 6 }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="noShows" 
+                    stroke="#ef4444" 
+                    strokeWidth={3}
+                    name="No-Shows (%)"
+                    dot={{ fill: '#ef4444', r: 6 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+              <div className="grid md:grid-cols-2 gap-4 mt-6">
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <p className="text-green-800 font-bold text-center">
+                    +65% más citas completadas
+                  </p>
+                </div>
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <p className="text-red-800 font-bold text-center">
+                    -78% reducción en no-shows
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-12">
+              {/* Gráfico de Ingresos */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-xl border border-gray-200"
+              >
+                <h3 className="font-bold text-xl text-black mb-6">Impacto en Ingresos</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={ingresosData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="categoria" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                    />
+                    <Legend />
+                    <Bar dataKey="antes" fill="#ef4444" name="Antes" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="despues" fill="#10b981" name="Después" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+                <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <p className="text-blue-800 font-bold text-center">
+                    €8.5K ingresos extra mensuales
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Gráfico de Satisfacción */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-xl border border-gray-200"
+              >
+                <h3 className="font-bold text-xl text-black mb-6">Satisfacción de Pacientes</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={satisfactionData}
+                      cx="50%"
+                      cy="50%"
+                      labelLine={false}
+                      label={({ name, value }) => `${name}: ${value}%`}
+                      outerRadius={100}
+                      fill="#8884d8"
+                      dataKey="value"
+                    >
+                      {satisfactionData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS_SATISFACTION[index % COLORS_SATISFACTION.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-4">
+                  <p className="text-green-800 font-bold text-center">
+                    98% satisfacción general de pacientes
+                  </p>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
