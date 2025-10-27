@@ -9,6 +9,7 @@ interface ButtonProps {
   size?: 'sm' | 'md' | 'lg'
   className?: string
   type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
 }
 
 export default function Button({
@@ -19,6 +20,7 @@ export default function Button({
   size = 'md',
   className = '',
   type = 'button',
+  disabled = false,
 }: ButtonProps) {
   const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300'
   
@@ -36,7 +38,8 @@ export default function Button({
     lg: 'px-8 py-4 text-lg',
   }
 
-  const buttonClasses = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`
+  const disabledStyles = disabled ? 'opacity-50 cursor-not-allowed' : ''
+  const buttonClasses = `${baseStyles} ${variants[variant]} ${sizes[size]} ${disabledStyles} ${className}`
 
   const buttonContent = <>{children}</>
 
@@ -50,7 +53,7 @@ export default function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} className={buttonClasses}>
+    <button type={type} onClick={onClick} disabled={disabled} className={buttonClasses}>
       {buttonContent}
     </button>
   )

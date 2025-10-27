@@ -1,14 +1,14 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { SiOpenai, SiGoogle, SiMeta, SiMicrosoftazure } from 'react-icons/si'
-import { FaShieldAlt, FaLock, FaServer, FaBolt } from 'react-icons/fa'
+import { SiOpenai, SiGoogle, SiMeta } from 'react-icons/si'
+import { FaShieldAlt, FaLock, FaServer, FaBolt, FaMicrosoft } from 'react-icons/fa'
 
 const technologies = [
   { name: 'OpenAI GPT-4', icon: SiOpenai },
   { name: 'Google Cloud AI', icon: SiGoogle },
   { name: 'Meta LLaMA', icon: SiMeta },
-  { name: 'Azure AI', icon: SiMicrosoftazure },
+  { name: 'Azure AI', icon: FaMicrosoft },
 ]
 
 const features = [
