@@ -328,30 +328,35 @@ export default function CentroAyudaPage() {
                   </div>
 
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {categoryArticles.map((article, idx) => (
-                      <Link
-                        key={idx}
-                        href={`/recursos/centro-ayuda/articulos/${article.slug}`}
-                        className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-purple-500 hover:shadow-lg transition-all group"
-                      >
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 text-xl group-hover:bg-purple-500 group-hover:text-white transition-all">
-                            <FaBook />
+                    {categoryArticles.map((article, idx) => {
+                      // Extraer primera línea del contenido como descripción
+                      const description = article.content.split('\n').find(line => line.trim() && !line.startsWith('#'))?.trim() || article.title
+                      
+                      return (
+                        <Link
+                          key={idx}
+                          href={`/recursos/centro-ayuda/articulos/${article.slug}`}
+                          className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-purple-500 hover:shadow-lg transition-all group"
+                        >
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 text-xl group-hover:bg-purple-500 group-hover:text-white transition-all">
+                              <FaBook />
+                            </div>
+                            <span className="text-xs text-gray-500">{article.readTime}</span>
                           </div>
-                          <span className="text-xs text-gray-500">{article.readTime}</span>
-                        </div>
-                        <h4 className="font-bold text-black mb-2 group-hover:text-purple-600 transition-all line-clamp-2">
-                          {article.title}
-                        </h4>
-                        <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                          {article.description}
-                        </p>
-                        <div className="flex items-center justify-between text-xs text-gray-500">
-                          <span>{article.views} vistas</span>
-                          <span className="text-purple-600 group-hover:translate-x-1 transition-transform">Leer →</span>
-                        </div>
-                      </Link>
-                    ))}
+                          <h4 className="font-bold text-black mb-2 group-hover:text-purple-600 transition-all line-clamp-2">
+                            {article.title}
+                          </h4>
+                          <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                            {description}
+                          </p>
+                          <div className="flex items-center justify-between text-xs text-gray-500">
+                            <span>{article.views} vistas</span>
+                            <span className="text-purple-600 group-hover:translate-x-1 transition-transform">Leer →</span>
+                          </div>
+                        </Link>
+                      )
+                    })}
                   </div>
                 </div>
               )
