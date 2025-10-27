@@ -6,10 +6,10 @@ import { useState } from 'react'
 import { FaWhatsapp, FaPhoneAlt, FaClock, FaCalendarCheck, FaNetworkWired } from 'react-icons/fa'
 
 const caseStudy = {
-  company: 'Urban Fitness',
-  industry: 'Cadena de Gimnasios',
-  franchises: '8 centros deportivos',
-  projectType: 'Transformación digital con IA para gestión completa de leads y atención 24/7',
+  company: 'Hello Nails',
+  industry: 'Salón de Belleza y Uñas',
+  franchises: 'Negocio local',
+  projectType: 'Transformación digital completa con IA para gestión automática de reservas, recordatorios y atención al cliente 24/7',
   features: [
     { icon: FaWhatsapp, title: 'Agente de IA por WhatsApp', description: 'Respuesta inmediata a consultas' },
     { icon: FaPhoneAlt, title: 'Sistema de seguimiento', description: 'Automatización de leads' },
@@ -18,10 +18,10 @@ const caseStudy = {
     { icon: FaNetworkWired, title: 'Plataforma unificada', description: 'Para todos los centros' },
   ],
   results: [
-    { value: '185%', label: 'Aumento en ventas' },
-    { value: '100%', label: 'Respuestas en <2min' },
-    { value: '92%', label: 'Satisfacción cliente' },
-    { value: '€12K', label: 'Ahorro mensual' },
+    { value: '+42%', label: 'Aumento en reservas' },
+    { value: '-68%', label: 'Reducción no-shows' },
+    { value: '€2.1K', label: 'Ingresos extra mensuales' },
+    { value: '95%', label: 'Ocupación promedio' },
   ],
 }
 
@@ -57,7 +57,7 @@ export default function CaseStudies() {
             Transformación real
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Descubre cómo Urban Fitness transformó su negocio con IA
+            Descubre cómo Hello Nails transformó su negocio con IA
           </p>
         </motion.div>
 
@@ -89,22 +89,29 @@ export default function CaseStudies() {
                   </p>
                 </div>
 
-                {/* Imagen del gimnasio */}
+                {/* Imagen de Hello Nails */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.4 }}
                   viewport={{ once: true }}
-                  className="relative h-80 w-full rounded-2xl overflow-hidden shadow-2xl cursor-pointer group bg-gradient-to-br from-gray-900 to-black"
+                  className="relative h-80 w-full rounded-2xl overflow-hidden shadow-2xl cursor-pointer group"
                 >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center text-white p-8">
-                      <h4 className="font-monda text-3xl font-bold mb-4">Urban Fitness</h4>
-                      <p className="text-gray-300 text-lg">Cadena de gimnasios líder</p>
+                  <Image
+                    src="/images/FOTO HELLO NAILS.webp"
+                    alt="Hello Nails - Salón de Belleza"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300" />
+                  <div className="absolute inset-0 flex items-end justify-center p-8">
+                    <div className="text-center text-white">
+                      <h4 className="font-monda text-3xl font-bold mb-2">Hello Nails</h4>
+                      <p className="text-gray-200 text-lg">Salón de belleza líder</p>
                     </div>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </motion.div>
               </motion.div>
             </motion.div>
