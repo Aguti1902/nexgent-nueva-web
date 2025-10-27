@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { FaCheckCircle, FaArrowRight, FaCalendarAlt } from 'react-icons/fa'
 import Link from 'next/link'
+import { LineChart, Line, BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 
 export default function UrbanFitnessCaseStudy() {
   const timeline = [
@@ -17,6 +18,28 @@ export default function UrbanFitnessCaseStudy() {
     { metric: 'Tiempo de respuesta', before: '45min', after: '<2min', improvement: '96% más rápido' },
     { metric: 'Ventas mensuales', before: '€42K', after: '€119.7K', improvement: '+185%' },
     { metric: 'Satisfacción cliente', before: '74%', after: '92%', improvement: '+18 puntos' },
+  ]
+
+  // Datos para gráficos
+  const salesEvolution = [
+    { mes: 'Antes', ventas: 42, respuestas: 60 },
+    { mes: 'Mes 1', ventas: 58, respuestas: 80 },
+    { mes: 'Mes 2', ventas: 75, respuestas: 95 },
+    { mes: 'Mes 3', ventas: 95, respuestas: 100 },
+    { mes: 'Mes 4', ventas: 119.7, respuestas: 100 },
+  ]
+
+  const responseTimeData = [
+    { semana: 'Semana 1', respuestas: 60, tiempoPromedio: 45 },
+    { semana: 'Semana 2', respuestas: 85, tiempoPromedio: 15 },
+    { semana: 'Semana 3', respuestas: 95, tiempoPromedio: 5 },
+    { semana: 'Semana 4', respuestas: 100, tiempoPromedio: 1.8 },
+  ]
+
+  const comparisonData = [
+    { metrica: 'Ventas (€K)', antes: 42, despues: 119.7 },
+    { metrica: 'Respuestas (%)', antes: 60, despues: 100 },
+    { metrica: 'Satisfacción (%)', antes: 74, despues: 92 },
   ]
 
   return (
@@ -145,6 +168,136 @@ export default function UrbanFitnessCaseStudy() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gráficos Interactivos */}
+      <section className="py-20 bg-white">
+        <div className="container-custom px-6">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <h2 className="font-monda text-4xl md:text-5xl font-bold text-black mb-4">
+                Analítica en Tiempo Real
+              </h2>
+              <p className="text-gray-600 text-lg">Seguimiento de todas las métricas clave</p>
+            </motion.div>
+
+            {/* Gráfico de Crecimiento de Ventas */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-blue-50 to-gray-50 rounded-2xl p-8 shadow-xl border-2 border-blue-200 mb-12"
+            >
+              <h3 className="font-bold text-2xl text-black mb-6">Evolución de Ventas e Índice de Respuesta</h3>
+              <ResponsiveContainer width="100%" height={350}>
+                <AreaChart data={salesEvolution}>
+                  <defs>
+                    <linearGradient id="colorVentas" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                    </linearGradient>
+                    <linearGradient id="colorRespuestas" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#10b981" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis dataKey="mes" stroke="#6b7280" />
+                  <YAxis stroke="#6b7280" />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                  />
+                  <Legend />
+                  <Area 
+                    type="monotone" 
+                    dataKey="ventas" 
+                    stroke="#3b82f6" 
+                    fillOpacity={1}
+                    fill="url(#colorVentas)"
+                    name="Ventas (€K)"
+                  />
+                  <Area 
+                    type="monotone" 
+                    dataKey="respuestas" 
+                    stroke="#10b981" 
+                    fillOpacity={1}
+                    fill="url(#colorRespuestas)"
+                    name="Respuestas (%)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-12">
+              {/* Tiempo de Respuesta */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-xl border border-gray-200"
+              >
+                <h3 className="font-bold text-xl text-black mb-6">Tiempo de Respuesta (minutos)</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart data={responseTimeData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="semana" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                    />
+                    <Legend />
+                    <Line 
+                      type="monotone" 
+                      dataKey="tiempoPromedio" 
+                      stroke="#ef4444" 
+                      strokeWidth={3}
+                      name="Tiempo Promedio"
+                      dot={{ fill: '#ef4444', r: 6 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+                <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-4">
+                  <p className="text-green-800 font-bold text-center">
+                    Reducción del 96% en tiempo de respuesta
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Comparativa General */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-xl border border-gray-200"
+              >
+                <h3 className="font-bold text-xl text-black mb-6">Impacto Global</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={comparisonData} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis type="number" stroke="#6b7280" />
+                    <YAxis dataKey="metrica" type="category" stroke="#6b7280" />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                    />
+                    <Legend />
+                    <Bar dataKey="antes" fill="#ef4444" name="Antes" radius={[0, 8, 8, 0]} />
+                    <Bar dataKey="despues" fill="#10b981" name="Después" radius={[0, 8, 8, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+                <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <p className="text-blue-800 font-bold text-center">
+                    €12K ahorro mensual en costes operativos
+                  </p>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
