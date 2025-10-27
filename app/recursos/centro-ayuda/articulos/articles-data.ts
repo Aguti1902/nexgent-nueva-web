@@ -1700,6 +1700,760 @@ Si 5 estrellas → pide review pública
 **Objetivo**: Retention >80%, Churn <20%`,
     relatedArticles: ['casos-uso-industria', 'automatizacion-upselling'],
   },
+
+  // Más Preguntas frecuentes
+  {
+    slug: 'cuanto-cuesta-nexgent',
+    title: '¿Cuánto cuesta NexGent? Planes y precios',
+    category: 'Preguntas frecuentes',
+    views: '8.9K',
+    readTime: '4 min',
+    content: `
+# ¿Cuánto cuesta NexGent? Planes y precios
+
+NexGent ofrece planes flexibles adaptados a las necesidades de cada negocio.
+
+## Estructura de precios
+
+### Plan Starter
+**€99/mes**
+- 1 agente de IA
+- Hasta 500 conversaciones/mes
+- WhatsApp Business integración
+- Soporte por email
+- Ideal para negocios pequeños
+
+### Plan Professional
+**€299/mes**
+- 3 agentes de IA
+- Hasta 2,000 conversaciones/mes
+- Todas las integraciones
+- Soporte prioritario 24/7
+- Análisis avanzados
+- Ideal para negocios en crecimiento
+
+### Plan Enterprise
+**Precio personalizado**
+- Agentes ilimitados
+- Conversaciones ilimitadas
+- Soluciones personalizadas
+- Account manager dedicado
+- Formación del equipo
+- Integraciones custom
+- Ideal para empresas grandes
+
+## ¿Qué incluyen todos los planes?
+
+Todos los planes incluyen:
+- ✅ Configuración inicial gratuita
+- ✅ Actualizaciones automáticas
+- ✅ Seguridad y encriptación
+- ✅ Backup diario de datos
+- ✅ Dashboard de métricas
+- ✅ Sin permanencia
+
+## ¿Hay costes ocultos?
+
+No. El precio que ves es el precio que pagas. Sin costes de configuración, sin tarifas ocultas.
+
+## ¿Puedo cambiar de plan?
+
+Sí, puedes subir o bajar de plan en cualquier momento. Los cambios se aplican en el siguiente ciclo de facturación.
+
+## ¿Ofrecen descuentos?
+
+Sí, ofrecemos:
+- 10% de descuento en pago anual
+- 20% de descuento para ONGs
+- Descuentos por volumen para múltiples agentes
+
+## Prueba gratuita
+
+Ofrecemos 14 días de prueba gratuita en cualquier plan. No se requiere tarjeta de crédito.
+
+[Solicitar demo gratuita →](/demo)`,
+    relatedArticles: ['que-es-nexgent', 'como-empezar-nexgent'],
+  },
+
+  {
+    slug: 'nexgent-es-seguro',
+    title: '¿NexGent es seguro? Seguridad y privacidad',
+    category: 'Preguntas frecuentes',
+    views: '6.7K',
+    readTime: '5 min',
+    content: `
+# ¿NexGent es seguro? Seguridad y privacidad
+
+La seguridad de tus datos es nuestra máxima prioridad.
+
+## Medidas de seguridad
+
+### Encriptación
+- **Encriptación end-to-end**: Todos los datos están encriptados en tránsito y en reposo
+- **TLS 1.3**: Protocolo de seguridad más avanzado
+- **Certificados SSL**: Todos nuestros servicios usan HTTPS
+
+### Infraestructura
+- **Servidores en Europa**: Cumplimiento GDPR
+- **Backup diario**: Copias de seguridad automáticas cada 24h
+- **Redundancia**: Múltiples centros de datos
+- **Monitoreo 24/7**: Sistemas de alerta en tiempo real
+
+### Acceso y autenticación
+- **Autenticación de dos factores (2FA)**: Obligatorio para todos los usuarios
+- **Control de acceso basado en roles**: Permisos granulares
+- **Logs de auditoría**: Registro de todas las acciones
+
+## Cumplimiento normativo
+
+### GDPR (Reglamento General de Protección de Datos)
+- ✅ Cumplimiento total con GDPR
+- ✅ Derecho al olvido
+- ✅ Portabilidad de datos
+- ✅ Consentimiento explícito
+
+### ISO 27001
+Estamos certificados en ISO 27001 para gestión de seguridad de la información.
+
+### SOC 2 Type II
+Auditados anualmente para garantizar los más altos estándares de seguridad.
+
+## Privacidad de datos
+
+### ¿Qué datos recopilamos?
+Solo los datos necesarios para proporcionar el servicio:
+- Datos de contacto de tus clientes
+- Historial de conversaciones
+- Métricas de uso
+
+### ¿Compartimos tus datos?
+**NO**. Nunca vendemos, alquilamos ni compartimos tus datos con terceros.
+
+### ¿Usáis los datos para entrenar IA?
+**NO**. Tus datos son solo tuyos. No se usan para entrenar modelos.
+
+## Control total
+
+- **Exporta tus datos**: En cualquier momento, en formato estándar
+- **Elimina tu cuenta**: Y todos tus datos serán eliminados permanentemente
+- **Configuración de privacidad**: Control granular sobre qué datos se procesan
+
+## Preguntas de seguridad
+
+**¿Qué pasa si hay una brecha de seguridad?**
+Tenemos un protocolo de respuesta a incidentes. Te notificaríamos inmediatamente y tomaríamos medidas correctivas.
+
+**¿Quién tiene acceso a mis datos?**
+Solo tu equipo y el personal autorizado de soporte (bajo tu petición).
+
+**¿Cómo puedo reportar un problema de seguridad?**
+Envía un email a security@nexgent.io
+
+[Ver nuestra política de privacidad →](/politica-privacidad)`,
+    relatedArticles: ['cuanto-cuesta-nexgent', 'soporte-tecnico-nexgent'],
+  },
+
+  {
+    slug: 'integraciones-disponibles',
+    title: '¿Qué integraciones tiene NexGent?',
+    category: 'Preguntas frecuentes',
+    views: '7.8K',
+    readTime: '6 min',
+    content: `
+# ¿Qué integraciones tiene NexGent?
+
+NexGent se integra con las herramientas que ya usas.
+
+## Canales de comunicación
+
+### WhatsApp Business API
+- ✅ Conexión directa con WhatsApp Business
+- ✅ Mensajes automáticos
+- ✅ Botones interactivos
+- ✅ Multimedia (imágenes, videos, archivos)
+- ✅ WhatsApp Business verificado
+
+### Telegram
+- ✅ Bot de Telegram
+- ✅ Grupos y canales
+- ✅ Comandos personalizados
+- ✅ Inline keyboards
+
+### Instagram Direct
+- ✅ Respuestas automáticas a DMs
+- ✅ Comentarios en posts
+- ✅ Stories interactivas
+
+### Messenger (Facebook)
+- ✅ Chatbot de Messenger
+- ✅ Respuestas automáticas
+- ✅ Integración con páginas de Facebook
+
+### Webchat
+- ✅ Widget para tu sitio web
+- ✅ Personalizable (colores, posición, texto)
+- ✅ Sin código necesario
+
+### Email
+- ✅ Respuestas automáticas a emails
+- ✅ Seguimiento de conversaciones
+- ✅ Templates personalizables
+
+## Software de gestión
+
+### CRM
+- **HubSpot**: Sincronización bidireccional de contactos y deals
+- **Salesforce**: Integración completa con objetos custom
+- **Pipedrive**: Actualización automática de pipeline
+- **Zoho CRM**: Gestión de leads y contactos
+- **Zendesk**: Tickets y soporte
+
+### Calendarios
+- **Google Calendar**: Reservas automáticas
+- **Microsoft Outlook**: Sincronización de citas
+- **Calendly**: Integración de agendamiento
+- **Acuity Scheduling**: Gestión de citas
+
+### Pagos
+- **Stripe**: Cobros automáticos
+- **PayPal**: Procesar pagos
+- **Redsys**: Pasarela española
+- **Mercado Pago**: Para LATAM
+
+### Email Marketing
+- **Mailchimp**: Listas y campañas
+- **Brevo (Sendinblue)**: Automatizaciones
+- **ActiveCampaign**: Marketing automation
+- **GetResponse**: Email sequences
+
+## Integraciones técnicas
+
+### APIs
+- **REST API**: Integración personalizada
+- **Webhooks**: Eventos en tiempo real
+- **GraphQL**: Queries avanzadas
+
+### Zapier
+Conecta NexGent con +5,000 aplicaciones:
+- Google Sheets
+- Slack
+- Notion
+- Trello
+- Airtable
+- Y muchas más
+
+### Make (Integromat)
+Automatizaciones visuales complejas.
+
+## Software de retail
+
+### Punto de venta (POS)
+- **Square**: Integración con sistema de pagos
+- **Lightspeed**: Gestión de inventario
+- **Shopify POS**: Tiendas físicas y online
+
+### Inventario
+- **TradeGecko**: Control de stock
+- **Cin7**: Gestión omnicanal
+- **DEAR Inventory**: ERP para retail
+
+## Industrias específicas
+
+### Fitness y bienestar
+- **Mindbody**: Reservas de clases
+- **Glofox**: Gestión de gimnasios
+- **Virtuagym**: Apps de fitness
+
+### Salud
+- **Doctoralia**: Agenda médica
+- **Geseme**: Software médico
+- **MedBook**: Historia clínica
+
+### Restauración
+- **OpenTable**: Reservas
+- **Resy**: Gestión de mesas
+- **TheFork**: Reservas online
+
+## ¿No ves tu herramienta?
+
+### Integraciones personalizadas
+Nuestro equipo puede crear integraciones custom para tu software específico.
+
+### API abierta
+Usa nuestra API para construir tu propia integración.
+
+[Ver documentación de API →](/recursos/documentacion/api)
+
+## Cómo activar integraciones
+
+1. **Ve a Configuración** → Integraciones
+2. **Selecciona la herramienta** que quieres integrar
+3. **Sigue las instrucciones** de conexión
+4. **¡Listo!** La integración estará activa
+
+[Solicitar integración personalizada →](/contacto)`,
+    relatedArticles: ['como-configurar-whatsapp-business', 'integracion-con-calendarios'],
+  },
+
+  {
+    slug: 'soporte-tecnico-nexgent',
+    title: '¿Cómo funciona el soporte técnico?',
+    category: 'Preguntas frecuentes',
+    views: '5.4K',
+    readTime: '4 min',
+    content: `
+# ¿Cómo funciona el soporte técnico?
+
+Estamos disponibles 24/7 para ayudarte.
+
+## Canales de soporte
+
+### Chat en vivo
+- **Disponibilidad**: 24/7
+- **Tiempo de respuesta**: <8 minutos promedio
+- **Idiomas**: Español e inglés
+- **Ubicación**: Widget en la esquina inferior derecha
+
+### WhatsApp
+- **Número**: +34 684 48 66 47
+- **Disponibilidad**: 24/7
+- **Ideal para**: Consultas rápidas y urgencias
+
+### Email
+- **Dirección**: info@nexgent.io
+- **Tiempo de respuesta**: <4 horas en días laborables
+- **Ideal para**: Consultas detalladas con capturas o archivos
+
+### Centro de ayuda
+- **Acceso**: nexgent.io/recursos/centro-ayuda
+- **Contenido**: +120 artículos, guías y tutoriales
+- **Búsqueda**: Encuentra respuestas instantáneas
+
+### Videollamadas
+Disponibles para clientes Enterprise:
+- Sesiones de onboarding
+- Revisiones de configuración
+- Formación del equipo
+
+## Tiempos de respuesta
+
+### Plan Starter
+- Email: <12 horas
+- Chat: <15 minutos
+- Horario: L-V 9:00-18:00
+
+### Plan Professional
+- Email: <4 horas
+- Chat: <8 minutos
+- WhatsApp: <5 minutos
+- Horario: 24/7
+
+### Plan Enterprise
+- Prioritario en todos los canales
+- Account manager dedicado
+- Soporte telefónico directo
+- Horario: 24/7
+
+## Tipos de soporte
+
+### Soporte técnico
+- Problemas de configuración
+- Errores o bugs
+- Integraciones
+- API y webhooks
+
+### Soporte de producto
+- Cómo usar funcionalidades
+- Mejores prácticas
+- Optimización de agentes
+- Casos de uso
+
+### Formación
+- Onboarding inicial (incluido)
+- Sesiones de formación
+- Webinars mensuales (gratis)
+- Certificación de equipo (Enterprise)
+
+## SLA (Service Level Agreement)
+
+### Tiempo máximo de resolución
+
+**Prioridad Alta (sistema caído)**
+- Starter: 24 horas
+- Professional: 4 horas
+- Enterprise: 1 hora
+
+**Prioridad Media (funcionalidad afectada)**
+- Starter: 48 horas
+- Professional: 12 horas
+- Enterprise: 4 horas
+
+**Prioridad Baja (consultas generales)**
+- Starter: 5 días
+- Professional: 2 días
+- Enterprise: 1 día
+
+## Disponibilidad del sistema
+
+### Uptime garantizado
+- 99.9% de uptime anual
+- Mantenimientos programados (notificados con 48h)
+- Estado del sistema: status.nexgent.io
+
+### ¿Qué pasa si hay una caída?
+
+1. **Notificación inmediata** por email y SMS
+2. **Equipo técnico activado** automáticamente
+3. **Actualizaciones cada 15 min** sobre el progreso
+4. **Compensación** según SLA si se exceden los tiempos
+
+## Cómo contactar soporte
+
+### Desde el dashboard
+1. Haz clic en el botón de **ayuda** (?)
+2. Selecciona **Contactar soporte**
+3. Describe tu consulta
+4. Recibirás respuesta por tu canal preferido
+
+### Desde el chat
+1. Abre el **widget de chat**
+2. Escribe tu consulta
+3. Un agente te responderá inmediatamente
+
+### Por WhatsApp
+1. Guarda el número: **+34 684 48 66 47**
+2. Envía un mensaje con tu consulta
+3. Incluye tu email de registro
+
+## Reportar un bug
+
+Si encuentras un error:
+1. **Captura de pantalla** del error
+2. **Describe** qué estabas haciendo
+3. **Navegador y sistema operativo**
+4. Envía a: bugs@nexgent.io
+
+## Feedback y sugerencias
+
+Nos encanta escuchar tus ideas:
+- Email: feedback@nexgent.io
+- Formulario: nexgent.io/feedback
+- Votación de features: roadmap.nexgent.io
+
+[Contactar soporte ahora →](/contacto)`,
+    relatedArticles: ['nexgent-es-seguro', 'cuanto-cuesta-nexgent'],
+  },
+
+  {
+    slug: 'tiempo-implementacion-nexgent',
+    title: '¿Cuánto tiempo tarda la implementación?',
+    category: 'Preguntas frecuentes',
+    views: '6.2K',
+    readTime: '5 min',
+    content: `
+# ¿Cuánto tiempo tarda la implementación?
+
+La implementación de NexGent es rápida: desde 24 horas hasta 2 semanas según el plan.
+
+## Timeline por plan
+
+### Plan Starter
+**1-3 días laborables**
+
+Día 1:
+- Creación de cuenta
+- Configuración básica
+- Conexión de WhatsApp Business
+
+Día 2-3:
+- Personalización del agente
+- Pruebas internas
+- Lanzamiento
+
+### Plan Professional
+**3-7 días laborables**
+
+Semana 1:
+- Onboarding personalizado (1h)
+- Configuración avanzada
+- Múltiples integraciones
+- Entrenamiento del agente
+- Pruebas exhaustivas
+- Formación del equipo
+- Go-live
+
+### Plan Enterprise
+**1-2 semanas**
+
+Semana 1:
+- Kick-off meeting
+- Análisis de procesos
+- Diseño de workflows
+- Integraciones custom
+
+Semana 2:
+- Implementación
+- Testing UAT
+- Formación completa del equipo
+- Documentación personalizada
+- Launch
+
+## Fases de implementación
+
+### Fase 1: Preparación (1 día)
+✅ Crear cuenta
+✅ Configurar perfil de empresa
+✅ Definir objetivos
+✅ Recopilar credenciales de integraciones
+
+### Fase 2: Configuración (1-3 días)
+✅ Conectar canales (WhatsApp, Instagram, etc.)
+✅ Configurar horarios de atención
+✅ Personalizar mensajes
+✅ Establecer flujos de conversación
+
+### Fase 3: Personalización (1-2 días)
+✅ Entrenar al agente con tus datos
+✅ Configurar respuestas personalizadas
+✅ Ajustar tono de voz
+✅ Añadir conocimiento específico de tu negocio
+
+### Fase 4: Integraciones (1-3 días)
+✅ Conectar CRM
+✅ Conectar calendario
+✅ Conectar sistema de pagos
+✅ Conectar otras herramientas
+
+### Fase 5: Testing (1-2 días)
+✅ Pruebas internas
+✅ Escenarios de uso real
+✅ Ajustes finales
+✅ Validación del equipo
+
+### Fase 6: Formación (1 día)
+✅ Sesión de onboarding con el equipo
+✅ Guía de uso
+✅ Mejores prácticas
+✅ Q&A
+
+### Fase 7: Launch (1 día)
+✅ Activación en producción
+✅ Monitoreo inicial
+✅ Soporte dedicado primeras 48h
+✅ Revisión de métricas
+
+## ¿Qué necesitas preparar?
+
+### Información básica
+- Datos de tu empresa
+- Logo y colores corporativos
+- Horarios de atención
+- Política de privacidad
+
+### Accesos
+- Cuenta de WhatsApp Business
+- Credenciales de integraciones
+- Acceso a CRM (si aplica)
+- Dominio web (para widget)
+
+### Contenido
+- FAQs más comunes
+- Información de productos/servicios
+- Precios y promociones
+- Políticas de devolución/cancelación
+
+## Fast-track (24 horas)
+
+¿Necesitas implementar urgentemente? Ofrecemos fast-track:
+- **Coste adicional**: +€299
+- **Timeline**: 24 horas
+- **Incluye**: Configuración prioritaria + soporte dedicado
+- **Disponible para**: Planes Professional y Enterprise
+
+## ¿Puedo empezar con una versión básica?
+
+**Sí**. Recomendamos un enfoque MVP:
+
+**Día 1**: Lanzar con funcionalidades básicas
+- Un canal (WhatsApp)
+- Respuestas automáticas esenciales
+- Horario de atención
+
+**Días siguientes**: Ir añadiendo gradualmente
+- Más canales
+- Integraciones
+- Personalización avanzada
+- Automatizaciones complejas
+
+## Post-implementación
+
+### Primera semana
+- Monitoreo intensivo
+- Ajustes diarios
+- Soporte prioritario
+
+### Primer mes
+- Revisión de métricas semanales
+- Optimización continua
+- Incorporación de feedback
+
+### Continuo
+- Actualizaciones automáticas
+- Mejoras del agente
+- Soporte 24/7
+
+## Factores que afectan el tiempo
+
+**Más rápido si:**
+- ✅ Tienes los accesos listos
+- ✅ Tu equipo está disponible
+- ✅ Procesos claros y documentados
+- ✅ Pocas integraciones
+
+**Más lento si:**
+- ❌ Integraciones custom complejas
+- ❌ Múltiples validaciones/aprobaciones
+- ❌ Migración desde otro sistema
+- ❌ Workflows muy específicos
+
+[Solicitar demo y timeline →](/demo)`,
+    relatedArticles: ['como-empezar-nexgent', 'cuanto-cuesta-nexgent'],
+  },
+
+  {
+    slug: 'idiomas-disponibles-nexgent',
+    title: '¿En qué idiomas está disponible NexGent?',
+    category: 'Preguntas frecuentes',
+    views: '4.1K',
+    readTime: '3 min',
+    content: `
+# ¿En qué idiomas está disponible NexGent?
+
+NexGent soporta más de 95 idiomas para conversaciones con tus clientes.
+
+## Idiomas principales
+
+### Interfaz del dashboard
+- 🇪🇸 Español
+- 🇬🇧 Inglés
+- 🇫🇷 Francés
+- 🇩🇪 Alemán
+- 🇮🇹 Italiano
+- 🇵🇹 Portugués
+
+### Agentes de IA
+Los agentes pueden conversar en **+95 idiomas**, incluyendo:
+
+**Europa**
+- Español, Inglés, Francés, Alemán, Italiano, Portugués
+- Catalán, Euskera, Gallego
+- Holandés, Polaco, Ruso, Sueco, Danés, Noruego
+- Griego, Rumano, Búlgaro, Checo, Húngaro
+
+**América**
+- Español (variantes: España, México, Argentina, Colombia...)
+- Portugués (Brasil)
+- Inglés (US, UK, Australia...)
+
+**Asia**
+- Chino (simplificado y tradicional)
+- Japonés
+- Coreano
+- Hindi
+- Árabe
+- Tailandés, Vietnamita, Indonesio
+
+**Y muchos más...**
+
+## Detección automática de idioma
+
+El agente **detecta automáticamente** el idioma del cliente:
+1. Cliente escribe en cualquier idioma
+2. El agente lo detecta
+3. Responde en el mismo idioma
+4. Sin configuración adicional
+
+**Ejemplo:**
+- Cliente: "Hello, I need help"
+- Agente: "Hi! How can I assist you today?"
+
+- Cliente: "Bonjour, j'ai besoin d'aide"
+- Agente: "Bonjour! Comment puis-je vous aider?"
+
+## Idioma por defecto
+
+Puedes configurar el idioma por defecto del agente:
+1. Ve a **Configuración** → **General**
+2. Selecciona **Idioma del agente**
+3. Elige tu idioma principal
+4. Guarda cambios
+
+## Multiidioma en el mismo agente
+
+Un mismo agente puede atender en múltiples idiomas simultáneamente:
+- ✅ Sin duplicar agentes
+- ✅ Sin configuración compleja
+- ✅ Cambio automático según el cliente
+
+## Traducción en tiempo real
+
+### Para el equipo
+El dashboard puede traducir conversaciones en tiempo real:
+- Cliente escribe en japonés
+- Tu equipo lo ve traducido al español
+- Tu equipo responde en español
+- Cliente lo recibe en japonés
+
+**Activar traducción:**
+1. Abre una conversación
+2. Clic en **⚙️** (configuración)
+3. Activa "Traducir conversación"
+4. Selecciona idioma destino
+
+## Personalización por idioma
+
+Puedes personalizar mensajes para cada idioma:
+
+**Ejemplo:**
+- Mensaje de bienvenida en español
+- Mensaje de bienvenida en inglés
+- Mensaje de bienvenida en francés
+
+El agente enviará el mensaje apropiado según el idioma detectado.
+
+## Tono y expresiones locales
+
+El agente adapta:
+- **Expresiones idiomáticas** de cada región
+- **Tono formal/informal** según cultura
+- **Formatos** (fechas, horas, monedas)
+
+**Español de España** vs **Español de México:**
+- 🇪🇸 "Vale, te envío la información ahora mismo"
+- 🇲🇽 "Claro, te mando la información ahorita"
+
+## Idiomas técnicos
+
+Para industrias especializadas, el agente maneja **jerga técnica**:
+- Médica
+- Legal
+- Tecnológica
+- Financiera
+- Y más...
+
+## ¿No ves tu idioma?
+
+Si necesitas un idioma específico no listado, contáctanos. La IA puede aprender casi cualquier idioma con entrenamiento adicional.
+
+## Soporte en tu idioma
+
+Nuestro equipo de soporte habla:
+- 🇪🇸 Español
+- 🇬🇧 Inglés
+
+[Configurar idiomas →](/recursos/centro-ayuda/articulos/configuracion-idiomas)`,
+    relatedArticles: ['personalizacion-mensajes', 'que-es-nexgent'],
+  },
 ]
 
 export function getArticleBySlug(slug: string): Article | undefined {
