@@ -3,90 +3,26 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { FaBook, FaClock, FaArrowRight, FaSearch, FaBrain, FaCheckCircle, FaRocket, FaChartLine } from 'react-icons/fa'
+import { getAllBlogArticles, searchBlogArticles } from '@/data/blog-articles'
 
 export default function AllArticlesPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
-  const articles = [
-    {
-      slug: 'futuro-automatizacion-empresarial-ia',
-      title: 'El futuro de la automatización empresarial: IA que realmente funciona',
-      excerpt: 'Análisis profundo de cómo la inteligencia artificial está transformando la forma en que las empresas operan, con datos reales y casos de éxito verificados.',
-      date: '25 Oct 2024',
-      category: 'IA & Negocios',
-      readTime: '12 min',
-      author: 'Equipo NexGent',
-    },
-    {
-      slug: 'ia-atencion-cliente-2024',
-      title: 'Cómo la IA está transformando la atención al cliente en 2024',
-      excerpt: 'Descubre las últimas tendencias en automatización con IA y cómo están revolucionando la forma en que las empresas interactúan con sus clientes. Datos actualizados de más de 1,000 empresas.',
-      date: '22 Oct 2024',
-      category: 'IA & Negocios',
-      readTime: '8 min',
-      author: 'Equipo NexGent',
-    },
-    {
-      slug: '5-razones-automatizar-whatsapp-business',
-      title: '5 razones para automatizar tu negocio con WhatsApp Business ahora',
-      excerpt: 'WhatsApp se ha convertido en el canal preferido de comunicación con +2 mil millones de usuarios. Te contamos por qué deberías automatizarlo ya con datos concretos de ROI.',
-      date: '18 Oct 2024',
-      category: 'IA & Negocios',
-      readTime: '6 min',
-      author: 'Equipo NexGent',
-    },
-    {
-      slug: 'caso-exito-hello-nails',
-      title: 'Caso de éxito: Hello Nails aumentó sus ventas un 40% con IA',
-      excerpt: 'Conoce cómo este salón de belleza transformó su negocio con agentes de IA. ROI en 3 semanas, +40% ventas, -60% no-shows. Historia completa con cifras reales.',
-      date: '15 Oct 2024',
-      category: 'Casos de Éxito',
-      readTime: '10 min',
-      author: 'Equipo NexGent',
-    },
-    {
-      slug: 'guia-chatbot-que-venda',
-      title: 'Guía completa: Cómo implementar un chatbot que realmente venda',
-      excerpt: 'No todos los chatbots son iguales. Descubre qué hace que un chatbot convierta visitas en ventas con una guía paso a paso basada en datos de +500 implementaciones exitosas.',
-      date: '12 Oct 2024',
-      category: 'Guías Prácticas',
-      readTime: '15 min',
-      author: 'Equipo NexGent',
-    },
-    {
-      slug: 'ia-vs-asistentes-humanos-datos',
-      title: 'IA vs Asistentes Humanos: Datos reales de costes y eficiencia',
-      excerpt: 'Análisis comparativo con datos concretos: costes operativos, tiempo de respuesta, satisfacción del cliente y escalabilidad. Los números hablan por sí mismos.',
-      date: '10 Oct 2024',
-      category: 'Análisis & Datos',
-      readTime: '7 min',
-      author: 'Equipo NexGent',
-    },
-    {
-      slug: 'errores-fatales-implementar-ia',
-      title: 'Errores fatales al implementar IA en tu negocio (y cómo evitarlos)',
-      excerpt: 'Hemos analizado 200+ implementaciones fallidas para identificar los 7 errores más comunes que hacen que proyectos de IA fracasen. Aprende qué NO hacer.',
-      date: '8 Oct 2024',
-      category: 'IA & Negocios',
-      readTime: '9 min',
-      author: 'Equipo NexGent',
-    },
-  ]
+  const allArticles = getAllBlogArticles()
+  
+  const searchResults = searchQuery ? searchBlogArticles(searchQuery) : allArticles
+  
+  const filteredArticles = selectedCategory 
+    ? searchResults.filter(article => article.category === selectedCategory)
+    : searchResults
 
   const categories = [
-    { icon: FaBrain, name: 'IA & Negocios', count: 28 },
-    { icon: FaCheckCircle, name: 'Casos de Éxito', count: 15 },
-    { icon: FaRocket, name: 'Guías Prácticas', count: 22 },
-    { icon: FaChartLine, name: 'Análisis & Datos', count: 12 },
+    { icon: FaBrain, name: 'IA & Negocios', count: allArticles.filter(a => a.category === 'IA & Negocios').length },
+    { icon: FaCheckCircle, name: 'Casos de Éxito', count: allArticles.filter(a => a.category === 'Casos de Éxito').length },
+    { icon: FaRocket, name: 'Guías Prácticas', count: allArticles.filter(a => a.category === 'Guías Prácticas').length },
+    { icon: FaChartLine, name: 'Análisis & Datos', count: allArticles.filter(a => a.category === 'Análisis & Datos').length },
   ]
-
-  const filteredArticles = articles.filter(article => {
-    const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         article.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = !selectedCategory || article.category === selectedCategory
-    return matchesSearch && matchesCategory
-  })
 
   return (
     <>
@@ -228,4 +164,3 @@ export default function AllArticlesPage() {
     </>
   )
 }
-
