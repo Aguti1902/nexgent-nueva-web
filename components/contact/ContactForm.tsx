@@ -11,7 +11,6 @@ export default function ContactForm() {
     email: '',
     telefono: '',
     empresa: '',
-    sector: '',
     mensaje: '',
   })
 
@@ -37,25 +36,12 @@ export default function ContactForm() {
         email: '',
         telefono: '',
         empresa: '',
-        sector: '',
         mensaje: '',
       })
       
       setTimeout(() => setSubmitStatus('idle'), 5000)
     }, 1500)
   }
-
-  const sectores = [
-    'Salones de Belleza',
-    'Clínicas y Salud',
-    'Gimnasios y Fitness',
-    'Restaurantes',
-    'Retail',
-    'Hoteles y Turismo',
-    'Educación',
-    'Servicios Profesionales',
-    'Otro',
-  ]
 
   return (
     <section className="py-24 bg-gray-50">
@@ -69,10 +55,10 @@ export default function ContactForm() {
             className="bg-white rounded-2xl p-12 border border-gray-200"
           >
             <h2 className="font-monda text-4xl font-bold text-black mb-4">
-              Completa el formulario
+              Envíanos un mensaje
             </h2>
             <p className="text-gray-600 mb-10 text-lg">
-              Nos pondremos en contacto contigo en menos de 24 horas
+              Responderemos a tu consulta en menos de 24 horas. También puedes usar nuestro asistente de IA en la esquina inferior derecha.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -140,41 +126,22 @@ export default function ContactForm() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Sector *
-                </label>
-                <select
-                  name="sector"
-                  value={formData.sector}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all"
-                >
-                  <option value="">Selecciona tu sector</option>
-                  {sectores.map((sector) => (
-                    <option key={sector} value={sector}>
-                      {sector}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Mensaje
+                  Mensaje *
                 </label>
                 <textarea
                   name="mensaje"
                   value={formData.mensaje}
                   onChange={handleChange}
-                  rows={5}
+                  required
+                  rows={6}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition-all resize-none"
-                  placeholder="Cuéntanos sobre tu negocio y qué te gustaría automatizar..."
+                  placeholder="Cuéntanos en qué podemos ayudarte..."
                 />
               </div>
 
               {submitStatus === 'success' && (
                 <div className="bg-green-50 border border-green-200 text-green-800 px-6 py-4 rounded-lg">
-                  ¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.
+                  ¡Mensaje enviado! Te responderemos pronto.
                 </div>
               )}
 
@@ -188,7 +155,7 @@ export default function ContactForm() {
                 {isSubmitting ? 'Enviando...' : (
                   <>
                     <FaPaperPlane className="mr-2" />
-                    Enviar solicitud
+                    Enviar mensaje
                   </>
                 )}
               </Button>

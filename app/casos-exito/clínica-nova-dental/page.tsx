@@ -217,12 +217,16 @@ export default function ClinicaDentalCaseStudy() {
                 <LineChart data={citasEvolution}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                   <XAxis dataKey="mes" stroke="#6b7280" />
-                  <YAxis stroke="#6b7280" />
+                  <YAxis yAxisId="left" stroke="#10b981" label={{ value: 'Citas', angle: -90, position: 'insideLeft' }} />
+                  <YAxis yAxisId="right" orientation="right" stroke="#ef4444" label={{ value: 'No-Shows (%)', angle: 90, position: 'insideRight' }} domain={[0, 25]} />
                   <Tooltip 
-                    contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                    contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
+                    itemStyle={{ color: '#fff' }}
+                    labelStyle={{ color: '#fff' }}
                   />
                   <Legend />
                   <Line 
+                    yAxisId="left"
                     type="monotone" 
                     dataKey="citas" 
                     stroke="#10b981" 
@@ -231,6 +235,7 @@ export default function ClinicaDentalCaseStudy() {
                     dot={{ fill: '#10b981', r: 6 }}
                   />
                   <Line 
+                    yAxisId="right"
                     type="monotone" 
                     dataKey="noShows" 
                     stroke="#ef4444" 

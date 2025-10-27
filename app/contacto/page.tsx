@@ -5,9 +5,9 @@ import ContactInfo from '@/components/contact/ContactInfo'
 import FAQSection from '@/components/contact/FAQSection'
 
 export const metadata: Metadata = {
-  title: 'Contacto - NexGent | Solicita tu Demo Gratuita',
-  description: 'Contacta con NexGent y descubre cómo los agentes de IA pueden transformar tu negocio. Demo gratuita sin compromiso.',
-  keywords: 'contacto NexGent, demo IA, solicitar información, agentes IA empresas',
+  title: 'Contacto - NexGent | Hablemos de tu Proyecto',
+  description: 'Contacta con NexGent para consultas, presupuestos o información sobre nuestros servicios de IA. Estamos aquí para ayudarte.',
+  keywords: 'contacto NexGent, consultas IA, presupuesto IA, información agentes IA',
 }
 
 export default function ContactoPage() {

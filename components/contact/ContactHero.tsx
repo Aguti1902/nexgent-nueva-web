@@ -21,13 +21,11 @@ export default function ContactHero() {
           </div>
 
           <h1 className="font-monda text-6xl md:text-7xl lg:text-8xl font-bold mb-8 text-black leading-[1.1]">
-            Solicita tu
-            <br />
-            demo gratuita
+            Contáctanos
           </h1>
           
           <p className="text-2xl md:text-3xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
-            Descubre cómo la IA puede transformar tu negocio en menos de 30 minutos
+            Estamos aquí para responder tus preguntas y ayudarte con tu proyecto de IA
           </p>
         </motion.div>
       </div>
