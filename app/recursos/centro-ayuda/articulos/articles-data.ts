@@ -720,6 +720,408 @@ Email: info@nexgent.io
     `,
     relatedArticles: ['webhooks-avanzado', 'integracion-crm-guia-completa'],
   },
+  // Más artículos de Primeros pasos
+  {
+    slug: 'creacion-cuenta-nexgent',
+    title: 'Crear tu cuenta en NexGent paso a paso',
+    category: 'Primeros pasos',
+    views: '15.2K',
+    readTime: '3 min',
+    content: `# Crear tu cuenta en NexGent paso a paso
+
+Empezar con NexGent es muy sencillo. Te guiamos en el proceso de registro.
+
+## Paso 1: Registro
+
+1. Ve a [dashboard.nexgent.io](https://dashboard.nexgent.io)
+2. Haz clic en "Crear cuenta"
+3. Ingresa tu email y contraseña
+4. Verifica tu email
+
+## Paso 2: Información del negocio
+
+- Nombre de tu empresa
+- Industria
+- Tamaño del equipo
+- Objetivo principal
+
+## Paso 3: Elige tu plan
+
+- **Starter**: Para negocios pequeños
+- **Pro**: Más funcionalidades
+- **Enterprise**: Solución completa
+
+## ¿Qué sigue?
+
+Una vez creada tu cuenta, te recomendamos configurar WhatsApp Business como primer paso.`,
+    relatedArticles: ['como-configurar-whatsapp-business', 'configuracion-inicial-plataforma'],
+  },
+  {
+    slug: 'configuracion-inicial-plataforma',
+    title: 'Configuración inicial de la plataforma',
+    category: 'Primeros pasos',
+    views: '11.8K',
+    readTime: '10 min',
+    content: `# Configuración inicial de la plataforma
+
+Optimiza tu plataforma desde el primer día con esta guía completa.
+
+## 1. Perfil de empresa
+
+Completa tu perfil con:
+- Logo de empresa
+- Información de contacto
+- Horario de atención
+- Enlaces a redes sociales
+
+## 2. Usuarios y permisos
+
+Invita a tu equipo y asigna roles:
+- **Admin**: Control total
+- **Manager**: Gestión operativa
+- **Agent**: Atención al cliente
+- **Viewer**: Solo lectura
+
+## 3. Configuración de notificaciones
+
+Decide qué notificaciones quieres recibir:
+- Nuevos mensajes
+- Reservas creadas
+- Leads importantes
+- Errores del sistema
+
+## 4. Integra tu calendario
+
+Conecta Google Calendar o Outlook para sincronizar automáticamente las reservas.
+
+## 5. Personaliza tu marca
+
+- Colores corporativos
+- Tono de voz del bot
+- Mensajes de bienvenida
+- Firmas automáticas
+
+## Siguiente paso
+
+Crea tu primera automatización siguiendo nuestra guía.`,
+    relatedArticles: ['primera-automatizacion-guia', 'creacion-cuenta-nexgent'],
+  },
+  {
+    slug: 'primera-automatizacion-guia',
+    title: 'Tu primera automatización: Guía práctica',
+    category: 'Primeros pasos',
+    views: '13.5K',
+    readTime: '12 min',
+    content: `# Tu primera automatización: Guía práctica
+
+Aprende a crear tu primera automatización en menos de 15 minutos.
+
+## ¿Qué vas a automatizar?
+
+Vamos a crear un bot que:
+1. Saluda al cliente
+2. Le pregunta qué necesita
+3. Agenda citas automáticamente
+
+## Paso 1: Crear el flujo
+
+1. Ve a "Automatizaciones"
+2. Clic en "Nuevo flujo"
+3. Selecciona "Gestión de citas"
+
+## Paso 2: Personalizar mensajes
+
+\`\`\`
+¡Hola! 👋 Soy el asistente virtual de [TU EMPRESA]
+
+¿En qué puedo ayudarte?
+A) Agendar cita
+B) Consultar precios
+C) Otra consulta
+\`\`\`
+
+## Paso 3: Configurar acciones
+
+Para cada opción, define:
+- Respuesta del bot
+- Siguiente pregunta
+- Acción a ejecutar
+
+## Paso 4: Prueba tu bot
+
+Usa el simulador integrado para probar todos los escenarios antes de activarlo.
+
+## Paso 5: Activar
+
+Una vez probado, activa el bot y empieza a recibir clientes automáticamente.
+
+## Métricas a seguir
+
+- Conversaciones completadas
+- Tasa de abandono
+- Tiempo promedio de conversación
+- Satisfacción del cliente`,
+    relatedArticles: ['crear-flujos-conversacion', 'como-configurar-whatsapp-business'],
+  },
+  // Preguntas frecuentes
+  {
+    slug: 'precios-planes-nexgent',
+    title: 'Precios y planes: ¿Cuál elegir?',
+    category: 'Preguntas frecuentes',
+    views: '18.3K',
+    readTime: '5 min',
+    content: `# Precios y planes: ¿Cuál elegir?
+
+Descubre qué plan de NexGent se adapta mejor a tu negocio.
+
+## Plan Starter - €99/mes
+
+Perfecto para negocios pequeños:
+- Hasta 1,000 conversaciones/mes
+- 1 número de WhatsApp
+- Soporte por email
+- Dashboard básico
+
+## Plan Pro - €299/mes
+
+Para negocios en crecimiento:
+- Hasta 5,000 conversaciones/mes
+- 3 números de WhatsApp
+- Integraciones con CRM
+- Soporte 24/7 por chat
+- Analytics avanzados
+
+## Plan Enterprise - Personalizado
+
+Solución completa:
+- Conversaciones ilimitadas
+- Números ilimitados
+- Gestor de cuenta dedicado
+- API completa
+- SLA garantizado
+- Soporte telefónico prioritario
+
+## ¿Puedo cambiar de plan?
+
+Sí, en cualquier momento desde tu dashboard. El cambio es inmediato.
+
+## ¿Hay permanencia?
+
+No, cancela cuando quieras sin penalización.`,
+    relatedArticles: ['facturacion-metodos-pago', 'cancelar-suscripcion'],
+  },
+  {
+    slug: 'facturacion-metodos-pago',
+    title: 'Facturación y métodos de pago',
+    category: 'Preguntas frecuentes',
+    views: '9.2K',
+    readTime: '4 min',
+    content: `# Facturación y métodos de pago
+
+Todo lo que necesitas saber sobre pagos y facturas.
+
+## Métodos de pago aceptados
+
+- **Tarjeta de crédito/débito**: Visa, Mastercard, American Express
+- **Transferencia bancaria**: Para planes Enterprise
+- **PayPal**: Disponible en algunos países
+
+## Ciclo de facturación
+
+- Mensual: Cargo el mismo día cada mes
+- Anual: 2 meses gratis (20% descuento)
+
+## Facturas
+
+Las facturas se envían automáticamente por email y están disponibles en tu dashboard en "Configuración" → "Facturación".
+
+## Actualizaciones
+
+Para actualizar tu método de pago:
+1. Dashboard → Configuración
+2. Facturación
+3. Actualizar tarjeta
+
+## IVA y impuestos
+
+Los precios no incluyen IVA (se añade según tu ubicación).`,
+    relatedArticles: ['precios-planes-nexgent', 'cambiar-plan'],
+  },
+  {
+    slug: 'integraciones-disponibles',
+    title: 'Integraciones disponibles',
+    category: 'Preguntas frecuentes',
+    views: '14.7K',
+    readTime: '6 min',
+    content: `# Integraciones disponibles
+
+NexGent se integra con las herramientas que ya usas.
+
+## CRMs
+
+- Salesforce
+- HubSpot
+- Pipedrive
+- Zoho CRM
+- Monday.com
+- Notion
+
+## Calendarios
+
+- Google Calendar
+- Outlook Calendar
+- Apple Calendar
+- Calendly
+
+## E-commerce
+
+- Shopify
+- WooCommerce
+- PrestaShop
+- Magento
+
+## Email Marketing
+
+- Mailchimp
+- SendGrid
+- ActiveCampaign
+
+## Comunicación
+
+- Slack
+- Microsoft Teams
+- Telegram
+
+## Pagos
+
+- Stripe
+- PayPal
+- Redsys
+
+## ¿No está tu herramienta?
+
+Usa nuestra API REST o solicita una integración personalizada.`,
+    relatedArticles: ['integracion-crm-guia-completa', 'webhooks-avanzado'],
+  },
+  {
+    slug: 'seguridad-datos-rgpd',
+    title: 'Seguridad de datos y cumplimiento RGPD',
+    category: 'Preguntas frecuentes',
+    views: '11.4K',
+    readTime: '7 min',
+    content: `# Seguridad de datos y cumplimiento RGPD
+
+Tu privacidad y la de tus clientes es nuestra prioridad.
+
+## Cumplimiento RGPD
+
+NexGent cumple al 100% con el Reglamento General de Protección de Datos:
+- ✅ Servidores en Europa
+- ✅ Encriptación end-to-end
+- ✅ Derecho al olvido
+- ✅ Portabilidad de datos
+- ✅ DPO certificado
+
+## Seguridad técnica
+
+- **Encriptación**: TLS 1.3 en tránsito, AES-256 en reposo
+- **Autenticación**: 2FA disponible
+- **Backups**: Diarios automáticos
+- **Auditorías**: Trimestrales por terceros
+
+## Control de datos
+
+Tú decides:
+- Qué datos se almacenan
+- Cuánto tiempo se conservan
+- Quién tiene acceso
+- Exportación en cualquier momento
+
+## Certificaciones
+
+- ISO 27001
+- SOC 2 Type II
+- RGPD
+
+## ¿Compartís datos con terceros?
+
+Nunca. Tus datos son tuyos y solo tuyos.`,
+    relatedArticles: ['exportar-datos', 'eliminar-cuenta'],
+  },
+  {
+    slug: 'cancelar-suscripcion',
+    title: 'Cómo cancelar tu suscripción',
+    category: 'Preguntas frecuentes',
+    views: '6.8K',
+    readTime: '3 min',
+    content: `# Cómo cancelar tu suscripción
+
+Esperamos que no sea el caso, pero cancelar es muy sencillo.
+
+## Proceso de cancelación
+
+1. Dashboard → Configuración
+2. Suscripción
+3. "Cancelar suscripción"
+4. Confirma la cancelación
+
+## ¿Qué pasa después?
+
+- Mantienes acceso hasta el final del período pagado
+- Puedes exportar todos tus datos
+- Los datos se conservan 30 días por si vuelves
+- Después de 30 días, se eliminan permanentemente
+
+## ¿Perdería mis datos?
+
+No inmediatamente. Tienes 30 días para exportarlos o reactivar tu cuenta.
+
+## Reactivación
+
+Puedes reactivar en cualquier momento dentro de los 30 días sin perder nada.
+
+## ¿Necesitas ayuda?
+
+Antes de cancelar, habla con nosotros. Quizá podamos ayudarte: info@nexgent.io`,
+    relatedArticles: ['exportar-datos', 'pausar-servicio'],
+  },
+  {
+    slug: 'limites-conversaciones',
+    title: 'Límites de conversaciones por plan',
+    category: 'Preguntas frecuentes',
+    views: '8.9K',
+    readTime: '4 min',
+    content: `# Límites de conversaciones por plan
+
+Entiende cómo funcionan los límites y qué pasa si los superas.
+
+## ¿Qué cuenta como conversación?
+
+Una conversación = Una interacción completa con un cliente, sin importar cuántos mensajes se envíen.
+
+## Límites por plan
+
+- **Starter**: 1,000 conversaciones/mes
+- **Pro**: 5,000 conversaciones/mes
+- **Enterprise**: Ilimitadas
+
+## ¿Qué pasa si supero el límite?
+
+1. Recibes una notificación al 80%
+2. Al llegar al 100%, puedes:
+   - Actualizar tu plan automáticamente
+   - Comprar conversaciones adicionales (€0.15/conversación)
+   - El servicio continúa (no se detiene)
+
+## Conversaciones adicionales
+
+€0.15 por conversación extra. Se facturan al final del mes.
+
+## Monitoreo
+
+Ve tu uso actual en Dashboard → Estadísticas`,
+    relatedArticles: ['precios-planes-nexgent', 'cambiar-plan'],
+  },
 ]
 
 export function getArticleBySlug(slug: string): Article | undefined {
