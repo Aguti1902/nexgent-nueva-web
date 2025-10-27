@@ -1,12 +1,31 @@
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
 import { FaQuestionCircle, FaSearch, FaBook, FaComments, FaCheckCircle, FaHeadset, FaClock, FaRocket, FaBolt, FaCog, FaChartLine, FaUsers, FaShieldAlt, FaWhatsapp } from 'react-icons/fa'
 import Button from '@/components/ui/Button'
-
-export const metadata = {
-  title: 'Centro de Ayuda y Soporte | NexGent',
-  description: 'Guías completas, tutoriales paso a paso y respuestas a preguntas frecuentes sobre nuestros servicios de IA para negocios.',
-}
+import { articles, searchArticles } from './articulos/articles-data'
 
 export default function CentroAyudaPage() {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<typeof articles>([])
+  const [isSearching, setIsSearching] = useState(false)
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query)
+    if (query.trim().length > 0) {
+      setIsSearching(true)
+      const results = searchArticles(query)
+      setSearchResults(results)
+    } else {
+      setIsSearching(false)
+      setSearchResults([])
+    }
+  }
+
+  const popularArticles = articles
+    .sort((a, b) => parseFloat(b.views.replace('K', '')) - parseFloat(a.views.replace('K', '')))
+    .slice(0, 5)
   const categories = [
     {
       icon: FaRocket,
@@ -43,14 +62,6 @@ export default function CentroAyudaPage() {
       articles: 20,
       topics: ['Optimización', 'Casos de uso', 'ROI'],
     },
-  ]
-
-  const popularArticles = [
-    {title: 'Cómo configurar WhatsApp Business en 5 minutos', views: '12.4K'},
-    {title: 'Integración con CRM: Guía completa', views: '8.9K'},
-    {title: 'Crear flujos de conversación efectivos', views: '7.2K'},
-    {title: 'Troubleshooting: Problemas comunes', views: '6.8K'},
-    {title: 'Cómo medir el ROI de tu automatización', views: '5.4K'},
   ]
 
   const faqs = [
@@ -139,11 +150,51 @@ export default function CentroAyudaPage() {
                 <input
                   type="text"
                   placeholder="Busca guías, tutoriales, preguntas frecuentes..."
+                  value={searchQuery}
+                  onChange={(e) => handleSearch(e.target.value)}
                   className="w-full px-6 py-4 pr-14 rounded-xl border-2 border-gray-300 focus:border-purple-500 focus:outline-none text-lg shadow-lg"
                 />
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-purple-500 text-white p-2 rounded-lg">
                   <FaSearch className="text-xl" />
                 </div>
+                
+                {/* Search Results Dropdown */}
+                {isSearching && (
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border-2 border-gray-200 max-h-96 overflow-y-auto z-50">
+                    {searchResults.length > 0 ? (
+                      <div className="p-2">
+                        {searchResults.map((result, idx) => (
+                          <Link
+                            key={idx}
+                            href={`/recursos/centro-ayuda/articulos/${result.slug}`}
+                            className="block p-4 hover:bg-purple-50 rounded-lg transition-all group"
+                            onClick={() => {
+                              setSearchQuery('')
+                              setIsSearching(false)
+                            }}
+                          >
+                            <div className="flex items-start gap-3">
+                              <FaBook className="text-purple-500 mt-1 flex-shrink-0" />
+                              <div>
+                                <h4 className="font-semibold text-black group-hover:text-purple-600">
+                                  {result.title}
+                                </h4>
+                                <p className="text-sm text-gray-500 mt-1">
+                                  {result.category} • {result.readTime}
+                                </p>
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="p-8 text-center text-gray-500">
+                        <FaSearch className="text-4xl mx-auto mb-3 opacity-30" />
+                        <p>No se encontraron resultados para "{searchQuery}"</p>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600">
@@ -169,7 +220,11 @@ export default function CentroAyudaPage() {
             </div>
             <div className="max-w-3xl mx-auto space-y-3">
               {popularArticles.map((article, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-lg p-6 border border-gray-200 hover:border-purple-500 hover:shadow-lg transition-all cursor-pointer group flex items-center justify-between">
+                <Link
+                  key={idx}
+                  href={`/recursos/centro-ayuda/articulos/${article.slug}`}
+                  className="bg-gray-50 rounded-lg p-6 border border-gray-200 hover:border-purple-500 hover:shadow-lg transition-all cursor-pointer group flex items-center justify-between"
+                >
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold group-hover:bg-purple-500 group-hover:text-white transition-all">
                       {idx + 1}
@@ -180,7 +235,7 @@ export default function CentroAyudaPage() {
                     <span className="text-sm text-gray-500">{article.views} vistas</span>
                     <FaBook className="text-gray-400 group-hover:text-purple-500 transition-all" />
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
