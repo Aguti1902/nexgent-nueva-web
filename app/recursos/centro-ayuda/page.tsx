@@ -210,37 +210,48 @@ export default function CentroAyudaPage() {
         </div>
       </section>
 
-      {/* Popular Articles */}
-      <section className="py-16 bg-white">
-        <div className="container-custom px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="font-monda text-3xl font-bold text-black mb-3">Artículos más visitados</h2>
-              <p className="text-gray-600">Las guías que más ayudan a nuestros usuarios</p>
+          {/* Popular Articles */}
+          <section className="py-16 bg-white">
+            <div className="container-custom px-6">
+              <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-12">
+                  <h2 className="font-monda text-3xl font-bold text-black mb-3">Artículos más visitados</h2>
+                  <p className="text-gray-600">Las guías que más ayudan a nuestros usuarios</p>
+                </div>
+                <div className="max-w-3xl mx-auto space-y-3 mb-8">
+                  {popularArticles.map((article, idx) => (
+                    <Link
+                      key={idx}
+                      href={`/recursos/centro-ayuda/articulos/${article.slug}`}
+                      className="bg-gray-50 rounded-lg p-6 border border-gray-200 hover:border-purple-500 hover:shadow-lg transition-all cursor-pointer group flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold group-hover:bg-purple-500 group-hover:text-white transition-all">
+                          {idx + 1}
+                        </div>
+                        <h3 className="font-semibold text-black group-hover:text-purple-600 transition-all">{article.title}</h3>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-gray-500">{article.views} vistas</span>
+                        <FaBook className="text-gray-400 group-hover:text-purple-500 transition-all" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                <div className="text-center">
+                  <button
+                    onClick={() => {
+                      document.getElementById('all-articles')?.scrollIntoView({ behavior: 'smooth' })
+                    }}
+                    className="inline-flex items-center gap-2 bg-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-600 transition-all shadow-lg hover:shadow-xl"
+                  >
+                    <FaBook />
+                    Ver todos los artículos ({articles.length})
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="max-w-3xl mx-auto space-y-3">
-              {popularArticles.map((article, idx) => (
-                <Link
-                  key={idx}
-                  href={`/recursos/centro-ayuda/articulos/${article.slug}`}
-                  className="bg-gray-50 rounded-lg p-6 border border-gray-200 hover:border-purple-500 hover:shadow-lg transition-all cursor-pointer group flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold group-hover:bg-purple-500 group-hover:text-white transition-all">
-                      {idx + 1}
-                    </div>
-                    <h3 className="font-semibold text-black group-hover:text-purple-600 transition-all">{article.title}</h3>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm text-gray-500">{article.views} vistas</span>
-                    <FaBook className="text-gray-400 group-hover:text-purple-500 transition-all" />
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
       {/* Categories */}
       <section className="py-24 bg-gray-50">
@@ -252,7 +263,17 @@ export default function CentroAyudaPage() {
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {categories.map((category, index) => (
-                <div key={index} className="bg-white rounded-2xl p-8 border border-gray-200 hover:border-purple-500 hover:shadow-xl transition-all group cursor-pointer">
+                <button
+                  key={index}
+                  onClick={() => {
+                    const categoryArticles = articles.filter(a => a.category === category.title)
+                    setSearchResults(categoryArticles)
+                    setIsSearching(true)
+                    setSearchQuery(`Categoría: ${category.title}`)
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }}
+                  className="bg-white rounded-2xl p-8 border border-gray-200 hover:border-purple-500 hover:shadow-xl transition-all group cursor-pointer text-left"
+                >
                   <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 text-3xl mb-6 group-hover:bg-purple-500 group-hover:text-white transition-all">
                     <category.icon />
                   </div>
@@ -262,7 +283,9 @@ export default function CentroAyudaPage() {
                   <p className="text-gray-600 text-sm mb-4">
                     {category.description}
                   </p>
-                  <p className="text-xs text-gray-500 mb-4">{category.articles} artículos</p>
+                  <p className="text-xs text-gray-500 mb-4">
+                    {articles.filter(a => a.category === category.title).length} artículos disponibles
+                  </p>
                   <div className="space-y-2">
                     {category.topics.map((topic, idx) => (
                       <div key={idx} className="flex items-center gap-2 text-sm text-gray-600">
@@ -271,15 +294,74 @@ export default function CentroAyudaPage() {
                       </div>
                     ))}
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>
         </div>
       </section>
 
+      {/* All Articles */}
+      <section id="all-articles" className="py-24 bg-white">
+        <div className="container-custom px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="font-monda text-4xl font-bold text-black mb-4">Todos los artículos</h2>
+              <p className="text-lg text-gray-600">Explora nuestra base de conocimiento completa ({articles.length} artículos)</p>
+            </div>
+
+            {categories.map((category, catIndex) => {
+              const categoryArticles = articles.filter(a => a.category === category.title)
+              
+              if (categoryArticles.length === 0) return null
+              
+              return (
+                <div key={catIndex} className="mb-16 last:mb-0">
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 text-2xl">
+                      <category.icon />
+                    </div>
+                    <div>
+                      <h3 className="font-monda text-2xl font-bold text-black">{category.title}</h3>
+                      <p className="text-sm text-gray-500">{categoryArticles.length} artículos</p>
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {categoryArticles.map((article, idx) => (
+                      <Link
+                        key={idx}
+                        href={`/recursos/centro-ayuda/articulos/${article.slug}`}
+                        className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-purple-500 hover:shadow-lg transition-all group"
+                      >
+                        <div className="flex items-start justify-between mb-4">
+                          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 text-xl group-hover:bg-purple-500 group-hover:text-white transition-all">
+                            <FaBook />
+                          </div>
+                          <span className="text-xs text-gray-500">{article.readTime}</span>
+                        </div>
+                        <h4 className="font-bold text-black mb-2 group-hover:text-purple-600 transition-all line-clamp-2">
+                          {article.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                          {article.description}
+                        </p>
+                        <div className="flex items-center justify-between text-xs text-gray-500">
+                          <span>{article.views} vistas</span>
+                          <span className="text-purple-600 group-hover:translate-x-1 transition-transform">Leer →</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* FAQs */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-gray-50">
         <div className="container-custom px-6">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
