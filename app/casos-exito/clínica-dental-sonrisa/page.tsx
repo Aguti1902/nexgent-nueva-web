@@ -199,35 +199,6 @@ export default function ClinicaDentalCaseStudy() {
         </div>
       </section>
 
-      {/* Testimonio */}
-      <section className="py-20 bg-white">
-        <div className="container-custom px-6">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-3xl p-12 border-2 border-blue-200"
-            >
-              <p className="text-2xl text-gray-800 italic leading-relaxed mb-8">
-                "Pasamos de perder 30% de las citas por no-shows a solo un 8%. El sistema gestiona todo automáticamente 
-                y nuestro equipo puede enfocarse en los pacientes. Los ingresos aumentaron <strong>€3,200 mensuales</strong> 
-                solo optimizando la agenda. Una inversión que se pagó sola en 3 semanas."
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-2xl font-bold text-white">
-                  CR
-                </div>
-                <div>
-                  <p className="font-bold text-lg text-black">Dr. Carlos Ruiz</p>
-                  <p className="text-gray-600">Director, Clínica Dental Sonrisa</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Final */}
       <section className="py-20 bg-black text-white">
         <div className="container-custom px-6">

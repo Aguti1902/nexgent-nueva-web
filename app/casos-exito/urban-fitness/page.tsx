@@ -199,35 +199,6 @@ export default function UrbanFitnessCaseStudy() {
         </div>
       </section>
 
-      {/* Testimonio */}
-      <section className="py-20 bg-white">
-        <div className="container-custom px-6">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-50 to-gray-50 rounded-3xl p-12 border-2 border-blue-200"
-            >
-              <p className="text-2xl text-gray-800 italic leading-relaxed mb-8">
-                "El impacto ha sido increíble. Pasamos de perder el 40% de consultas a responder el 100% en menos de 2 minutos. 
-                Las ventas subieron un <strong>185%</strong> y nuestro equipo está liberado de tareas repetitivas. 
-                El ROI fue positivo desde el primer mes."
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-2xl font-bold text-white">
-                  CM
-                </div>
-                <div>
-                  <p className="font-bold text-lg text-black">Carlos Mendoza</p>
-                  <p className="text-gray-600">CEO, Urban Fitness</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Final */}
       <section className="py-20 bg-black text-white">
         <div className="container-custom px-6">

@@ -211,35 +211,6 @@ export default function HelloNailsCaseStudy() {
         </div>
       </section>
 
-      {/* Testimonio */}
-      <section className="py-20 bg-white">
-        <div className="container-custom px-6">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-3xl p-12 border-2 border-pink-200"
-            >
-              <p className="text-2xl text-gray-800 italic leading-relaxed mb-8">
-                "Antes perdíamos el 30% de citas por no-shows y teníamos huecos sin llenar. 
-                Ahora el sistema gestiona todo automáticamente: reservas, confirmaciones, recordatorios. 
-                Pasamos de 68% a 95% de ocupación. <strong>€2,100 más por mes</strong> solo optimizando la agenda. Increíble."
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-pink-300 rounded-full flex items-center justify-center text-2xl font-bold text-white">
-                  TM
-                </div>
-                <div>
-                  <p className="font-bold text-lg text-black">Teresa Messía</p>
-                  <p className="text-gray-600">Propietaria, Hello Nails</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Final */}
       <section className="py-20 bg-black text-white">
         <div className="container-custom px-6">
