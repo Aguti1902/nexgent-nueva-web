@@ -30,9 +30,14 @@ export default function ClinicaDentalCaseStudy() {
     { mes: 'Mes 4', citas: 1122, noShows: 4.8 },
   ]
 
+  const citasData = [
+    { periodo: 'Antes', valor: 680 },
+    { periodo: 'Después', valor: 1122 },
+  ]
+
   const ingresosData = [
-    { categoria: 'Citas Completadas', antes: 680, despues: 1122 },
-    { categoria: 'Ingresos (€K)', antes: 28, despues: 36.5 },
+    { periodo: 'Antes', valor: 28 },
+    { periodo: 'Después', valor: 36.5 },
   ]
 
   const satisfactionData = [
@@ -249,43 +254,71 @@ export default function ClinicaDentalCaseStudy() {
               </div>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-12">
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Gráfico de Citas */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="bg-gradient-to-br from-cyan-50 to-white rounded-2xl p-8 shadow-xl border-2 border-cyan-200"
+              >
+                <h3 className="font-bold text-xl text-black mb-6">Citas Completadas</h3>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={citasData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="periodo" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
+                      itemStyle={{ color: '#fff' }}
+                      labelStyle={{ color: '#fff' }}
+                    />
+                    <Bar dataKey="valor" fill="#06b6d4" name="Citas" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+                <div className="mt-6 bg-cyan-50 border border-cyan-300 rounded-lg p-4">
+                  <p className="text-cyan-800 font-bold text-center">
+                    +442 citas más al mes
+                  </p>
+                </div>
+              </motion.div>
+
               {/* Gráfico de Ingresos */}
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-xl border border-gray-200"
+                className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 shadow-xl border-2 border-blue-200"
               >
-                <h3 className="font-bold text-xl text-black mb-6">Impacto en Ingresos</h3>
+                <h3 className="font-bold text-xl text-black mb-6">Ingresos Mensuales (€K)</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <BarChart data={ingresosData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                    <XAxis dataKey="categoria" stroke="#6b7280" />
-                    <YAxis stroke="#6b7280" />
+                    <XAxis dataKey="periodo" stroke="#6b7280" />
+                    <YAxis domain={[0, 40]} stroke="#6b7280" />
                     <Tooltip 
-                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
+                      itemStyle={{ color: '#fff' }}
+                      labelStyle={{ color: '#fff' }}
                     />
-                    <Legend />
-                    <Bar dataKey="antes" fill="#ef4444" name="Antes" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="despues" fill="#10b981" name="Después" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="valor" fill="#3b82f6" name="Ingresos (€K)" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
-                <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="mt-6 bg-blue-50 border border-blue-300 rounded-lg p-4">
                   <p className="text-blue-800 font-bold text-center">
-                    €8.5K ingresos extra mensuales
+                    €8.5K extra mensuales
                   </p>
                 </div>
               </motion.div>
 
               {/* Gráfico de Satisfacción */}
               <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-xl border border-gray-200"
+                className="bg-gradient-to-br from-green-50 to-white rounded-2xl p-8 shadow-xl border-2 border-green-200"
               >
-                <h3 className="font-bold text-xl text-black mb-6">Satisfacción de Pacientes</h3>
+                <h3 className="font-bold text-xl text-black mb-6">Satisfacción Pacientes</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
@@ -309,9 +342,9 @@ export default function ClinicaDentalCaseStudy() {
                     />
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="mt-6 bg-green-50 border border-green-200 rounded-lg p-4">
+                <div className="mt-6 bg-green-50 border border-green-300 rounded-lg p-4">
                   <p className="text-green-800 font-bold text-center">
-                    98% satisfacción general de pacientes
+                    98% satisfacción general
                   </p>
                 </div>
               </motion.div>

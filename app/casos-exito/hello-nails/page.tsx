@@ -30,9 +30,14 @@ export default function HelloNailsCaseStudy() {
     { mes: 'Mes 5', ocupacion: 95, reservas: 3408, noShows: 9.6 },
   ]
 
-  const comparisonData = [
-    { categoria: 'Ocupación', antes: 68, despues: 95 },
-    { categoria: 'Reservas/mes', antes: 2400, despues: 3408 },
+  const ocupacionData = [
+    { periodo: 'Antes', valor: 68 },
+    { periodo: 'Después', valor: 95 },
+  ]
+
+  const reservasData = [
+    { periodo: 'Antes', valor: 2400 },
+    { periodo: 'Después', valor: 3408 },
   ]
 
   const pieData = [
@@ -200,57 +205,61 @@ export default function HelloNailsCaseStudy() {
               <p className="text-gray-600 text-lg">Datos en tiempo real de la transformación</p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-12 mb-16">
-              {/* Gráfico de Evolución */}
+            <div className="grid md:grid-cols-2 gap-8 mb-12">
+              {/* Gráfico de Ocupación */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-xl border border-gray-200"
+                className="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-8 shadow-xl border-2 border-pink-200"
               >
-                <h3 className="font-bold text-xl text-black mb-6">Ocupación Mensual (%)</h3>
+                <h3 className="font-bold text-xl text-black mb-6">Ocupación (%)</h3>
                 <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={evolutionData}>
+                  <BarChart data={ocupacionData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                    <XAxis dataKey="mes" stroke="#6b7280" />
-                    <YAxis stroke="#6b7280" />
+                    <XAxis dataKey="periodo" stroke="#6b7280" />
+                    <YAxis domain={[0, 100]} stroke="#6b7280" />
                     <Tooltip 
-                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
+                      itemStyle={{ color: '#fff' }}
+                      labelStyle={{ color: '#fff' }}
                     />
-                    <Legend />
-                    <Line 
-                      type="monotone" 
-                      dataKey="ocupacion" 
-                      stroke="#ec4899" 
-                      strokeWidth={3}
-                      name="Ocupación (%)"
-                      dot={{ fill: '#ec4899', r: 6 }}
-                    />
-                  </LineChart>
+                    <Bar dataKey="valor" fill="#ec4899" name="Ocupación (%)" radius={[8, 8, 0, 0]} />
+                  </BarChart>
                 </ResponsiveContainer>
+                <div className="mt-6 bg-pink-50 border border-pink-300 rounded-lg p-4">
+                  <p className="text-pink-800 font-bold text-center">
+                    +42% aumento en ocupación
+                  </p>
+                </div>
               </motion.div>
 
-              {/* Gráfico de Comparación */}
+              {/* Gráfico de Reservas */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-xl border border-gray-200"
+                className="bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 shadow-xl border-2 border-purple-200"
               >
-                <h3 className="font-bold text-xl text-black mb-6">Antes vs Después</h3>
+                <h3 className="font-bold text-xl text-black mb-6">Reservas Mensuales</h3>
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={comparisonData}>
+                  <BarChart data={reservasData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                    <XAxis dataKey="categoria" stroke="#6b7280" />
+                    <XAxis dataKey="periodo" stroke="#6b7280" />
                     <YAxis stroke="#6b7280" />
                     <Tooltip 
-                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
+                      itemStyle={{ color: '#fff' }}
+                      labelStyle={{ color: '#fff' }}
                     />
-                    <Legend />
-                    <Bar dataKey="antes" fill="#ef4444" name="Antes" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="despues" fill="#10b981" name="Después" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="valor" fill="#a855f7" name="Reservas" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
+                <div className="mt-6 bg-purple-50 border border-purple-300 rounded-lg p-4">
+                  <p className="text-purple-800 font-bold text-center">
+                    +1,008 reservas más al mes
+                  </p>
+                </div>
               </motion.div>
             </div>
 
