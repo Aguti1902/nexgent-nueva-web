@@ -31,8 +31,8 @@ const cases = [
     company: 'Urban Fitness',
     industry: 'Cadena de Gimnasios',
     franchises: '8 centros deportivos',
-    logo: null,
-    image: null,
+    logo: '/images/logos/URBAN FITNESS.png',
+    image: '/images/FOTO URBAN FITNESS.jpg',
     projectType: 'Transformación digital con IA para gestión completa de leads y atención 24/7',
     features: [
       { icon: FaWhatsapp, title: 'Agente de IA por WhatsApp', description: 'Respuesta inmediata a consultas' },

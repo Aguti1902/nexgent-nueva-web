@@ -58,6 +58,14 @@ export default function UrbanFitnessCaseStudy() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
+                <div className="relative w-48 h-24 mb-6">
+                  <Image
+                    src="/images/logos/URBAN FITNESS.png"
+                    alt="Urban Fitness Logo"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
                 <h1 className="font-monda text-5xl md:text-6xl font-bold text-black mb-6">
                   Caso de éxito: Urban Fitness
                 </h1>
@@ -74,12 +82,14 @@ export default function UrbanFitnessCaseStudy() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="relative h-96 rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-gray-900 to-black flex items-center justify-center"
+                className="relative h-96 rounded-3xl overflow-hidden shadow-2xl"
               >
-                <div className="text-center text-white p-8">
-                  <h2 className="font-monda text-4xl font-bold mb-4">Urban Fitness</h2>
-                  <p className="text-gray-300 text-xl">Cadena líder de gimnasios</p>
-                </div>
+                <Image
+                  src="/images/FOTO URBAN FITNESS.jpg"
+                  alt="Urban Fitness - Gimnasio"
+                  fill
+                  className="object-cover"
+                />
               </motion.div>
             </div>
           </div>
