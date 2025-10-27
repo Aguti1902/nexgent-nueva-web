@@ -1122,6 +1122,584 @@ Una conversación = Una interacción completa con un cliente, sin importar cuán
 Ve tu uso actual en Dashboard → Estadísticas`,
     relatedArticles: ['precios-planes-nexgent', 'cambiar-plan'],
   },
+  // Más Resolución de problemas
+  {
+    slug: 'errores-comunes-soluciones',
+    title: 'Errores comunes y sus soluciones',
+    category: 'Resolución de problemas',
+    views: '8.1K',
+    readTime: '8 min',
+    content: `# Errores comunes y sus soluciones
+
+Resuelve los problemas más frecuentes de forma rápida.
+
+## Error: "No se puede conectar con WhatsApp"
+
+**Causa**: Sesión expirada o código QR no escaneado correctamente.
+
+**Solución**:
+1. Ve a Integraciones → WhatsApp
+2. Desconecta la sesión actual
+3. Reconecta escaneando el QR de nuevo
+4. Asegúrate de tener WhatsApp Business activo en el móvil
+
+## Error: "Límite de mensajes alcanzado"
+
+**Causa**: Has superado el límite de tu plan o el límite de WhatsApp.
+
+**Solución**:
+1. Revisa tu uso en Dashboard → Estadísticas
+2. Actualiza tu plan si es necesario
+3. Si es límite de WhatsApp, espera 24 horas
+
+## Error: "Integración fallida"
+
+**Causa**: Token expirado o permisos incorrectos.
+
+**Solución**:
+1. Reautoriza la integración
+2. Verifica que has dado todos los permisos
+3. Regenera el token si es necesario
+
+## Error: "Bot no responde"
+
+**Causa**: Flujo desactivado o error en la configuración.
+
+**Solución**:
+1. Verifica que el flujo esté activo
+2. Prueba en el simulador
+3. Revisa los logs para ver dónde falla
+
+## ¿Sigue sin funcionar?
+
+Contacta con soporte: info@nexgent.io o WhatsApp +34 684 48 66 47`,
+    relatedArticles: ['troubleshooting-problemas-comunes', 'logs-debugging'],
+  },
+  {
+    slug: 'logs-debugging',
+    title: 'Cómo usar los logs para debugging',
+    category: 'Resolución de problemas',
+    views: '5.3K',
+    readTime: '6 min',
+    content: `# Cómo usar los logs para debugging
+
+Aprende a interpretar los logs y solucionar problemas tú mismo.
+
+## Acceder a los logs
+
+1. Dashboard → Configuración
+2. Desarrollo → Logs
+3. Filtra por fecha, tipo o severidad
+
+## Tipos de logs
+
+- **Info**: Información normal
+- **Warning**: Advertencias (no crítico)
+- **Error**: Errores que requieren atención
+- **Critical**: Errores críticos
+
+## Interpretar un log de error
+
+\`\`\`json
+{
+  "timestamp": "2025-01-15T10:30:00Z",
+  "level": "error",
+  "message": "Failed to send message",
+  "details": {
+    "error_code": "WHATSAPP_QUOTA_EXCEEDED",
+    "conversation_id": "conv_123"
+  }
+}
+\`\`\`
+
+**Error_code** te dice exactamente qué pasó.
+
+## Códigos de error comunes
+
+- **WHATSAPP_QUOTA_EXCEEDED**: Límite de WhatsApp alcanzado
+- **INVALID_PHONE**: Número de teléfono inválido
+- **AUTH_FAILED**: Autenticación fallida
+- **RATE_LIMIT**: Demasiadas peticiones
+
+## Exportar logs
+
+Puedes exportar logs para enviarlos a soporte si necesitas ayuda.`,
+    relatedArticles: ['errores-comunes-soluciones', 'monitoreo-performance'],
+  },
+  {
+    slug: 'monitoreo-performance',
+    title: 'Monitoreo y optimización de performance',
+    category: 'Resolución de problemas',
+    views: '4.7K',
+    readTime: '7 min',
+    content: `# Monitoreo y optimización de performance
+
+Mantén tu sistema funcionando al máximo rendimiento.
+
+## Métricas clave
+
+### Tiempo de respuesta
+- **Óptimo**: <2 segundos
+- **Aceptable**: 2-5 segundos
+- **Lento**: >5 segundos
+
+### Tasa de éxito
+- **Óptimo**: >98%
+- **Aceptable**: 95-98%
+- **Problema**: <95%
+
+### Disponibilidad
+- **SLA**: 99.9% uptime garantizado
+
+## Dashboard de performance
+
+En Dashboard → Analytics → Performance verás:
+- Tiempo de respuesta promedio
+- Tasa de errores
+- Latencia por endpoint
+- Uso de recursos
+
+## Optimizaciones
+
+### 1. Reduce el tamaño de respuestas
+Mensajes más cortos = respuestas más rápidas
+
+### 2. Usa caché inteligente
+Activa el caché para respuestas frecuentes
+
+### 3. Limpia datos antiguos
+Archiva conversaciones de más de 90 días
+
+### 4. Optimiza integraciones
+Sincroniza solo datos necesarios con CRM
+
+## Alertas automáticas
+
+Configura alertas para ser notificado si:
+- Tiempo de respuesta >5 seg
+- Tasa de error >5%
+- Uso >90%`,
+    relatedArticles: ['logs-debugging', 'troubleshooting-problemas-comunes'],
+  },
+  // Más Configuración avanzada
+  {
+    slug: 'flujos-personalizados-avanzados',
+    title: 'Crear flujos personalizados avanzados',
+    category: 'Configuración avanzada',
+    views: '6.9K',
+    readTime: '15 min',
+    content: `# Crear flujos personalizados avanzados
+
+Lleva tus automatizaciones al siguiente nivel con flujos complejos.
+
+## Condicionales avanzados
+
+Usa lógica IF-THEN-ELSE:
+
+\`\`\`
+IF cliente_es_vip THEN
+  mensaje_personalizado + descuento_20%
+ELSE IF cliente_nuevo THEN
+  mensaje_bienvenida + codigo_descuento
+ELSE
+  mensaje_estandar
+END
+\`\`\`
+
+## Variables dinámicas
+
+Usa variables en tus mensajes:
+
+\`\`\`
+Hola {{nombre}}, tu cita es el {{fecha}} a las {{hora}}.
+Confirma respondiendo SÍ.
+\`\`\`
+
+## Loops y repeticiones
+
+Envía recordatorios automáticos:
+
+\`\`\`
+LOOP 3 veces cada 24h:
+  IF no_confirmado THEN
+    enviar_recordatorio
+  ELSE
+    break
+  END
+END
+\`\`\`
+
+## Integraciones en flujos
+
+Ejecuta acciones en otros sistemas:
+
+1. Cliente reserva → Crear evento en Google Calendar
+2. Lead nuevo → Añadir a HubSpot
+3. Pago recibido → Enviar factura por email
+
+## Webhooks en flujos
+
+Llama a tu API cuando ocurra algo:
+
+\`\`\`javascript
+ON evento_reserva_completada:
+  POST https://tu-api.com/webhook
+  BODY: {
+    cliente: {{cliente}},
+    servicio: {{servicio}},
+    fecha: {{fecha}}
+  }
+\`\`\`
+
+## Testing avanzado
+
+Usa el simulador con diferentes escenarios y datos de prueba.`,
+    relatedArticles: ['webhooks-avanzado', 'api-rest-documentacion'],
+  },
+  {
+    slug: 'gestion-equipos-permisos',
+    title: 'Gestión de equipos y permisos',
+    category: 'Configuración avanzada',
+    views: '5.8K',
+    readTime: '8 min',
+    content: `# Gestión de equipos y permisos
+
+Organiza tu equipo y asigna permisos correctamente.
+
+## Roles disponibles
+
+### Admin
+- Acceso total
+- Puede añadir/eliminar usuarios
+- Puede cambiar plan
+- Ve toda la información
+
+### Manager
+- Gestiona operaciones
+- Configura flujos
+- Ve reportes
+- No puede cambiar plan
+
+### Agent
+- Responde conversaciones
+- Ve solo conversaciones asignadas
+- No puede configurar
+
+### Viewer
+- Solo lectura
+- Ve dashboards
+- No puede editar nada
+
+## Invitar usuarios
+
+1. Dashboard → Equipo
+2. "Invitar usuario"
+3. Email + Rol
+4. Enviar invitación
+
+## Permisos personalizados
+
+En plan Enterprise puedes crear roles custom con permisos específicos.
+
+## Organización por departamentos
+
+- **Ventas**: Acceso a leads y conversaciones
+- **Soporte**: Solo a tickets y consultas
+- **Marketing**: Solo a campañas
+
+## Auditoría
+
+Ve quién hizo qué en Dashboard → Auditoría`,
+    relatedArticles: ['configuracion-inicial-plataforma', 'seguridad-datos-rgpd'],
+  },
+  {
+    slug: 'automatizacion-upselling',
+    title: 'Automatización de upselling inteligente',
+    category: 'Configuración avanzada',
+    views: '7.2K',
+    readTime: '10 min',
+    content: `# Automatización de upselling inteligente
+
+Aumenta tus ingresos con upselling automático pero natural.
+
+## ¿Qué es upselling inteligente?
+
+El bot sugiere productos/servicios complementarios en el momento perfecto, sin ser invasivo.
+
+## Estrategias efectivas
+
+### 1. Basado en historial
+"Veo que la última vez pediste manicura. ¿Te gustaría añadir pedicura hoy?"
+
+### 2. Bundle offers
+"Si añades tratamiento facial, te hacemos 15% descuento en el pack completo"
+
+### 3. Temporada
+"Este mes tenemos promoción 2x1 en depilación láser"
+
+## Configuración
+
+1. Dashboard → Automatizaciones
+2. "Nuevo flujo" → "Upselling"
+3. Define reglas:
+   - Cuándo ofrecer
+   - Qué ofrecer
+   - Descuento si aplica
+
+## Ejemplo práctico
+
+\`\`\`
+Cliente reserva manicura (€25)
+
+Bot: "¡Perfecto! Tu cita está confirmada. 
+Por cierto, ¿sabías que puedes añadir pedicura 
+por solo €15 adicionales (normalmente €20)?"
+
+IF cliente_acepta:
+  total = €40
+  ingreso_extra = €15
+\`\`\`
+
+## Métricas
+
+- Tasa de aceptación de upsell
+- Ingreso promedio por cliente
+- ROI de ofertas
+
+## Mejores prácticas
+
+✅ Ofrece solo si tiene sentido
+✅ Personaliza según historial
+✅ No insistas si dice no
+❌ No hagas spam`,
+    relatedArticles: ['crear-flujos-conversacion', 'medir-roi-automatizacion'],
+  },
+  // Más Mejores prácticas
+  {
+    slug: 'optimizacion-tasa-conversion',
+    title: 'Optimización de tasa de conversión',
+    category: 'Mejores prácticas',
+    views: '9.4K',
+    readTime: '12 min',
+    content: `# Optimización de tasa de conversión
+
+Convierte más visitantes en clientes con estas técnicas probadas.
+
+## 1. Reduce la fricción
+
+**Malo**: "Para agendar necesito tu nombre, apellidos, email, teléfono, dirección..."
+
+**Bueno**: "¿Tu nombre? Perfecto, ¿qué día prefieres?"
+
+Pide solo lo esencial al principio.
+
+## 2. Respuesta inmediata
+
+**Estadística**: Responder en <5 minutos aumenta conversión en 400%
+
+Usa el bot para respuesta instantánea 24/7.
+
+## 3. Opciones claras
+
+**Malo**: "¿Qué quieres hacer?"
+
+**Bueno**: "¿Qué te interesa?
+A) Agendar cita
+B) Ver precios
+C) Hablar con alguien"
+
+Máximo 3 opciones por pregunta.
+
+## 4. Urgencia (sin presión)
+
+"Tenemos disponibilidad mañana a las 10:00 y 15:00. ¿Te gustaría reservar una?"
+
+## 5. Social proof
+
+"Únete a +500 clientes satisfechos 🌟"
+
+## 6. Garantías
+
+"Cambio de fecha gratis hasta 24h antes"
+
+## 7. Seguimiento automático
+
+Si el cliente no termina la reserva:
+- Recordatorio a las 2 horas
+- Otro a las 24 horas
+- Oferta especial a los 3 días
+
+## A/B Testing
+
+Prueba variaciones de mensajes y mide qué funciona mejor.
+
+## Métricas clave
+
+- Lead → Conversación iniciada: >70%
+- Conversación → Reserva: >40%
+- Reserva → Completada: >90%`,
+    relatedArticles: ['crear-flujos-conversacion', 'medir-roi-automatizacion'],
+  },
+  {
+    slug: 'casos-uso-industria',
+    title: 'Casos de uso por industria',
+    category: 'Mejores prácticas',
+    views: '11.2K',
+    readTime: '14 min',
+    content: `# Casos de uso por industria
+
+Implementaciones específicas según tu sector.
+
+## 🎨 Salones de belleza
+
+**Automatizaciones clave**:
+- Reservas automáticas
+- Recordatorios 24h antes
+- Confirmación de asistencia
+- Upselling de servicios
+- Encuesta post-servicio
+
+**Resultado promedio**: +40% reservas, -65% no-shows
+
+## 💪 Gimnasios y fitness
+
+**Automatizaciones clave**:
+- Gestión de leads (pruebas gratis)
+- Reserva de clases
+- Recordatorios de renovación
+- Programa de referidos
+- Recuperación de abandonos
+
+**Resultado promedio**: +185% conversión leads
+
+## 🦷 Clínicas dentales
+
+**Automatizaciones clave**:
+- Recordatorios de citas
+- Seguimiento post-tratamiento
+- Recordatorios de revisiones anuales
+- Gestión de urgencias
+- Confirmación de seguros
+
+**Resultado promedio**: -78% no-shows, +65% ocupación
+
+## 🍽️ Restaurantes
+
+**Automatizaciones clave**:
+- Reservas de mesas
+- Pedidos delivery
+- Programas de fidelización
+- Feedback instantáneo
+- Promociones especiales
+
+**Resultado promedio**: +55% reservas online
+
+## 🏨 Hoteles y turismo
+
+**Automatizaciones clave**:
+- Gestión de reservas
+- Check-in/out digital
+- Servicios de conserjería
+- Upselling de experiencias
+- Reviews automatizados
+
+**Resultado promedio**: +30% revenue per guest
+
+## 🏪 Retail y e-commerce
+
+**Automatizaciones clave**:
+- Recuperación de carritos abandonados
+- Notificaciones de envío
+- Atención al cliente 24/7
+- Recomendaciones personalizadas
+- Programa de lealtad
+
+**Resultado promedio**: +25% recuperación carritos
+
+## 📚 Educación
+
+**Automatizaciones clave**:
+- Información de cursos
+- Inscripciones
+- Recordatorios de clases
+- Envío de materiales
+- Encuestas de satisfacción
+
+**Resultado promedio**: +40% inscripciones`,
+    relatedArticles: ['optimizacion-tasa-conversion', 'crear-flujos-conversacion'],
+  },
+  {
+    slug: 'estrategias-retencion-clientes',
+    title: 'Estrategias de retención de clientes',
+    category: 'Mejores prácticas',
+    views: '8.6K',
+    readTime: '11 min',
+    content: `# Estrategias de retención de clientes
+
+Mantén a tus clientes felices y volviendo por más.
+
+## 1. Onboarding perfecto
+
+Primeros 7 días son críticos:
+- Mensaje de bienvenida personalizado
+- Tutorial de uso
+- Oferta especial de bienvenida
+- Check-in al día 3 y 7
+
+## 2. Comunicación proactiva
+
+**No esperes a que pregunten**:
+- Avisos de mantenimiento
+- Nuevos servicios disponibles
+- Contenido educativo
+- Tips relacionados con su interés
+
+## 3. Programa de fidelización
+
+"Por cada 5 visitas, la 6ta tiene 20% descuento"
+
+Automatiza el tracking y los recordatorios.
+
+## 4. Fechas importantes
+
+Automatiza mensajes en:
+- Cumpleaños del cliente
+- Aniversario de primera compra
+- Festivos especiales
+
+"¡Feliz cumpleaños María! 🎂 Te regalamos 15% en tu próxima visita"
+
+## 5. Recuperación de inactivos
+
+Si un cliente no vuelve en X días:
+- Día 30: "Te echamos de menos"
+- Día 60: Oferta especial
+- Día 90: Encuesta "¿Por qué no vuelves?"
+
+## 6. Pide feedback
+
+Después de cada servicio:
+"¿Cómo fue tu experiencia? (1-5 ⭐)"
+
+Si <4 estrellas → escalado a manager
+Si 5 estrellas → pide review pública
+
+## 7. Crea comunidad
+
+- Grupo exclusivo de WhatsApp
+- Early access a promociones
+- Eventos VIP
+
+## Métricas de retención
+
+- **Retention rate**: % clientes que vuelven
+- **Churn rate**: % clientes que se van
+- **LTV**: Lifetime value promedio
+- **Frecuencia de compra**: Veces por año
+
+**Objetivo**: Retention >80%, Churn <20%`,
+    relatedArticles: ['casos-uso-industria', 'automatizacion-upselling'],
+  },
 ]
 
 export function getArticleBySlug(slug: string): Article | undefined {
