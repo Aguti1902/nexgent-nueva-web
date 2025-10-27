@@ -1,4 +1,4 @@
-import { FaQuestionCircle, FaSearch, FaBook, FaVideo, FaComments, FaCheckCircle, FaHeadset, FaClock, FaRocket, FaBolt, FaCog, FaChartLine, FaUsers, FaShieldAlt } from 'react-icons/fa'
+import { FaQuestionCircle, FaSearch, FaBook, FaComments, FaCheckCircle, FaHeadset, FaClock, FaRocket, FaBolt, FaCog, FaChartLine, FaUsers, FaShieldAlt, FaWhatsapp } from 'react-icons/fa'
 import Button from '@/components/ui/Button'
 
 export const metadata = {
@@ -14,13 +14,6 @@ export default function CentroAyudaPage() {
       description: 'Todo lo que necesitas para empezar',
       articles: 12,
       topics: ['Creación de cuenta', 'Configuración inicial', 'Primera automatización'],
-    },
-    {
-      icon: FaVideo,
-      title: 'Tutoriales en vídeo',
-      description: 'Aprende visualmente paso a paso',
-      articles: 24,
-      topics: ['WhatsApp Business', 'Gestión de reservas', 'CRM con IA'],
     },
     {
       icon: FaComments,
@@ -102,13 +95,15 @@ export default function CentroAyudaPage() {
       description: 'Respuesta en menos de 8 minutos',
       availability: '24/7',
       cta: 'Abrir chat',
+      href: '#',
     },
     {
-      icon: FaComments,
+      icon: FaWhatsapp,
       title: 'WhatsApp',
       description: 'Contacta directamente con soporte',
       availability: '24/7',
-      cta: '+34 XXX XXX XXX',
+      cta: '+34 684 48 66 47',
+      href: 'https://wa.me/34684486647',
     },
     {
       icon: FaBook,
@@ -116,13 +111,7 @@ export default function CentroAyudaPage() {
       description: 'Guías técnicas completas',
       availability: 'Siempre disponible',
       cta: 'Ver docs',
-    },
-    {
-      icon: FaVideo,
-      title: 'Video tutoriales',
-      description: 'Aprende visualmente',
-      availability: '24 videos disponibles',
-      cta: 'Ver videos',
+      href: '#',
     },
   ]
 
@@ -269,7 +258,7 @@ export default function CentroAyudaPage() {
               <h2 className="font-monda text-4xl font-bold text-black mb-4">Canales de soporte</h2>
               <p className="text-lg text-gray-600">Elige cómo quieres que te ayudemos</p>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-3 gap-8">
               {supportChannels.map((channel, idx) => (
                 <div key={idx} className="bg-white rounded-xl p-8 border border-gray-200 hover:border-purple-500 hover:shadow-xl transition-all text-center group">
                   <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-3xl mx-auto mb-6 group-hover:bg-purple-500 group-hover:text-white transition-all">
@@ -278,9 +267,14 @@ export default function CentroAyudaPage() {
                   <h3 className="font-bold text-lg text-black mb-2">{channel.title}</h3>
                   <p className="text-sm text-gray-600 mb-2">{channel.description}</p>
                   <p className="text-xs text-gray-500 mb-6">{channel.availability}</p>
-                  <button className="w-full bg-purple-500 text-white py-3 rounded-lg font-semibold hover:bg-purple-600 transition-all">
+                  <a 
+                    href={channel.href}
+                    target={channel.href.startsWith('http') ? '_blank' : undefined}
+                    rel={channel.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="block w-full bg-purple-500 text-white py-3 rounded-lg font-semibold hover:bg-purple-600 transition-all"
+                  >
                     {channel.cta}
-                  </button>
+                  </a>
                 </div>
               ))}
             </div>
