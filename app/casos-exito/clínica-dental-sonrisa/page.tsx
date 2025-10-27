@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { FaCheckCircle, FaArrowRight, FaCalendarAlt } from 'react-icons/fa'
 import Link from 'next/link'
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
@@ -58,6 +59,14 @@ export default function ClinicaDentalCaseStudy() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
+                <div className="relative w-48 h-24 mb-6">
+                  <Image
+                    src="/images/logos/NOVA DENTAL.png"
+                    alt="Nova Dental Logo"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
                 <h1 className="font-monda text-5xl md:text-6xl font-bold text-black mb-6">
                   Caso de éxito: Clínica Dental Sonrisa
                 </h1>
@@ -74,12 +83,14 @@ export default function ClinicaDentalCaseStudy() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="relative h-96 rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center"
+                className="relative h-96 rounded-3xl overflow-hidden shadow-2xl"
               >
-                <div className="text-center text-white p-8">
-                  <h2 className="font-monda text-4xl font-bold mb-4">Clínica Dental Sonrisa</h2>
-                  <p className="text-blue-100 text-xl">Atención dental de excelencia</p>
-                </div>
+                <Image
+                  src="/images/CLINICA DENTAL.jpg"
+                  alt="Clínica Dental Sonrisa"
+                  fill
+                  className="object-cover"
+                />
               </motion.div>
             </div>
           </div>

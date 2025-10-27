@@ -52,8 +52,8 @@ const cases = [
     company: 'Clínica Dental Sonrisa',
     industry: 'Clínica Dental',
     franchises: '3 clínicas',
-    logo: null,
-    image: null,
+    logo: '/images/logos/NOVA DENTAL.png',
+    image: '/images/CLINICA DENTAL.jpg',
     projectType: 'Sistema completo de gestión de citas, recordatorios automáticos y seguimiento de pacientes',
     features: [
       { icon: FaWhatsapp, title: 'Recordatorios automáticos', description: 'WhatsApp y SMS personalizados' },
