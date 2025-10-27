@@ -303,7 +303,9 @@ export default function ClinicaDentalCaseStudy() {
                       ))}
                     </Pie>
                     <Tooltip 
-                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px', color: '#fff' }}
+                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
+                      itemStyle={{ color: '#fff' }}
+                      labelStyle={{ color: '#fff' }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
