@@ -4,10 +4,10 @@ import { motion } from 'framer-motion'
 
 export default function ContactHero() {
   return (
-    <section className="relative min-h-[70vh] flex items-center justify-center bg-white overflow-hidden pt-24">
+    <section className="relative min-h-[60vh] flex items-center justify-center bg-white overflow-hidden pt-24">
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:100px_100px]" />
 
-      <div className="container-custom px-6 py-24 relative z-10">
+      <div className="container-custom px-6 py-12 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
