@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+function getOpenAIClient() {
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY || 'dummy-key-for-build',
+  })
+}
 
 const systemPrompt = `Eres un asistente virtual experto de NexGent, una agencia líder en desarrollo de agentes de inteligencia artificial para empresas. Tu función es ayudar a los visitantes a entender qué son los agentes de IA y cómo NexGent puede ayudar a automatizar sus negocios.
 
@@ -70,7 +72,15 @@ No inventes información. Si te preguntan algo fuera de estos temas o que no sep
 
 export async function POST(request: Request) {
   try {
+    if (!process.env.OPENAI_API_KEY) {
+      return NextResponse.json(
+        { error: 'API key no configurada' },
+        { status: 500 }
+      )
+    }
+
     const { messages } = await request.json()
+    const openai = getOpenAIClient()
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4',
