@@ -8,7 +8,7 @@ import { FaWhatsapp, FaPhoneAlt, FaClock, FaCalendarCheck, FaNetworkWired } from
 const caseStudy = {
   company: 'Hello Nails',
   industry: 'Salón de Belleza y Uñas',
-  franchises: 'Negocio local',
+  franchises: 'Más de 200 centros',
   projectType: 'Transformación digital completa con IA para gestión automática de reservas, recordatorios y atención al cliente 24/7',
   features: [
     { icon: FaWhatsapp, title: 'Agente de IA por WhatsApp', description: 'Respuesta inmediata a consultas' },
@@ -77,6 +77,15 @@ export default function CaseStudies() {
               >
                 <div className="mb-8">
                   <div className="mb-6">
+                    <div className="relative w-40 h-20 mb-4">
+                      <Image
+                        src="/images/logos/HELLO NAILS.png"
+                        alt="Hello Nails Logo"
+                        fill
+                        className="object-contain"
+                        sizes="160px"
+                      />
+                    </div>
                     <h3 className="font-monda text-4xl font-bold text-black">{caseStudy.company}</h3>
                   </div>
                   <div className="flex items-center gap-4 mb-4">
