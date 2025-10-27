@@ -1,4 +1,4 @@
-import { FaBook, FaClock, FaArrowRight, FaCheckCircle, FaRocket, FaTrendingUp, FaUsers, FaBrain, FaChartLine } from 'react-icons/fa'
+import { FaBook, FaClock, FaArrowRight, FaCheckCircle, FaRocket, FaUsers, FaBrain, FaChartLine } from 'react-icons/fa'
 import Button from '@/components/ui/Button'
 
 export const metadata = {
@@ -63,7 +63,7 @@ export default function BlogPage() {
 
   const categories = [
     {icon: FaBrain, name: 'IA & Negocios', count: 28},
-    {icon: FaTrendingUp, name: 'Casos de Éxito', count: 15},
+    {icon: FaCheckCircle, name: 'Casos de Éxito', count: 15},
     {icon: FaRocket, name: 'Guías Prácticas', count: 22},
     {icon: FaChartLine, name: 'Análisis & Datos', count: 12},
   ]
