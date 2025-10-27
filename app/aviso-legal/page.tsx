@@ -27,7 +27,7 @@ export default function AvisoLegalPage() {
               <li>Titular: NexGent Technologies S.L.</li>
               <li>NIF: B-12345678</li>
               <li>Domicilio social: Madrid, España</li>
-              <li>Email: hola@nexgent.com</li>
+              <li>Email: info@nexgent.io</li>
             </ul>
           </section>
 

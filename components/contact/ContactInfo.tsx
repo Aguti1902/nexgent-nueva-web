@@ -8,22 +8,15 @@ const contactMethods = [
     icon: FaEnvelope,
     title: 'Email',
     description: 'Respuesta en menos de 24h',
-    contact: 'hola@nexgent.com',
-    href: 'mailto:hola@nexgent.com',
+    contact: 'info@nexgent.io',
+    href: 'mailto:info@nexgent.io',
   },
   {
     icon: FaPhone,
     title: 'Teléfono',
     description: 'Lunes a Viernes, 9:00-18:00',
-    contact: '+34 900 000 000',
-    href: 'tel:+34900000000',
-  },
-  {
-    icon: FaCalendarAlt,
-    title: 'Agendar Demo',
-    description: 'Elige el mejor horario para ti',
-    contact: 'Calendly',
-    href: '#',
+    contact: '+34 684 48 66 47',
+    href: 'tel:+34684486647',
   },
 ]
 
@@ -46,7 +39,7 @@ export default function ContactInfo() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {contactMethods.map((method, index) => (
             <motion.a
               key={method.title}

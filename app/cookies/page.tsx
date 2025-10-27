@@ -118,7 +118,7 @@ export default function CookiesPage() {
             <p>
               Si tienes preguntas sobre nuestra Política de Cookies, puedes contactarnos en:
               <br />
-              <strong>Email:</strong> hola@nexgent.com
+              <strong>Email:</strong> info@nexgent.io
             </p>
           </section>
         </div>

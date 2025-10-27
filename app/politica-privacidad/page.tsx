@@ -23,7 +23,7 @@ export default function PoliticaPrivacidadPage() {
               datos personales recogidos a través de este sitio web.
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2">
-              <li>Email de contacto: hola@nexgent.com</li>
+              <li>Email de contacto: info@nexgent.io</li>
               <li>Domicilio: Madrid, España</li>
             </ul>
           </section>
@@ -101,7 +101,7 @@ export default function PoliticaPrivacidadPage() {
               <li>Solicitar la portabilidad de tus datos</li>
             </ul>
             <p className="mt-4">
-              Para ejercer estos derechos, contacta con nosotros en: hola@nexgent.com
+              Para ejercer estos derechos, contacta con nosotros en: info@nexgent.io
             </p>
           </section>
 
