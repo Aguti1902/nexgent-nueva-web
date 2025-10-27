@@ -5,13 +5,6 @@ import { FaStar } from 'react-icons/fa'
 
 const testimonials = [
   {
-    name: 'Laura Martínez',
-    position: 'Directora de Operaciones',
-    company: 'Hello Nails',
-    rating: 5,
-    testimonial: 'La implementación fue rapidísima y los resultados superaron nuestras expectativas. El agente de IA gestiona cientos de conversaciones diarias con una naturalidad increíble.',
-  },
-  {
     name: 'Carlos Ruiz',
     position: 'Propietario',
     company: 'Style Studio',
@@ -53,7 +46,7 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}

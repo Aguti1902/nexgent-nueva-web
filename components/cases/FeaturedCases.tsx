@@ -6,20 +6,20 @@ import Button from '@/components/ui/Button'
 
 const cases = [
   {
-    company: 'Urban Fitness',
-    industry: 'Cadena de Gimnasios',
-    icon: FaDumbbell,
-    description: 'Red de 8 gimnasios que perdía el 40% de consultas por WhatsApp por falta de respuesta rápida y gestión manual.',
-    solution: 'Agente de IA en WhatsApp con respuestas instantáneas, gestión de reservas, seguimiento de leads y automatización completa.',
+    company: 'Hello Nails',
+    industry: 'Salón de Belleza y Uñas - Más de 200 centros',
+    icon: FaSpa,
+    description: 'Cadena de más de 200 salones de belleza que necesitaba optimizar la gestión de reservas y reducir las ausencias de clientes.',
+    solution: 'Transformación digital completa con IA para gestión automática de reservas, recordatorios personalizados y atención al cliente 24/7 por WhatsApp.',
     results: [
-      { metric: '185%', label: 'Aumento en ventas' },
-      { metric: '100%', label: 'Respuestas en <2min' },
-      { metric: '€12K', label: 'Ahorro mensual' },
-      { metric: '92%', label: 'Satisfacción cliente' },
+      { metric: '+42%', label: 'Aumento en reservas' },
+      { metric: '-68%', label: 'Reducción no-shows' },
+      { metric: '€2.1K', label: 'Ingresos extra mensuales' },
+      { metric: '95%', label: 'Ocupación promedio' },
     ],
-    testimonial: 'El impacto ha sido increíble. Pasamos de perder el 40% de consultas a responder el 100% en menos de 2 minutos. Las ventas subieron un 185% y nuestro equipo está liberado de tareas repetitivas.',
-    author: 'Carlos Mendoza',
-    position: 'CEO',
+    testimonial: 'Antes perdíamos el 30% de citas por no-shows y teníamos huecos sin llenar. Ahora el sistema gestiona todo automáticamente: reservas, confirmaciones, recordatorios. Pasamos de 68% a 95% de ocupación. €2,100 más por mes solo optimizando la agenda. Increíble.',
+    author: 'Teresa Messía',
+    position: 'Propietaria',
   },
   {
     company: 'Style Studio',
