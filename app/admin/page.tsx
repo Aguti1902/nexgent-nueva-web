@@ -1,11 +1,45 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog } from 'react-icons/fa'
+import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog, FaSignOutAlt } from 'react-icons/fa'
 
 export default function AdminDashboard() {
+  const router = useRouter()
   const [activeSection, setActiveSection] = useState('overview')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [username, setUsername] = useState('')
+
+  useEffect(() => {
+    // Verificar autenticación
+    const authenticated = localStorage.getItem('adminAuthenticated')
+    const user = localStorage.getItem('adminUsername')
+    
+    if (authenticated === 'true' && user) {
+      setIsAuthenticated(true)
+      setUsername(user)
+    } else {
+      router.push('/admin/login')
+    }
+  }, [router])
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminAuthenticated')
+    localStorage.removeItem('adminUsername')
+    router.push('/admin/login')
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Verificando acceso...</p>
+        </div>
+      </div>
+    )
+  }
 
   const stats = [
     { label: 'Artículos del Blog', value: '7', icon: FaBook, color: 'blue' },
@@ -34,12 +68,23 @@ export default function AdminDashboard() {
               </span>
             </div>
             <div className="flex items-center gap-4">
+              <span className="text-gray-600">
+                Hola, <strong>{username}</strong>
+              </span>
               <Link 
                 href="/" 
+                target="_blank"
                 className="text-gray-600 hover:text-black transition-colors"
               >
                 Ver sitio web →
               </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-all"
+              >
+                <FaSignOutAlt />
+                Cerrar sesión
+              </button>
             </div>
           </div>
         </div>
