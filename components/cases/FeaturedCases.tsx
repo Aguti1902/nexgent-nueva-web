@@ -48,6 +48,27 @@ const cases = [
       { value: '92%', label: 'Satisfacción cliente' },
     ],
   },
+  {
+    company: 'Clínica Dental Sonrisa',
+    industry: 'Clínica Dental',
+    franchises: '3 clínicas',
+    logo: null,
+    image: null,
+    projectType: 'Sistema completo de gestión de citas, recordatorios automáticos y seguimiento de pacientes',
+    features: [
+      { icon: FaWhatsapp, title: 'Recordatorios automáticos', description: 'WhatsApp y SMS personalizados' },
+      { icon: FaPhoneAlt, title: 'Llamadas de seguimiento', description: 'IA que llama a pacientes' },
+      { icon: FaClock, title: 'Gestión de urgencias', description: 'Priorización inteligente' },
+      { icon: FaCalendarCheck, title: 'Sistema de citas', description: 'Reserva online 24/7' },
+      { icon: FaNetworkWired, title: 'Historia clínica digital', description: 'Integrada con IA' },
+    ],
+    results: [
+      { value: '-78%', label: 'Reducción no-shows' },
+      { value: '+65%', label: 'Más citas mensuales' },
+      { value: '€8.5K', label: 'Ingresos extra/mes' },
+      { value: '98%', label: 'Satisfacción pacientes' },
+    ],
+  },
 ]
 
 export default function FeaturedCases() {
@@ -266,19 +287,16 @@ export default function FeaturedCases() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.4 }}
                       viewport={{ once: true }}
-                      className="flex flex-col items-center gap-4"
+                      className="flex justify-center"
                     >
                       <motion.a
-                        href="/contacto"
+                        href={`/casos-exito/${caseStudy.company.toLowerCase().replace(/ /g, '-')}`}
                         whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(255,255,255,0.3)" }}
                         whileTap={{ scale: 0.95 }}
                         className="bg-white text-black font-bold py-5 px-14 rounded-full transition-all duration-300 text-lg hover:bg-gray-100 shadow-xl"
                       >
-                        ¿Quieres resultados así?
+                        Ver caso de éxito completo
                       </motion.a>
-                      <p className="text-gray-400 text-sm">
-                        Agenda una demo gratuita y descubre el potencial de tu negocio
-                      </p>
                     </motion.div>
                   </div>
                 </div>
