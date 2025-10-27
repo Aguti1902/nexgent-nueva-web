@@ -31,7 +31,7 @@ const cases = [
     company: 'Urban Fitness',
     industry: 'Cadena de Gimnasios',
     franchises: '8 centros deportivos',
-    logo: '/images/logos/URBAN FITNESS.png',
+    logo: '/images/logos/URBAN FITNESS2.png',
     image: '/images/FOTO URBAN FITNESS.jpg',
     projectType: 'Transformación digital con IA para gestión completa de leads y atención 24/7',
     features: [
@@ -49,7 +49,7 @@ const cases = [
     ],
   },
   {
-    company: 'Clínica Dental Sonrisa',
+    company: 'Clínica Nova Dental',
     industry: 'Clínica Dental',
     franchises: '3 clínicas',
     logo: '/images/logos/NOVA DENTAL.png',

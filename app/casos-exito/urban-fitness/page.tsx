@@ -61,7 +61,7 @@ export default function UrbanFitnessCaseStudy() {
               >
                 <div className="relative w-48 h-24 mb-6">
                   <Image
-                    src="/images/logos/URBAN FITNESS.png"
+                    src="/images/logos/URBAN FITNESS2.png"
                     alt="Urban Fitness Logo"
                     fill
                     className="object-contain"

@@ -68,13 +68,13 @@ export default function ClinicaDentalCaseStudy() {
                   />
                 </div>
                 <h1 className="font-monda text-5xl md:text-6xl font-bold text-black mb-6">
-                  Caso de éxito: Clínica Dental Sonrisa
+                  Caso de éxito: Clínica Nova Dental
                 </h1>
                 <p className="text-xl text-gray-600 mb-4">
                   Clínica Dental • 3 clínicas
                 </p>
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  Descubre cómo Clínica Dental Sonrisa redujo los no-shows en un 78%, aumentó las citas un 65% 
+                  Descubre cómo Clínica Nova Dental redujo los no-shows en un 78%, aumentó las citas un 65% 
                   y genera €8.5K adicionales al mes con IA.
                 </p>
               </motion.div>
@@ -87,7 +87,7 @@ export default function ClinicaDentalCaseStudy() {
               >
                 <Image
                   src="/images/CLINICA DENTAL.jpg"
-                  alt="Clínica Dental Sonrisa"
+                  alt="Clínica Nova Dental"
                   fill
                   className="object-cover"
                 />
@@ -105,7 +105,7 @@ export default function ClinicaDentalCaseStudy() {
               <div>
                 <h2 className="font-monda text-3xl font-bold text-black mb-6">El Desafío</h2>
                 <p className="text-gray-700 leading-relaxed mb-4">
-                  Las 3 clínicas de Sonrisa enfrentaban un <strong>22% de ausencias</strong> sin previo aviso, 
+                  Las 3 clínicas de Nova Dental enfrentaban un <strong>22% de ausencias</strong> sin previo aviso, 
                   lo que significaba horas perdidas y pérdidas económicas significativas.
                 </p>
                 <p className="text-gray-700 leading-relaxed">
@@ -375,7 +375,7 @@ export default function ClinicaDentalCaseStudy() {
               Optimiza tu clínica dental
             </h2>
             <p className="text-xl text-gray-300 mb-8">
-              Descubre cómo reducir no-shows y aumentar ingresos como Clínica Dental Sonrisa
+              Descubre cómo reducir no-shows y aumentar ingresos como Clínica Nova Dental
             </p>
             <Link
               href="/contacto"
