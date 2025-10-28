@@ -24,42 +24,73 @@ export default function AdminDashboard() {
     if (authenticated === 'true' && user) {
       setIsAuthenticated(true)
       setUsername(user)
-      // Cargar artículos del blog
-      setBlogArticles(getAllBlogArticles())
+      // Cargar artículos del blog desde Supabase
+      loadArticles()
     } else {
       router.push('/admin/login')
     }
   }, [router])
 
-  const handleDeleteArticle = (articleId: string) => {
-    if (deleteConfirm === articleId) {
-      // Aquí iría la lógica real de eliminación
-      // Por ahora solo actualizamos el estado local
-      const savedArticles = localStorage.getItem('blogArticles')
-      if (savedArticles) {
-        const articles = JSON.parse(savedArticles)
-        const updated = articles.filter((a: BlogArticle) => a.id !== articleId)
-        localStorage.setItem('blogArticles', JSON.stringify(updated))
+  const loadArticles = async () => {
+    try {
+      const response = await fetch('/api/blog?published=false') // Cargar todos los artículos (incluidos borradores)
+      if (response.ok) {
+        const data = await response.json()
+        setBlogArticles(data.articles || [])
       }
-      setBlogArticles(blogArticles.filter(a => a.id !== articleId))
+    } catch (error) {
+      console.error('Error loading articles:', error)
+      // Fallback a artículos predefinidos si falla
+      setBlogArticles(getAllBlogArticles())
+    }
+  }
+
+  const handleDeleteArticle = async (articleId: string) => {
+    if (deleteConfirm === articleId) {
+      try {
+        const response = await fetch(`/api/blog/${articleId}`, {
+          method: 'DELETE'
+        })
+        
+        if (response.ok) {
+          alert('✅ Artículo eliminado correctamente')
+          loadArticles() // Recargar la lista
+        } else {
+          alert('❌ Error al eliminar el artículo')
+        }
+      } catch (error) {
+        console.error('Error deleting article:', error)
+        alert('❌ Error al eliminar el artículo')
+      }
       setDeleteConfirm(null)
-      alert('Artículo eliminado correctamente')
     } else {
       setDeleteConfirm(articleId)
       setTimeout(() => setDeleteConfirm(null), 3000)
     }
   }
 
-  const togglePublishStatus = (articleId: string) => {
-    const updated = blogArticles.map(article => 
-      article.id === articleId 
-        ? { ...article, published: !article.published }
-        : article
-    )
-    setBlogArticles(updated)
-    // Guardar en localStorage
-    localStorage.setItem('blogArticles', JSON.stringify(updated))
-    alert('Estado actualizado')
+  const togglePublishStatus = async (articleId: string) => {
+    try {
+      // Encontrar el artículo actual para saber su estado
+      const article = blogArticles.find(a => a.id === articleId)
+      if (!article) return
+      
+      const response = await fetch(`/api/blog/${articleId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ published: !article.published })
+      })
+      
+      if (response.ok) {
+        alert('✅ Estado actualizado')
+        loadArticles() // Recargar la lista
+      } else {
+        alert('❌ Error al actualizar el estado')
+      }
+    } catch (error) {
+      console.error('Error updating status:', error)
+      alert('❌ Error al actualizar el estado')
+    }
   }
 
   const handleLogout = () => {

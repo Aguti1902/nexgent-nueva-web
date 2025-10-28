@@ -58,23 +58,42 @@ export default function NuevoArticuloBlog() {
     }
   }
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      // Validar tamaño (max 2MB para base64)
-      if (file.size > 2 * 1024 * 1024) {
-        alert('La imagen es muy grande. Por favor, selecciona una imagen menor a 2MB.')
+      // Validar tamaño (max 5MB para Supabase)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('La imagen es muy grande. Por favor, selecciona una imagen menor a 5MB.')
         return
       }
 
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setFormData(prev => ({
-          ...prev,
-          imagenDestacada: reader.result as string
-        }))
+      // Mostrar loading
+      const loadingMsg = alert('Subiendo imagen...')
+      
+      try {
+        // Subir a Supabase Storage
+        const uploadFormData = new FormData()
+        uploadFormData.append('file', file)
+        
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: uploadFormData
+        })
+        
+        if (response.ok) {
+          const data = await response.json()
+          setFormData(prev => ({
+            ...prev,
+            imagenDestacada: data.url // URL de Supabase
+          }))
+          alert('✅ Imagen subida correctamente')
+        } else {
+          alert('❌ Error al subir la imagen')
+        }
+      } catch (error) {
+        console.error('Error uploading image:', error)
+        alert('❌ Error al subir la imagen')
       }
-      reader.readAsDataURL(file)
     }
   }
 
@@ -82,7 +101,7 @@ export default function NuevoArticuloBlog() {
     setFormData(prev => ({ ...prev, imagenDestacada: '' }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     // Validar que los campos requeridos estén completos
@@ -91,30 +110,40 @@ export default function NuevoArticuloBlog() {
       return
     }
 
-    // Crear nuevo artículo
-    const newArticle = {
-      id: Date.now().toString(), // ID único basado en timestamp
-      slug: formData.slug,
-      title: formData.titulo,
-      category: formData.categoria,
-      excerpt: formData.extracto,
-      content: formData.contenido,
-      date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }),
-      readTime: formData.tiempoLectura,
-      author: formData.autor,
-      image: formData.imagenDestacada,
-      published: true,
+    try {
+      // Crear nuevo artículo
+      const newArticle = {
+        slug: formData.slug,
+        title: formData.titulo,
+        category: formData.categoria,
+        excerpt: formData.extracto,
+        content: formData.contenido,
+        date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }),
+        read_time: formData.tiempoLectura,
+        author: formData.autor,
+        image_url: formData.imagenDestacada || null,
+        published: true,
+      }
+
+      // Guardar en Supabase
+      const response = await fetch('/api/blog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newArticle)
+      })
+
+      if (response.ok) {
+        alert('✅ Artículo publicado correctamente!')
+        // Redirigir al dashboard
+        router.push('/admin')
+      } else {
+        const error = await response.json()
+        alert(`❌ Error al publicar: ${error.error || 'Error desconocido'}`)
+      }
+    } catch (error) {
+      console.error('Error creating article:', error)
+      alert('❌ Error al publicar el artículo')
     }
-
-    // Guardar en localStorage
-    const existingArticles = JSON.parse(localStorage.getItem('blogArticles') || '[]')
-    const updatedArticles = [newArticle, ...existingArticles]
-    localStorage.setItem('blogArticles', JSON.stringify(updatedArticles))
-
-    alert('✅ Artículo publicado correctamente!')
-    
-    // Redirigir al dashboard
-    router.push('/admin')
   }
 
   return (

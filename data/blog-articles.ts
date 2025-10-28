@@ -1666,40 +1666,77 @@ Sigue estas lecciones de 200+ fracasos analizados y estarás en el 27% exitoso.
 ]
 
 // Funciones helper
-// Helper para obtener artículos de localStorage
-function getStoredArticles(): BlogArticle[] {
+// Combinar artículos de Supabase con los predefinidos
+async function fetchSupabaseArticles(): Promise<BlogArticle[]> {
   if (typeof window === 'undefined') return []
-  const stored = localStorage.getItem('blogArticles')
-  return stored ? JSON.parse(stored) : []
+  
+  try {
+    const response = await fetch('/api/blog?published=true')
+    if (response.ok) {
+      const data = await response.json()
+      return data.articles || []
+    }
+  } catch (error) {
+    console.error('Error fetching articles from Supabase:', error)
+  }
+  return []
 }
 
-// Combinar artículos predefinidos con los del localStorage
-function getAllArticles(): BlogArticle[] {
-  const stored = getStoredArticles()
-  // Los artículos nuevos del localStorage van primero
-  return [...stored, ...blogArticles]
-}
-
+// Versión sincrónica que retorna solo artículos predefinidos (para SSR)
 export function getAllBlogArticles(): BlogArticle[] {
-  return getAllArticles().filter(article => article.published)
+  return blogArticles.filter(article => article.published)
+}
+
+// Versión asincrónica que incluye artículos de Supabase (para cliente)
+export async function getAllBlogArticlesAsync(): Promise<BlogArticle[]> {
+  const supabaseArticles = await fetchSupabaseArticles()
+  const predefinedArticles = blogArticles.filter(article => article.published)
+  
+  // Combinar y ordenar por fecha (más recientes primero)
+  return [...supabaseArticles, ...predefinedArticles].sort((a, b) => {
+    const dateA = new Date(a.date).getTime()
+    const dateB = new Date(b.date).getTime()
+    return dateB - dateA
+  })
 }
 
 export function getBlogArticleBySlug(slug: string): BlogArticle | undefined {
-  return getAllArticles().find(article => article.slug === slug)
+  return blogArticles.find(article => article.slug === slug)
+}
+
+// Versión asincrónica para búsqueda en ambas fuentes
+export async function getBlogArticleBySlugAsync(slug: string): Promise<BlogArticle | undefined> {
+  const allArticles = await getAllBlogArticlesAsync()
+  return allArticles.find(article => article.slug === slug)
 }
 
 export function getBlogArticlesByCategory(category: string): BlogArticle[] {
-  return getAllArticles().filter(article => article.category === category && article.published)
+  return blogArticles.filter(article => article.category === category && article.published)
+}
+
+export async function getBlogArticlesByCategoryAsync(category: string): Promise<BlogArticle[]> {
+  const allArticles = await getAllBlogArticlesAsync()
+  return allArticles.filter(article => article.category === category)
 }
 
 export function searchBlogArticles(query: string): BlogArticle[] {
   const lowerQuery = query.toLowerCase()
-  return getAllArticles().filter(article => 
+  return blogArticles.filter(article => 
     article.published && (
       article.title.toLowerCase().includes(lowerQuery) ||
       article.excerpt.toLowerCase().includes(lowerQuery) ||
       article.content.toLowerCase().includes(lowerQuery)
     )
+  )
+}
+
+export async function searchBlogArticlesAsync(query: string): Promise<BlogArticle[]> {
+  const allArticles = await getAllBlogArticlesAsync()
+  const lowerQuery = query.toLowerCase()
+  return allArticles.filter(article => 
+    article.title.toLowerCase().includes(lowerQuery) ||
+    article.excerpt.toLowerCase().includes(lowerQuery) ||
+    article.content.toLowerCase().includes(lowerQuery)
   )
 }
 
