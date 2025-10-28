@@ -45,15 +45,21 @@ export default function ScrollPopup() {
             <div className="flex items-center -space-x-2 flex-shrink-0">
               <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border-2 border-black overflow-hidden">
                 <Image 
-                  src="/images/ISOTIPO.png" 
-                  alt="NexGent" 
-                  width={32} 
-                  height={32}
-                  className="object-contain"
+                  src="/images/FOTO1.png" 
+                  alt="Cliente 1" 
+                  width={40} 
+                  height={40}
+                  className="object-cover"
                 />
               </div>
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center border-2 border-black">
-                <span className="text-white text-sm font-bold">AI</span>
+              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border-2 border-black overflow-hidden">
+                <Image 
+                  src="/images/FOTO2.png" 
+                  alt="Cliente 2" 
+                  width={40} 
+                  height={40}
+                  className="object-cover"
+                />
               </div>
             </div>
 
