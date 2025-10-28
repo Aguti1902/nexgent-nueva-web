@@ -19,12 +19,15 @@ export default function PoliticaPrivacidadPage() {
               1. Responsable del Tratamiento
             </h2>
             <p>
-              NexGent Technologies S.L. (en adelante "NexGent") es el responsable del tratamiento de los
+              NEXGENT AI SYSTEMS SOCIEDAD LIMITADA (en adelante "NexGent") es el responsable del tratamiento de los
               datos personales recogidos a través de este sitio web.
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2">
+              <li>Titular: NEXGENT AI SYSTEMS SOCIEDAD LIMITADA</li>
+              <li>CIF: B22534564</li>
+              <li>Domicilio social: CALLE JULIO VERNE, 12, PELIGROS (18210), Granada, España</li>
               <li>Email de contacto: info@nexgent.io</li>
-              <li>Domicilio: Madrid, España</li>
+              <li>Teléfono: +34 684 48 66 47</li>
             </ul>
           </section>
 

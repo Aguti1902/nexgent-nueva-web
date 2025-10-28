@@ -24,10 +24,11 @@ export default function AvisoLegalPage() {
               de NexGent:
             </p>
             <ul className="list-disc list-inside mt-4 space-y-2">
-              <li>Titular: NexGent Technologies S.L.</li>
-              <li>NIF: B-12345678</li>
-              <li>Domicilio social: Madrid, España</li>
+              <li>Titular: NEXGENT AI SYSTEMS SOCIEDAD LIMITADA</li>
+              <li>CIF: B22534564</li>
+              <li>Domicilio social: CALLE JULIO VERNE, 12, PELIGROS (18210), Granada, España</li>
               <li>Email: info@nexgent.io</li>
+              <li>Teléfono: +34 684 48 66 47</li>
             </ul>
           </section>
 
@@ -80,7 +81,7 @@ export default function AvisoLegalPage() {
             </h2>
             <p>
               Las presentes condiciones se rigen por la legislación española. Para cualquier controversia
-              derivada del uso del sitio web, las partes se someten a los Juzgados y Tribunales de Madrid.
+              derivada del uso del sitio web, las partes se someten a los Juzgados y Tribunales de Granada.
             </p>
           </section>
         </div>

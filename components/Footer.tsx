@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { FaLinkedin, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa'
+import { FaLinkedin, FaInstagram, FaWhatsapp, FaTelegram } from 'react-icons/fa'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -9,12 +9,18 @@ export default function Footer() {
     empresa: [
       { href: '/nosotros', label: 'Sobre Nosotros' },
       { href: '/casos-exito', label: 'Casos de Éxito' },
+      { href: '/demo', label: 'Solicita una Demo' },
       { href: '/contacto', label: 'Contacto' },
     ],
     servicios: [
       { href: '/servicios#whatsapp', label: 'Atención por WhatsApp' },
       { href: '/servicios#llamadas', label: 'Llamadas Automatizadas' },
       { href: '/servicios#reservas', label: 'Sistema de Reservas' },
+      { href: '/servicios#recordatorios', label: 'Recordatorios Automáticos' },
+    ],
+    recursos: [
+      { href: '/recursos/blog', label: 'Blog' },
+      { href: '/recursos/centro-ayuda', label: 'Centro de Ayuda' },
     ],
     legal: [
       { href: '/aviso-legal', label: 'Aviso Legal' },
@@ -24,18 +30,18 @@ export default function Footer() {
   }
 
   const socialLinks = [
-    { icon: FaLinkedin, href: '#', label: 'LinkedIn' },
-    { icon: FaTwitter, href: '#', label: 'Twitter' },
-    { icon: FaInstagram, href: '#', label: 'Instagram' },
-    { icon: FaWhatsapp, href: '#', label: 'WhatsApp' },
+    { icon: FaLinkedin, href: 'https://www.linkedin.com/company/nexgentai/', label: 'LinkedIn' },
+    { icon: FaInstagram, href: 'https://www.instagram.com/nexgentai', label: 'Instagram' },
+    { icon: FaWhatsapp, href: 'https://api.whatsapp.com/send/?phone=34684486647&text&type=phone_number&app_absent=0', label: 'WhatsApp' },
+    { icon: FaTelegram, href: 'https://t.me/nexgentsolutions', label: 'Telegram' },
   ]
 
   return (
     <footer className="bg-black text-white overflow-x-hidden w-full max-w-full">
       <div className="container-custom px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Logo y descripción */}
-          <div className="space-y-6">
+          <div className="space-y-6 lg:col-span-1">
             <Link href="/" className="block">
               <Image 
                 src="/images/LOGO BLANCO.png" 
@@ -86,6 +92,23 @@ export default function Footer() {
             <h3 className="font-monda text-lg font-bold mb-4 text-white">Servicios</h3>
             <ul className="space-y-3">
               {footerLinks.servicios.map((link) => (
+                <li key={link.href}>
+                  <Link 
+                    href={link.href}
+                    className="text-gray-400 hover:text-white transition-colors duration-300 text-sm"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Recursos */}
+          <div>
+            <h3 className="font-monda text-lg font-bold mb-4 text-white">Recursos</h3>
+            <ul className="space-y-3">
+              {footerLinks.recursos.map((link) => (
                 <li key={link.href}>
                   <Link 
                     href={link.href}
