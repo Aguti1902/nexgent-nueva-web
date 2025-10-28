@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { HiMenu, HiX, HiChevronDown } from 'react-icons/hi'
 import { FaWhatsapp, FaPhoneAlt, FaCalendarCheck, FaCut, FaBuilding, FaBook, FaQuestionCircle, FaRobot, FaEnvelope, FaComments, FaChartLine, FaTooth, FaUtensils, FaShoppingCart, FaHome, FaDumbbell, FaHotel, FaBell, FaDatabase, FaFileInvoice, FaCar, FaGraduationCap, FaBriefcase, FaHandshake } from 'react-icons/fa'
 import Button from './ui/Button'
+import NexibotToggle from './NexibotToggle'
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -212,6 +213,7 @@ export default function Header() {
 
           {/* Botones a la derecha */}
           <div className="hidden lg:flex items-center gap-3">
+            <NexibotToggle />
             <Button href="https://dashboard.nexgent.io/" variant="outline" size="sm">
               Iniciar sesión
             </Button>

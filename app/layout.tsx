@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Poppins, Monda } from 'next/font/google'
 import './globals.css'
 import ConditionalLayout from '@/components/ConditionalLayout'
+import { NexibotProvider } from '@/contexts/NexibotContext'
 
 const poppins = Poppins({ 
   weight: ['300', '400', '500', '600', '700'],
@@ -42,9 +43,11 @@ export default function RootLayout({
   return (
     <html lang="es" className="scroll-smooth">
       <body className={`${poppins.variable} ${monda.variable} font-poppins antialiased bg-white text-secondary`}>
-        <ConditionalLayout>
-          {children}
-        </ConditionalLayout>
+        <NexibotProvider>
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
+        </NexibotProvider>
       </body>
     </html>
   )
