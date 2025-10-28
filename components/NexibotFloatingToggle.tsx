@@ -18,7 +18,7 @@ export default function NexibotFloatingToggle() {
     >
       <div className="relative w-8 h-8 flex-shrink-0">
         <Image
-          src="/images/LOGONEXIBOT.png"
+          src="/images/NEXIBOT.png"
           alt="NEXIBOT"
           fill
           className="object-contain"
