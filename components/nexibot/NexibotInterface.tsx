@@ -12,9 +12,6 @@ export default function NexibotInterface() {
     offset: ["start start", "end end"]
   })
 
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.6])
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50])
-  
   // Interactive demo state
   const [userInput, setUserInput] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
@@ -213,10 +210,7 @@ export default function NexibotInterface() {
       <div className="fixed top-0 left-1/2 transform -translate-x-1/2 w-[800px] h-[800px] bg-yellow-400/[0.03] rounded-full blur-[120px] pointer-events-none" />
 
       {/* HERO SECTION */}
-      <motion.section 
-        style={{ opacity, y }}
-        className="relative min-h-screen flex items-center justify-center px-6 pt-20"
-      >
+      <section className="relative min-h-screen flex items-center justify-center px-6 pt-20">
         <div className="max-w-7xl mx-auto text-center">
           {/* Logo */}
           <motion.div
@@ -308,7 +302,7 @@ export default function NexibotInterface() {
             <div className="w-px h-16 bg-gradient-to-b from-gray-600 to-transparent" />
           </div>
         </motion.div>
-      </motion.section>
+      </section>
 
       {/* DEMO INTERACTIVO */}
       <section className="relative py-20 px-6 border-t border-gray-900">
