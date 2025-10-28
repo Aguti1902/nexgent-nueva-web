@@ -1,17 +1,11 @@
 'use client'
 
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { useState, useRef, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { HiCheckCircle, HiLightningBolt, HiCpuChip, HiPuzzle, HiCode, HiTrendingUp, HiShieldCheck } from 'react-icons/hi'
 
 export default function NexibotInterface() {
-  const containerRef = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  })
-
   // Interactive demo state
   const [userInput, setUserInput] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
@@ -200,7 +194,7 @@ export default function NexibotInterface() {
   ]
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-black text-white relative overflow-hidden">
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
       {/* Grid sutil */}
       <div className="fixed inset-0 opacity-[0.02]">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,215,0,1)_0.5px,transparent_0.5px),linear-gradient(90deg,rgba(255,215,0,1)_0.5px,transparent_0.5px)] bg-[size:80px_80px]" />
