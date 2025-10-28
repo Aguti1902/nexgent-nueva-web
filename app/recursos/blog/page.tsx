@@ -1,71 +1,36 @@
-import { FaBook, FaClock, FaArrowRight, FaCheckCircle, FaRocket, FaUsers, FaBrain, FaChartLine } from 'react-icons/fa'
-import Button from '@/components/ui/Button'
+'use client'
 
-export const metadata = {
-  title: 'Blog de IA para Negocios | NexGent',
-  description: 'Artículos, noticias, guías y casos de éxito sobre inteligencia artificial para negocios. Aprende cómo la IA está transformando empresas.',
-}
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { FaBook, FaClock, FaArrowRight, FaCheckCircle, FaRocket, FaBrain, FaChartLine } from 'react-icons/fa'
+import Button from '@/components/ui/Button'
+import { getAllBlogArticlesAsync, type BlogArticle } from '@/data/blog-articles'
 
 export default function BlogPage() {
-  const featuredArticle = {
-    title: 'El futuro de la automatización empresarial: IA que realmente funciona',
-    excerpt: 'Análisis profundo de cómo la inteligencia artificial está transformando la forma en que las empresas operan, con datos reales y casos de éxito verificados.',
-    date: '25 Oct 2024',
-    category: 'Tendencias IA',
-    readTime: '12 min',
-    author: 'Equipo NexGent',
-  }
+  const [articles, setArticles] = useState<BlogArticle[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
-  const articles = [
-    {
-      title: 'Cómo la IA está transformando la atención al cliente en 2024',
-      excerpt: 'Descubre las últimas tendencias en automatización con IA y cómo están revolucionando la forma en que las empresas interactúan con sus clientes. Datos actualizados de más de 1,000 empresas.',
-      date: '22 Oct 2024',
-      category: 'IA & Negocios',
-      readTime: '8 min',
-    },
-    {
-      title: '5 razones para automatizar tu negocio con WhatsApp Business ahora',
-      excerpt: 'WhatsApp se ha convertido en el canal preferido de comunicación con +2 mil millones de usuarios. Te contamos por qué deberías automatizarlo ya con datos concretos de ROI.',
-      date: '18 Oct 2024',
-      category: 'WhatsApp Business',
-      readTime: '6 min',
-    },
-    {
-      title: 'Caso de éxito: Hello Nails aumentó sus ventas un 40% con IA',
-      excerpt: 'Conoce cómo este salón de belleza transformó su negocio con agentes de IA. ROI en 3 semanas, +40% ventas, -60% no-shows. Historia completa con cifras reales.',
-      date: '15 Oct 2024',
-      category: 'Casos de Éxito',
-      readTime: '10 min',
-    },
-    {
-      title: 'Guía completa: Cómo implementar un chatbot que realmente venda',
-      excerpt: 'No todos los chatbots son iguales. Descubre qué hace que un chatbot convierta visitas en ventas con una guía paso a paso basada en datos de +500 implementaciones exitosas.',
-      date: '12 Oct 2024',
-      category: 'Guías',
-      readTime: '15 min',
-    },
-    {
-      title: 'IA vs Asistentes Humanos: Datos reales de costes y eficiencia',
-      excerpt: 'Análisis comparativo con datos concretos: costes operativos, tiempo de respuesta, satisfacción del cliente y escalabilidad. Los números hablan por sí mismos.',
-      date: '10 Oct 2024',
-      category: 'Análisis',
-      readTime: '7 min',
-    },
-    {
-      title: 'Errores fatales al implementar IA en tu negocio (y cómo evitarlos)',
-      excerpt: 'Hemos analizado 200+ implementaciones fallidas para identificar los 7 errores más comunes que hacen que proyectos de IA fracasen. Aprende qué NO hacer.',
-      date: '8 Oct 2024',
-      category: 'Mejores Prácticas',
-      readTime: '9 min',
-    },
-  ]
+  useEffect(() => {
+    async function loadArticles() {
+      const allArticles = await getAllBlogArticlesAsync()
+      setArticles(allArticles)
+    }
+    loadArticles()
+  }, [])
+
+  const featuredArticle = articles.length > 0 ? articles[0] : null
+
+  const filteredArticles = selectedCategory
+    ? articles.filter(article => article.category === selectedCategory)
+    : articles
+
+  const displayArticles = filteredArticles.slice(1, 7) // Mostramos 6 artículos (saltamos el destacado)
 
   const categories = [
-    {icon: FaBrain, name: 'IA & Negocios', count: 28},
-    {icon: FaCheckCircle, name: 'Casos de Éxito', count: 15},
-    {icon: FaRocket, name: 'Guías Prácticas', count: 22},
-    {icon: FaChartLine, name: 'Análisis & Datos', count: 12},
+    {icon: FaBrain, name: 'IA & Negocios', count: articles.filter(a => a.category === 'IA & Negocios').length},
+    {icon: FaCheckCircle, name: 'Casos de Éxito', count: articles.filter(a => a.category === 'Casos de Éxito').length},
+    {icon: FaRocket, name: 'Guías Prácticas', count: articles.filter(a => a.category === 'Guías Prácticas').length},
+    {icon: FaChartLine, name: 'Análisis & Datos', count: articles.filter(a => a.category === 'Análisis & Datos').length},
   ]
 
   return (
@@ -98,44 +63,46 @@ export default function BlogPage() {
             </div>
 
             {/* Featured Article */}
-            <div className="mb-16">
-              <div className="bg-white rounded-2xl overflow-hidden border-2 border-gray-200 hover:border-blue-500 transition-all group">
-                <div className="grid lg:grid-cols-2 gap-0">
-                  <div className="h-80 lg:h-auto bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white">
-                    <div className="text-center p-12">
-                      <FaBrain className="text-7xl mb-6 mx-auto opacity-80" />
-                      <p className="text-2xl font-bold">Artículo Destacado</p>
+            {featuredArticle && (
+              <Link href={`/recursos/blog/articulos/${featuredArticle.slug}`} className="block mb-16">
+                <div className="bg-white rounded-2xl overflow-hidden border-2 border-gray-200 hover:border-blue-500 transition-all group">
+                  <div className="grid lg:grid-cols-2 gap-0">
+                    <div className="h-80 lg:h-auto bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white">
+                      <div className="text-center p-12">
+                        <FaBrain className="text-7xl mb-6 mx-auto opacity-80" />
+                        <p className="text-2xl font-bold">Artículo Destacado</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-10">
-                    <div className="flex items-center gap-3 text-xs text-gray-500 mb-4">
-                      <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">{featuredArticle.category}</span>
-                      <span className="flex items-center gap-1">
-                        <FaClock />
-                        {featuredArticle.readTime}
-                      </span>
-                      <span>{featuredArticle.date}</span>
-                    </div>
-                    
-                    <h2 className="font-monda text-3xl font-bold text-black mb-4 group-hover:text-blue-600 transition-colors">
-                      {featuredArticle.title}
-                    </h2>
-                    
-                    <p className="text-gray-600 mb-6 leading-relaxed">
-                      {featuredArticle.excerpt}
-                    </p>
-                    
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">Por {featuredArticle.author}</span>
-                      <button className="flex items-center gap-2 text-blue-600 font-semibold hover:gap-3 transition-all">
-                        Leer artículo completo
-                        <FaArrowRight />
-                      </button>
+                    <div className="p-10">
+                      <div className="flex items-center gap-3 text-xs text-gray-500 mb-4">
+                        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">{featuredArticle.category}</span>
+                        <span className="flex items-center gap-1">
+                          <FaClock />
+                          {featuredArticle.readTime}
+                        </span>
+                        <span>{featuredArticle.date}</span>
+                      </div>
+                      
+                      <h2 className="font-monda text-3xl font-bold text-black mb-4 group-hover:text-blue-600 transition-colors">
+                        {featuredArticle.title}
+                      </h2>
+                      
+                      <p className="text-gray-600 mb-6 leading-relaxed">
+                        {featuredArticle.excerpt}
+                      </p>
+                      
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-500">Por {featuredArticle.author}</span>
+                        <span className="flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-3 transition-all">
+                          Leer artículo completo
+                          <FaArrowRight />
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -146,15 +113,37 @@ export default function BlogPage() {
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {categories.map((category, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-blue-500 hover:shadow-lg transition-all cursor-pointer group">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 text-2xl mb-4 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                <button
+                  key={idx}
+                  onClick={() => setSelectedCategory(selectedCategory === category.name ? null : category.name)}
+                  className={`bg-gray-50 rounded-xl p-6 border-2 transition-all cursor-pointer group ${
+                    selectedCategory === category.name
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-200 hover:border-blue-500 hover:shadow-lg'
+                  }`}
+                >
+                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl mb-4 transition-all ${
+                    selectedCategory === category.name
+                      ? 'bg-blue-500 text-white'
+                      : 'bg-blue-100 text-blue-600 group-hover:bg-blue-500 group-hover:text-white'
+                  }`}>
                     <category.icon />
                   </div>
-                  <h3 className="font-bold text-black mb-1">{category.name}</h3>
-                  <p className="text-sm text-gray-600">{category.count} artículos</p>
-                </div>
+                  <h3 className="font-bold text-black mb-1 text-left">{category.name}</h3>
+                  <p className="text-sm text-gray-600 text-left">{category.count} artículos</p>
+                </button>
               ))}
             </div>
+            {selectedCategory && (
+              <div className="text-center mt-6">
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className="text-sm text-gray-600 hover:text-black transition-all"
+                >
+                  ← Ver todas las categorías
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -164,50 +153,69 @@ export default function BlogPage() {
         <div className="container-custom px-6">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="font-monda text-4xl font-bold text-black mb-4">Últimos artículos</h2>
+              <h2 className="font-monda text-4xl font-bold text-black mb-4">
+                {selectedCategory ? `Artículos de ${selectedCategory}` : 'Últimos artículos'}
+              </h2>
               <p className="text-lg text-gray-600">Mantente actualizado con las últimas tendencias y mejores prácticas</p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {articles.map((article, index) => (
-                <article key={index} className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-blue-500 hover:shadow-xl transition-all duration-300 group">
-                  <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                    <FaBook className="text-5xl text-gray-400" />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
-                      <span className="bg-gray-100 px-2 py-1 rounded">{article.category}</span>
-                      <span className="flex items-center gap-1">
-                        <FaClock className="text-xs" />
-                        {article.readTime}
-                      </span>
-                    </div>
-                    
-                    <h3 className="font-monda text-xl font-bold text-black mb-3 group-hover:text-blue-600 transition-colors leading-tight">
-                      {article.title}
-                    </h3>
-                    
-                    <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3">
-                      {article.excerpt}
-                    </p>
-                    
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                      <span className="text-xs text-gray-500">{article.date}</span>
-                      <button className="text-sm font-medium text-blue-600 flex items-center gap-1 group-hover:gap-2 transition-all">
-                        Leer más
-                        <FaArrowRight className="text-xs" />
-                      </button>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
+            {displayArticles.length > 0 ? (
+              <>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                  {displayArticles.map((article, index) => (
+                    <Link
+                      key={article.id}
+                      href={`/recursos/blog/articulos/${article.slug}`}
+                      className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-blue-500 hover:shadow-xl transition-all duration-300 group"
+                    >
+                      <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                        <FaBook className="text-5xl text-gray-400" />
+                      </div>
+                      <div className="p-6">
+                        <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
+                          <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded font-semibold">{article.category}</span>
+                          <span className="flex items-center gap-1">
+                            <FaClock className="text-xs" />
+                            {article.readTime}
+                          </span>
+                        </div>
+                        
+                        <h3 className="font-monda text-xl font-bold text-black mb-3 group-hover:text-blue-600 transition-colors leading-tight line-clamp-2">
+                          {article.title}
+                        </h3>
+                        
+                        <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3">
+                          {article.excerpt}
+                        </p>
+                        
+                        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                          <span className="text-xs text-gray-500">{article.date}</span>
+                          <span className="text-sm font-medium text-blue-600 flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Leer más
+                            <FaArrowRight className="text-xs" />
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
 
-            <div className="text-center">
-              <Button variant="outline" size="lg" href="/recursos/blog/articulos">
-                Ver todos los artículos
-              </Button>
-            </div>
+                <div className="text-center">
+                  <Button variant="outline" size="lg" href="/recursos/blog/articulos">
+                    Ver todos los artículos
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-16">
+                <FaBook className="text-6xl text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-600 text-lg">
+                  {selectedCategory
+                    ? `No hay artículos en la categoría "${selectedCategory}" todavía.`
+                    : 'Cargando artículos...'}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
