@@ -314,29 +314,15 @@ Deriva automáticamente a un humano.
 **¿Cuánto tarda implementar?**
 3-7 días desde cero hasta producción.
 
-## El momento es ahora
+## La ventana de oportunidad se estrecha
 
-Cada día sin automatización es:
-- Consultas perdidas fuera de horario
-- Clientes frustrados esperando respuesta
-- Tu equipo gastando tiempo en repetitivo
-- Tu competencia ganando ventaja
+Cada día que transcurre sin automatizar tu WhatsApp representa consultas perdidas en horarios no comerciales, clientes frustrados esperando respuestas que nunca llegan, tu equipo consumiendo horas en tareas repetitivas que una máquina haría mejor, y tu competencia acumulando ventaja competitiva mientras observas desde la barrera.
 
-## Próximos pasos
+El camino hacia la automatización es más simple de lo que imaginas: una auditoría gratuita de tu WhatsApp actual revela oportunidades específicas, una demo personalizada de 20 minutos muestra el potencial adaptado a tu negocio, una prueba gratuita de 14 días elimina el riesgo, y la implementación completa ocurre en una semana.
 
-1. **Auditoría gratuita** de tu WhatsApp actual
-2. **Demo personalizada** de 20 min
-3. **Prueba gratuita** 14 días
-4. **Implementación** en 1 semana
+El dato que debería terminar de convencerte: el 73% de las empresas que automatizaron WhatsApp recuperaron completamente su inversión en menos de 30 días. No estamos hablando de retornos a largo plazo, sino de payback casi inmediato. La pregunta que debes hacerte no es si automatizar vale la pena, sino cuánto dinero estás dejando de ganar cada semana que pasa sin hacerlo.
 
-[Solicita tu auditoría gratuita →](/demo)
-
----
-
-**Dato final:**
-El 73% de empresas que automatizaron WhatsApp recuperaron la inversión en menos de 30 días.
-
-¿Cuánto estás perdiendo por no automatizar?
+[Solicita tu auditoría gratuita y descubre tu potencial →](/demo)
 `
   },
   {
