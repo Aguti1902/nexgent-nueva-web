@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 
 const partners = [
-  { name: 'Urban Fitness', logo: '' },
+  { name: 'Nova Dental', logo: '/images/logos/NOVA DENTAL.png' },
   { name: 'Agutidesigns', logo: '/images/logos/Agutidesigns.png' },
   { name: 'IQ Mind', logo: '/images/logos/IQMIND.svg' },
   { name: 'Spa Deluxe', logo: '/images/logos/SPADELUXE.png' },
