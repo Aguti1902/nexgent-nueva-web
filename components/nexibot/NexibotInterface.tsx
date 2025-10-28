@@ -311,31 +311,31 @@ export default function NexibotInterface() {
       </motion.section>
 
       {/* DEMO INTERACTIVO */}
-      <section className="relative py-32 px-6 border-t border-gray-900">
+      <section className="relative py-20 px-6 border-t border-gray-900">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
-            <h2 className="font-monda text-5xl md:text-6xl font-bold mb-6">
+            <h2 className="font-monda text-4xl md:text-5xl font-bold mb-4">
               Pruébalo <span className="text-yellow-400">ahora</span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Describe tu idea o selecciona un ejemplo y ve cómo NEXIBOT crea tu agente al instante
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              Describe tu idea o selecciona un ejemplo
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-6">
             {/* Panel de generación */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-gray-900/50 to-black border border-gray-800 rounded-3xl p-8"
+              className="bg-gradient-to-br from-gray-900/50 to-black border border-gray-800 rounded-2xl p-6"
             >
-              <label className="block text-sm text-gray-500 mb-4 uppercase tracking-wider">
+              <label className="block text-xs text-gray-500 mb-3 uppercase tracking-wider">
                 Describe tu agente de IA
               </label>
               
@@ -343,19 +343,19 @@ export default function NexibotInterface() {
               <textarea
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
-                placeholder="Ej: Quiero un agente para mi tienda online que responda dudas y gestione pedidos..."
-                className="w-full bg-black border border-gray-700 rounded-xl p-6 text-white text-lg leading-relaxed min-h-[140px] mb-6 resize-none focus:outline-none focus:border-yellow-400/50 transition-colors"
+                placeholder="Ej: Quiero un agente para mi tienda online..."
+                className="w-full bg-black border border-gray-700 rounded-lg p-4 text-white leading-relaxed min-h-[100px] mb-4 resize-none focus:outline-none focus:border-yellow-400/50 transition-colors text-sm"
               />
 
               {/* Ejemplos predefinidos */}
-              <div className="mb-6">
-                <p className="text-sm text-gray-500 mb-3">O selecciona un ejemplo:</p>
-                <div className="grid gap-3">
+              <div className="mb-4">
+                <p className="text-xs text-gray-500 mb-2">O selecciona un ejemplo:</p>
+                <div className="grid gap-2">
                   {examplePrompts.map((prompt, index) => (
                     <button
                       key={index}
                       onClick={() => generateAgent(prompt)}
-                      className="text-left bg-black border border-gray-700 hover:border-yellow-400/50 rounded-lg p-4 text-gray-300 hover:text-yellow-400 transition-all duration-300 group"
+                      className="text-left bg-black border border-gray-700 hover:border-yellow-400/50 rounded-lg p-3 text-gray-300 hover:text-yellow-400 transition-all duration-300 group text-sm"
                     >
                       <span className="text-yellow-400 mr-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
                       {prompt}
@@ -368,11 +368,11 @@ export default function NexibotInterface() {
               <button
                 onClick={() => userInput && generateAgent(userInput)}
                 disabled={!userInput || isGenerating}
-                className="w-full bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-black font-bold py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-3"
+                className="w-full bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-black font-bold py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm"
               >
                 {isGenerating ? (
                   <>
-                    <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
                     Generando agente...
                   </>
                 ) : (
@@ -390,47 +390,47 @@ export default function NexibotInterface() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="border-t border-gray-800 pt-8 mt-8"
+                    className="border-t border-gray-800 pt-5 mt-5"
                   >
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center justify-between mb-4">
                       <div>
-                        <div className="flex items-center gap-3 mb-2">
-                          <FaCheck className="text-green-400" />
-                          <span className="text-sm text-gray-500 uppercase tracking-wider">Agente generado</span>
+                        <div className="flex items-center gap-2 mb-1">
+                          <FaCheck className="text-green-400 text-sm" />
+                          <span className="text-xs text-gray-500 uppercase tracking-wider">Generado</span>
                         </div>
-                        <h3 className="font-monda text-2xl font-bold text-yellow-400">
+                        <h3 className="font-monda text-xl font-bold text-yellow-400">
                           {agentData.title}
                         </h3>
                       </div>
                       <div className="text-right">
-                        <div className="text-sm text-gray-500 mb-1">Tiempo</div>
-                        <div className="font-monda text-xl text-yellow-400">{agentData.time}</div>
+                        <div className="text-xs text-gray-500">Tiempo</div>
+                        <div className="font-monda text-lg text-yellow-400">{agentData.time}</div>
                       </div>
                     </div>
 
-                    {/* Features del agente */}
-                    <div className="space-y-3 mb-6">
-                      {agentData.features.map((feature: string, index: number) => (
+                    {/* Features del agente - Compactas */}
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      {agentData.features.slice(0, 4).map((feature: string, index: number) => (
                         <motion.div
                           key={index}
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                          className="flex items-center gap-3 bg-black border border-gray-800 rounded-lg p-3"
+                          transition={{ delay: index * 0.05 }}
+                          className="flex items-center gap-2 bg-black border border-gray-800 rounded-lg p-2"
                         >
-                          <FaCheck className="text-yellow-400 flex-shrink-0 text-sm" />
-                          <span className="text-gray-300 text-sm">{feature}</span>
+                          <FaCheck className="text-yellow-400 flex-shrink-0 text-xs" />
+                          <span className="text-gray-300 text-xs">{feature}</span>
                         </motion.div>
                       ))}
                     </div>
 
                     {/* Plataformas */}
-                    <div className="flex items-center gap-3 flex-wrap mb-6">
-                      <span className="text-sm text-gray-500">Disponible en:</span>
+                    <div className="flex items-center gap-2 flex-wrap mb-4">
+                      <span className="text-xs text-gray-500">En:</span>
                       {agentData.platforms.map((platform: string, index: number) => (
                         <span
                           key={index}
-                          className="px-3 py-1 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-yellow-400 text-sm"
+                          className="px-2 py-1 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-yellow-400 text-xs"
                         >
                           {platform}
                         </span>
@@ -440,9 +440,9 @@ export default function NexibotInterface() {
                     {/* Botón ver demo */}
                     <button
                       onClick={startMobileDemo}
-                      className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-bold py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
+                      className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-bold py-2.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm"
                     >
-                      📱 Ver agente en acción
+                      📱 Ver en acción
                     </button>
                   </motion.div>
                 )}
@@ -457,28 +457,28 @@ export default function NexibotInterface() {
               className="flex items-center justify-center"
             >
               <div className="relative">
-                {/* Marco del móvil */}
-                <div className="w-[340px] h-[680px] bg-gray-900 rounded-[3rem] p-4 border-8 border-gray-800 shadow-2xl relative">
+                {/* Marco del móvil - Más pequeño */}
+                <div className="w-[300px] h-[600px] bg-gray-900 rounded-[2.5rem] p-3 border-[6px] border-gray-800 shadow-2xl relative">
                   {/* Notch */}
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-7 bg-black rounded-b-3xl" />
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-b-3xl z-10" />
                   
                   {/* Pantalla */}
-                  <div className="w-full h-full bg-black rounded-[2.3rem] overflow-hidden flex flex-col">
+                  <div className="w-full h-full bg-black rounded-[2rem] overflow-hidden flex flex-col">
                     {/* Header del chat */}
-                    <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-4 flex items-center gap-3">
-                      <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                        <FaBrain className="text-yellow-500" />
+                    <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-3 flex items-center gap-2">
+                      <div className="w-9 h-9 bg-white rounded-full flex items-center justify-center">
+                        <FaBrain className="text-yellow-500 text-sm" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-bold text-black">{agentData?.title || 'Tu Agente IA'}</h4>
+                        <h4 className="font-bold text-black text-sm">{agentData?.title || 'Tu Agente IA'}</h4>
                         <p className="text-xs text-black/70">
-                          {showMobileDemo ? 'En línea' : 'Listo para conversar'}
+                          {showMobileDemo ? 'En línea' : 'Listo'}
                         </p>
                       </div>
                     </div>
 
                     {/* Área de mensajes */}
-                    <div className="flex-1 p-4 overflow-y-auto bg-gradient-to-b from-gray-900 to-black">
+                    <div className="flex-1 p-3 overflow-y-auto bg-gradient-to-b from-gray-900 to-black">
                       <AnimatePresence>
                         {!showMobileDemo && !agentData && (
                           <motion.div
@@ -487,9 +487,9 @@ export default function NexibotInterface() {
                             className="h-full flex items-center justify-center text-center"
                           >
                             <div>
-                              <div className="text-6xl mb-4">💬</div>
-                              <p className="text-gray-500">
-                                Genera un agente para ver<br />cómo funciona en tiempo real
+                              <div className="text-5xl mb-3">💬</div>
+                              <p className="text-gray-500 text-sm px-4">
+                                Genera un agente<br />para verlo en acción
                               </p>
                             </div>
                           </motion.div>
@@ -500,16 +500,16 @@ export default function NexibotInterface() {
                             key={index}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className={`mb-3 flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                            className={`mb-2 flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
                           >
                             <div
-                              className={`max-w-[75%] rounded-2xl px-4 py-3 ${
+                              className={`max-w-[80%] rounded-xl px-3 py-2 ${
                                 message.type === 'user'
                                   ? 'bg-yellow-400 text-black rounded-br-sm'
                                   : 'bg-gray-800 text-white rounded-bl-sm'
                               }`}
                             >
-                              <p className="text-sm whitespace-pre-line">{message.text}</p>
+                              <p className="text-xs whitespace-pre-line leading-relaxed">{message.text}</p>
                             </div>
                           </motion.div>
                         ))}
@@ -518,24 +518,24 @@ export default function NexibotInterface() {
                           <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="flex justify-start mb-3"
+                            className="flex justify-start mb-2"
                           >
-                            <div className="bg-gray-800 rounded-2xl rounded-bl-sm px-4 py-3">
+                            <div className="bg-gray-800 rounded-xl rounded-bl-sm px-3 py-2">
                               <div className="flex gap-1">
                                 <motion.div
                                   animate={{ scale: [1, 1.2, 1] }}
                                   transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                                  className="w-2 h-2 bg-gray-500 rounded-full"
+                                  className="w-1.5 h-1.5 bg-gray-500 rounded-full"
                                 />
                                 <motion.div
                                   animate={{ scale: [1, 1.2, 1] }}
                                   transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                                  className="w-2 h-2 bg-gray-500 rounded-full"
+                                  className="w-1.5 h-1.5 bg-gray-500 rounded-full"
                                 />
                                 <motion.div
                                   animate={{ scale: [1, 1.2, 1] }}
                                   transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-                                  className="w-2 h-2 bg-gray-500 rounded-full"
+                                  className="w-1.5 h-1.5 bg-gray-500 rounded-full"
                                 />
                               </div>
                             </div>
@@ -545,12 +545,12 @@ export default function NexibotInterface() {
                     </div>
 
                     {/* Input de mensaje */}
-                    <div className="bg-gray-900 p-3 flex items-center gap-2">
-                      <div className="flex-1 bg-gray-800 rounded-full px-4 py-2 text-sm text-gray-500">
-                        Escribe un mensaje...
+                    <div className="bg-gray-900 p-2.5 flex items-center gap-2">
+                      <div className="flex-1 bg-gray-800 rounded-full px-3 py-1.5 text-xs text-gray-500">
+                        Escribe...
                       </div>
-                      <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-                        <span className="text-black">➤</span>
+                      <div className="w-7 h-7 bg-yellow-400 rounded-full flex items-center justify-center">
+                        <span className="text-black text-sm">➤</span>
                       </div>
                     </div>
                   </div>
@@ -563,9 +563,9 @@ export default function NexibotInterface() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-center text-sm text-gray-600 mt-8"
+            className="text-center text-xs text-gray-600 mt-6"
           >
-            💡 Demo 100% interactivo • Escribe tu idea o selecciona un ejemplo para empezar
+            💡 Demo 100% interactivo • Escribe tu idea o selecciona un ejemplo
           </motion.p>
         </div>
       </section>
