@@ -89,13 +89,15 @@ export default function AdminDashboard() {
       type: 'blog' as const, 
       title: a.title, 
       date: a.date, 
-      id: a.id 
+      id: a.id,
+      views: '1.2K' // Placeholder para vistas
     })),
     ...helpArticles.slice(0, 1).map(a => ({ 
       type: 'guia' as const, 
       title: a.title, 
       date: 'Recientemente', 
-      id: a.slug 
+      id: a.slug,
+      views: '3.4K' // Placeholder para vistas
     }))
   ]
 
