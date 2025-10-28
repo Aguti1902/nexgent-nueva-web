@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaBook, FaClock, FaArrowRight, FaSearch, FaBrain, FaCheckCircle, FaRocket, FaChartLine } from 'react-icons/fa'
 import { getAllBlogArticles, searchBlogArticles } from '@/data/blog-articles'
@@ -8,8 +8,13 @@ import { getAllBlogArticles, searchBlogArticles } from '@/data/blog-articles'
 export default function AllArticlesPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [allArticles, setAllArticles] = useState(getAllBlogArticles())
 
-  const allArticles = getAllBlogArticles()
+  // Cargar artículos al montar
+  useEffect(() => {
+    const articles = getAllBlogArticles()
+    setAllArticles(articles)
+  }, [])
   
   const searchResults = searchQuery ? searchBlogArticles(searchQuery) : allArticles
   

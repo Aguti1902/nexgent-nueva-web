@@ -1,17 +1,40 @@
 'use client'
 
 import { useParams } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaArrowLeft, FaClock, FaBook, FaCalendar, FaUser, FaShareAlt, FaTwitter, FaLinkedin, FaFacebook } from 'react-icons/fa'
 import ReactMarkdown from 'react-markdown'
-import { getAllBlogArticles, getBlogArticleBySlug } from '@/data/blog-articles'
+import { getAllBlogArticles, getBlogArticleBySlug, type BlogArticle } from '@/data/blog-articles'
 
 export default function ArticuloBlogPage() {
   const params = useParams()
   const slug = params?.slug as string
 
-  const article = getBlogArticleBySlug(slug)
-  const allArticles = getAllBlogArticles()
+  const [article, setArticle] = useState<BlogArticle | undefined>(undefined)
+  const [allArticles, setAllArticles] = useState<BlogArticle[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Cargar artículo de inmediato desde datos predefinidos
+    const predefinedArticle = getBlogArticleBySlug(slug)
+    const predefinedArticles = getAllBlogArticles()
+    
+    setArticle(predefinedArticle)
+    setAllArticles(predefinedArticles)
+    setLoading(false)
+  }, [slug])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <FaBook className="text-6xl text-blue-500 animate-pulse mx-auto mb-4" />
+          <p className="text-gray-600">Cargando artículo...</p>
+        </div>
+      </div>
+    )
+  }
 
   if (!article) {
     return (

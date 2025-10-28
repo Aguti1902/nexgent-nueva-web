@@ -4,18 +4,28 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaBook, FaClock, FaArrowRight, FaCheckCircle, FaRocket, FaBrain, FaChartLine } from 'react-icons/fa'
 import Button from '@/components/ui/Button'
-import { getAllBlogArticlesAsync, type BlogArticle } from '@/data/blog-articles'
+import { getAllBlogArticles, getAllBlogArticlesAsync, type BlogArticle } from '@/data/blog-articles'
 
 export default function BlogPage() {
   const [articles, setArticles] = useState<BlogArticle[]>([])
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
   useEffect(() => {
-    async function loadArticles() {
-      const allArticles = await getAllBlogArticlesAsync()
-      setArticles(allArticles)
+    // Cargar artículos inmediatamente desde datos predefinidos
+    const predefinedArticles = getAllBlogArticles()
+    setArticles(predefinedArticles)
+    
+    // Luego intentar cargar de Supabase y combinar
+    async function loadSupabaseArticles() {
+      try {
+        const supabaseArticles = await getAllBlogArticlesAsync()
+        setArticles(supabaseArticles)
+      } catch (error) {
+        console.error('Error loading Supabase articles:', error)
+        // Si falla, mantener los predefinidos
+      }
     }
-    loadArticles()
+    loadSupabaseArticles()
   }, [])
 
   const featuredArticle = articles.length > 0 ? articles[0] : null

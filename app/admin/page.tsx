@@ -33,10 +33,21 @@ export default function AdminDashboard() {
 
   const loadArticles = async () => {
     try {
-      const response = await fetch('/api/blog?published=false') // Cargar todos los artículos (incluidos borradores)
+      // Primero cargar artículos predefinidos
+      const predefinedArticles = getAllBlogArticles()
+      
+      // Intentar cargar de Supabase
+      const response = await fetch('/api/blog?published=false')
       if (response.ok) {
         const data = await response.json()
-        setBlogArticles(data.articles || [])
+        const supabaseArticles = data.articles || []
+        
+        // Combinar ambos (Supabase + predefinidos)
+        const allArticles = [...supabaseArticles, ...predefinedArticles]
+        setBlogArticles(allArticles)
+      } else {
+        // Si falla, usar solo predefinidos
+        setBlogArticles(predefinedArticles)
       }
     } catch (error) {
       console.error('Error loading articles:', error)
