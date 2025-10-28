@@ -8,6 +8,7 @@ import ChatWidget from '@/components/ChatWidget'
 import { useNexibot } from '@/contexts/NexibotContext'
 import NexibotInterface from '@/components/nexibot/NexibotInterface'
 import NexibotHeader from '@/components/nexibot/NexibotHeader'
+import NexibotFloatingToggle from '@/components/NexibotFloatingToggle'
 
 export default function ConditionalLayout({
   children,
@@ -30,6 +31,7 @@ export default function ConditionalLayout({
       <>
         <NexibotHeader />
         <NexibotInterface />
+        <NexibotFloatingToggle />
       </>
     )
   }
@@ -44,6 +46,7 @@ export default function ConditionalLayout({
       <Footer />
       <ScrollPopup />
       <ChatWidget />
+      <NexibotFloatingToggle />
     </>
   )
 }
