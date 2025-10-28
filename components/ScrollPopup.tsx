@@ -66,7 +66,7 @@ export default function ScrollPopup() {
             {/* Texto */}
             <p className="text-xs md:text-sm font-medium whitespace-nowrap">
               <span className="hidden md:inline">¿Quieres ver cómo NexGent puede transformar tu negocio?</span>
-              <span className="md:hidden">¿Transformar?</span>
+              <span className="md:hidden">Transforma tu negocio</span>
             </p>
 
             {/* Botón CTA */}
