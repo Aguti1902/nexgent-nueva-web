@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { HiCheckCircle, HiLightningBolt, HiCpuChip, HiPuzzle, HiCode, HiTrendingUp, HiShieldCheck } from 'react-icons/hi'
+// Iconos eliminados - usando emojis en su lugar
 
 export default function NexibotInterface() {
   // Interactive demo state  
@@ -367,7 +367,7 @@ export default function NexibotInterface() {
                   </>
                 ) : (
                   <>
-                    <HiLightningBolt className="text-lg" />
+                    ⚡
                     Generar mi agente
                   </>
                 )}
@@ -385,7 +385,7 @@ export default function NexibotInterface() {
                     <div className="flex items-center justify-between mb-4">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <HiCheckCircle className="text-green-400 text-sm" />
+                          <span className="text-green-400 text-sm">✓</span>
                           <span className="text-xs text-gray-500 uppercase tracking-wider">Generado</span>
                         </div>
                         <h3 className="font-monda text-xl font-bold text-yellow-400">
@@ -408,7 +408,7 @@ export default function NexibotInterface() {
                           transition={{ delay: index * 0.05 }}
                           className="flex items-center gap-2 bg-black border border-gray-800 rounded-lg p-2"
                         >
-                          <HiCheckCircle className="text-yellow-400 flex-shrink-0 text-xs" />
+                          <span className="text-yellow-400 flex-shrink-0 text-xs">✓</span>
                           <span className="text-gray-300 text-xs">{feature}</span>
                         </motion.div>
                       ))}
@@ -456,8 +456,8 @@ export default function NexibotInterface() {
                   <div className="w-full h-full bg-black rounded-[2rem] overflow-hidden flex flex-col">
                     {/* Header del chat */}
                     <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-3 flex items-center gap-2">
-                      <div className="w-9 h-9 bg-white rounded-full flex items-center justify-center">
-                        <HiCpuChip className="text-yellow-500 text-base" />
+                      <div className="w-9 h-9 bg-white rounded-full flex items-center justify-center text-base">
+                        🤖
                       </div>
                       <div className="flex-1">
                         <h4 className="font-bold text-black text-sm">{agentData?.title || 'Tu Agente IA'}</h4>
@@ -741,7 +741,7 @@ export default function NexibotInterface() {
               href="/contacto"
               className="inline-flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-10 py-5 rounded-full transition-all duration-300 text-lg group"
             >
-              <HiLightningBolt className="text-2xl" />
+              <span className="text-2xl">⚡</span>
               <span>Solicitar acceso beta</span>
               <div className="w-2 h-2 rounded-full bg-black group-hover:w-4 transition-all duration-300" />
             </a>
