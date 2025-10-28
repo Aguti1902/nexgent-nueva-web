@@ -40,7 +40,7 @@ export default function ScrollPopup() {
           className="fixed bottom-8 inset-x-0 z-50 flex justify-center px-4"
           style={{ maxWidth: '100vw', left: 0, right: 0 }}
         >
-          <div className="bg-black text-white rounded-full shadow-2xl px-6 py-4 flex items-center gap-4 max-w-full">
+          <div className="bg-black text-white rounded-full shadow-2xl px-6 py-4 flex items-center gap-4 max-w-full border-2 border-white">
             {/* Avatares/Logo */}
             <div className="flex items-center -space-x-2 flex-shrink-0">
               <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border-2 border-black overflow-hidden">
