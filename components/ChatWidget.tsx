@@ -75,7 +75,7 @@ export default function ChatWidget() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 bg-black text-white rounded-full p-4 shadow-2xl hover:bg-gray-800 transition-colors duration-300 flex items-center gap-3 group border border-white"
+            className="fixed bottom-6 right-4 md:right-6 z-50 bg-black text-white rounded-full p-4 shadow-2xl hover:bg-gray-800 transition-colors duration-300 flex items-center gap-3 group border border-white"
             style={{ maxWidth: '90vw' }}
           >
             <div className="relative">
@@ -97,7 +97,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.9 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] max-w-[380px] h-[600px] max-h-[80vh] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden"
+            className="fixed bottom-6 right-4 md:right-6 z-50 w-[calc(100vw-2rem)] md:w-[calc(100vw-3rem)] max-w-[380px] h-[600px] max-h-[80vh] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden"
             style={{ maxWidth: 'min(380px, 90vw)' }}
           >
             {/* Header del chat */}
