@@ -7,7 +7,7 @@ import ScrollPopup from '@/components/ScrollPopup'
 import ChatWidget from '@/components/ChatWidget'
 import { useNexibot } from '@/contexts/NexibotContext'
 import NexibotInterface from '@/components/nexibot/NexibotInterface'
-import NexibotTransition from '@/components/NexibotTransition'
+import NexibotHeader from '@/components/nexibot/NexibotHeader'
 
 export default function ConditionalLayout({
   children,
@@ -24,12 +24,11 @@ export default function ConditionalLayout({
     return <>{children}</>
   }
 
-  // Si está en modo NEXIBOT, mostrar la interfaz de NEXIBOT
+  // Si está en modo NEXIBOT, mostrar solo el header de NEXIBOT y la interfaz
   if (isNexibotMode) {
     return (
       <>
-        <Header />
-        <NexibotTransition />
+        <NexibotHeader />
         <NexibotInterface />
       </>
     )
@@ -39,7 +38,6 @@ export default function ConditionalLayout({
   return (
     <>
       <Header />
-      <NexibotTransition />
       <main className="min-h-screen overflow-x-hidden" style={{ paddingTop: '88px' }}>
         {children}
       </main>
