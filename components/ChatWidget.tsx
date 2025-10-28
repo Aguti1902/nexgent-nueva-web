@@ -107,7 +107,7 @@ export default function ChatWidget() {
                   <Image src="/images/ISOTIPO.png" alt="NexGent" width={24} height={24} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white text-sm">Asistente NexGent</h3>
+                  <h3 className="font-semibold text-white text-sm">Asistente Virtual de NexGent</h3>
                   <p className="text-xs text-gray-400 flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                     En línea
