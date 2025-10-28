@@ -3,13 +3,17 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog, FaSignOutAlt } from 'react-icons/fa'
+import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog, FaSignOutAlt, FaEye, FaEyeSlash } from 'react-icons/fa'
+import { getAllBlogArticles, BlogArticle } from '@/data/blog-articles'
+import { articles as helpArticles } from '@/app/recursos/centro-ayuda/articulos/articles-data'
 
 export default function AdminDashboard() {
   const router = useRouter()
   const [activeSection, setActiveSection] = useState('overview')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [username, setUsername] = useState('')
+  const [blogArticles, setBlogArticles] = useState<BlogArticle[]>([])
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
 
   useEffect(() => {
     // Verificar autenticación
@@ -19,10 +23,43 @@ export default function AdminDashboard() {
     if (authenticated === 'true' && user) {
       setIsAuthenticated(true)
       setUsername(user)
+      // Cargar artículos del blog
+      setBlogArticles(getAllBlogArticles())
     } else {
       router.push('/admin/login')
     }
   }, [router])
+
+  const handleDeleteArticle = (articleId: string) => {
+    if (deleteConfirm === articleId) {
+      // Aquí iría la lógica real de eliminación
+      // Por ahora solo actualizamos el estado local
+      const savedArticles = localStorage.getItem('blogArticles')
+      if (savedArticles) {
+        const articles = JSON.parse(savedArticles)
+        const updated = articles.filter((a: BlogArticle) => a.id !== articleId)
+        localStorage.setItem('blogArticles', JSON.stringify(updated))
+      }
+      setBlogArticles(blogArticles.filter(a => a.id !== articleId))
+      setDeleteConfirm(null)
+      alert('Artículo eliminado correctamente')
+    } else {
+      setDeleteConfirm(articleId)
+      setTimeout(() => setDeleteConfirm(null), 3000)
+    }
+  }
+
+  const togglePublishStatus = (articleId: string) => {
+    const updated = blogArticles.map(article => 
+      article.id === articleId 
+        ? { ...article, published: !article.published }
+        : article
+    )
+    setBlogArticles(updated)
+    // Guardar en localStorage
+    localStorage.setItem('blogArticles', JSON.stringify(updated))
+    alert('Estado actualizado')
+  }
 
   const handleLogout = () => {
     localStorage.removeItem('adminAuthenticated')
@@ -42,15 +79,24 @@ export default function AdminDashboard() {
   }
 
   const stats = [
-    { label: 'Artículos del Blog', value: '7', icon: FaBook, color: 'blue' },
-    { label: 'Guías del Centro de Ayuda', value: '27', icon: FaQuestionCircle, color: 'purple' },
-    { label: 'Visitas este mes', value: '12.4K', icon: FaChartLine, color: 'green' },
+    { label: 'Artículos del Blog', value: blogArticles.length.toString(), icon: FaBook, color: 'blue' },
+    { label: 'Guías del Centro de Ayuda', value: helpArticles.length.toString(), icon: FaQuestionCircle, color: 'purple' },
+    { label: 'Total de Contenido', value: (blogArticles.length + helpArticles.length).toString(), icon: FaChartLine, color: 'green' },
   ]
 
   const recentArticles = [
-    { type: 'blog', title: 'El futuro de la automatización empresarial', date: '25 Oct 2024', views: '1.2K' },
-    { type: 'guia', title: 'Cómo configurar WhatsApp Business', date: '24 Oct 2024', views: '3.4K' },
-    { type: 'blog', title: 'IA vs Asistentes Humanos', date: '22 Oct 2024', views: '890' },
+    ...blogArticles.slice(0, 2).map(a => ({ 
+      type: 'blog' as const, 
+      title: a.title, 
+      date: a.date, 
+      id: a.id 
+    })),
+    ...helpArticles.slice(0, 1).map(a => ({ 
+      type: 'guia' as const, 
+      title: a.title, 
+      date: 'Recientemente', 
+      id: a.slug 
+    }))
   ]
 
   return (
@@ -231,14 +277,17 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {[
-                      { title: 'El futuro de la automatización empresarial', category: 'IA & Negocios', date: '25 Oct 2024', views: '1.2K' },
-                      { title: 'Cómo la IA está transformando la atención al cliente', category: 'IA & Negocios', date: '22 Oct 2024', views: '890' },
-                      { title: '5 razones para automatizar WhatsApp Business', category: 'IA & Negocios', date: '18 Oct 2024', views: '756' },
-                    ].map((article, idx) => (
-                      <tr key={idx} className="border-t border-gray-200 hover:bg-gray-50">
+                    {blogArticles.map((article) => (
+                      <tr key={article.id} className="border-t border-gray-200 hover:bg-gray-50">
                         <td className="p-4">
-                          <p className="font-medium text-black">{article.title}</p>
+                          <div className="flex items-center gap-3">
+                            <p className="font-medium text-black">{article.title}</p>
+                            {!article.published && (
+                              <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded">
+                                Borrador
+                              </span>
+                            )}
+                          </div>
                         </td>
                         <td className="p-4">
                           <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded text-xs">
@@ -246,14 +295,45 @@ export default function AdminDashboard() {
                           </span>
                         </td>
                         <td className="p-4 text-gray-600">{article.date}</td>
-                        <td className="p-4 text-gray-600">{article.views}</td>
+                        <td className="p-4 text-gray-600">{article.readTime}</td>
                         <td className="p-4">
                           <div className="flex items-center justify-end gap-2">
-                            <button className="p-2 hover:bg-gray-200 rounded transition-colors">
-                              <FaEdit className="text-gray-600" />
+                            <Link
+                              href={`/recursos/blog/articulos/${article.slug}`}
+                              target="_blank"
+                              className="p-2 hover:bg-green-100 rounded transition-colors"
+                              title="Ver en la web"
+                            >
+                              <FaEye className="text-green-600" />
+                            </Link>
+                            <Link
+                              href={`/admin/blog/editar/${article.id}`}
+                              className="p-2 hover:bg-blue-100 rounded transition-colors"
+                              title="Editar"
+                            >
+                              <FaEdit className="text-blue-600" />
+                            </Link>
+                            <button
+                              onClick={() => togglePublishStatus(article.id)}
+                              className="p-2 hover:bg-yellow-100 rounded transition-colors"
+                              title={article.published ? "Despublicar" : "Publicar"}
+                            >
+                              {article.published ? (
+                                <FaEye className="text-yellow-600" />
+                              ) : (
+                                <FaEyeSlash className="text-gray-600" />
+                              )}
                             </button>
-                            <button className="p-2 hover:bg-red-100 rounded transition-colors">
-                              <FaTrash className="text-red-600" />
+                            <button
+                              onClick={() => handleDeleteArticle(article.id)}
+                              className={`p-2 rounded transition-colors ${
+                                deleteConfirm === article.id
+                                  ? 'bg-red-500 hover:bg-red-600'
+                                  : 'hover:bg-red-100'
+                              }`}
+                              title={deleteConfirm === article.id ? "Confirmar eliminación" : "Eliminar"}
+                            >
+                              <FaTrash className={deleteConfirm === article.id ? "text-white" : "text-red-600"} />
                             </button>
                           </div>
                         </td>
