@@ -154,22 +154,18 @@ export default function NexibotInterface() {
 
   const features = [
     { 
-      icon: HiCpuChip,
       title: 'IA Conversacional Avanzada', 
       description: 'Agentes que comprenden contexto, mantienen el historial de conversaciones y aprenden de cada interacción para mejorar continuamente.' 
     },
     { 
-      icon: HiCode,
       title: 'Sin código necesario', 
       description: 'Describe lo que necesitas en lenguaje natural. NEXIBOT se encarga de generar todo el código, arquitectura y configuraciones necesarias.' 
     },
     { 
-      icon: HiPuzzle,
       title: 'Integraciones ilimitadas', 
       description: 'Conecta automáticamente con WhatsApp, Telegram, Web, Email, CRM, calendarios y más de 50 plataformas diferentes.' 
     },
     { 
-      icon: HiLightningBolt,
       title: 'Deploy instantáneo', 
       description: 'De la idea al agente funcionando en minutos. Sin servidores, sin configuración técnica, sin complicaciones.' 
     },
@@ -591,8 +587,8 @@ export default function NexibotInterface() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-gradient-to-br from-gray-900/50 to-black border border-gray-800 rounded-2xl p-8 hover:border-yellow-400/30 transition-all duration-300 group"
               >
-                <div className="w-14 h-14 bg-yellow-400/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-yellow-400/20 transition-colors">
-                  <feature.icon className="text-2xl text-yellow-400" />
+                <div className="w-14 h-14 bg-yellow-400/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-yellow-400/20 transition-colors text-3xl">
+                  ✨
                 </div>
                 <h3 className="font-monda text-2xl font-bold mb-4">{feature.title}</h3>
                 <p className="text-gray-400 leading-relaxed">{feature.description}</p>
