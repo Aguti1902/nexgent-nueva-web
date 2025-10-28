@@ -37,20 +37,22 @@ export async function POST(request: NextRequest) {
     const supabaseAdmin = getSupabaseAdmin()
     const body = await request.json()
 
+    const insertData: any = {
+      title: body.title,
+      slug: body.slug,
+      excerpt: body.excerpt,
+      content: body.content,
+      category: body.category,
+      author: body.author || 'Equipo NexGent',
+      date: body.date,
+      read_time: body.read_time || '5 min',
+      image_url: body.image_url,
+      published: body.published !== false,
+    }
+
     const { data, error } = await supabaseAdmin
       .from('blog_articles')
-      .insert([{
-        title: body.title,
-        slug: body.slug,
-        excerpt: body.excerpt,
-        content: body.content,
-        category: body.category,
-        author: body.author || 'Equipo NexGent',
-        date: body.date,
-        read_time: body.read_time || '5 min',
-        image_url: body.image_url,
-        published: body.published !== false,
-      }])
+      .insert([insertData])
       .select()
       .single()
 

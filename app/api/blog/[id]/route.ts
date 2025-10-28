@@ -35,20 +35,22 @@ export async function PUT(
     const supabaseAdmin = getSupabaseAdmin()
     const body = await request.json()
 
+    const updateData: any = {
+      title: body.title,
+      slug: body.slug,
+      excerpt: body.excerpt,
+      content: body.content,
+      category: body.category,
+      author: body.author,
+      date: body.date,
+      read_time: body.read_time,
+      image_url: body.image_url,
+      published: body.published,
+    }
+
     const { data, error } = await supabaseAdmin
       .from('blog_articles')
-      .update({
-        title: body.title,
-        slug: body.slug,
-        excerpt: body.excerpt,
-        content: body.content,
-        category: body.category,
-        author: body.author,
-        date: body.date,
-        read_time: body.read_time,
-        image_url: body.image_url,
-        published: body.published,
-      })
+      .update(updateData)
       .eq('id', params.id)
       .select()
       .single()
@@ -98,9 +100,11 @@ export async function PATCH(
     const supabaseAdmin = getSupabaseAdmin()
     const body = await request.json()
 
+    const updateData: any = { published: body.published }
+
     const { data, error } = await supabaseAdmin
       .from('blog_articles')
-      .update({ published: body.published })
+      .update(updateData)
       .eq('id', params.id)
       .select()
       .single()
