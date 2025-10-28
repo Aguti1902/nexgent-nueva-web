@@ -16,8 +16,6 @@ export default function NexibotInterface() {
   const y = useTransform(scrollYProgress, [0, 1], [0, -50])
   const yTitle = useTransform(scrollYProgress, [0, 0.3], [0, -100])
   const opacityFade = useTransform(scrollYProgress, [0, 0.15, 0.3], [1, 0.5, 0])
-  const yFeaturesUp = useTransform(scrollYProgress, [0.2, 0.5], [100, 0])
-  const scaleFeaturesUp = useTransform(scrollYProgress, [0.2, 0.5], [0.95, 1])
   
   // Interactive demo state
   const [userInput, setUserInput] = useState('')
@@ -582,10 +580,7 @@ export default function NexibotInterface() {
       </section>
 
       {/* FEATURES GRID */}
-      <motion.section 
-        style={{ y: yFeaturesUp, scale: scaleFeaturesUp }}
-        className="relative py-32 px-6 border-t border-gray-900"
-      >
+      <section className="relative py-32 px-6 border-t border-gray-900">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -620,7 +615,7 @@ export default function NexibotInterface() {
             ))}
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* CASOS DE USO */}
       <section className="relative py-32 px-6 border-t border-gray-900">
