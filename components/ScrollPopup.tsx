@@ -40,10 +40,10 @@ export default function ScrollPopup() {
           className="fixed bottom-24 inset-x-0 z-50 flex justify-center px-4"
           style={{ maxWidth: '100vw', left: 0, right: 0 }}
         >
-          <div className="bg-black text-white rounded-full shadow-2xl px-6 py-4 flex items-center gap-4 max-w-full border border-white">
+          <div className="bg-black text-white rounded-full shadow-2xl px-4 md:px-6 py-3 md:py-4 flex items-center gap-2 md:gap-4 max-w-full border border-white">
             {/* Avatares/Logo */}
             <div className="flex items-center -space-x-2 flex-shrink-0">
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border-2 border-black overflow-hidden">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center border-2 border-black overflow-hidden">
                 <Image 
                   src="/images/FOTO1.png" 
                   alt="Cliente 1" 
@@ -52,7 +52,7 @@ export default function ScrollPopup() {
                   className="object-cover"
                 />
               </div>
-              <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center border-2 border-black overflow-hidden">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center border-2 border-black overflow-hidden">
                 <Image 
                   src="/images/FOTO2.png" 
                   alt="Cliente 2" 
@@ -64,9 +64,9 @@ export default function ScrollPopup() {
             </div>
 
             {/* Texto */}
-            <p className="text-sm font-medium whitespace-nowrap">
+            <p className="text-xs md:text-sm font-medium whitespace-nowrap">
               <span className="hidden md:inline">¿Quieres ver cómo NexGent puede transformar tu negocio?</span>
-              <span className="md:hidden">¿Transformar tu negocio?</span>
+              <span className="md:hidden">¿Transformar?</span>
             </p>
 
             {/* Botón CTA */}
@@ -74,18 +74,20 @@ export default function ScrollPopup() {
               href="/demo" 
               variant="primary"
               size="sm"
-              className="bg-white !text-black hover:!bg-gray-200 flex-shrink-0"
+              className="bg-white !text-black hover:!bg-gray-200 flex-shrink-0 !text-xs md:!text-sm !px-3 md:!px-4 !py-2"
             >
-              Pide una demo
+              <span className="hidden sm:inline">Pide una demo</span>
+              <span className="sm:hidden">Demo</span>
             </Button>
 
             {/* Botón cerrar */}
             <button
               onClick={handleClose}
-              className="ml-2 text-white/70 hover:text-white transition-colors flex-shrink-0"
+              className="text-white/70 hover:text-white transition-colors flex-shrink-0"
               aria-label="Cerrar"
             >
-              <HiX size={20} />
+              <HiX size={16} className="md:hidden" />
+              <HiX size={20} className="hidden md:block" />
             </button>
           </div>
         </motion.div>
