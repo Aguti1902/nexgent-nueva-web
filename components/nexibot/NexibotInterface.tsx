@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
-import { FaCheck, FaRocket, FaBrain, FaPlug, FaCode, FaChartLine, FaShieldAlt } from 'react-icons/fa'
+import { HiCheckCircle, HiLightningBolt, HiCpuChip, HiPuzzle, HiCode, HiTrendingUp, HiShieldCheck } from 'react-icons/hi'
 
 export default function NexibotInterface() {
   const containerRef = useRef(null)
@@ -14,6 +14,10 @@ export default function NexibotInterface() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.6])
   const y = useTransform(scrollYProgress, [0, 1], [0, -50])
+  const yTitle = useTransform(scrollYProgress, [0, 0.3], [0, -100])
+  const opacityFade = useTransform(scrollYProgress, [0, 0.15, 0.3], [1, 0.5, 0])
+  const yFeaturesUp = useTransform(scrollYProgress, [0.2, 0.5], [100, 0])
+  const scaleFeaturesUp = useTransform(scrollYProgress, [0.2, 0.5], [0.95, 1])
   
   // Interactive demo state
   const [userInput, setUserInput] = useState('')
@@ -163,22 +167,22 @@ export default function NexibotInterface() {
 
   const features = [
     { 
-      icon: FaBrain,
+      icon: HiCpuChip,
       title: 'IA Conversacional Avanzada', 
       description: 'Agentes que comprenden contexto, mantienen el historial de conversaciones y aprenden de cada interacción para mejorar continuamente.' 
     },
     { 
-      icon: FaCode,
+      icon: HiCode,
       title: 'Sin código necesario', 
       description: 'Describe lo que necesitas en lenguaje natural. NEXIBOT se encarga de generar todo el código, arquitectura y configuraciones necesarias.' 
     },
     { 
-      icon: FaPlug,
+      icon: HiPuzzle,
       title: 'Integraciones ilimitadas', 
       description: 'Conecta automáticamente con WhatsApp, Telegram, Web, Email, CRM, calendarios y más de 50 plataformas diferentes.' 
     },
     { 
-      icon: FaRocket,
+      icon: HiLightningBolt,
       title: 'Deploy instantáneo', 
       description: 'De la idea al agente funcionando en minutos. Sin servidores, sin configuración técnica, sin complicaciones.' 
     },
@@ -235,10 +239,11 @@ export default function NexibotInterface() {
             </div>
           </motion.div>
 
-          {/* Título */}
+          {/* Título con parallax */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            style={{ y: yTitle, opacity: opacityFade }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="font-monda text-7xl md:text-9xl font-bold leading-none mb-6 tracking-tight"
           >
@@ -285,12 +290,12 @@ export default function NexibotInterface() {
           >
             {[
               { value: '<5min', label: 'Tiempo de creación' },
-              { value: '0 líneas', label: 'De código necesario' },
+              { value: '0 líneas', label: 'Código necesario' },
               { value: '24/7', label: 'Operativo sin parar' },
             ].map((stat, index) => (
               <div key={index} className="border-l border-gray-800 pl-6 text-left">
                 <div className="font-monda text-4xl font-bold text-yellow-400 mb-2">{stat.value}</div>
-                <div className="text-sm text-gray-500">{stat.label}</div>
+                <div className="text-sm text-gray-500 leading-tight">{stat.label}</div>
               </div>
             ))}
           </motion.div>
@@ -383,7 +388,7 @@ export default function NexibotInterface() {
                   </>
                 ) : (
                   <>
-                    <FaRocket />
+                    <HiLightningBolt className="text-lg" />
                     Generar mi agente
                   </>
                 )}
@@ -401,7 +406,7 @@ export default function NexibotInterface() {
                     <div className="flex items-center justify-between mb-4">
                       <div>
                         <div className="flex items-center gap-2 mb-1">
-                          <FaCheck className="text-green-400 text-sm" />
+                          <HiCheckCircle className="text-green-400 text-sm" />
                           <span className="text-xs text-gray-500 uppercase tracking-wider">Generado</span>
                         </div>
                         <h3 className="font-monda text-xl font-bold text-yellow-400">
@@ -424,7 +429,7 @@ export default function NexibotInterface() {
                           transition={{ delay: index * 0.05 }}
                           className="flex items-center gap-2 bg-black border border-gray-800 rounded-lg p-2"
                         >
-                          <FaCheck className="text-yellow-400 flex-shrink-0 text-xs" />
+                          <HiCheckCircle className="text-yellow-400 flex-shrink-0 text-xs" />
                           <span className="text-gray-300 text-xs">{feature}</span>
                         </motion.div>
                       ))}
@@ -473,7 +478,7 @@ export default function NexibotInterface() {
                     {/* Header del chat */}
                     <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-3 flex items-center gap-2">
                       <div className="w-9 h-9 bg-white rounded-full flex items-center justify-center">
-                        <FaBrain className="text-yellow-500 text-sm" />
+                        <HiCpuChip className="text-yellow-500 text-base" />
                       </div>
                       <div className="flex-1">
                         <h4 className="font-bold text-black text-sm">{agentData?.title || 'Tu Agente IA'}</h4>
@@ -577,7 +582,10 @@ export default function NexibotInterface() {
       </section>
 
       {/* FEATURES GRID */}
-      <section className="relative py-32 px-6 border-t border-gray-900">
+      <motion.section 
+        style={{ y: yFeaturesUp, scale: scaleFeaturesUp }}
+        className="relative py-32 px-6 border-t border-gray-900"
+      >
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
@@ -612,7 +620,7 @@ export default function NexibotInterface() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CASOS DE USO */}
       <section className="relative py-32 px-6 border-t border-gray-900">
@@ -757,7 +765,7 @@ export default function NexibotInterface() {
               href="/contacto"
               className="inline-flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-10 py-5 rounded-full transition-all duration-300 text-lg group"
             >
-              <FaRocket className="text-xl" />
+              <HiLightningBolt className="text-2xl" />
               <span>Solicitar acceso beta</span>
               <div className="w-2 h-2 rounded-full bg-black group-hover:w-4 transition-all duration-300" />
             </a>
