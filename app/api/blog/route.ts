@@ -8,6 +8,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const published = searchParams.get('published')
 
+    // @ts-ignore - Supabase types not generated yet
     let query = supabaseAdmin
       .from('blog_articles')
       .select('*')
@@ -37,7 +38,7 @@ export async function POST(request: NextRequest) {
     const supabaseAdmin = getSupabaseAdmin()
     const body = await request.json()
 
-    const insertData: any = {
+    const insertData = {
       title: body.title,
       slug: body.slug,
       excerpt: body.excerpt,
@@ -50,6 +51,7 @@ export async function POST(request: NextRequest) {
       published: body.published !== false,
     }
 
+    // @ts-ignore - Supabase types not generated yet
     const { data, error } = await supabaseAdmin
       .from('blog_articles')
       .insert([insertData])

@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(arrayBuffer)
 
     // Subir a Supabase Storage
+    // @ts-ignore - Supabase types not generated yet
     const { data, error } = await supabaseAdmin
       .storage
       .from('blog-images')
@@ -48,6 +49,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Obtener URL pública
+    // @ts-ignore - Supabase types not generated yet
     const { data: urlData } = supabaseAdmin
       .storage
       .from('blog-images')
@@ -74,6 +76,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'No path provided' }, { status: 400 })
     }
 
+    // @ts-ignore - Supabase types not generated yet
     const { error } = await supabaseAdmin
       .storage
       .from('blog-images')
