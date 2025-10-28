@@ -82,7 +82,7 @@ export default function DemoHero() {
               transition={{ duration: 0.6, delay: 0.8 }}
               className="pt-4"
             >
-              <p className="text-sm text-gray-400 uppercase tracking-wider mb-5">
+              <p className="text-sm text-gray-400 uppercase tracking-wider mb-5 text-left">
                 YA CONFÍAN EN NEXGENT
               </p>
               <div className="grid grid-cols-3 gap-6">
@@ -92,7 +92,7 @@ export default function DemoHero() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.9 + index * 0.1 }}
-                    className="relative h-8 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300"
+                    className="relative h-8 flex items-center justify-start opacity-60 hover:opacity-100 transition-opacity duration-300"
                     style={{
                       filter: 'brightness(0) invert(1)',
                     }}
@@ -101,7 +101,7 @@ export default function DemoHero() {
                       src={client.logo}
                       alt={client.name}
                       fill
-                      className="object-contain"
+                      className="object-contain object-left"
                       sizes="(max-width: 768px) 70px, 90px"
                     />
                   </motion.div>

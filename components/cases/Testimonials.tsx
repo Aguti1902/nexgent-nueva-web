@@ -59,7 +59,7 @@ export default function Testimonials() {
               {/* Rating */}
               <div className="flex gap-1 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <FaStar key={i} className="text-black text-lg" />
+                  <FaStar key={i} className="text-yellow-400 text-lg" />
                 ))}
               </div>
 
