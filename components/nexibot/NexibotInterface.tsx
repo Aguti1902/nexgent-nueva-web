@@ -211,7 +211,7 @@ export default function NexibotInterface() {
           >
             <div className="relative w-48 h-48 md:w-64 md:h-64 mx-auto">
               <Image
-                src="/images/NEXIBOT.png"
+                src="/images/NEXIBOTBLANCO.png"
                 alt="NEXIBOT"
                 fill
                 className="object-contain"

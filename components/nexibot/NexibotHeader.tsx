@@ -10,7 +10,7 @@ export default function NexibotHeader() {
           {/* Logo NEXIBOT centrado */}
           <div className="relative w-32 h-12">
             <Image
-              src="/images/NEXIBOT.png"
+              src="/images/NEXIBOTBLANCO.png"
               alt="NEXIBOT"
               fill
               className="object-contain"
