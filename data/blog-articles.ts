@@ -1666,21 +1666,35 @@ Sigue estas lecciones de 200+ fracasos analizados y estarás en el 27% exitoso.
 ]
 
 // Funciones helper
+// Helper para obtener artículos de localStorage
+function getStoredArticles(): BlogArticle[] {
+  if (typeof window === 'undefined') return []
+  const stored = localStorage.getItem('blogArticles')
+  return stored ? JSON.parse(stored) : []
+}
+
+// Combinar artículos predefinidos con los del localStorage
+function getAllArticles(): BlogArticle[] {
+  const stored = getStoredArticles()
+  // Los artículos nuevos del localStorage van primero
+  return [...stored, ...blogArticles]
+}
+
 export function getAllBlogArticles(): BlogArticle[] {
-  return blogArticles.filter(article => article.published)
+  return getAllArticles().filter(article => article.published)
 }
 
 export function getBlogArticleBySlug(slug: string): BlogArticle | undefined {
-  return blogArticles.find(article => article.slug === slug)
+  return getAllArticles().find(article => article.slug === slug)
 }
 
 export function getBlogArticlesByCategory(category: string): BlogArticle[] {
-  return blogArticles.filter(article => article.category === category && article.published)
+  return getAllArticles().filter(article => article.category === category && article.published)
 }
 
 export function searchBlogArticles(query: string): BlogArticle[] {
   const lowerQuery = query.toLowerCase()
-  return blogArticles.filter(article => 
+  return getAllArticles().filter(article => 
     article.published && (
       article.title.toLowerCase().includes(lowerQuery) ||
       article.excerpt.toLowerCase().includes(lowerQuery) ||

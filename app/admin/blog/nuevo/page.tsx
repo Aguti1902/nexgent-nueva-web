@@ -84,9 +84,37 @@ export default function NuevoArticuloBlog() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Guardando artículo:', formData)
-    // Aquí iría la lógica para guardar en la base de datos o archivo
-    alert('Artículo guardado correctamente!')
+    
+    // Validar que los campos requeridos estén completos
+    if (!formData.titulo || !formData.extracto || !formData.contenido) {
+      alert('Por favor, completa todos los campos obligatorios (título, extracto y contenido)')
+      return
+    }
+
+    // Crear nuevo artículo
+    const newArticle = {
+      id: Date.now().toString(), // ID único basado en timestamp
+      slug: formData.slug,
+      title: formData.titulo,
+      category: formData.categoria,
+      excerpt: formData.extracto,
+      content: formData.contenido,
+      date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }),
+      readTime: formData.tiempoLectura,
+      author: formData.autor,
+      image: formData.imagenDestacada,
+      published: true,
+    }
+
+    // Guardar en localStorage
+    const existingArticles = JSON.parse(localStorage.getItem('blogArticles') || '[]')
+    const updatedArticles = [newArticle, ...existingArticles]
+    localStorage.setItem('blogArticles', JSON.stringify(updatedArticles))
+
+    alert('✅ Artículo publicado correctamente!')
+    
+    // Redirigir al dashboard
+    router.push('/admin')
   }
 
   return (

@@ -39,6 +39,8 @@ export default function NuevaGuia() {
   })
 
   const [preview, setPreview] = useState(false)
+  const [generatedCode, setGeneratedCode] = useState('')
+  const [showCode, setShowCode] = useState(false)
 
   const categorias = [
     'Primeros pasos',
@@ -66,19 +68,46 @@ export default function NuevaGuia() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
+    // Validar campos requeridos
+    if (!formData.titulo || !formData.contenido) {
+      alert('Por favor, completa el título y el contenido de la guía')
+      return
+    }
+
     // Generar el código del artículo
+    const relatedArticles = formData.articulosRelacionados 
+      ? formData.articulosRelacionados.split(',').map(slug => `'${slug.trim()}'`).join(', ')
+      : ''
+
     const articleCode = `{
   slug: '${formData.slug}',
   title: '${formData.titulo}',
   category: '${formData.categoria}',
   views: '1.2K',
   readTime: '${formData.tiempoLectura}',
-  content: \`${formData.contenido}\`,
-  relatedArticles: [${formData.articulosRelacionados.split(',').map(slug => `'${slug.trim()}'`).join(', ')}],
+  content: \`
+# ${formData.titulo}
+
+${formData.contenido}
+\`,
+  relatedArticles: [${relatedArticles}],
 },`
 
-    console.log('Código del artículo:', articleCode)
-    alert('Guía guardada! Copia el código del artículo de la consola y añádelo a articles-data.ts')
+    setGeneratedCode(articleCode)
+    setShowCode(true)
+    
+    // Copiar automáticamente al portapapeles
+    navigator.clipboard.writeText(articleCode).then(() => {
+      alert('✅ Código generado y copiado al portapapeles!\n\nPega este código en el archivo:\napp/recursos/centro-ayuda/articulos/articles-data.ts')
+    }).catch(() => {
+      alert('✅ Código generado! Cópialo manualmente desde el cuadro que aparece abajo.')
+    })
+  }
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(generatedCode).then(() => {
+      alert('✅ Código copiado al portapapeles!')
+    })
   }
 
   return (
@@ -304,6 +333,32 @@ Antes de empezar, asegúrate de tener:
                   <p className="text-gray-400 italic">El contenido aparecerá aquí...</p>
                 )}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Código Generado */}
+        {showCode && (
+          <div className="mt-8 bg-gray-900 text-white rounded-xl p-6 border border-gray-700">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg">📋 Código Generado</h3>
+              <button
+                onClick={copyToClipboard}
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all"
+              >
+                Copiar código
+              </button>
+            </div>
+            <pre className="bg-black rounded-lg p-4 overflow-x-auto text-sm">
+              <code>{generatedCode}</code>
+            </pre>
+            <div className="mt-4 p-4 bg-purple-900/50 rounded-lg border border-purple-700">
+              <p className="text-sm text-purple-200">
+                <strong>📁 Archivo:</strong> <code className="text-purple-100">app/recursos/centro-ayuda/articulos/articles-data.ts</code>
+              </p>
+              <p className="text-sm text-purple-200 mt-2">
+                <strong>✏️ Instrucciones:</strong> Pega este código dentro del array <code className="text-purple-100">articles</code>
+              </p>
             </div>
           </div>
         )}
