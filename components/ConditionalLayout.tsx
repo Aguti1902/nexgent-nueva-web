@@ -13,9 +13,10 @@ export default function ConditionalLayout({
 }) {
   const pathname = usePathname()
   const isDemoPage = pathname === '/demo'
+  const isAdminPage = pathname?.startsWith('/admin')
 
-  if (isDemoPage) {
-    // Para la página de demo, solo mostramos el contenido sin Header/Footer
+  // Para páginas de demo y admin, solo mostramos el contenido sin Header/Footer
+  if (isDemoPage || isAdminPage) {
     return <>{children}</>
   }
 
