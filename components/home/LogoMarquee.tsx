@@ -5,6 +5,7 @@ import Image from 'next/image'
 
 const partners = [
   { name: 'Nova Dental', logo: '/images/logos/NOVA DENTAL.png' },
+  { name: 'Hello Nails', logo: '/images/logos/HELLO NAILS.png' },
   { name: 'Agutidesigns', logo: '/images/logos/Agutidesigns.png' },
   { name: 'IQ Mind', logo: '/images/logos/IQMIND.svg' },
   { name: 'Spa Deluxe', logo: '/images/logos/SPADELUXE.png' },
