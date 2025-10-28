@@ -37,7 +37,7 @@ export default function ScrollPopup() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="fixed bottom-8 inset-x-0 z-50 flex justify-center px-4"
+          className="fixed bottom-24 inset-x-0 z-50 flex justify-center px-4"
           style={{ maxWidth: '100vw', left: 0, right: 0 }}
         >
           <div className="bg-black text-white rounded-full shadow-2xl px-6 py-4 flex items-center gap-4 max-w-full border border-white">
