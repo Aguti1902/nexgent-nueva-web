@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { HiCheckCircle, HiLightningBolt, HiCpuChip, HiPuzzle, HiCode, HiTrendingUp, HiShieldCheck } from 'react-icons/hi'
 
 export default function NexibotInterface() {
-  // Interactive demo state
+  // Interactive demo state  
   const [userInput, setUserInput] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
   const [showOutput, setShowOutput] = useState(false)
