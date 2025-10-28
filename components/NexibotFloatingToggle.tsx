@@ -16,7 +16,7 @@ export default function NexibotFloatingToggle() {
         color: isNexibotMode ? '#FFD700' : '#000',
       }}
     >
-      <div className="relative w-10 h-10 flex-shrink-0">
+      <div className="relative w-16 h-16 flex-shrink-0">
         <Image
           src="/images/NEXIBOT.png"
           alt="NEXIBOT"
