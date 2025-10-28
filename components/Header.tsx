@@ -10,6 +10,7 @@ import Button from './ui/Button'
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [activeMobileSection, setActiveMobileSection] = useState<string | null>(null)
 
   const menuItems = {
     soluciones: [
@@ -242,47 +243,63 @@ export default function Header() {
             </Link>
             
             <div className="py-2">
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-3 px-2">Soluciones</p>
-              <div className="space-y-1">
-                {menuItems.soluciones.map((item, index) => (
-                  <Link
-                    key={index}
-                    href={item.href}
-                    className="flex items-center gap-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300 py-3 px-2 rounded-lg"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-black flex-shrink-0">
-                      <item.icon className="text-sm" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium text-sm">{item.title}</p>
-                      <p className="text-xs text-gray-500">{item.description}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+              <button
+                onClick={() => setActiveMobileSection(activeMobileSection === 'soluciones' ? null : 'soluciones')}
+                className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-50 transition-colors duration-300 font-medium py-3 px-2 rounded-lg"
+              >
+                <span className="text-sm uppercase tracking-wide font-semibold">Soluciones</span>
+                <HiChevronDown className={`transition-transform duration-200 ${activeMobileSection === 'soluciones' ? 'rotate-180' : ''}`} />
+              </button>
+              {activeMobileSection === 'soluciones' && (
+                <div className="space-y-1 mt-2">
+                  {menuItems.soluciones.map((item, index) => (
+                    <Link
+                      key={index}
+                      href={item.href}
+                      className="flex items-center gap-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300 py-3 px-2 rounded-lg"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-black flex-shrink-0">
+                        <item.icon className="text-sm" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">{item.title}</p>
+                        <p className="text-xs text-gray-500">{item.description}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="py-2">
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-3 px-2">Industrias</p>
-              <div className="space-y-1">
-                {menuItems.industrias.map((item, index) => (
-                  <Link
-                    key={index}
-                    href={item.href}
-                    className="flex items-center gap-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300 py-3 px-2 rounded-lg"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-black flex-shrink-0">
-                      <item.icon className="text-sm" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium text-sm">{item.title}</p>
-                      <p className="text-xs text-gray-500">{item.description}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+              <button
+                onClick={() => setActiveMobileSection(activeMobileSection === 'industrias' ? null : 'industrias')}
+                className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-50 transition-colors duration-300 font-medium py-3 px-2 rounded-lg"
+              >
+                <span className="text-sm uppercase tracking-wide font-semibold">Industrias</span>
+                <HiChevronDown className={`transition-transform duration-200 ${activeMobileSection === 'industrias' ? 'rotate-180' : ''}`} />
+              </button>
+              {activeMobileSection === 'industrias' && (
+                <div className="space-y-1 mt-2">
+                  {menuItems.industrias.map((item, index) => (
+                    <Link
+                      key={index}
+                      href={item.href}
+                      className="flex items-center gap-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300 py-3 px-2 rounded-lg"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-black flex-shrink-0">
+                        <item.icon className="text-sm" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">{item.title}</p>
+                        <p className="text-xs text-gray-500">{item.description}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
 
             <Link
@@ -294,25 +311,33 @@ export default function Header() {
             </Link>
 
             <div className="py-2">
-              <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold mb-3 px-2">Recursos</p>
-              <div className="space-y-1">
-                {menuItems.recursos.map((item, index) => (
-                  <Link
-                    key={index}
-                    href={item.href}
-                    className="flex items-center gap-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300 py-3 px-2 rounded-lg"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-black flex-shrink-0">
-                      <item.icon className="text-sm" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium text-sm">{item.title}</p>
-                      <p className="text-xs text-gray-500">{item.description}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+              <button
+                onClick={() => setActiveMobileSection(activeMobileSection === 'recursos' ? null : 'recursos')}
+                className="flex items-center justify-between w-full text-gray-900 hover:bg-gray-50 transition-colors duration-300 font-medium py-3 px-2 rounded-lg"
+              >
+                <span className="text-sm uppercase tracking-wide font-semibold">Recursos</span>
+                <HiChevronDown className={`transition-transform duration-200 ${activeMobileSection === 'recursos' ? 'rotate-180' : ''}`} />
+              </button>
+              {activeMobileSection === 'recursos' && (
+                <div className="space-y-1 mt-2">
+                  {menuItems.recursos.map((item, index) => (
+                    <Link
+                      key={index}
+                      href={item.href}
+                      className="flex items-center gap-3 text-gray-700 hover:bg-gray-50 transition-colors duration-300 py-3 px-2 rounded-lg"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-black flex-shrink-0">
+                        <item.icon className="text-sm" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">{item.title}</p>
+                        <p className="text-xs text-gray-500">{item.description}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
 
             <Link
