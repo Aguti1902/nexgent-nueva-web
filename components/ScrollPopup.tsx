@@ -37,10 +37,10 @@ export default function ScrollPopup() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="fixed bottom-24 inset-x-0 z-50 flex justify-center px-2"
+          className="fixed bottom-24 inset-x-0 z-50 flex justify-center px-4"
           style={{ maxWidth: '100vw', left: 0, right: 0 }}
         >
-          <div className="bg-black text-white rounded-full shadow-2xl px-3 md:px-6 py-3 md:py-4 flex items-center gap-2 md:gap-4 w-full max-w-full border border-white">
+          <div className="bg-black text-white rounded-full shadow-2xl px-4 md:px-6 py-4 md:py-5 flex items-center gap-2 md:gap-4 max-w-full border border-white">
             {/* Avatares/Logo */}
             <div className="flex items-center -space-x-2 flex-shrink-0">
               <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center border-2 border-black overflow-hidden">
