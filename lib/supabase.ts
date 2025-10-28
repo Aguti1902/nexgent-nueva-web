@@ -1,23 +1,48 @@
 import { createClient } from '@supabase/supabase-js'
 
 // Cliente de Supabase para el navegador (client-side)
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+// Lazy initialization para evitar errores durante el build
+let supabaseInstance: ReturnType<typeof createClient> | null = null
+
+export const getSupabase = () => {
+  if (!supabaseInstance) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    
+    if (!supabaseUrl || !supabaseAnonKey) {
+      throw new Error('Missing Supabase environment variables')
+    }
+    
+    supabaseInstance = createClient(supabaseUrl, supabaseAnonKey)
+  }
+  return supabaseInstance
+}
+
+// Para compatibilidad con código existente
+export const supabase = typeof window !== 'undefined' ? getSupabase() : null as any
 
 // Cliente de Supabase para el servidor (server-side) con service_role key
 // Solo usar en API routes
-export const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false
+let supabaseAdminInstance: ReturnType<typeof createClient> | null = null
+
+export const getSupabaseAdmin = () => {
+  if (!supabaseAdminInstance) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    
+    if (!supabaseUrl || !supabaseServiceKey) {
+      throw new Error('Missing Supabase environment variables for admin')
     }
+    
+    supabaseAdminInstance = createClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
+    })
   }
-)
+  return supabaseAdminInstance
+}
 
 // Tipos para la base de datos
 export interface BlogArticle {

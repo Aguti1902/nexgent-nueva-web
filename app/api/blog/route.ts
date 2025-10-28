@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase'
+import { getSupabaseAdmin } from '@/lib/supabase'
 
 // GET - Obtener todos los artículos
 export async function GET(request: NextRequest) {
   try {
+    const supabaseAdmin = getSupabaseAdmin()
     const { searchParams } = new URL(request.url)
     const published = searchParams.get('published')
 
@@ -33,6 +34,7 @@ export async function GET(request: NextRequest) {
 // POST - Crear nuevo artículo
 export async function POST(request: NextRequest) {
   try {
+    const supabaseAdmin = getSupabaseAdmin()
     const body = await request.json()
 
     const { data, error } = await supabaseAdmin

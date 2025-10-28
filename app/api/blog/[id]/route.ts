@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase'
+import { getSupabaseAdmin } from '@/lib/supabase'
 
 // GET - Obtener un artículo por ID
 export async function GET(
@@ -7,6 +7,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    const supabaseAdmin = getSupabaseAdmin()
     const { data, error } = await supabaseAdmin
       .from('blog_articles')
       .select('*')
@@ -31,6 +32,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
+    const supabaseAdmin = getSupabaseAdmin()
     const body = await request.json()
 
     const { data, error } = await supabaseAdmin
@@ -69,6 +71,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
+    const supabaseAdmin = getSupabaseAdmin()
     const { error } = await supabaseAdmin
       .from('blog_articles')
       .delete()
@@ -92,6 +95,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
+    const supabaseAdmin = getSupabaseAdmin()
     const body = await request.json()
 
     const { data, error } = await supabaseAdmin
