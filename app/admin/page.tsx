@@ -110,15 +110,12 @@ export default function AdminDashboard() {
           <div className="flex items-center gap-3">
             <Link href="/admin" className="flex items-center gap-2">
               <Image 
-                src="/images/ISOTIPO.png" 
+                src="/images/LOGO.png" 
                 alt="NexGent Logo" 
-                width={40} 
+                width={140} 
                 height={40}
                 className="object-contain"
               />
-              <div className="font-monda text-2xl font-bold text-black">
-                nex<span className="text-blue-500">gent</span>
-              </div>
             </Link>
             <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
               Admin

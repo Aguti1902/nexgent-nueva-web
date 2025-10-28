@@ -43,17 +43,14 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="flex items-center justify-center mb-4">
             <Image 
-              src="/images/ISOTIPO.png" 
+              src="/images/LOGO BLANCO.png" 
               alt="NexGent Logo" 
-              width={50} 
-              height={50}
+              width={200} 
+              height={60}
               className="object-contain"
             />
-            <h1 className="font-monda text-4xl font-bold text-white">
-              nex<span className="text-blue-500">gent</span>
-            </h1>
           </div>
           <p className="text-gray-400">Panel de Administración</p>
         </div>

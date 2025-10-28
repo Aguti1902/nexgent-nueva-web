@@ -89,15 +89,12 @@ export default function NuevaGuia() {
           <div className="flex items-center gap-6">
             <Link href="/admin" className="flex items-center gap-2">
               <Image 
-                src="/images/ISOTIPO.png" 
+                src="/images/LOGO.png" 
                 alt="NexGent Logo" 
-                width={40} 
+                width={140} 
                 height={40}
                 className="object-contain"
               />
-              <span className="font-monda text-2xl font-bold text-black">
-                nex<span className="text-blue-500">gent</span>
-              </span>
             </Link>
             <span className="text-gray-300">|</span>
             <Link 
