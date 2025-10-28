@@ -354,10 +354,16 @@ export default function NexibotInterface() {
                   {examplePrompts.map((prompt, index) => (
                     <button
                       key={index}
-                      onClick={() => generateAgent(prompt)}
-                      className="text-left bg-black border border-gray-700 hover:border-yellow-400/50 rounded-lg p-3 text-gray-300 hover:text-yellow-400 transition-all duration-300 group text-sm"
+                      onClick={() => setUserInput(prompt)}
+                      className={`text-left bg-black border rounded-lg p-3 transition-all duration-300 group text-sm ${
+                        userInput === prompt 
+                          ? 'border-yellow-400 text-yellow-400' 
+                          : 'border-gray-700 hover:border-yellow-400/50 text-gray-300 hover:text-yellow-400'
+                      }`}
                     >
-                      <span className="text-yellow-400 mr-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                      <span className={`mr-2 transition-opacity ${
+                        userInput === prompt ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                      } text-yellow-400`}>→</span>
                       {prompt}
                     </button>
                   ))}
