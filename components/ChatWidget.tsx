@@ -75,7 +75,7 @@ export default function ChatWidget() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 bg-black text-white rounded-full p-4 shadow-2xl hover:bg-gray-800 transition-colors duration-300 flex items-center gap-3 group border-4 border-white ring-2 ring-white"
+            className="fixed bottom-6 right-6 z-50 bg-black text-white rounded-full p-4 shadow-2xl hover:bg-gray-800 transition-colors duration-300 flex items-center gap-3 group border border-white"
             style={{ maxWidth: '90vw' }}
           >
             <div className="relative">
