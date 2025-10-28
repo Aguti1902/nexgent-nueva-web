@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog, FaSignOutAlt, FaEye, FaEyeSlash } from 'react-icons/fa'
 import { getAllBlogArticles, BlogArticle } from '@/data/blog-articles'
 import { articles as helpArticles } from '@/app/recursos/centro-ayuda/articulos/articles-data'
@@ -108,6 +109,13 @@ export default function AdminDashboard() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link href="/admin" className="flex items-center gap-2">
+              <Image 
+                src="/images/ISOTIPO.png" 
+                alt="NexGent Logo" 
+                width={40} 
+                height={40}
+                className="object-contain"
+              />
               <div className="font-monda text-2xl font-bold text-black">
                 nex<span className="text-blue-500">gent</span>
               </div>

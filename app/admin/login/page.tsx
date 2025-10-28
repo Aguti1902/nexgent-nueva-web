@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { FaLock, FaUser } from 'react-icons/fa'
 
 export default function AdminLoginPage() {
@@ -42,9 +43,18 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="font-monda text-4xl font-bold text-white mb-2">
-            nex<span className="text-blue-500">gent</span>
-          </h1>
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <Image 
+              src="/images/ISOTIPO.png" 
+              alt="NexGent Logo" 
+              width={50} 
+              height={50}
+              className="object-contain"
+            />
+            <h1 className="font-monda text-4xl font-bold text-white">
+              nex<span className="text-blue-500">gent</span>
+            </h1>
+          </div>
           <p className="text-gray-400">Panel de Administración</p>
         </div>
 

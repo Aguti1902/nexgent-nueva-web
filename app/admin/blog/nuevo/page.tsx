@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { FaArrowLeft, FaSave, FaEye, FaImage } from 'react-icons/fa'
+import Image from 'next/image'
+import { FaArrowLeft, FaSave, FaEye, FaImage, FaTrash } from 'react-icons/fa'
 
 export default function NuevoArticuloBlog() {
   const router = useRouter()
@@ -57,6 +58,30 @@ export default function NuevoArticuloBlog() {
     }
   }
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      // Validar tamaño (max 2MB para base64)
+      if (file.size > 2 * 1024 * 1024) {
+        alert('La imagen es muy grande. Por favor, selecciona una imagen menor a 2MB.')
+        return
+      }
+
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setFormData(prev => ({
+          ...prev,
+          imagenDestacada: reader.result as string
+        }))
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const removeImage = () => {
+    setFormData(prev => ({ ...prev, imagenDestacada: '' }))
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log('Guardando artículo:', formData)
@@ -70,8 +95,17 @@ export default function NuevoArticuloBlog() {
       <header className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link href="/admin" className="font-monda text-2xl font-bold text-black">
-              nex<span className="text-blue-500">gent</span>
+            <Link href="/admin" className="flex items-center gap-2">
+              <Image 
+                src="/images/ISOTIPO.png" 
+                alt="NexGent Logo" 
+                width={40} 
+                height={40}
+                className="object-contain"
+              />
+              <span className="font-monda text-2xl font-bold text-black">
+                nex<span className="text-blue-500">gent</span>
+              </span>
             </Link>
             <span className="text-gray-300">|</span>
             <Link 
@@ -214,21 +248,39 @@ export default function NuevoArticuloBlog() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Imagen destacada
               </label>
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-500 transition-all cursor-pointer">
-                <FaImage className="text-4xl text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 mb-2">Arrastra una imagen o haz clic para seleccionar</p>
-                <p className="text-xs text-gray-500">PNG, JPG o WebP (máx. 5MB)</p>
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                      console.log('Imagen seleccionada:', e.target.files[0].name)
-                    }
-                  }}
-                />
-              </div>
+              {formData.imagenDestacada ? (
+                <div className="relative">
+                  <img 
+                    src={formData.imagenDestacada} 
+                    alt="Preview" 
+                    className="w-full h-64 object-cover rounded-lg"
+                  />
+                  <button
+                    type="button"
+                    onClick={removeImage}
+                    className="absolute top-4 right-4 bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition-all shadow-lg"
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              ) : (
+                <label className="block cursor-pointer">
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-500 transition-all">
+                    <FaImage className="text-4xl text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-600 mb-2">Arrastra una imagen o haz clic para seleccionar</p>
+                    <p className="text-xs text-gray-500">PNG, JPG o WebP (máx. 2MB)</p>
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleImageUpload}
+                  />
+                </label>
+              )}
+              <p className="text-xs text-gray-500 mt-2">
+                ⚠️ Nota: Las imágenes se guardan en formato base64. Para producción, usa un servicio como Cloudinary.
+              </p>
             </div>
 
             {/* Contenido */}

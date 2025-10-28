@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { FaArrowLeft, FaSave, FaEye } from 'react-icons/fa'
 
 export default function NuevaGuia() {
@@ -86,8 +87,17 @@ export default function NuevaGuia() {
       <header className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link href="/admin" className="font-monda text-2xl font-bold text-black">
-              nex<span className="text-blue-500">gent</span>
+            <Link href="/admin" className="flex items-center gap-2">
+              <Image 
+                src="/images/ISOTIPO.png" 
+                alt="NexGent Logo" 
+                width={40} 
+                height={40}
+                className="object-contain"
+              />
+              <span className="font-monda text-2xl font-bold text-black">
+                nex<span className="text-blue-500">gent</span>
+              </span>
             </Link>
             <span className="text-gray-300">|</span>
             <Link 
