@@ -9,7 +9,7 @@ export default function NexibotFloatingToggle() {
   return (
     <button
       onClick={toggleNexibotMode}
-      className="fixed bottom-24 left-4 md:bottom-6 md:left-6 z-50 flex items-center gap-3 px-5 py-3 rounded-full border-2 transition-all duration-300 hover:scale-105 shadow-2xl"
+      className="fixed bottom-6 left-6 z-50 flex items-center gap-3 px-5 py-3 rounded-full border-2 transition-all duration-300 hover:scale-105 shadow-2xl"
       style={{
         borderColor: isNexibotMode ? '#FFD700' : '#e5e7eb',
         backgroundColor: isNexibotMode ? '#000' : '#fff',
