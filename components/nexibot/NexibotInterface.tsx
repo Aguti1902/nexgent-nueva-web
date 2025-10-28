@@ -209,26 +209,15 @@ export default function NexibotInterface() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-12"
           >
-            <div className="relative w-20 h-20 mx-auto mb-6">
+            <div className="relative w-48 h-48 md:w-64 md:h-64 mx-auto">
               <Image
-                src="/images/LOGONEXIBOT.png"
+                src="/images/NEXIBOT.png"
                 alt="NEXIBOT"
                 fill
-                className="object-contain opacity-90"
+                className="object-contain"
               />
             </div>
           </motion.div>
-
-          {/* Título */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="font-monda text-7xl md:text-9xl font-bold leading-none mb-6 tracking-tight"
-          >
-            <span className="text-white">NEX</span>
-            <span className="text-yellow-400">IBOT</span>
-          </motion.h1>
 
           {/* Subtítulo */}
           <motion.p

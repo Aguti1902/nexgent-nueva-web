@@ -8,19 +8,13 @@ export default function NexibotHeader() {
       <nav className="w-full px-6 lg:px-8 py-4 max-w-full">
         <div className="flex items-center justify-center">
           {/* Logo NEXIBOT centrado */}
-          <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10">
-              <Image
-                src="/images/LOGONEXIBOT.png"
-                alt="NEXIBOT"
-                fill
-                className="object-contain"
-              />
-            </div>
-            <h1 className="font-monda text-2xl font-bold">
-              <span className="text-white">NEX</span>
-              <span className="text-yellow-400">IBOT</span>
-            </h1>
+          <div className="relative w-32 h-12">
+            <Image
+              src="/images/NEXIBOT.png"
+              alt="NEXIBOT"
+              fill
+              className="object-contain"
+            />
           </div>
         </div>
       </nav>

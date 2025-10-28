@@ -16,7 +16,7 @@ export default function NexibotFloatingToggle() {
         color: isNexibotMode ? '#FFD700' : '#000',
       }}
     >
-      <div className="relative w-8 h-8 flex-shrink-0">
+      <div className="relative w-10 h-10 flex-shrink-0">
         <Image
           src="/images/NEXIBOT.png"
           alt="NEXIBOT"
@@ -24,7 +24,6 @@ export default function NexibotFloatingToggle() {
           className="object-contain"
         />
       </div>
-      <span className="font-bold text-sm whitespace-nowrap">NEXIBOT</span>
       
       {/* Toggle Switch */}
       <div 
