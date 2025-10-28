@@ -103,37 +103,37 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="container-custom px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Link href="/" className="font-monda text-2xl font-bold text-black">
+      {/* Admin Header */}
+      <header className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Link href="/admin" className="flex items-center gap-2">
+              <div className="font-monda text-2xl font-bold text-black">
                 nex<span className="text-blue-500">gent</span>
-              </Link>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
-                Admin
-              </span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-gray-600">
-                Hola, <strong>{username}</strong>
-              </span>
-              <Link 
-                href="/" 
-                target="_blank"
-                className="text-gray-600 hover:text-black transition-colors"
-              >
-                Ver sitio web →
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-all"
-              >
-                <FaSignOutAlt />
-                Cerrar sesión
-              </button>
-            </div>
+              </div>
+            </Link>
+            <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+              Admin
+            </span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-gray-600">
+              Hola, <strong>{username}</strong>
+            </span>
+            <Link 
+              href="/" 
+              target="_blank"
+              className="text-gray-600 hover:text-black transition-colors"
+            >
+              Ver sitio web →
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-all"
+            >
+              <FaSignOutAlt />
+              Cerrar sesión
+            </button>
           </div>
         </div>
       </header>
