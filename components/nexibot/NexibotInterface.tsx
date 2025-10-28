@@ -16,52 +16,150 @@ export default function NexibotInterface() {
   const y = useTransform(scrollYProgress, [0, 1], [0, -50])
   
   // Interactive demo state
-  const [demoStep, setDemoStep] = useState(0)
   const [userInput, setUserInput] = useState('')
-  const [isTyping, setIsTyping] = useState(false)
+  const [isGenerating, setIsGenerating] = useState(false)
   const [showOutput, setShowOutput] = useState(false)
+  const [agentData, setAgentData] = useState<any>(null)
+  const [showMobileDemo, setShowMobileDemo] = useState(false)
+  const [chatMessages, setChatMessages] = useState<any[]>([])
+  const [isBotTyping, setIsBotTyping] = useState(false)
 
-  const demoSteps = [
-    {
-      prompt: "Quiero un agente para mi restaurante que gestione reservas por WhatsApp",
-      output: {
-        title: "Agente generado: RestauranteBot",
-        features: [
-          "Gestión de reservas 24/7",
-          "Integración con WhatsApp Business",
-          "Confirmaciones automáticas",
-          "Base de datos de clientes",
-          "Recordatorios personalizados"
-        ],
-        platforms: ["WhatsApp", "Web", "Telegram"],
-        time: "4 minutos"
-      }
-    },
-    {
-      prompt: "Necesito un asistente para mi clínica dental que agende citas y responda preguntas",
-      output: {
-        title: "Agente generado: DentalAssistant",
-        features: [
-          "Agendamiento de citas",
-          "Gestión de horarios",
-          "Recordatorios automáticos",
-          "FAQs sobre tratamientos",
-          "Integración con calendario"
-        ],
-        platforms: ["WhatsApp", "Web", "SMS"],
-        time: "5 minutos"
-      }
-    }
+  const examplePrompts = [
+    "Quiero un agente para mi restaurante que gestione reservas por WhatsApp",
+    "Necesito un asistente para mi clínica dental que agende citas",
+    "Quiero un bot de atención al cliente para mi e-commerce",
+    "Necesito un agente para calificar leads de mi inmobiliaria"
   ]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDemoStep((prev) => (prev + 1) % demoSteps.length)
-      setShowOutput(false)
-      setTimeout(() => setShowOutput(true), 1000)
-    }, 8000)
-    return () => clearInterval(interval)
-  }, [])
+  const generateAgent = (prompt: string) => {
+    setIsGenerating(true)
+    setShowOutput(false)
+    setShowMobileDemo(false)
+    setUserInput(prompt)
+
+    // Simular generación del agente
+    setTimeout(() => {
+      let data
+      if (prompt.toLowerCase().includes('restaurante')) {
+        data = {
+          title: "RestauranteBot",
+          features: [
+            "Gestión de reservas 24/7",
+            "Integración con WhatsApp Business",
+            "Confirmaciones automáticas",
+            "Base de datos de clientes",
+            "Recordatorios personalizados"
+          ],
+          platforms: ["WhatsApp", "Web", "Telegram"],
+          time: "4 minutos",
+          chatExample: [
+            { type: 'user', text: 'Hola, quiero hacer una reserva' },
+            { type: 'bot', text: '¡Hola! Claro, con gusto te ayudo. ¿Para cuántas personas será la reserva?' },
+            { type: 'user', text: '4 personas' },
+            { type: 'bot', text: 'Perfecto, ¿para qué día y hora te gustaría reservar?' },
+            { type: 'user', text: 'Mañana a las 20:00' },
+            { type: 'bot', text: '✅ ¡Reserva confirmada!\n\n📅 Fecha: Mañana\n🕐 Hora: 20:00\n👥 Personas: 4\n\nTe enviaré un recordatorio 2 horas antes. ¡Nos vemos!' }
+          ]
+        }
+      } else if (prompt.toLowerCase().includes('clínica') || prompt.toLowerCase().includes('dental')) {
+        data = {
+          title: "DentalAssistant",
+          features: [
+            "Agendamiento de citas",
+            "Gestión de horarios",
+            "Recordatorios automáticos",
+            "FAQs sobre tratamientos",
+            "Integración con calendario"
+          ],
+          platforms: ["WhatsApp", "Web", "SMS"],
+          time: "5 minutos",
+          chatExample: [
+            { type: 'user', text: 'Buenos días, necesito agendar una cita' },
+            { type: 'bot', text: '¡Buenos días! Estaré encantado de ayudarte. ¿Qué tipo de tratamiento necesitas?' },
+            { type: 'user', text: 'Limpieza dental' },
+            { type: 'bot', text: 'Perfecto. Tengo disponibilidad:\n\n📅 Lunes 28 - 10:00 AM\n📅 Miércoles 30 - 3:00 PM\n📅 Viernes 1 - 11:00 AM\n\n¿Cuál prefieres?' },
+            { type: 'user', text: 'Miércoles a las 3' },
+            { type: 'bot', text: '✅ ¡Cita agendada!\n\n🦷 Limpieza dental\n📅 Miércoles 30 Oct\n🕒 3:00 PM\n👨‍⚕️ Dr. García\n\nTe enviaré un recordatorio el día anterior.' }
+          ]
+        }
+      } else if (prompt.toLowerCase().includes('ecommerce') || prompt.toLowerCase().includes('e-commerce')) {
+        data = {
+          title: "EcommerceBot",
+          features: [
+            "Atención al cliente 24/7",
+            "Seguimiento de pedidos",
+            "Recomendaciones de productos",
+            "Gestión de devoluciones",
+            "Soporte multilenguaje"
+          ],
+          platforms: ["WhatsApp", "Web", "Messenger"],
+          time: "4 minutos",
+          chatExample: [
+            { type: 'user', text: 'Hola, ¿dónde está mi pedido?' },
+            { type: 'bot', text: '¡Hola! Te ayudo a rastrearlo. ¿Cuál es tu número de pedido?' },
+            { type: 'user', text: '#12345' },
+            { type: 'bot', text: '📦 Estado de tu pedido:\n\n🚚 En tránsito\n📍 Llegará mañana antes de las 6 PM\n\nPuedes rastrearlo en: tracking.com/12345' }
+          ]
+        }
+      } else {
+        data = {
+          title: "InmobiliariaBot",
+          features: [
+            "Calificación de leads",
+            "Agendamiento de visitas",
+            "Información de propiedades",
+            "Filtrado automático",
+            "CRM integrado"
+          ],
+          platforms: ["WhatsApp", "Web", "Telegram"],
+          time: "5 minutos",
+          chatExample: [
+            { type: 'user', text: 'Hola, busco un piso en Madrid' },
+            { type: 'bot', text: '¡Hola! Perfecto, te ayudo a encontrarlo. ¿Qué presupuesto máximo tienes?' },
+            { type: 'user', text: 'Hasta 300.000€' },
+            { type: 'bot', text: 'Genial, ¿cuántos dormitorios necesitas?' },
+            { type: 'user', text: '2 o 3' },
+            { type: 'bot', text: '✅ He encontrado 12 propiedades que coinciden:\n\n🏠 Piso en Chamberí - 280.000€\n🏠 Piso en Retiro - 295.000€\n🏠 Piso en Salamanca - 300.000€\n\n¿Te gustaría agendar una visita?' }
+          ]
+        }
+      }
+      
+      setAgentData(data)
+      setIsGenerating(false)
+      setShowOutput(true)
+    }, 2000)
+  }
+
+  const startMobileDemo = () => {
+    setShowMobileDemo(true)
+    setChatMessages([])
+    
+    // Simular conversación paso a paso
+    if (agentData?.chatExample) {
+      let index = 0
+      const showNextMessage = () => {
+        if (index < agentData.chatExample.length) {
+          const message = agentData.chatExample[index]
+          
+          if (message.type === 'bot') {
+            setIsBotTyping(true)
+            setTimeout(() => {
+              setChatMessages(prev => [...prev, message])
+              setIsBotTyping(false)
+              index++
+              setTimeout(showNextMessage, 1500)
+            }, 1500)
+          } else {
+            setChatMessages(prev => [...prev, message])
+            index++
+            setTimeout(showNextMessage, 1000)
+          }
+        }
+      }
+      
+      setTimeout(showNextMessage, 500)
+    }
+  }
 
   const features = [
     { 
@@ -214,7 +312,7 @@ export default function NexibotInterface() {
 
       {/* DEMO INTERACTIVO */}
       <section className="relative py-32 px-6 border-t border-gray-900">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -222,104 +320,244 @@ export default function NexibotInterface() {
             className="text-center mb-16"
           >
             <h2 className="font-monda text-5xl md:text-6xl font-bold mb-6">
-              Ve cómo <span className="text-yellow-400">funciona</span>
+              Pruébalo <span className="text-yellow-400">ahora</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Escribe lo que necesitas y NEXIBOT genera tu agente de IA personalizado al instante
+              Describe tu idea o selecciona un ejemplo y ve cómo NEXIBOT crea tu agente al instante
             </p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-br from-gray-900/50 to-black border border-gray-800 rounded-3xl p-8 md:p-12"
-          >
-            {/* Input del usuario */}
-            <div className="mb-8">
-              <label className="block text-sm text-gray-500 mb-3 uppercase tracking-wider">
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Panel de generación */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-gray-900/50 to-black border border-gray-800 rounded-3xl p-8"
+            >
+              <label className="block text-sm text-gray-500 mb-4 uppercase tracking-wider">
                 Describe tu agente de IA
               </label>
-              <div className="bg-black border border-gray-700 rounded-xl p-6 min-h-[120px] relative overflow-hidden">
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={demoStep}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="text-white text-lg leading-relaxed"
-                  >
-                    {demoSteps[demoStep].prompt}
-                  </motion.p>
-                </AnimatePresence>
-                
-                {/* Cursor parpadeante */}
-                <motion.span
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                  className="inline-block w-0.5 h-6 bg-yellow-400 ml-1"
-                />
+              
+              {/* Input editable */}
+              <textarea
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                placeholder="Ej: Quiero un agente para mi tienda online que responda dudas y gestione pedidos..."
+                className="w-full bg-black border border-gray-700 rounded-xl p-6 text-white text-lg leading-relaxed min-h-[140px] mb-6 resize-none focus:outline-none focus:border-yellow-400/50 transition-colors"
+              />
+
+              {/* Ejemplos predefinidos */}
+              <div className="mb-6">
+                <p className="text-sm text-gray-500 mb-3">O selecciona un ejemplo:</p>
+                <div className="grid gap-3">
+                  {examplePrompts.map((prompt, index) => (
+                    <button
+                      key={index}
+                      onClick={() => generateAgent(prompt)}
+                      className="text-left bg-black border border-gray-700 hover:border-yellow-400/50 rounded-lg p-4 text-gray-300 hover:text-yellow-400 transition-all duration-300 group"
+                    >
+                      <span className="text-yellow-400 mr-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {/* Output generado */}
-            <AnimatePresence mode="wait">
-              {showOutput && (
-                <motion.div
-                  key={demoStep}
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="border-t border-gray-800 pt-8"
-                >
-                  <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <div className="flex items-center gap-3 mb-2">
-                        <FaCheck className="text-green-400" />
-                        <span className="text-sm text-gray-500 uppercase tracking-wider">Agente generado</span>
+              {/* Botón generar */}
+              <button
+                onClick={() => userInput && generateAgent(userInput)}
+                disabled={!userInput || isGenerating}
+                className="w-full bg-yellow-400 hover:bg-yellow-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-black font-bold py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-3"
+              >
+                {isGenerating ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                    Generando agente...
+                  </>
+                ) : (
+                  <>
+                    <FaRocket />
+                    Generar mi agente
+                  </>
+                )}
+              </button>
+
+              {/* Output generado */}
+              <AnimatePresence>
+                {showOutput && agentData && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="border-t border-gray-800 pt-8 mt-8"
+                  >
+                    <div className="flex items-center justify-between mb-6">
+                      <div>
+                        <div className="flex items-center gap-3 mb-2">
+                          <FaCheck className="text-green-400" />
+                          <span className="text-sm text-gray-500 uppercase tracking-wider">Agente generado</span>
+                        </div>
+                        <h3 className="font-monda text-2xl font-bold text-yellow-400">
+                          {agentData.title}
+                        </h3>
                       </div>
-                      <h3 className="font-monda text-2xl font-bold text-yellow-400">
-                        {demoSteps[demoStep].output.title}
-                      </h3>
+                      <div className="text-right">
+                        <div className="text-sm text-gray-500 mb-1">Tiempo</div>
+                        <div className="font-monda text-xl text-yellow-400">{agentData.time}</div>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-sm text-gray-500 mb-1">Tiempo de generación</div>
-                      <div className="font-monda text-xl text-yellow-400">{demoSteps[demoStep].output.time}</div>
+
+                    {/* Features del agente */}
+                    <div className="space-y-3 mb-6">
+                      {agentData.features.map((feature: string, index: number) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="flex items-center gap-3 bg-black border border-gray-800 rounded-lg p-3"
+                        >
+                          <FaCheck className="text-yellow-400 flex-shrink-0 text-sm" />
+                          <span className="text-gray-300 text-sm">{feature}</span>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    {/* Plataformas */}
+                    <div className="flex items-center gap-3 flex-wrap mb-6">
+                      <span className="text-sm text-gray-500">Disponible en:</span>
+                      {agentData.platforms.map((platform: string, index: number) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-yellow-400 text-sm"
+                        >
+                          {platform}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Botón ver demo */}
+                    <button
+                      onClick={startMobileDemo}
+                      className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-bold py-3 rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
+                    >
+                      📱 Ver agente en acción
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+
+            {/* Simulación móvil */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center justify-center"
+            >
+              <div className="relative">
+                {/* Marco del móvil */}
+                <div className="w-[340px] h-[680px] bg-gray-900 rounded-[3rem] p-4 border-8 border-gray-800 shadow-2xl relative">
+                  {/* Notch */}
+                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-7 bg-black rounded-b-3xl" />
+                  
+                  {/* Pantalla */}
+                  <div className="w-full h-full bg-black rounded-[2.3rem] overflow-hidden flex flex-col">
+                    {/* Header del chat */}
+                    <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-4 flex items-center gap-3">
+                      <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                        <FaBrain className="text-yellow-500" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-bold text-black">{agentData?.title || 'Tu Agente IA'}</h4>
+                        <p className="text-xs text-black/70">
+                          {showMobileDemo ? 'En línea' : 'Listo para conversar'}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Área de mensajes */}
+                    <div className="flex-1 p-4 overflow-y-auto bg-gradient-to-b from-gray-900 to-black">
+                      <AnimatePresence>
+                        {!showMobileDemo && !agentData && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="h-full flex items-center justify-center text-center"
+                          >
+                            <div>
+                              <div className="text-6xl mb-4">💬</div>
+                              <p className="text-gray-500">
+                                Genera un agente para ver<br />cómo funciona en tiempo real
+                              </p>
+                            </div>
+                          </motion.div>
+                        )}
+
+                        {showMobileDemo && chatMessages.map((message, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className={`mb-3 flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                          >
+                            <div
+                              className={`max-w-[75%] rounded-2xl px-4 py-3 ${
+                                message.type === 'user'
+                                  ? 'bg-yellow-400 text-black rounded-br-sm'
+                                  : 'bg-gray-800 text-white rounded-bl-sm'
+                              }`}
+                            >
+                              <p className="text-sm whitespace-pre-line">{message.text}</p>
+                            </div>
+                          </motion.div>
+                        ))}
+
+                        {isBotTyping && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="flex justify-start mb-3"
+                          >
+                            <div className="bg-gray-800 rounded-2xl rounded-bl-sm px-4 py-3">
+                              <div className="flex gap-1">
+                                <motion.div
+                                  animate={{ scale: [1, 1.2, 1] }}
+                                  transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+                                  className="w-2 h-2 bg-gray-500 rounded-full"
+                                />
+                                <motion.div
+                                  animate={{ scale: [1, 1.2, 1] }}
+                                  transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+                                  className="w-2 h-2 bg-gray-500 rounded-full"
+                                />
+                                <motion.div
+                                  animate={{ scale: [1, 1.2, 1] }}
+                                  transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+                                  className="w-2 h-2 bg-gray-500 rounded-full"
+                                />
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    {/* Input de mensaje */}
+                    <div className="bg-gray-900 p-3 flex items-center gap-2">
+                      <div className="flex-1 bg-gray-800 rounded-full px-4 py-2 text-sm text-gray-500">
+                        Escribe un mensaje...
+                      </div>
+                      <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
+                        <span className="text-black">➤</span>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Features del agente */}
-                  <div className="grid md:grid-cols-2 gap-4 mb-6">
-                    {demoSteps[demoStep].output.features.map((feature, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="flex items-center gap-3 bg-black border border-gray-800 rounded-lg p-4"
-                      >
-                        <FaCheck className="text-yellow-400 flex-shrink-0" />
-                        <span className="text-gray-300">{feature}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  {/* Plataformas */}
-                  <div className="flex items-center gap-4 flex-wrap">
-                    <span className="text-sm text-gray-500">Disponible en:</span>
-                    {demoSteps[demoStep].output.platforms.map((platform, index) => (
-                      <span
-                        key={index}
-                        className="px-4 py-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-yellow-400 text-sm"
-                      >
-                        {platform}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
 
           <motion.p
             initial={{ opacity: 0 }}
@@ -327,7 +565,7 @@ export default function NexibotInterface() {
             viewport={{ once: true }}
             className="text-center text-sm text-gray-600 mt-8"
           >
-            Demo interactivo • Los ejemplos se actualizan automáticamente
+            💡 Demo 100% interactivo • Escribe tu idea o selecciona un ejemplo para empezar
           </motion.p>
         </div>
       </section>
