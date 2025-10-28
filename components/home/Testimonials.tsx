@@ -187,7 +187,7 @@ export default function Testimonials() {
             ¿Quieres ser el próximo caso de éxito?
           </p>
           <a
-            href="/contacto"
+            href="/demo"
             className="inline-block bg-black text-white px-8 py-4 rounded-full font-semibold hover:bg-gray-800 transition-all duration-300 hover:shadow-xl"
           >
             Solicita tu demo gratuita

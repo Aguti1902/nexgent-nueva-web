@@ -63,7 +63,7 @@ export default function HeroSection() {
               <Button 
                 variant="primary" 
                 size="md" 
-                href="/contacto" 
+                href="/demo" 
                 className="bg-black hover:bg-gray-800 text-white border-0"
               >
                 Solicita una demo

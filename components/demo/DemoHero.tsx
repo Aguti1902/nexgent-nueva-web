@@ -24,7 +24,7 @@ const stats = [
 const trustedLogos = [
   { name: 'Nova Dental', logo: '/images/logos/NOVA DENTAL.png' },
   { name: 'Hello Nails', logo: '/images/logos/HELLO NAILS.png' },
-  { name: 'Agutidesigns', logo: '/images/logos/Agutidesigns.png' },
+  { name: 'Teresa Messia', logo: '/images/logos/TERESA.png' },
   { name: 'IQ Mind', logo: '/images/logos/IQMIND.svg' },
   { name: 'Spa Deluxe', logo: '/images/logos/SPADELUXE.png' },
   { name: 'NMY', logo: '/images/logos/NMY.png' },
@@ -92,7 +92,7 @@ export default function DemoHero() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.9 + index * 0.1 }}
-                    className="relative h-12 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300"
+                    className="relative h-8 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300"
                     style={{
                       filter: 'brightness(0) invert(1)',
                     }}
@@ -102,7 +102,7 @@ export default function DemoHero() {
                       alt={client.name}
                       fill
                       className="object-contain"
-                      sizes="(max-width: 768px) 100px, 120px"
+                      sizes="(max-width: 768px) 70px, 90px"
                     />
                   </motion.div>
                 ))}

@@ -64,7 +64,7 @@ export default function ScrollPopup() {
 
             {/* Botón CTA */}
             <Button 
-              href="/contacto" 
+              href="/demo" 
               variant="primary"
               size="sm"
               className="bg-white !text-black hover:!bg-gray-200 flex-shrink-0"

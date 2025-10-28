@@ -36,7 +36,7 @@ export default function FinalCTA() {
             <Button 
               variant="white" 
               size="lg" 
-              href="/contacto"
+              href="/demo"
             >
               Solicita una demo gratuita
             </Button>

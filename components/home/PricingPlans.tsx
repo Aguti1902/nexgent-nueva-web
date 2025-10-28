@@ -129,7 +129,7 @@ export default function PricingPlans() {
                 <Button 
                   variant={plan.popular ? 'primary' : 'outline'} 
                   className="w-full"
-                  href="/contacto"
+                  href="/demo"
                 >
                   {plan.cta}
                 </Button>

@@ -22,7 +22,7 @@ export default function AboutCTA() {
           <p className="text-2xl text-gray-600 mb-12 leading-relaxed">
             Agenda una demo y descubre por qué somos el partner ideal para tu automatización
           </p>
-          <Button variant="primary" size="lg" href="/contacto">
+          <Button variant="primary" size="lg" href="/demo">
             Solicita tu demo gratuita
           </Button>
         </motion.div>
