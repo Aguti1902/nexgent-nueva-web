@@ -14,8 +14,6 @@ export default function NexibotInterface() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.6])
   const y = useTransform(scrollYProgress, [0, 1], [0, -50])
-  const yTitle = useTransform(scrollYProgress, [0, 0.3], [0, -100])
-  const opacityFade = useTransform(scrollYProgress, [0, 0.15, 0.3], [1, 0.5, 0])
   
   // Interactive demo state
   const [userInput, setUserInput] = useState('')
@@ -237,11 +235,10 @@ export default function NexibotInterface() {
             </div>
           </motion.div>
 
-          {/* Título con parallax */}
+          {/* Título */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ y: yTitle, opacity: opacityFade }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="font-monda text-7xl md:text-9xl font-bold leading-none mb-6 tracking-tight"
           >
