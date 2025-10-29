@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { FaBook, FaClock, FaArrowRight, FaCheckCircle, FaRocket, FaBrain, FaChartLine } from 'react-icons/fa'
 import Button from '@/components/ui/Button'
 import { getAllBlogArticles, getAllBlogArticlesAsync, type BlogArticle } from '@/data/blog-articles'
@@ -77,12 +78,29 @@ export default function BlogPage() {
               <Link href={`/recursos/blog/articulos/${featuredArticle.slug}`} className="block mb-16">
                 <div className="bg-white rounded-2xl overflow-hidden border-2 border-gray-200 hover:border-blue-500 transition-all group">
                   <div className="grid lg:grid-cols-2 gap-0">
-                    <div className="h-80 lg:h-auto bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white">
-                      <div className="text-center p-12">
-                        <FaBrain className="text-7xl mb-6 mx-auto opacity-80" />
-                        <p className="text-2xl font-bold">Artículo Destacado</p>
+                    {/* Imagen del artículo o placeholder */}
+                    {featuredArticle.image ? (
+                      <div className="h-80 lg:h-auto relative overflow-hidden">
+                        <Image
+                          src={featuredArticle.image}
+                          alt={featuredArticle.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                        {/* Badge de "Destacado" sobre la imagen */}
+                        <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+                          <span className="text-sm font-bold text-blue-600">⭐ Destacado</span>
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="h-80 lg:h-auto bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white">
+                        <div className="text-center p-12">
+                          <FaBrain className="text-7xl mb-6 mx-auto opacity-80" />
+                          <p className="text-2xl font-bold">Artículo Destacado</p>
+                        </div>
+                      </div>
+                    )}
                     <div className="p-10">
                       <div className="flex items-center gap-3 text-xs text-gray-500 mb-4">
                         <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-semibold">{featuredArticle.category}</span>
