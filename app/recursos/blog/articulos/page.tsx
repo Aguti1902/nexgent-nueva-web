@@ -3,20 +3,52 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaBook, FaClock, FaArrowRight, FaSearch, FaBrain, FaCheckCircle, FaRocket, FaChartLine } from 'react-icons/fa'
-import { getAllBlogArticles, searchBlogArticles } from '@/data/blog-articles'
+import { getAllBlogArticles, getAllBlogArticlesAsync, searchBlogArticles, searchBlogArticlesAsync, type BlogArticle } from '@/data/blog-articles'
 
 export default function AllArticlesPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [allArticles, setAllArticles] = useState(getAllBlogArticles())
+  const [allArticles, setAllArticles] = useState<BlogArticle[]>(getAllBlogArticles())
+  const [searchResults, setSearchResults] = useState<BlogArticle[]>([])
 
   // Cargar artículos al montar
   useEffect(() => {
     const articles = getAllBlogArticles()
     setAllArticles(articles)
+    setSearchResults(articles)
+    
+    // Cargar de Supabase
+    async function loadFromSupabase() {
+      try {
+        const supabaseArticles = await getAllBlogArticlesAsync()
+        setAllArticles(supabaseArticles)
+        if (!searchQuery) {
+          setSearchResults(supabaseArticles)
+        }
+      } catch (error) {
+        console.error('Error loading articles from Supabase:', error)
+      }
+    }
+    loadFromSupabase()
   }, [])
   
-  const searchResults = searchQuery ? searchBlogArticles(searchQuery) : allArticles
+  // Buscar artículos cuando cambia el query
+  useEffect(() => {
+    async function performSearch() {
+      if (searchQuery) {
+        try {
+          const results = await searchBlogArticlesAsync(searchQuery)
+          setSearchResults(results)
+        } catch (error) {
+          console.error('Error searching articles:', error)
+          setSearchResults(searchBlogArticles(searchQuery))
+        }
+      } else {
+        setSearchResults(allArticles)
+      }
+    }
+    performSearch()
+  }, [searchQuery, allArticles])
   
   const filteredArticles = selectedCategory 
     ? searchResults.filter(article => article.category === selectedCategory)

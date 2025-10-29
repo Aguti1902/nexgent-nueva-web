@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaArrowLeft, FaClock, FaBook, FaCalendar, FaUser, FaShareAlt, FaTwitter, FaLinkedin, FaFacebook } from 'react-icons/fa'
 import ReactMarkdown from 'react-markdown'
-import { getAllBlogArticles, getBlogArticleBySlug, type BlogArticle } from '@/data/blog-articles'
+import { getAllBlogArticles, getBlogArticleBySlug, getBlogArticleBySlugAsync, getAllBlogArticlesAsync, type BlogArticle } from '@/data/blog-articles'
 
 export default function ArticuloBlogPage() {
   const params = useParams()
@@ -23,6 +23,23 @@ export default function ArticuloBlogPage() {
     setArticle(predefinedArticle)
     setAllArticles(predefinedArticles)
     setLoading(false)
+    
+    // Luego intentar cargar de Supabase
+    async function loadFromSupabase() {
+      try {
+        const supabaseArticle = await getBlogArticleBySlugAsync(slug)
+        const supabaseArticles = await getAllBlogArticlesAsync()
+        
+        if (supabaseArticle) {
+          setArticle(supabaseArticle)
+        }
+        setAllArticles(supabaseArticles)
+      } catch (error) {
+        console.error('Error loading article from Supabase:', error)
+      }
+    }
+    
+    loadFromSupabase()
   }, [slug])
 
   if (loading) {
