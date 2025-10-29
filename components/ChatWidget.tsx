@@ -29,8 +29,8 @@ const getSessionId = () => {
   return sessionId
 }
 
-// URL de Calendly - CAMBIA ESTO POR TU URL
-const CALENDLY_URL = 'https://calendly.com/nexgent-demo/30min' // ← Pon tu URL aquí
+// URL de Calendly configurada
+const CALENDLY_URL = 'https://calendly.com/nexgent-demo'
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
