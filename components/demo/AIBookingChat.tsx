@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 import { FaRobot, FaPaperPlane } from 'react-icons/fa'
+import CalendlyModal from '../CalendlyModal'
 
 interface Message {
   id: number
@@ -21,6 +22,11 @@ const conversationFlow = [
     step: 1,
     botMessage: (name: string) => `Encantado de conocerte, ${name}! 😊 ¿Cuál es tu correo electrónico?`,
     field: 'email',
+    validate: (value: string) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      return emailRegex.test(value)
+    },
+    errorMessage: 'Por favor, introduce un correo electrónico válido (debe contener @ y un dominio)',
   },
   {
     step: 2,
@@ -29,24 +35,13 @@ const conversationFlow = [
   },
   {
     step: 3,
-    botMessage: '¿A qué sector pertenece tu negocio? (ej: salones de belleza, restaurantes, ecommerce...)',
-    field: 'industry',
+    botMessage: '¿Qué solución de IA te interesa más? Por ejemplo: automatización de WhatsApp, llamadas con IA, chatbot para web, CRM inteligente, gestión de reservas, etc.',
+    field: 'interest',
   },
   {
     step: 4,
-    botMessage: '¿Cuántos empleados tiene tu empresa aproximadamente?',
-    field: 'employees',
-    options: ['1-5', '6-10', '11-25', '26-50', '51-100', '100+'],
-  },
-  {
-    step: 5,
-    botMessage: '¿Qué día te vendría mejor para la demo? Indícame una fecha (ej: 28 de octubre, próximo lunes...)',
-    field: 'date',
-  },
-  {
-    step: 6,
-    botMessage: '¿Qué horario prefieres? (ej: 10:00, 15:30...)',
-    field: 'time',
+    botMessage: '¿Me das un teléfono de contacto? (Es opcional, escribe "no" si prefieres no darlo)',
+    field: 'phone',
   },
 ]
 
@@ -63,6 +58,7 @@ export default function AIBookingChat() {
   const [currentStep, setCurrentStep] = useState(0)
   const [userData, setUserData] = useState<Record<string, string>>({})
   const [isTyping, setIsTyping] = useState(false)
+  const [showCalendly, setShowCalendly] = useState(false)
   const chatEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -82,14 +78,28 @@ export default function AIBookingChat() {
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return
 
-    // Add user message
-    addMessage(inputValue, 'user')
     const userInput = inputValue
+    const currentFlow = conversationFlow[currentStep]
+    
+    // Validar email si es el paso de email
+    if (currentFlow.validate && !currentFlow.validate(userInput)) {
+      addMessage(userInput, 'user')
+      setInputValue('')
+      setIsTyping(true)
+      await new Promise((resolve) => setTimeout(resolve, 800))
+      setIsTyping(false)
+      addMessage(currentFlow.errorMessage || 'Por favor, verifica tu respuesta.', 'bot')
+      return
+    }
+
+    // Add user message
+    addMessage(userInput, 'user')
     setInputValue('')
 
     // Save user data
-    const currentField = conversationFlow[currentStep].field
-    setUserData((prev) => ({ ...prev, [currentField]: userInput }))
+    const currentField = currentFlow.field
+    const newUserData = { ...userData, [currentField]: userInput }
+    setUserData(newUserData)
 
     // Show typing indicator
     setIsTyping(true)
@@ -107,22 +117,27 @@ export default function AIBookingChat() {
       addMessage(botMessageText, 'bot')
       setCurrentStep(nextStep)
     } else {
-      // Final confirmation
-      const confirmationMessage = `
-¡Perfecto! ✅ He agendado tu demo para el ${userData.date} a las ${userData.time}.
+      // Guardar en Supabase
+      await scheduleDemo(newUserData)
+      
+      // Confirmación final
+      const confirmationMessage = `¡Perfecto! 🎉 Tengo todos tus datos.
 
-📧 Te enviaré un correo de confirmación a ${userData.email} con el enlace de la videollamada.
+📋 Resumen:
+• Nombre: ${newUserData.name}
+• Email: ${newUserData.email}
+• Empresa: ${newUserData.company}
+• Interés: ${newUserData.interest}
+${newUserData.phone && newUserData.phone.toLowerCase() !== 'no' ? `• Teléfono: ${newUserData.phone}` : ''}
 
-¿Hay algo más en lo que pueda ayudarte?
-      `.trim()
+Ahora voy a abrir nuestro calendario para que elijas la fecha y hora que mejor te convenga. 📅`.trim()
       
       addMessage(confirmationMessage, 'bot')
       
-      // Here you would integrate with Google Calendar API
-      console.log('Booking data:', { ...userData, date: userData.date, time: userData.time })
-      
-      // Send data to backend/Google Calendar
-      await scheduleDemo({ ...userData, date: userData.date, time: userData.time })
+      // Abrir Calendly después de 2 segundos
+      setTimeout(() => {
+        setShowCalendly(true)
+      }, 2000)
     }
   }
 
@@ -135,18 +150,25 @@ export default function AIBookingChat() {
 
   const scheduleDemo = async (data: Record<string, string>) => {
     try {
-      // Aquí irá la integración con Google Calendar API
+      // Guardar en Supabase (sin fecha/hora, se elegirá en Calendly)
       const response = await fetch('/api/schedule-demo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          interest: data.interest,
+          phone: data.phone && data.phone.toLowerCase() !== 'no' ? data.phone : null,
+          status: 'pending_calendly', // Esperando que elija en Calendly
+        }),
       })
       
       if (response.ok) {
-        console.log('Demo scheduled successfully')
+        console.log('Demo request saved successfully')
       }
     } catch (error) {
-      console.error('Error scheduling demo:', error)
+      console.error('Error saving demo request:', error)
     }
   }
 
@@ -236,17 +258,31 @@ export default function AIBookingChat() {
           onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
           placeholder="Escribe tu respuesta..."
           className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent text-black"
+          disabled={currentStep >= conversationFlow.length}
         />
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleSendMessage}
-          disabled={!inputValue.trim()}
+          disabled={!inputValue.trim() || currentStep >= conversationFlow.length}
           className="px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <FaPaperPlane />
         </motion.button>
       </div>
+
+      {/* Modal de Calendly */}
+      <CalendlyModal
+        isOpen={showCalendly}
+        onClose={() => setShowCalendly(false)}
+        userData={{
+          name: userData.name,
+          email: userData.email,
+          phone: userData.phone,
+          company: userData.company,
+        }}
+        calendlyUrl="https://calendly.com/nexgent-demo"
+      />
     </motion.div>
   )
 }
