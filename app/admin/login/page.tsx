@@ -89,7 +89,7 @@ export default function AdminLoginPage() {
                   onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
                   required
                   className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="admin"
+                  placeholder="Usuario"
                 />
               </div>
             </div>
@@ -121,13 +121,6 @@ export default function AdminLoginPage() {
               {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </button>
           </form>
-
-          {/* Credenciales de prueba */}
-          <div className="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200">
-            <p className="text-xs text-gray-600 mb-2 font-semibold">Credenciales de acceso:</p>
-            <p className="text-xs text-gray-600"><strong>Usuario:</strong> admin</p>
-            <p className="text-xs text-gray-600"><strong>Contraseña:</strong> nexgent2024</p>
-          </div>
         </div>
 
         {/* Footer */}
