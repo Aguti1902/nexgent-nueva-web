@@ -249,16 +249,16 @@ export default function NexibotInterface() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="grid grid-cols-3 gap-12 max-w-4xl mx-auto"
+            className="grid grid-cols-3 gap-4 md:gap-12 max-w-4xl mx-auto px-4"
           >
             {[
               { value: '<5min', label: 'Tiempo de creación' },
               { value: '0 líneas', label: 'Código necesario' },
               { value: '24/7', label: 'Operativo sin parar' },
             ].map((stat, index) => (
-              <div key={index} className="border-l border-gray-800 pl-6 text-left">
-                <div className="font-monda text-4xl font-bold text-yellow-400 mb-2">{stat.value}</div>
-                <div className="text-sm text-gray-500 leading-tight">{stat.label}</div>
+              <div key={index} className="border-l border-gray-800 pl-3 md:pl-6 text-left">
+                <div className="font-monda text-2xl md:text-4xl font-bold text-yellow-400 mb-1 md:mb-2">{stat.value}</div>
+                <div className="text-xs md:text-sm text-gray-500 leading-tight">{stat.label}</div>
               </div>
             ))}
           </motion.div>
@@ -271,8 +271,7 @@ export default function NexibotInterface() {
             transition={{ duration: 1, delay: 1.2 }}
             className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
           >
-          <div className="flex flex-col items-center gap-2">
-            <div className="text-xs text-gray-600 uppercase tracking-widest">Descubre más</div>
+          <div className="flex flex-col items-center">
             <div className="w-px h-16 bg-gradient-to-b from-gray-600 to-transparent" />
           </div>
         </motion.div>
