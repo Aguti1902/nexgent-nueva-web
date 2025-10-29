@@ -42,3 +42,6 @@ next-env.d.ts
 *.swo
 *~
 
+
+# OpenAI API Key (privado)
+OPENAI-API-KEY-PRIVADA.txt

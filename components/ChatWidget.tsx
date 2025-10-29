@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FaCommentDots, FaTimes, FaPaperPlane } from 'react-icons/fa'
+import { FaCommentDots, FaTimes, FaPaperPlane, FaCheckCircle } from 'react-icons/fa'
 import Image from 'next/image'
 
 interface Message {
@@ -10,17 +10,34 @@ interface Message {
   content: string
 }
 
+// Generar o recuperar sessionId
+const getSessionId = () => {
+  if (typeof window === 'undefined') return null
+  let sessionId = localStorage.getItem('chatSessionId')
+  if (!sessionId) {
+    sessionId = crypto.randomUUID()
+    localStorage.setItem('chatSessionId', sessionId)
+  }
+  return sessionId
+}
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: '¡Hola! 👋 Soy el asistente virtual de NexGent. ¿En qué puedo ayudarte hoy? Puedo responder preguntas sobre nuestros agentes de IA y servicios.'
+      content: '¡Hola! 👋 Soy el Asistente Virtual de NexGent. Me encantaría ayudarte a agendar una demo personalizada. ¿Cómo te llamas?'
     }
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [demoCompleted, setDemoCompleted] = useState(false)
+  const [sessionId, setSessionId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setSessionId(getSessionId())
+  }, [])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -32,11 +49,14 @@ export default function ChatWidget() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!input.trim() || isLoading) return
+    if (!input.trim() || isLoading || !sessionId) return
 
     const userMessage = input.trim()
     setInput('')
-    setMessages(prev => [...prev, { role: 'user', content: userMessage }])
+    
+    // Agregar mensaje del usuario
+    const updatedMessages = [...messages, { role: 'user' as const, content: userMessage }]
+    setMessages(updatedMessages)
     setIsLoading(true)
 
     try {
@@ -46,19 +66,35 @@ export default function ChatWidget() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          messages: [...messages, { role: 'user', content: userMessage }]
+          message: userMessage,
+          sessionId: sessionId,
+          conversationHistory: messages,
         }),
       })
 
       if (!response.ok) throw new Error('Error en la respuesta')
 
       const data = await response.json()
+      
+      // Agregar respuesta del asistente
       setMessages(prev => [...prev, { role: 'assistant', content: data.message }])
+      
+      // Si se completó la recopilación de datos
+      if (data.dataCollected) {
+        setDemoCompleted(true)
+        // Mostrar mensaje de confirmación
+        setTimeout(() => {
+          setMessages(prev => [...prev, {
+            role: 'assistant',
+            content: '🎉 ¡Demo agendada! Te contactaremos pronto para confirmar la fecha y hora. ¿Hay algo más en lo que pueda ayudarte?'
+          }])
+        }, 1000)
+      }
     } catch (error) {
       console.error('Error:', error)
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        content: 'Lo siento, ha ocurrido un error. Por favor, intenta de nuevo o contacta con nosotros directamente.' 
+        content: 'Lo siento, ha ocurrido un error. Por favor, intenta de nuevo o contacta con nosotros directamente en info@nexgent.io o al +34 684 48 66 47.' 
       }])
     } finally {
       setIsLoading(false)
@@ -103,14 +139,19 @@ export default function ChatWidget() {
             {/* Header del chat */}
             <div className="bg-black px-6 py-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center relative">
                   <Image src="/images/ISOTIPO.png" alt="NexGent" width={24} height={24} />
+                  {demoCompleted && (
+                    <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                      <FaCheckCircle className="text-white text-xs" />
+                    </div>
+                  )}
                 </div>
                 <div>
                   <h3 className="font-semibold text-white text-sm">Asistente Virtual de NexGent</h3>
                   <p className="text-xs text-gray-400 flex items-center gap-1">
                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    En línea
+                    {demoCompleted ? 'Demo agendada ✓' : 'En línea'}
                   </p>
                 </div>
               </div>
