@@ -6,7 +6,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog, FaSignOutAlt, FaEye, FaEyeSlash } from 'react-icons/fa'
 import { getAllBlogArticles, BlogArticle } from '@/data/blog-articles'
-import { articles as helpArticles } from '@/app/recursos/centro-ayuda/articulos/articles-data'
 
 interface ImageFile {
   name: string
@@ -16,12 +15,24 @@ interface ImageFile {
   updatedAt?: string
 }
 
+interface HelpArticle {
+  id: number
+  slug: string
+  title: string
+  category: string
+  views: string
+  read_time: string
+  content: string
+  published: boolean
+}
+
 export default function AdminDashboard() {
   const router = useRouter()
   const [activeSection, setActiveSection] = useState('overview')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [username, setUsername] = useState('')
   const [blogArticles, setBlogArticles] = useState<BlogArticle[]>([])
+  const [helpArticles, setHelpArticles] = useState<HelpArticle[]>([])
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
   const [images, setImages] = useState<ImageFile[]>([])
   const [isUploading, setIsUploading] = useState(false)
@@ -35,8 +46,9 @@ export default function AdminDashboard() {
     if (authenticated === 'true' && user) {
       setIsAuthenticated(true)
       setUsername(user)
-      // Cargar artículos del blog desde Supabase
+      // Cargar artículos del blog y guías desde Supabase
       loadArticles()
+      loadHelpArticles()
     } else {
       router.push('/admin/login')
     }
@@ -64,6 +76,19 @@ export default function AdminDashboard() {
       console.error('Error loading articles:', error)
       // Fallback a artículos predefinidos si falla
       setBlogArticles(getAllBlogArticles())
+    }
+  }
+
+  const loadHelpArticles = async () => {
+    try {
+      const response = await fetch('/api/help-center')
+      if (response.ok) {
+        const data = await response.json()
+        setHelpArticles(data.articles || [])
+      }
+    } catch (error) {
+      console.error('Error loading help articles:', error)
+      setHelpArticles([])
     }
   }
 

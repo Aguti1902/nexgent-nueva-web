@@ -5,7 +5,17 @@ import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaArrowLeft, FaEdit, FaTrash, FaEye, FaPlus } from 'react-icons/fa'
-import { articles } from '@/app/recursos/centro-ayuda/articulos/articles-data'
+
+interface HelpArticle {
+  id: number
+  slug: string
+  title: string
+  category: string
+  views: string
+  read_time: string
+  content: string
+  published: boolean
+}
 
 export default function CategoriaGuiasPage() {
   const router = useRouter()
@@ -13,15 +23,32 @@ export default function CategoriaGuiasPage() {
   const slug = params?.slug as string
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
+  const [articles, setArticles] = useState<HelpArticle[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const authenticated = localStorage.getItem('adminAuthenticated')
     if (authenticated === 'true') {
       setIsAuthenticated(true)
+      loadArticles()
     } else {
       router.push('/admin/login')
     }
   }, [router])
+
+  const loadArticles = async () => {
+    try {
+      const response = await fetch('/api/help-center')
+      if (response.ok) {
+        const data = await response.json()
+        setArticles(data.articles || [])
+      }
+    } catch (error) {
+      console.error('Error loading articles:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   if (!isAuthenticated) {
     return (
@@ -34,8 +61,8 @@ export default function CategoriaGuiasPage() {
     )
   }
 
-  // Convertir slug a nombre de categoría
-  const categoryName = slug
+  // Decodificar y convertir slug a nombre de categoría
+  const categoryName = decodeURIComponent(slug)
     .split('-')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
@@ -45,13 +72,27 @@ export default function CategoriaGuiasPage() {
     article => article.category.toLowerCase() === categoryName.toLowerCase()
   )
 
-  const handleDeleteArticle = (articleSlug: string) => {
-    if (deleteConfirm === articleSlug) {
-      // Aquí iría la lógica para eliminar del sistema
-      alert('Para eliminar guías, edita el archivo articles-data.ts')
+  const handleDeleteArticle = async (articleId: number) => {
+    if (deleteConfirm === articleId.toString()) {
+      try {
+        const response = await fetch(`/api/help-center?id=${articleId}`, {
+          method: 'DELETE'
+        })
+        
+        if (response.ok) {
+          alert('✅ Guía eliminada exitosamente')
+          loadArticles() // Recargar lista
+        } else {
+          const error = await response.json()
+          alert(`❌ Error al eliminar: ${error.error}`)
+        }
+      } catch (error) {
+        console.error('Error deleting article:', error)
+        alert('❌ Error al eliminar la guía')
+      }
       setDeleteConfirm(null)
     } else {
-      setDeleteConfirm(articleSlug)
+      setDeleteConfirm(articleId.toString())
       setTimeout(() => setDeleteConfirm(null), 3000)
     }
   }
@@ -109,14 +150,20 @@ export default function CategoriaGuiasPage() {
               </tr>
             </thead>
             <tbody>
-              {categoryArticles.length > 0 ? (
+              {loading ? (
+                <tr>
+                  <td colSpan={4} className="p-8 text-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto"></div>
+                  </td>
+                </tr>
+              ) : categoryArticles.length > 0 ? (
                 categoryArticles.map((article) => (
-                  <tr key={article.slug} className="border-t border-gray-200 hover:bg-gray-50">
+                  <tr key={article.id} className="border-t border-gray-200 hover:bg-gray-50">
                     <td className="p-4">
                       <p className="font-medium text-black">{article.title}</p>
                     </td>
                     <td className="p-4 text-gray-600">{article.views}</td>
-                    <td className="p-4 text-gray-600">{article.readTime}</td>
+                    <td className="p-4 text-gray-600">{article.read_time}</td>
                     <td className="p-4">
                       <div className="flex items-center justify-end gap-2">
                         <Link
@@ -128,22 +175,22 @@ export default function CategoriaGuiasPage() {
                           <FaEye className="text-green-600" />
                         </Link>
                         <button
-                          onClick={() => alert('Para editar guías, modifica el archivo articles-data.ts')}
+                          onClick={() => alert('Función de edición próximamente')}
                           className="p-2 hover:bg-blue-100 rounded transition-colors"
                           title="Editar"
                         >
                           <FaEdit className="text-blue-600" />
                         </button>
                         <button
-                          onClick={() => handleDeleteArticle(article.slug)}
+                          onClick={() => handleDeleteArticle(article.id)}
                           className={`p-2 rounded transition-colors ${
-                            deleteConfirm === article.slug
+                            deleteConfirm === article.id.toString()
                               ? 'bg-red-500 hover:bg-red-600'
                               : 'hover:bg-red-100'
                           }`}
-                          title={deleteConfirm === article.slug ? "Confirmar eliminación" : "Eliminar"}
+                          title={deleteConfirm === article.id.toString() ? "Confirmar eliminación" : "Eliminar"}
                         >
-                          <FaTrash className={deleteConfirm === article.slug ? "text-white" : "text-red-600"} />
+                          <FaTrash className={deleteConfirm === article.id.toString() ? "text-white" : "text-red-600"} />
                         </button>
                       </div>
                     </td>
@@ -160,14 +207,17 @@ export default function CategoriaGuiasPage() {
           </table>
         </div>
 
-        <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-xl">
-          <h3 className="font-bold text-lg text-blue-900 mb-2">💡 Nota sobre edición de guías</h3>
-          <p className="text-blue-800 mb-3">
-            Las guías del centro de ayuda están almacenadas en el archivo <code className="bg-blue-100 px-2 py-1 rounded">articles-data.ts</code>. 
+        <div className="mt-8 p-6 bg-purple-50 border border-purple-200 rounded-xl">
+          <h3 className="font-bold text-lg text-purple-900 mb-2">✨ Sistema de guías con Supabase</h3>
+          <p className="text-purple-800 mb-3">
+            Las guías se guardan automáticamente en la base de datos. Puedes:
           </p>
-          <p className="text-blue-800">
-            Para editar o eliminar guías existentes, modifica ese archivo directamente. Para crear nuevas guías, usa el botón "Nueva guía" que generará el código que debes copiar en el archivo.
-          </p>
+          <ul className="list-disc list-inside text-purple-800 space-y-1">
+            <li><strong>Crear:</strong> Usa el botón "Nueva guía" para crear artículos</li>
+            <li><strong>Ver:</strong> Haz clic en el ícono de ojo para ver en la web</li>
+            <li><strong>Eliminar:</strong> Haz clic en el ícono de papelera (doble clic para confirmar)</li>
+            <li><strong>Editar:</strong> Función próximamente disponible</li>
+          </ul>
         </div>
       </div>
     </div>
