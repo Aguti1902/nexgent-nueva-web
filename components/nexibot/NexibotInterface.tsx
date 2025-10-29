@@ -202,39 +202,23 @@ export default function NexibotInterface() {
       {/* HERO SECTION */}
       <section className="relative min-h-screen flex items-center justify-center px-6 pt-20">
         <div className="max-w-7xl mx-auto text-center">
-          {/* Logo */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="mb-12"
-              >
-                <div className="relative w-20 h-20 mx-auto mb-6">
-                  <Image
-                    src="/images/NEXIBOTBLANCO.png"
-                    alt="NEXIBOT"
-                    fill
-                    className="object-contain opacity-90"
-                  />
-                </div>
-              </motion.div>
-
-          {/* Título */}
+          {/* Título Principal */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="font-monda text-7xl md:text-9xl font-bold leading-none mb-6 tracking-tight"
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="font-monda text-6xl md:text-8xl font-bold leading-tight mb-6 tracking-tight"
           >
-            <span className="text-white">NEX</span>
-            <span className="text-yellow-400">IBOT</span>
+            <span className="text-white">Crea Agentes de IA</span>
+            <br />
+            <span className="text-yellow-400">Sin Escribir Código</span>
           </motion.h1>
 
           {/* Subtítulo */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl md:text-2xl text-gray-400 mb-4 max-w-3xl mx-auto leading-relaxed"
           >
             El primer creador automático de agentes de IA del mercado
@@ -243,7 +227,7 @@ export default function NexibotInterface() {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
             className="text-lg text-gray-500 mb-12 max-w-2xl mx-auto"
           >
             Describe tu necesidad y obtén un agente de IA completamente funcional en minutos. Sin programar, sin configuraciones complejas, sin límites.
@@ -253,7 +237,7 @@ export default function NexibotInterface() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             className="inline-flex items-center gap-3 px-6 py-3 border border-yellow-400/30 rounded-full backdrop-blur-sm mb-16"
           >
             <div className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
@@ -264,7 +248,7 @@ export default function NexibotInterface() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
             className="grid grid-cols-3 gap-12 max-w-4xl mx-auto"
           >
             {[
@@ -280,13 +264,13 @@ export default function NexibotInterface() {
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.5 }}
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
-        >
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
+          >
           <div className="flex flex-col items-center gap-2">
             <div className="text-xs text-gray-600 uppercase tracking-widest">Descubre más</div>
             <div className="w-px h-16 bg-gradient-to-b from-gray-600 to-transparent" />
