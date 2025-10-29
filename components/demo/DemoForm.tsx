@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { FaUser, FaBuilding, FaRobot, FaCalendar, FaArrowRight, FaArrowLeft, FaCheck } from 'react-icons/fa'
 
-interface FormData {
+interface DemoFormData {
   // Paso 1: Información personal
   name: string
   email: string
@@ -32,7 +32,7 @@ const agentTypes = [
 
 export default function DemoForm() {
   const [currentStep, setCurrentStep] = useState(1)
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<DemoFormData>({
     name: '',
     email: '',
     phone: '',
@@ -86,7 +86,7 @@ export default function DemoForm() {
     return ''
   }
 
-  const handleFieldChange = (field: keyof FormData, value: any) => {
+  const handleFieldChange = (field: keyof DemoFormData, value: any) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     
     // Validar en tiempo real si el campo ha sido tocado
@@ -141,7 +141,13 @@ export default function DemoForm() {
       document.body.appendChild(script)
 
       return () => {
-        document.body.removeChild(script)
+        try {
+          if (script.parentNode) {
+            document.body.removeChild(script)
+          }
+        } catch (error) {
+          console.log('Error removing Calendly script:', error)
+        }
       }
     }
   }, [currentStep])
