@@ -354,7 +354,7 @@ export default function DemoForm() {
                 </label>
                 <select
                   value={formData.industry}
-                  onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                  onChange={(e) => handleFieldChange('industry', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-black"
                   required
                 >
@@ -378,7 +378,7 @@ export default function DemoForm() {
                 </label>
                 <select
                   value={formData.employees}
-                  onChange={(e) => setFormData({ ...formData, employees: e.target.value })}
+                  onChange={(e) => handleFieldChange('employees', e.target.value)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-black"
                   required
                 >
