@@ -1,15 +1,71 @@
 'use client'
 
 import { useParams } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaArrowLeft, FaClock, FaEye, FaBook } from 'react-icons/fa'
-import { getArticleBySlug, articles } from '../articles-data'
 import ReactMarkdown from 'react-markdown'
+
+interface HelpArticle {
+  id: number
+  slug: string
+  title: string
+  category: string
+  views: string
+  read_time: string
+  content: string
+  published: boolean
+  related_articles?: string[]
+}
 
 export default function ArticlePage() {
   const params = useParams()
   const slug = params.slug as string
-  const article = getArticleBySlug(slug)
+  const [article, setArticle] = useState<HelpArticle | null>(null)
+  const [relatedArticles, setRelatedArticles] = useState<HelpArticle[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadArticle()
+  }, [slug])
+
+  const loadArticle = async () => {
+    try {
+      const response = await fetch('/api/help-center?published=true')
+      if (response.ok) {
+        const data = await response.json()
+        const articles = data.articles || []
+        const foundArticle = articles.find((a: HelpArticle) => a.slug === slug)
+        setArticle(foundArticle || null)
+        
+        // Cargar artículos relacionados
+        if (foundArticle && foundArticle.related_articles) {
+          const related = articles.filter((a: HelpArticle) => 
+            foundArticle.related_articles?.includes(a.slug)
+          )
+          setRelatedArticles(related)
+        } else if (foundArticle) {
+          // Si no tiene relacionados, mostrar de la misma categoría
+          const related = articles
+            .filter((a: HelpArticle) => a.category === foundArticle.category && a.slug !== slug)
+            .slice(0, 3)
+          setRelatedArticles(related)
+        }
+      }
+    } catch (error) {
+      console.error('Error loading article:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+      </div>
+    )
+  }
 
   if (!article) {
     return (
@@ -35,10 +91,6 @@ export default function ArticlePage() {
     )
   }
 
-  const relatedArticles = article.relatedArticles
-    ?.map(slug => articles.find(a => a.slug === slug))
-    .filter(Boolean) || []
-
   return (
     <div className="min-h-screen bg-white pt-32 pb-24">
       <div className="container-custom px-6">
@@ -63,7 +115,7 @@ export default function ArticlePage() {
             <div className="flex items-center gap-6 text-gray-600">
               <div className="flex items-center gap-2">
                 <FaClock />
-                <span>{article.readTime} lectura</span>
+                <span>{article.read_time} lectura</span>
               </div>
               <div className="flex items-center gap-2">
                 <FaEye />
@@ -119,7 +171,7 @@ export default function ArticlePage() {
                           {related.title}
                         </h3>
                         <div className="flex items-center gap-3 text-sm text-gray-500">
-                          <span>{related.readTime}</span>
+                          <span>{related.read_time}</span>
                           <span>•</span>
                           <span>{related.views} vistas</span>
                         </div>

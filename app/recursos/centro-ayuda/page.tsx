@@ -1,21 +1,54 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaQuestionCircle, FaSearch, FaBook, FaComments, FaCheckCircle, FaHeadset, FaClock, FaRocket, FaBolt, FaCog, FaChartLine, FaUsers, FaShieldAlt, FaWhatsapp } from 'react-icons/fa'
 import Button from '@/components/ui/Button'
-import { articles, searchArticles } from './articulos/articles-data'
+
+interface HelpArticle {
+  id: number
+  slug: string
+  title: string
+  category: string
+  views: string
+  read_time: string
+  content: string
+  published: boolean
+}
 
 export default function CentroAyudaPage() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [searchResults, setSearchResults] = useState<typeof articles>([])
+  const [searchResults, setSearchResults] = useState<HelpArticle[]>([])
   const [isSearching, setIsSearching] = useState(false)
+  const [articles, setArticles] = useState<HelpArticle[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadArticles()
+  }, [])
+
+  const loadArticles = async () => {
+    try {
+      const response = await fetch('/api/help-center?published=true')
+      if (response.ok) {
+        const data = await response.json()
+        setArticles(data.articles || [])
+      }
+    } catch (error) {
+      console.error('Error loading articles:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const handleSearch = (query: string) => {
     setSearchQuery(query)
     if (query.trim().length > 0) {
       setIsSearching(true)
-      const results = searchArticles(query)
+      const results = articles.filter(article =>
+        article.title.toLowerCase().includes(query.toLowerCase()) ||
+        article.content.toLowerCase().includes(query.toLowerCase())
+      )
       setSearchResults(results)
     } else {
       setIsSearching(false)
@@ -24,42 +57,46 @@ export default function CentroAyudaPage() {
   }
 
   const popularArticles = articles
-    .sort((a, b) => parseFloat(b.views.replace('K', '')) - parseFloat(a.views.replace('K', '')))
+    .sort((a, b) => {
+      const aViews = parseFloat(a.views.replace('K', '').replace(',', '')) || 0
+      const bViews = parseFloat(b.views.replace('K', '').replace(',', '')) || 0
+      return bViews - aViews
+    })
     .slice(0, 5)
   const categories = [
     {
       icon: FaRocket,
       title: 'Primeros pasos',
       description: 'Todo lo que necesitas para empezar',
-      articles: 12,
+      articles: articles.filter(a => a.category === 'Primeros pasos').length,
       topics: ['Creación de cuenta', 'Configuración inicial', 'Primera automatización'],
     },
     {
       icon: FaComments,
       title: 'Preguntas frecuentes',
       description: 'Respuestas rápidas a dudas comunes',
-      articles: 48,
+      articles: articles.filter(a => a.category === 'Preguntas frecuentes').length,
       topics: ['Precios y planes', 'Integraciones', 'Seguridad'],
     },
     {
       icon: FaCog,
       title: 'Configuración avanzada',
       description: 'Personaliza al máximo tu solución',
-      articles: 18,
+      articles: articles.filter(a => a.category === 'Configuración avanzada').length,
       topics: ['Flujos personalizados', 'APIs', 'Webhooks'],
     },
     {
       icon: FaBolt,
       title: 'Resolución de problemas',
       description: 'Soluciona cualquier inconveniente',
-      articles: 15,
+      articles: articles.filter(a => a.category === 'Resolución de problemas').length,
       topics: ['Errores comunes', 'Debugging', 'Performance'],
     },
     {
       icon: FaChartLine,
       title: 'Mejores prácticas',
       description: 'Optimiza tus resultados',
-      articles: 20,
+      articles: articles.filter(a => a.category === 'Mejores prácticas').length,
       topics: ['Optimización', 'Casos de uso', 'ROI'],
     },
   ]
@@ -180,7 +217,7 @@ export default function CentroAyudaPage() {
                                   {result.title}
                                 </h4>
                                 <p className="text-sm text-gray-500 mt-1">
-                                  {result.category} • {result.readTime}
+                                  {result.category} • {result.read_time}
                                 </p>
                               </div>
                             </div>
@@ -342,7 +379,7 @@ export default function CentroAyudaPage() {
                             <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 text-xl group-hover:bg-purple-500 group-hover:text-white transition-all">
                               <FaBook />
                             </div>
-                            <span className="text-xs text-gray-500">{article.readTime}</span>
+                            <span className="text-xs text-gray-500">{article.read_time}</span>
                           </div>
                           <h4 className="font-bold text-black mb-2 group-hover:text-purple-600 transition-all line-clamp-2">
                             {article.title}
