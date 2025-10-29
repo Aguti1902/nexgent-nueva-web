@@ -8,6 +8,14 @@ import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage
 import { getAllBlogArticles, BlogArticle } from '@/data/blog-articles'
 import { articles as helpArticles } from '@/app/recursos/centro-ayuda/articulos/articles-data'
 
+interface ImageFile {
+  name: string
+  url: string
+  size: number
+  createdAt?: string
+  updatedAt?: string
+}
+
 export default function AdminDashboard() {
   const router = useRouter()
   const [activeSection, setActiveSection] = useState('overview')
@@ -15,6 +23,9 @@ export default function AdminDashboard() {
   const [username, setUsername] = useState('')
   const [blogArticles, setBlogArticles] = useState<BlogArticle[]>([])
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
+  const [images, setImages] = useState<ImageFile[]>([])
+  const [isUploading, setIsUploading] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState(0)
 
   useEffect(() => {
     // Verificar autenticación
@@ -55,6 +66,86 @@ export default function AdminDashboard() {
       setBlogArticles(getAllBlogArticles())
     }
   }
+
+  const loadImages = async () => {
+    try {
+      const response = await fetch('/api/images')
+      if (response.ok) {
+        const data = await response.json()
+        setImages(data.images || [])
+      }
+    } catch (error) {
+      console.error('Error loading images:', error)
+    }
+  }
+
+  const handleImageUpload = async (file: File) => {
+    if (!file) return
+
+    setIsUploading(true)
+    setUploadProgress(0)
+
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const response = await fetch('/api/images', {
+        method: 'POST',
+        body: formData
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        alert(`✅ Imagen subida correctamente\n\n📎 URL: ${data.image.url}`)
+        loadImages() // Recargar la lista
+      } else {
+        const error = await response.json()
+        alert(`❌ Error al subir la imagen:\n${error.error}`)
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error)
+      alert('❌ Error al subir la imagen')
+    } finally {
+      setIsUploading(false)
+      setUploadProgress(0)
+    }
+  }
+
+  const handleDeleteImage = async (imageName: string) => {
+    if (deleteConfirm === imageName) {
+      try {
+        const response = await fetch(`/api/images?name=${encodeURIComponent(imageName)}`, {
+          method: 'DELETE'
+        })
+
+        if (response.ok) {
+          alert('✅ Imagen eliminada correctamente')
+          loadImages() // Recargar la lista
+        } else {
+          alert('❌ Error al eliminar la imagen')
+        }
+      } catch (error) {
+        console.error('Error deleting image:', error)
+        alert('❌ Error al eliminar la imagen')
+      }
+      setDeleteConfirm(null)
+    } else {
+      setDeleteConfirm(imageName)
+      setTimeout(() => setDeleteConfirm(null), 3000)
+    }
+  }
+
+  const copyImageUrl = (url: string) => {
+    navigator.clipboard.writeText(url)
+    alert(`✅ URL copiada al portapapeles:\n${url}`)
+  }
+
+  // Cargar imágenes cuando se activa la sección media
+  useEffect(() => {
+    if (activeSection === 'media' && isAuthenticated) {
+      loadImages()
+    }
+  }, [activeSection, isAuthenticated])
 
   const handleDeleteArticle = async (articleId: string) => {
     if (deleteConfirm === articleId) {
@@ -438,9 +529,9 @@ export default function AdminDashboard() {
             <div>
               <div className="flex items-center justify-between mb-8">
                 <h1 className="font-monda text-4xl font-bold text-black">Biblioteca de Imágenes</h1>
-                <label htmlFor="imageUpload" className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-all flex items-center gap-2 cursor-pointer">
+                <label htmlFor="imageUpload" className={`bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-all flex items-center gap-2 cursor-pointer ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
                   <FaPlus />
-                  Subir imagen
+                  {isUploading ? 'Subiendo...' : 'Subir imagen'}
                   <input
                     id="imageUpload"
                     type="file"
@@ -448,27 +539,64 @@ export default function AdminDashboard() {
                     onChange={(e) => {
                       const file = e.target.files?.[0]
                       if (file) {
-                        alert(`✅ Funcionalidad de subida de imágenes próximamente\n\nArchivo seleccionado: ${file.name}\n\nNecesitarás configurar Supabase Storage para subir imágenes.`)
+                        handleImageUpload(file)
                       }
+                      // Limpiar el input
+                      e.target.value = ''
                     }}
+                    disabled={isUploading}
                     className="hidden"
                   />
                 </label>
               </div>
-              
-              <div className="grid md:grid-cols-4 gap-6">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((img) => (
-                  <div key={img} className="bg-white rounded-xl border border-gray-200 overflow-hidden group">
-                    <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                      <FaImage className="text-4xl text-gray-400" />
+
+              {images.length === 0 ? (
+                <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+                  <FaImage className="text-6xl text-gray-300 mx-auto mb-4" />
+                  <p className="text-gray-600 mb-2">No hay imágenes subidas</p>
+                  <p className="text-sm text-gray-500">Haz clic en "Subir imagen" para añadir tu primera imagen</p>
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-4 gap-6">
+                  {images.map((img) => (
+                    <div key={img.name} className="bg-white rounded-xl border border-gray-200 overflow-hidden group">
+                      <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 overflow-hidden">
+                        <Image
+                          src={img.url}
+                          alt={img.name}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-300"
+                          sizes="(max-width: 768px) 100vw, 25vw"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <p className="text-sm font-medium text-black mb-1 truncate" title={img.name}>{img.name}</p>
+                        <p className="text-xs text-gray-600 mb-3">{(img.size / 1024 / 1024).toFixed(2)} MB</p>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => copyImageUrl(img.url)}
+                            className="flex-1 bg-blue-500 text-white text-xs px-3 py-2 rounded hover:bg-blue-600 transition-colors"
+                            title="Copiar URL"
+                          >
+                            Copiar URL
+                          </button>
+                          <button
+                            onClick={() => handleDeleteImage(img.name)}
+                            className={`px-3 py-2 rounded transition-colors ${
+                              deleteConfirm === img.name
+                                ? 'bg-red-500 hover:bg-red-600 text-white'
+                                : 'bg-red-100 hover:bg-red-200 text-red-600'
+                            }`}
+                            title={deleteConfirm === img.name ? "Confirmar eliminación" : "Eliminar"}
+                          >
+                            <FaTrash className="text-sm" />
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <div className="p-4">
-                      <p className="text-sm font-medium text-black mb-1">imagen-{img}.jpg</p>
-                      <p className="text-xs text-gray-600">1.2 MB</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
