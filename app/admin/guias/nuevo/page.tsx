@@ -18,8 +18,7 @@ export default function NuevaGuia() {
     articulosRelacionados: '',
   })
   const [preview, setPreview] = useState(false)
-  const [generatedCode, setGeneratedCode] = useState('')
-  const [showCode, setShowCode] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     const authenticated = localStorage.getItem('adminAuthenticated')
@@ -64,7 +63,7 @@ export default function NuevaGuia() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     // Validar campos requeridos
@@ -73,40 +72,46 @@ export default function NuevaGuia() {
       return
     }
 
-    // Generar el código del artículo
-    const relatedArticles = formData.articulosRelacionados 
-      ? formData.articulosRelacionados.split(',').map(slug => `'${slug.trim()}'`).join(', ')
-      : ''
+    setIsSaving(true)
 
-    const articleCode = `{
-  slug: '${formData.slug}',
-  title: '${formData.titulo}',
-  category: '${formData.categoria}',
-  views: '1.2K',
-  readTime: '${formData.tiempoLectura}',
-  content: \`
-# ${formData.titulo}
+    try {
+      // Procesar artículos relacionados
+      const relatedArticles = formData.articulosRelacionados 
+        ? formData.articulosRelacionados.split(',').map(slug => slug.trim()).filter(Boolean)
+        : []
 
-${formData.contenido}
-\`,
-  relatedArticles: [${relatedArticles}],
-},`
+      // Crear nueva guía
+      const newGuide = {
+        slug: formData.slug,
+        title: formData.titulo,
+        category: formData.categoria,
+        content: formData.contenido,
+        read_time: formData.tiempoLectura,
+        views: '0',
+        related_articles: relatedArticles,
+        published: true,
+      }
 
-    setGeneratedCode(articleCode)
-    setShowCode(true)
-    
-    // Copiar automáticamente al portapapeles
-    navigator.clipboard.writeText(articleCode).then(() => {
-      alert('✅ Código generado y copiado al portapapeles!\n\nPega este código en el archivo:\napp/recursos/centro-ayuda/articulos/articles-data.ts')
-    }).catch(() => {
-      alert('✅ Código generado! Cópialo manualmente desde el cuadro que aparece abajo.')
-    })
-  }
+      // Guardar en Supabase
+      const response = await fetch('/api/help-center', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newGuide)
+      })
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(generatedCode).then(() => {
-      alert('✅ Código copiado al portapapeles!')
-    })
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || 'Error al guardar la guía')
+      }
+
+      alert('✅ Guía guardada exitosamente!')
+      router.push('/admin')
+    } catch (error: any) {
+      console.error('Error saving guide:', error)
+      alert(`❌ Error al guardar la guía: ${error.message}`)
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   return (
@@ -143,10 +148,15 @@ ${formData.contenido}
             </button>
             <button
               onClick={handleSubmit}
-              className="flex items-center gap-2 bg-purple-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-600 transition-all"
+              disabled={isSaving}
+              className={`flex items-center gap-2 text-white px-6 py-2 rounded-lg font-semibold transition-all ${
+                isSaving 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-purple-500 hover:bg-purple-600'
+              }`}
             >
               <FaSave />
-              Generar código
+              {isSaving ? 'Guardando...' : 'Guardar guía'}
             </button>
           </div>
         </div>
@@ -286,21 +296,6 @@ Antes de empezar, asegúrate de tener:
             </div>
 
             {/* Botones */}
-            <div className="flex justify-end gap-4">
-              <Link
-                href="/admin"
-                className="px-6 py-3 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all"
-              >
-                Cancelar
-              </Link>
-              <button
-                type="submit"
-                className="bg-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-600 transition-all flex items-center gap-2"
-              >
-                <FaSave />
-                Generar código del artículo
-              </button>
-            </div>
           </form>
         ) : (
           <div className="bg-white rounded-xl p-12 border border-gray-200">
@@ -332,32 +327,6 @@ Antes de empezar, asegúrate de tener:
                   <p className="text-gray-400 italic">El contenido aparecerá aquí...</p>
                 )}
               </div>
-            </div>
-          </div>
-        )}
-
-        {/* Código Generado */}
-        {showCode && (
-          <div className="mt-8 bg-gray-900 text-white rounded-xl p-6 border border-gray-700">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-lg">📋 Código Generado</h3>
-              <button
-                onClick={copyToClipboard}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all"
-              >
-                Copiar código
-              </button>
-            </div>
-            <pre className="bg-black rounded-lg p-4 overflow-x-auto text-sm">
-              <code>{generatedCode}</code>
-            </pre>
-            <div className="mt-4 p-4 bg-purple-900/50 rounded-lg border border-purple-700">
-              <p className="text-sm text-purple-200">
-                <strong>📁 Archivo:</strong> <code className="text-purple-100">app/recursos/centro-ayuda/articulos/articles-data.ts</code>
-              </p>
-              <p className="text-sm text-purple-200 mt-2">
-                <strong>✏️ Instrucciones:</strong> Pega este código dentro del array <code className="text-purple-100">articles</code>
-              </p>
             </div>
           </div>
         )}
