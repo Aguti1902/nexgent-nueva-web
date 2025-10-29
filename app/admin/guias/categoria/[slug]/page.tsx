@@ -5,16 +5,18 @@ import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaArrowLeft, FaEdit, FaTrash, FaEye, FaPlus } from 'react-icons/fa'
+import { articles as predefinedArticles } from '@/app/recursos/centro-ayuda/articulos/articles-data'
 
 interface HelpArticle {
-  id: number
+  id?: number
   slug: string
   title: string
   category: string
   views: string
-  read_time: string
+  read_time?: string
+  readTime?: string
   content: string
-  published: boolean
+  published?: boolean
 }
 
 export default function CategoriaGuiasPage() {
@@ -23,8 +25,8 @@ export default function CategoriaGuiasPage() {
   const slug = params?.slug as string
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
-  const [articles, setArticles] = useState<HelpArticle[]>([])
-  const [loading, setLoading] = useState(true)
+  const [articles, setArticles] = useState<HelpArticle[]>(predefinedArticles)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const authenticated = localStorage.getItem('adminAuthenticated')
@@ -41,12 +43,14 @@ export default function CategoriaGuiasPage() {
       const response = await fetch('/api/help-center')
       if (response.ok) {
         const data = await response.json()
-        setArticles(data.articles || [])
+        const supabaseArticles = data.articles || []
+        // Combinar artículos de Supabase con predefinidos
+        const allArticles = [...supabaseArticles, ...predefinedArticles]
+        setArticles(allArticles)
       }
     } catch (error) {
       console.error('Error loading articles:', error)
-    } finally {
-      setLoading(false)
+      // Mantener los predefinidos si falla
     }
   }
 
@@ -72,10 +76,16 @@ export default function CategoriaGuiasPage() {
     article => article.category.toLowerCase() === categoryName.toLowerCase()
   )
 
-  const handleDeleteArticle = async (articleId: number) => {
-    if (deleteConfirm === articleId.toString()) {
+  const handleDeleteArticle = async (article: HelpArticle) => {
+    // Solo permitir eliminar artículos de Supabase (tienen id)
+    if (!article.id) {
+      alert('⚠️ Los artículos predefinidos no se pueden eliminar desde el admin. Solo los artículos creados desde el dashboard.')
+      return
+    }
+
+    if (deleteConfirm === article.id.toString()) {
       try {
-        const response = await fetch(`/api/help-center?id=${articleId}`, {
+        const response = await fetch(`/api/help-center?id=${article.id}`, {
           method: 'DELETE'
         })
         
@@ -92,7 +102,7 @@ export default function CategoriaGuiasPage() {
       }
       setDeleteConfirm(null)
     } else {
-      setDeleteConfirm(articleId.toString())
+      setDeleteConfirm(article.id.toString())
       setTimeout(() => setDeleteConfirm(null), 3000)
     }
   }
@@ -163,7 +173,7 @@ export default function CategoriaGuiasPage() {
                       <p className="font-medium text-black">{article.title}</p>
                     </td>
                     <td className="p-4 text-gray-600">{article.views}</td>
-                    <td className="p-4 text-gray-600">{article.read_time}</td>
+                    <td className="p-4 text-gray-600">{article.read_time || article.readTime}</td>
                     <td className="p-4">
                       <div className="flex items-center justify-end gap-2">
                         <Link
@@ -182,15 +192,24 @@ export default function CategoriaGuiasPage() {
                           <FaEdit className="text-blue-600" />
                         </button>
                         <button
-                          onClick={() => handleDeleteArticle(article.id)}
+                          onClick={() => handleDeleteArticle(article)}
                           className={`p-2 rounded transition-colors ${
-                            deleteConfirm === article.id.toString()
+                            deleteConfirm === article.id?.toString()
                               ? 'bg-red-500 hover:bg-red-600'
-                              : 'hover:bg-red-100'
+                              : article.id 
+                                ? 'hover:bg-red-100'
+                                : 'opacity-50 cursor-not-allowed'
                           }`}
-                          title={deleteConfirm === article.id.toString() ? "Confirmar eliminación" : "Eliminar"}
+                          title={
+                            !article.id 
+                              ? "No se pueden eliminar artículos predefinidos" 
+                              : deleteConfirm === article.id.toString() 
+                                ? "Confirmar eliminación" 
+                                : "Eliminar"
+                          }
+                          disabled={!article.id}
                         >
-                          <FaTrash className={deleteConfirm === article.id.toString() ? "text-white" : "text-red-600"} />
+                          <FaTrash className={deleteConfirm === article.id?.toString() ? "text-white" : "text-red-600"} />
                         </button>
                       </div>
                     </td>

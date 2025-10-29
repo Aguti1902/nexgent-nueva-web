@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog, FaSignOutAlt, FaEye, FaEyeSlash } from 'react-icons/fa'
 import { getAllBlogArticles, BlogArticle } from '@/data/blog-articles'
+import { articles as predefinedHelpArticles } from '@/app/recursos/centro-ayuda/articulos/articles-data'
 
 interface ImageFile {
   name: string
@@ -16,14 +17,15 @@ interface ImageFile {
 }
 
 interface HelpArticle {
-  id: number
+  id?: number
   slug: string
   title: string
   category: string
   views: string
-  read_time: string
+  read_time?: string
+  readTime?: string
   content: string
-  published: boolean
+  published?: boolean
 }
 
 export default function AdminDashboard() {
@@ -84,11 +86,18 @@ export default function AdminDashboard() {
       const response = await fetch('/api/help-center')
       if (response.ok) {
         const data = await response.json()
-        setHelpArticles(data.articles || [])
+        const supabaseArticles = data.articles || []
+        // Combinar artículos de Supabase con predefinidos
+        const allArticles = [...supabaseArticles, ...predefinedHelpArticles]
+        setHelpArticles(allArticles)
+      } else {
+        // Si falla, usar solo predefinidos
+        setHelpArticles(predefinedHelpArticles)
       }
     } catch (error) {
       console.error('Error loading help articles:', error)
-      setHelpArticles([])
+      // Fallback a artículos predefinidos
+      setHelpArticles(predefinedHelpArticles)
     }
   }
 

@@ -4,24 +4,26 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaQuestionCircle, FaSearch, FaBook, FaComments, FaCheckCircle, FaHeadset, FaClock, FaRocket, FaBolt, FaCog, FaChartLine, FaUsers, FaShieldAlt, FaWhatsapp } from 'react-icons/fa'
 import Button from '@/components/ui/Button'
+import { articles as predefinedArticles } from './articulos/articles-data'
 
 interface HelpArticle {
-  id: number
+  id?: number
   slug: string
   title: string
   category: string
   views: string
-  read_time: string
+  read_time?: string
+  readTime?: string
   content: string
-  published: boolean
+  published?: boolean
 }
 
 export default function CentroAyudaPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<HelpArticle[]>([])
   const [isSearching, setIsSearching] = useState(false)
-  const [articles, setArticles] = useState<HelpArticle[]>([])
-  const [loading, setLoading] = useState(true)
+  const [articles, setArticles] = useState<HelpArticle[]>(predefinedArticles)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     loadArticles()
@@ -32,12 +34,14 @@ export default function CentroAyudaPage() {
       const response = await fetch('/api/help-center?published=true')
       if (response.ok) {
         const data = await response.json()
-        setArticles(data.articles || [])
+        const supabaseArticles = data.articles || []
+        // Combinar artículos de Supabase con predefinidos
+        const allArticles = [...supabaseArticles, ...predefinedArticles]
+        setArticles(allArticles)
       }
     } catch (error) {
       console.error('Error loading articles:', error)
-    } finally {
-      setLoading(false)
+      // Mantener los predefinidos si falla
     }
   }
 
@@ -217,7 +221,7 @@ export default function CentroAyudaPage() {
                                   {result.title}
                                 </h4>
                                 <p className="text-sm text-gray-500 mt-1">
-                                  {result.category} • {result.read_time}
+                                  {result.category} • {result.read_time || result.readTime}
                                 </p>
                               </div>
                             </div>
@@ -379,7 +383,7 @@ export default function CentroAyudaPage() {
                             <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600 text-xl group-hover:bg-purple-500 group-hover:text-white transition-all">
                               <FaBook />
                             </div>
-                            <span className="text-xs text-gray-500">{article.read_time}</span>
+                            <span className="text-xs text-gray-500">{article.read_time || article.readTime}</span>
                           </div>
                           <h4 className="font-bold text-black mb-2 group-hover:text-purple-600 transition-all line-clamp-2">
                             {article.title}

@@ -5,17 +5,20 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { FaArrowLeft, FaClock, FaEye, FaBook } from 'react-icons/fa'
 import ReactMarkdown from 'react-markdown'
+import { articles as predefinedArticles, getArticleBySlug } from '../articles-data'
 
 interface HelpArticle {
-  id: number
+  id?: number
   slug: string
   title: string
   category: string
   views: string
-  read_time: string
+  read_time?: string
+  readTime?: string
   content: string
-  published: boolean
+  published?: boolean
   related_articles?: string[]
+  relatedArticles?: string[]
 }
 
 export default function ArticlePage() {
@@ -31,22 +34,34 @@ export default function ArticlePage() {
 
   const loadArticle = async () => {
     try {
+      // Primero buscar en predefinidos
+      const predefinedArticle = getArticleBySlug(slug)
+      
+      // Intentar cargar de Supabase
       const response = await fetch('/api/help-center?published=true')
+      let allArticles = [...predefinedArticles]
+      
       if (response.ok) {
         const data = await response.json()
-        const articles = data.articles || []
-        const foundArticle = articles.find((a: HelpArticle) => a.slug === slug)
-        setArticle(foundArticle || null)
+        const supabaseArticles = data.articles || []
+        allArticles = [...supabaseArticles, ...predefinedArticles]
+      }
+      
+      const foundArticle = allArticles.find((a: HelpArticle) => a.slug === slug)
+      setArticle(foundArticle || predefinedArticle || null)
+      
+      // Cargar artículos relacionados
+      if (foundArticle) {
+        const relatedSlugs = foundArticle.related_articles || foundArticle.relatedArticles || []
         
-        // Cargar artículos relacionados
-        if (foundArticle && foundArticle.related_articles) {
-          const related = articles.filter((a: HelpArticle) => 
-            foundArticle.related_articles?.includes(a.slug)
+        if (relatedSlugs.length > 0) {
+          const related = allArticles.filter((a: HelpArticle) => 
+            relatedSlugs.includes(a.slug)
           )
           setRelatedArticles(related)
-        } else if (foundArticle) {
+        } else {
           // Si no tiene relacionados, mostrar de la misma categoría
-          const related = articles
+          const related = allArticles
             .filter((a: HelpArticle) => a.category === foundArticle.category && a.slug !== slug)
             .slice(0, 3)
           setRelatedArticles(related)
@@ -54,6 +69,9 @@ export default function ArticlePage() {
       }
     } catch (error) {
       console.error('Error loading article:', error)
+      // Fallback a predefinidos
+      const predefinedArticle = getArticleBySlug(slug)
+      setArticle(predefinedArticle || null)
     } finally {
       setLoading(false)
     }
@@ -115,7 +133,7 @@ export default function ArticlePage() {
             <div className="flex items-center gap-6 text-gray-600">
               <div className="flex items-center gap-2">
                 <FaClock />
-                <span>{article.read_time} lectura</span>
+                <span>{article.read_time || article.readTime} lectura</span>
               </div>
               <div className="flex items-center gap-2">
                 <FaEye />
@@ -171,7 +189,7 @@ export default function ArticlePage() {
                           {related.title}
                         </h3>
                         <div className="flex items-center gap-3 text-sm text-gray-500">
-                          <span>{related.read_time}</span>
+                          <span>{related.read_time || related.readTime}</span>
                           <span>•</span>
                           <span>{related.views} vistas</span>
                         </div>
