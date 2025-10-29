@@ -306,13 +306,13 @@ export default function AdminDashboard() {
             <div>
               <div className="flex items-center justify-between mb-8">
                 <h1 className="font-monda text-4xl font-bold text-black">Artículos del Blog</h1>
-                <Link
-                  href="/admin/blog/nuevo"
+                <button
+                  onClick={() => router.push('/admin/blog/nuevo')}
                   className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all flex items-center gap-2"
                 >
                   <FaPlus />
                   Nuevo artículo
-                </Link>
+                </button>
               </div>
               <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
                 <table className="w-full">
