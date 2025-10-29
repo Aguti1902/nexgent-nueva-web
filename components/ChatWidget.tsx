@@ -4,10 +4,18 @@ import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaCommentDots, FaTimes, FaPaperPlane, FaCheckCircle } from 'react-icons/fa'
 import Image from 'next/image'
+import CalendlyModal from './CalendlyModal'
 
 interface Message {
   role: 'user' | 'assistant'
   content: string
+}
+
+interface UserData {
+  nombre?: string
+  email?: string
+  telefono?: string
+  empresa?: string
 }
 
 // Generar o recuperar sessionId
@@ -21,6 +29,9 @@ const getSessionId = () => {
   return sessionId
 }
 
+// URL de Calendly - CAMBIA ESTO POR TU URL
+const CALENDLY_URL = 'https://calendly.com/nexgent-demo/30min' // ← Pon tu URL aquí
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
@@ -32,6 +43,8 @@ export default function ChatWidget() {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [demoCompleted, setDemoCompleted] = useState(false)
+  const [showCalendly, setShowCalendly] = useState(false)
+  const [userData, setUserData] = useState<UserData>({})
   const [sessionId, setSessionId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -80,15 +93,27 @@ export default function ChatWidget() {
       setMessages(prev => [...prev, { role: 'assistant', content: data.message }])
       
       // Si se completó la recopilación de datos
-      if (data.dataCollected) {
+      if (data.dataCollected && data.userData) {
         setDemoCompleted(true)
-        // Mostrar mensaje de confirmación
+        setUserData({
+          nombre: data.userData.nombre,
+          email: data.userData.email,
+          telefono: data.userData.telefono,
+          empresa: data.userData.empresa,
+        })
+        
+        // Mostrar mensaje y abrir Calendly
         setTimeout(() => {
           setMessages(prev => [...prev, {
             role: 'assistant',
-            content: '🎉 ¡Demo agendada! Te contactaremos pronto para confirmar la fecha y hora. ¿Hay algo más en lo que pueda ayudarte?'
+            content: '¡Perfecto! 🎉 Ahora voy a abrir el calendario para que elijas la fecha y hora que mejor te convenga. Un momento...'
           }])
-        }, 1000)
+        }, 500)
+        
+        // Abrir modal de Calendly después de 1.5 segundos
+        setTimeout(() => {
+          setShowCalendly(true)
+        }, 1500)
       }
     } catch (error) {
       console.error('Error:', error)
@@ -227,6 +252,19 @@ export default function ChatWidget() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Modal de Calendly */}
+      <CalendlyModal
+        isOpen={showCalendly}
+        onClose={() => setShowCalendly(false)}
+        userData={{
+          name: userData.nombre,
+          email: userData.email,
+          phone: userData.telefono,
+          company: userData.empresa,
+        }}
+        calendlyUrl={CALENDLY_URL}
+      />
     </>
   )
 }
