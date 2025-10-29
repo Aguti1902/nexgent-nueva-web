@@ -2511,7 +2511,21 @@ async function fetchSupabaseArticles(): Promise<BlogArticle[]> {
     const response = await fetch('/api/blog?published=true')
     if (response.ok) {
       const data = await response.json()
-      return data.articles || []
+      // Mapear los campos de Supabase al formato BlogArticle
+      const articles = (data.articles || []).map((article: any) => ({
+        id: article.id.toString(),
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt,
+        content: article.content,
+        category: article.category,
+        author: article.author || 'Equipo NexGent',
+        date: article.date,
+        readTime: article.read_time || '5 min',
+        image: article.image_url || undefined, // Mapear image_url → image
+        published: article.published !== false,
+      }))
+      return articles
     }
   } catch (error) {
     console.error('Error fetching articles from Supabase:', error)
