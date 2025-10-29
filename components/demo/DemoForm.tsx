@@ -135,43 +135,18 @@ export default function DemoForm() {
   // Cargar script de Calendly cuando llegamos al paso 4
   useEffect(() => {
     if (currentStep === 4) {
-      // Verificar si el script ya está cargado
-      const existingScript = document.querySelector('script[src*="calendly.com/assets/external/widget.js"]')
-      
-      if (!existingScript) {
-        const script = document.createElement('script')
-        script.src = 'https://assets.calendly.com/assets/external/widget.js'
-        script.async = true
-        script.onload = () => {
-          console.log('Calendly script loaded successfully')
-          // Forzar inicialización del widget si es necesario
-          if (window.Calendly) {
-            window.Calendly.initInlineWidget({
-              url: 'https://calendly.com/nexgent-demo?hide_gdpr_banner=1&primary_color=000000',
-              parentElement: document.querySelector('.calendly-inline-widget'),
-            })
-          }
-        }
-        document.body.appendChild(script)
+      const script = document.createElement('script')
+      script.src = 'https://assets.calendly.com/assets/external/widget.js'
+      script.async = true
+      document.body.appendChild(script)
 
-        return () => {
-          try {
-            if (script.parentNode) {
-              document.body.removeChild(script)
-            }
-          } catch (error) {
-            console.log('Error removing Calendly script:', error)
+      return () => {
+        try {
+          if (script.parentNode) {
+            document.body.removeChild(script)
           }
-        }
-      } else {
-        // Si el script ya está cargado, inicializar directamente
-        if (window.Calendly) {
-          setTimeout(() => {
-            window.Calendly.initInlineWidget({
-              url: 'https://calendly.com/nexgent-demo?hide_gdpr_banner=1&primary_color=000000',
-              parentElement: document.querySelector('.calendly-inline-widget'),
-            })
-          }, 100)
+        } catch (error) {
+          console.log('Error removing Calendly script:', error)
         }
       }
     }
@@ -501,7 +476,7 @@ export default function DemoForm() {
               {/* Calendly Widget */}
               <div 
                 className="calendly-inline-widget rounded-lg overflow-hidden border border-gray-200" 
-                data-url="https://calendly.com/nexgent-demo?hide_gdpr_banner=1&primary_color=000000"
+                data-url="https://calendly.com/tu-usuario-calendly/demo-nexgent?hide_gdpr_banner=1&primary_color=000000"
                 style={{ minWidth: '320px', height: '700px' }}
               />
 
