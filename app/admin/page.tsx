@@ -398,13 +398,13 @@ export default function AdminDashboard() {
             <div>
               <div className="flex items-center justify-between mb-8">
                 <h1 className="font-monda text-4xl font-bold text-black">Guías & Tutoriales</h1>
-                <Link
-                  href="/admin/guias/nuevo"
+                <button
+                  onClick={() => router.push('/admin/guias/nuevo')}
                   className="bg-purple-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-600 transition-all flex items-center gap-2"
                 >
                   <FaPlus />
                   Nueva guía
-                </Link>
+                </button>
               </div>
               
               <div className="grid gap-6">
@@ -421,12 +421,12 @@ export default function AdminDashboard() {
                         <h3 className="font-bold text-xl text-black mb-2">{cat.category}</h3>
                         <p className="text-gray-600">{cat.count} artículos publicados</p>
                       </div>
-                      <Link
-                        href={`/admin/guias/categoria/${cat.category.toLowerCase().replace(/ /g, '-')}`}
+                      <button
+                        onClick={() => router.push(`/admin/guias/categoria/${cat.category.toLowerCase().replace(/ /g, '-')}`)}
                         className={`bg-${cat.color}-100 text-${cat.color}-700 px-4 py-2 rounded-lg font-semibold hover:bg-${cat.color}-200 transition-all`}
                       >
                         Ver artículos
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -438,10 +438,22 @@ export default function AdminDashboard() {
             <div>
               <div className="flex items-center justify-between mb-8">
                 <h1 className="font-monda text-4xl font-bold text-black">Biblioteca de Imágenes</h1>
-                <button className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-all flex items-center gap-2">
+                <label htmlFor="imageUpload" className="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition-all flex items-center gap-2 cursor-pointer">
                   <FaPlus />
                   Subir imagen
-                </button>
+                  <input
+                    id="imageUpload"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) {
+                        alert(`✅ Funcionalidad de subida de imágenes próximamente\n\nArchivo seleccionado: ${file.name}\n\nNecesitarás configurar Supabase Storage para subir imágenes.`)
+                      }
+                    }}
+                    className="hidden"
+                  />
+                </label>
               </div>
               
               <div className="grid md:grid-cols-4 gap-6">

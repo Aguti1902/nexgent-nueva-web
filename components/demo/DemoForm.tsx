@@ -45,7 +45,92 @@ export default function DemoForm() {
     preferredTime: '',
   })
 
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
+
   const totalSteps = 4
+
+  // Validaciones
+  const validateName = (name: string): string => {
+    if (!name.trim()) return 'El nombre es obligatorio'
+    if (name.trim().length < 3) return 'El nombre debe tener al menos 3 caracteres'
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(name)) return 'El nombre solo puede contener letras'
+    return ''
+  }
+
+  const validateEmail = (email: string): string => {
+    if (!email.trim()) return 'El email es obligatorio'
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) return 'El formato del email no es válido'
+    
+    // Validar que no sea email personal
+    const personalDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com', 'icloud.com']
+    const domain = email.split('@')[1]?.toLowerCase()
+    if (domain && personalDomains.includes(domain)) {
+      return 'Por favor, usa tu email corporativo'
+    }
+    return ''
+  }
+
+  const validatePhone = (phone: string): string => {
+    if (!phone.trim()) return 'El teléfono es obligatorio'
+    const cleanPhone = phone.replace(/[\s\-\(\)]/g, '')
+    if (cleanPhone.length < 9) return 'El teléfono debe tener al menos 9 dígitos'
+    if (!/^[\+]?[0-9\s\-\(\)]+$/.test(phone)) return 'El formato del teléfono no es válido'
+    return ''
+  }
+
+  const validateCompany = (company: string): string => {
+    if (!company.trim()) return 'El nombre de la empresa es obligatorio'
+    if (company.trim().length < 2) return 'El nombre de la empresa debe tener al menos 2 caracteres'
+    return ''
+  }
+
+  const handleFieldChange = (field: keyof FormData, value: any) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
+    
+    // Validar en tiempo real si el campo ha sido tocado
+    if (touched[field]) {
+      let error = ''
+      switch (field) {
+        case 'name':
+          error = validateName(value)
+          break
+        case 'email':
+          error = validateEmail(value)
+          break
+        case 'phone':
+          error = validatePhone(value)
+          break
+        case 'company':
+          error = validateCompany(value)
+          break
+      }
+      setErrors(prev => ({ ...prev, [field]: error }))
+    }
+  }
+
+  const handleFieldBlur = (field: string) => {
+    setTouched(prev => ({ ...prev, [field]: true }))
+    
+    // Validar al perder el foco
+    let error = ''
+    switch (field) {
+      case 'name':
+        error = validateName(formData.name)
+        break
+      case 'email':
+        error = validateEmail(formData.email)
+        break
+      case 'phone':
+        error = validatePhone(formData.phone)
+        break
+      case 'company':
+        error = validateCompany(formData.company)
+        break
+    }
+    setErrors(prev => ({ ...prev, [field]: error }))
+  }
 
   // Cargar script de Calendly cuando llegamos al paso 4
   useEffect(() => {
@@ -92,9 +177,21 @@ export default function DemoForm() {
   const isStepValid = () => {
     switch (currentStep) {
       case 1:
-        return formData.name && formData.email && formData.phone
+        return (
+          formData.name.trim() !== '' &&
+          formData.email.trim() !== '' &&
+          formData.phone.trim() !== '' &&
+          !validateName(formData.name) &&
+          !validateEmail(formData.email) &&
+          !validatePhone(formData.phone)
+        )
       case 2:
-        return formData.company && formData.industry && formData.employees
+        return (
+          formData.company.trim() !== '' &&
+          formData.industry !== '' &&
+          formData.employees !== '' &&
+          !validateCompany(formData.company)
+        )
       case 3:
         return formData.agentType.length > 0
       case 4:
@@ -157,11 +254,18 @@ export default function DemoForm() {
                 <input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) => handleFieldChange('name', e.target.value)}
+                  onBlur={() => handleFieldBlur('name')}
                   placeholder="Tu nombre"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-black"
-                  required
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-black ${
+                    errors.name && touched.name
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-black'
+                  }`}
                 />
+                {errors.name && touched.name && (
+                  <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+                )}
               </div>
 
               <div>
@@ -171,11 +275,18 @@ export default function DemoForm() {
                 <input
                   type="email"
                   value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  onChange={(e) => handleFieldChange('email', e.target.value)}
+                  onBlur={() => handleFieldBlur('email')}
                   placeholder="tu@empresa.com"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-black"
-                  required
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-black ${
+                    errors.email && touched.email
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-black'
+                  }`}
                 />
+                {errors.email && touched.email && (
+                  <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+                )}
               </div>
 
               <div>
@@ -185,11 +296,18 @@ export default function DemoForm() {
                 <input
                   type="tel"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={(e) => handleFieldChange('phone', e.target.value)}
+                  onBlur={() => handleFieldBlur('phone')}
                   placeholder="+34 600 000 000"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-black"
-                  required
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-black ${
+                    errors.phone && touched.phone
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-black'
+                  }`}
                 />
+                {errors.phone && touched.phone && (
+                  <p className="mt-1 text-sm text-red-600">{errors.phone}</p>
+                )}
               </div>
             </motion.div>
           )}
@@ -216,11 +334,18 @@ export default function DemoForm() {
                 <input
                   type="text"
                   value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                  onChange={(e) => handleFieldChange('company', e.target.value)}
+                  onBlur={() => handleFieldBlur('company')}
                   placeholder="Nombre de tu empresa"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black text-black"
-                  required
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 text-black ${
+                    errors.company && touched.company
+                      ? 'border-red-500 focus:ring-red-500'
+                      : 'border-gray-300 focus:ring-black'
+                  }`}
                 />
+                {errors.company && touched.company && (
+                  <p className="mt-1 text-sm text-red-600">{errors.company}</p>
+                )}
               </div>
 
               <div>
