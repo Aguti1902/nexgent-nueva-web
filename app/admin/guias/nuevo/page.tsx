@@ -9,6 +9,17 @@ import { FaArrowLeft, FaSave, FaEye } from 'react-icons/fa'
 export default function NuevaGuia() {
   const router = useRouter()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [formData, setFormData] = useState({
+    titulo: '',
+    slug: '',
+    categoria: 'Primeros pasos',
+    tiempoLectura: '5 min',
+    contenido: '',
+    articulosRelacionados: '',
+  })
+  const [preview, setPreview] = useState(false)
+  const [generatedCode, setGeneratedCode] = useState('')
+  const [showCode, setShowCode] = useState(false)
 
   useEffect(() => {
     const authenticated = localStorage.getItem('adminAuthenticated')
@@ -29,18 +40,6 @@ export default function NuevaGuia() {
       </div>
     )
   }
-  const [formData, setFormData] = useState({
-    titulo: '',
-    slug: '',
-    categoria: 'Primeros pasos',
-    tiempoLectura: '5 min',
-    contenido: '',
-    articulosRelacionados: '',
-  })
-
-  const [preview, setPreview] = useState(false)
-  const [generatedCode, setGeneratedCode] = useState('')
-  const [showCode, setShowCode] = useState(false)
 
   const categorias = [
     'Primeros pasos',

@@ -9,6 +9,17 @@ import { FaArrowLeft, FaSave, FaEye, FaImage, FaTrash } from 'react-icons/fa'
 export default function NuevoArticuloBlog() {
   const router = useRouter()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [formData, setFormData] = useState({
+    titulo: '',
+    slug: '',
+    categoria: 'IA & Negocios',
+    extracto: '',
+    contenido: '',
+    autor: 'Equipo NexGent',
+    tiempoLectura: '5 min',
+    imagenDestacada: '',
+  })
+  const [preview, setPreview] = useState(false)
 
   useEffect(() => {
     const authenticated = localStorage.getItem('adminAuthenticated')
@@ -29,18 +40,6 @@ export default function NuevoArticuloBlog() {
       </div>
     )
   }
-  const [formData, setFormData] = useState({
-    titulo: '',
-    slug: '',
-    categoria: 'IA & Negocios',
-    extracto: '',
-    contenido: '',
-    autor: 'Equipo NexGent',
-    tiempoLectura: '5 min',
-    imagenDestacada: '',
-  })
-
-  const [preview, setPreview] = useState(false)
 
   const categorias = ['IA & Negocios', 'Casos de Éxito', 'Guías Prácticas', 'Análisis & Datos']
 
