@@ -48,6 +48,7 @@ export default function DemoForm() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [calendlyLoading, setCalendlyLoading] = useState(true)
+  const [isSavingData, setIsSavingData] = useState(false)
 
   const totalSteps = 4
 
@@ -145,9 +146,45 @@ export default function DemoForm() {
     }
   }, [currentStep])
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep < totalSteps) {
+      // Si estamos en el paso 3 y vamos al paso 4, guardar datos en Supabase
+      if (currentStep === 3) {
+        await saveDemoRequest()
+      }
       setCurrentStep(currentStep + 1)
+    }
+  }
+
+  const saveDemoRequest = async () => {
+    setIsSavingData(true)
+    try {
+      const response = await fetch('/api/demo-requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          industry: formData.industry,
+          employees: formData.employees,
+          agentType: formData.agentType,
+          objectives: formData.objectives,
+        }),
+      })
+
+      if (!response.ok) {
+        console.error('Error saving demo request')
+      } else {
+        console.log('Demo request saved successfully')
+      }
+    } catch (error) {
+      console.error('Error saving demo request:', error)
+    } finally {
+      setIsSavingData(false)
     }
   }
 
@@ -512,15 +549,24 @@ export default function DemoForm() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleNext}
-              disabled={!isStepValid()}
+              disabled={!isStepValid() || isSavingData}
               className={`flex-1 font-bold py-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 ${
-                isStepValid()
+                isStepValid() && !isSavingData
                   ? 'bg-blue-500 hover:bg-blue-600 text-white'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}
             >
-              Siguiente
-              <FaArrowRight />
+              {isSavingData ? (
+                <>
+                  <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  Guardando...
+                </>
+              ) : (
+                <>
+                  Siguiente
+                  <FaArrowRight />
+                </>
+              )}
             </motion.button>
           </div>
         )}

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog, FaSignOutAlt, FaEye, FaEyeSlash } from 'react-icons/fa'
+import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog, FaSignOutAlt, FaEye, FaEyeSlash, FaCalendarCheck } from 'react-icons/fa'
 import { getAllBlogArticles, BlogArticle } from '@/data/blog-articles'
 import { articles as predefinedHelpArticles } from '@/app/recursos/centro-ayuda/articulos/articles-data'
 
@@ -360,6 +360,14 @@ export default function AdminDashboard() {
             >
               <FaImage />
               <span className="font-medium">Imágenes</span>
+            </button>
+            
+            <button
+              onClick={() => router.push('/admin/solicitudes-demo')}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-700 hover:bg-gray-100"
+            >
+              <FaCalendarCheck />
+              <span className="font-medium">Solicitudes Demo</span>
             </button>
             
             <button
