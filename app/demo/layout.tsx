@@ -9,12 +9,12 @@ export default function DemoLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
-      {/* Logo NO fijo - posición normal */}
-      <div className="relative z-50">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 pt-8 pb-4 md:pt-5 md:pb-2 lg:py-6">
+    <main className="h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 overflow-hidden flex flex-col">
+      {/* Logo compacto */}
+      <div className="relative z-50 flex-shrink-0">
+        <div className="max-w-[1600px] mx-auto px-6 lg:px-12 pt-4 pb-2">
           <Link href="/" className="block w-fit">
-            <div className="relative h-12 w-40 lg:h-14 lg:w-48 hover:opacity-80 transition-opacity duration-300">
+            <div className="relative h-10 w-32 lg:h-12 lg:w-40 hover:opacity-80 transition-opacity duration-300">
               <Image
                 src="/images/LOGO BLANCO.png"
                 alt="NexGent"
@@ -27,7 +27,9 @@ export default function DemoLayout({
         </div>
       </div>
 
-      {children}
+      <div className="flex-1 flex items-center overflow-hidden">
+        {children}
+      </div>
     </main>
   )
 }

@@ -34,29 +34,29 @@ export default function DemoHero() {
   const [activeTab, setActiveTab] = useState<'form' | 'chat'>('form')
 
   return (
-    <section className="min-h-screen text-white flex items-center justify-center">
-      <div className="w-full max-w-[1600px] mx-auto px-6 lg:px-12 pt-10 pb-6 md:py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <section className="w-full text-white flex items-center justify-center">
+      <div className="w-full max-w-[1600px] mx-auto px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Lado izquierdo - Estadísticas */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="space-y-10"
+            className="space-y-6"
           >
             <div>
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="font-monda text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight"
+                className="font-monda text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight"
               >
                 Números que hablan por sí solos.
               </motion.h1>
             </div>
 
             {/* Estadísticas */}
-            <div className="space-y-6">
+            <div className="space-y-4">
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
@@ -65,10 +65,10 @@ export default function DemoHero() {
                   transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                   className="space-y-1"
                 >
-                  <div className="font-monda text-5xl lg:text-6xl font-bold">
+                  <div className="font-monda text-4xl lg:text-5xl font-bold">
                     {stat.number}
                   </div>
-                  <div className="text-gray-400 text-base lg:text-lg">
+                  <div className="text-gray-400 text-sm lg:text-base">
                     {stat.label}
                   </div>
                 </motion.div>
@@ -80,19 +80,19 @@ export default function DemoHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="pt-4"
+              className="pt-2"
             >
-              <p className="text-sm text-gray-400 uppercase tracking-wider mb-5 text-left">
+              <p className="text-xs text-gray-400 uppercase tracking-wider mb-3 text-left">
                 YA CONFÍAN EN NEXGENT
               </p>
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-3 gap-4">
                 {trustedLogos.map((client, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.9 + index * 0.1 }}
-                    className="relative h-8 flex items-center justify-start opacity-60 hover:opacity-100 transition-opacity duration-300"
+                    className="relative h-6 flex items-center justify-start opacity-60 hover:opacity-100 transition-opacity duration-300"
                     style={{
                       filter: 'brightness(0) invert(1)',
                     }}
@@ -115,18 +115,18 @@ export default function DemoHero() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+            className="bg-white rounded-3xl shadow-2xl overflow-hidden max-h-[85vh] overflow-y-auto"
           >
-            <div className="p-8 lg:p-12">
-              <h2 className="font-monda text-3xl font-bold text-black mb-4">
+            <div className="p-6 lg:p-8">
+              <h2 className="font-monda text-2xl lg:text-3xl font-bold text-black mb-3">
                 A un paso de optimizar tu gestión
               </h2>
-              <p className="text-gray-600 mb-8">
+              <p className="text-gray-600 text-sm lg:text-base mb-6">
                 Déjanos tu información y agenda una demo personalizada con nuestro equipo.
               </p>
 
               {/* Tabs para cambiar entre formulario y chat */}
-              <div className="grid grid-cols-1 gap-4 mb-8">
+              <div className="grid grid-cols-1 gap-4 mb-6">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
