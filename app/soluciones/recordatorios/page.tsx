@@ -92,8 +92,8 @@ export default function RecordatoriosPage() {
                         </div>
                         <p className="text-sm mt-2">¿Confirmas tu asistencia?</p>
                         <div className="flex gap-2 mt-2">
-                          <button className="flex-1 bg-green-500 text-white px-3 py-2 rounded text-xs font-bold">✓ Confirmo</button>
-                          <button className="flex-1 bg-gray-200 text-gray-700 px-3 py-2 rounded text-xs">Reprogramar</button>
+                          <button className="flex-1 bg-green-500 text-white px-3 py-2 rounded text-xs font-bold whitespace-nowrap">✓ Confirmo</button>
+                          <button className="flex-1 bg-gray-200 text-gray-700 px-3 py-2 rounded text-xs whitespace-nowrap">Reprogramar</button>
                         </div>
                       </div>
                     </div>

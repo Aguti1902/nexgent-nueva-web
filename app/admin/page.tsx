@@ -670,7 +670,7 @@ export default function AdminDashboard() {
                     />
                   </div>
                   
-                  <button className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all">
+                  <button className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all whitespace-nowrap">
                     Guardar cambios
                   </button>
                 </div>

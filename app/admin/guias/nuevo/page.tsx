@@ -149,7 +149,7 @@ export default function NuevaGuia() {
             <button
               onClick={handleSubmit}
               disabled={isSaving}
-              className={`flex items-center gap-2 text-white px-6 py-2 rounded-lg font-semibold transition-all ${
+              className={`flex items-center gap-2 text-white px-6 py-2 rounded-lg font-semibold transition-all whitespace-nowrap ${
                 isSaving 
                   ? 'bg-gray-400 cursor-not-allowed' 
                   : 'bg-purple-500 hover:bg-purple-600'
