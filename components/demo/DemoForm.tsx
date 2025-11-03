@@ -141,65 +141,22 @@ export default function DemoForm() {
       const script = document.createElement('script')
       script.src = 'https://assets.calendly.com/assets/external/widget.js'
       script.type = 'text/javascript'
+      script.async = true
       document.head.appendChild(script)
     }
   }, [])
 
-  // Inicializar Calendly cuando llegamos al paso 4
+  // Ocultar el indicador de carga después de 2 segundos (tiempo para que Calendly renderice)
   useEffect(() => {
     if (currentStep === 4) {
       setCalendlyLoading(true)
-      // Esperar un momento para asegurar que el DOM esté listo
       const timer = setTimeout(() => {
-        initCalendly()
-      }, 100)
+        setCalendlyLoading(false)
+      }, 2000)
       
       return () => clearTimeout(timer)
     }
   }, [currentStep])
-
-  const initCalendly = () => {
-    const calendlyElement = document.getElementById('calendly-embed')
-    
-    if (!calendlyElement) {
-      console.error('Calendly element not found')
-      return
-    }
-
-    // Verificar si Calendly está disponible
-    if (!(window as any).Calendly) {
-      console.log('Calendly script not loaded yet, retrying...')
-      // Reintentar después de 500ms
-      setTimeout(() => initCalendly(), 500)
-      return
-    }
-
-    // Limpiar contenido previo
-    calendlyElement.innerHTML = ''
-    
-    // Inicializar Calendly
-    try {
-      ;(window as any).Calendly.initInlineWidget({
-        url: 'https://calendly.com/nexgent-demo',
-        parentElement: calendlyElement,
-        prefill: {
-          name: formData.name,
-          email: formData.email,
-          customAnswers: {
-            a1: formData.phone,
-            a2: formData.company,
-          },
-        },
-        utm: {},
-      })
-      console.log('Calendly initialized successfully')
-      // Marcar como cargado después de un breve delay para que el iframe renderice
-      setTimeout(() => setCalendlyLoading(false), 1000)
-    } catch (error) {
-      console.error('Error initializing Calendly:', error)
-      setCalendlyLoading(false)
-    }
-  }
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -521,10 +478,10 @@ export default function DemoForm() {
                 </div>
               )}
               
-              {/* Calendly Widget - Solo el calendario */}
+              {/* Calendly Widget - Método simple con data-url */}
               <div 
-                id="calendly-embed"
-                className="rounded-lg overflow-hidden w-full" 
+                className="calendly-inline-widget w-full rounded-lg overflow-hidden" 
+                data-url={`https://calendly.com/nexgent-demo?hide_gdpr_banner=1&primary_color=000000&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`}
                 style={{ minWidth: '100%', height: '600px' }}
               />
             </motion.div>
