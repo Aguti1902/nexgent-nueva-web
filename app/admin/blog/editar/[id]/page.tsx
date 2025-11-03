@@ -88,9 +88,9 @@ export default function EditarArticuloBlog() {
       return
     }
 
-    // Validar tamaño (máx 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      alert('La imagen debe ser menor de 5MB')
+    // Validar tamaño (máx 20MB)
+    if (file.size > 20 * 1024 * 1024) {
+      alert('La imagen debe ser menor de 20MB')
       return
     }
 
@@ -385,7 +385,7 @@ export default function EditarArticuloBlog() {
                     <p className={`mb-2 ${isDragging ? 'text-blue-600 font-semibold' : 'text-gray-600'}`}>
                       {isDragging ? '¡Suelta la imagen aquí!' : 'Arrastra una imagen o haz clic para seleccionar'}
                     </p>
-                    <p className="text-xs text-gray-500">PNG, JPG o WebP (máx. 5MB)</p>
+                    <p className="text-xs text-gray-500">PNG, JPG o WebP (máx. 20MB)</p>
                     <input
                       type="file"
                       accept="image/*"
