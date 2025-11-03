@@ -1,16 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 
-// Configuración para permitir archivos grandes
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '20mb',
-    },
-  },
-}
-
-// Configuración de runtime para Edge (sin límites de tamaño)
+// Configuración de runtime para Next.js 14 App Router
 export const runtime = 'nodejs'
 export const maxDuration = 60 // 60 segundos timeout
 
