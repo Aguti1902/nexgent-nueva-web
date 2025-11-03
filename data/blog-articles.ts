@@ -22,6 +22,7 @@ export const blogArticles: BlogArticle[] = [
     category: 'IA & Negocios',
     readTime: '12 min',
     author: 'Equipo NexGent',
+    image: '/images/blog/IA.jpg',
     published: true,
     content: `
 La inteligencia artificial ha dejado de ser una promesa futurista para convertirse en una realidad tangible que está redefiniendo el panorama empresarial. En oficinas, clínicas, gimnasios y tiendas de todo el mundo, la IA está generando resultados medibles que transforman radicalmente la manera en que las empresas interactúan con sus clientes y gestionan sus operaciones.
@@ -80,6 +81,7 @@ La pregunta ya no es si deberías implementar IA, sino cuánto estás dispuesto 
     category: 'IA & Negocios',
     readTime: '8 min',
     author: 'Equipo NexGent',
+    image: '/images/blog/ATENCION AL CLIENTE.jpg',
     published: true,
     content: `
 La atención al cliente atraviesa su transformación más radical en décadas. Lo que en 2023 requería equipos de diez personas trabajando en turnos puede gestionarse en 2024 con apenas dos personas apoyadas por inteligencia artificial. No es exageración ni proyección futurista, es la realidad operativa de cientos de empresas europeas que han dado el salto.
@@ -210,6 +212,7 @@ La pregunta ya no es si tu competencia adoptará IA en atención al cliente. Muc
     category: 'IA & Negocios',
     readTime: '6 min',
     author: 'Equipo NexGent',
+    image: '/images/blog/WHATSAPP.jpg',
     published: true,
     content: `
 La combinación de WhatsApp Business API con inteligencia artificial representa una de las oportunidades más poderosas y subestimadas para negocios de todos los tamaños. No es hipérbole: los datos demuestran que esta fusión tecnológica está generando retornos medibles en semanas, no meses.
@@ -334,6 +337,7 @@ El dato que debería terminar de convencerte: el 73% de las empresas que automat
     category: 'Casos de Éxito',
     readTime: '10 min',
     author: 'Equipo NexGent',
+    image: '/images/blog/HELLO NAILS.jpg',
     published: true,
     content: `
 Hello Nails, cadena de salones de belleza con más de 200 centros, enfrentaba un problema común pero costoso: perdían clientes por mala gestión de la atención.
@@ -541,6 +545,7 @@ Hello Nails demostró que la IA no es solo para gigantes tecnológicos. Una cade
     category: 'Guías Prácticas',
     readTime: '15 min',
     author: 'Equipo NexGent',
+    image: '/images/blog/CHATBOT.jpg',
     published: true,
     content: `
 Hemos analizado más de 500 implementaciones de chatbots. El 80% fracasan. El 20% que funciona sigue patrones específicos. Aquí está la guía completa.
@@ -873,6 +878,7 @@ Sigue esta guía y estarás en el 20% que funciona.
     category: 'Análisis & Datos',
     readTime: '7 min',
     author: 'Equipo NexGent',
+    image: '/images/blog/IA VS HUMANO.jpg',
     published: true,
     content: `
 Análisis objetivo y basado en datos de más de 200 empresas que hicieron la transición de atención humana a híbrida (humanos + IA).
@@ -1181,6 +1187,7 @@ La pregunta es: ¿cuándo vas a implementar el modelo híbrido?**
     category: 'IA & Negocios',
     readTime: '9 min',
     author: 'Equipo NexGent',
+    image: '/images/blog/ERRORES.jpg',
     published: true,
     content: `
 El 73% de proyectos de IA fracasan en los primeros 6 meses. Hemos analizado 200+ implementaciones fallidas para identificar qué salió mal y cómo evitarlo.
@@ -1542,6 +1549,7 @@ Sigue estas lecciones de 200+ fracasos analizados y estarás en el 27% exitoso.
     category: 'Análisis & Datos',
     readTime: '15 min',
     author: 'Equipo NexGent',
+    image: '/images/blog/CHAT GPT VS CLAUDE.JPG',
     published: true,
     content: `
 En el competitivo mundo de la inteligencia artificial, dos gigantes se disputan el trono: GPT-4 Turbo de OpenAI y Claude 3 Opus de Anthropic. La batalla entre estos modelos de lenguaje no es solo una cuestión técnica, sino que tiene implicaciones directas en cómo las empresas operan, innovan y se relacionan con sus clientes en 2024.
@@ -1628,6 +1636,7 @@ Lo más prudente es comenzar con un piloto pequeño, medir resultados con KPIs c
     category: 'IA & Negocios',
     readTime: '12 min',
     author: 'Equipo NexGent',
+    image: '/images/blog/EUROPEO.jpg',
     published: true,
     content: `
 El 13 de marzo de 2024, la UE aprobó el AI Act, la primera regulación comprehensiva de inteligencia artificial del mundo. Y va a cambiar todo.
@@ -1997,6 +2006,7 @@ El AI Act es complejo pero manejable:
     category: 'IA & Negocios',
     readTime: '14 min',
     author: 'Equipo NexGent',
+    image: '/images/blog/Agentes de IA Autónomos.jpg',
     published: true,
     content: `
 2023 fue el año de ChatGPT. 2024 es el año de los **agentes autónomos**. Y van a cambiar todo lo que creías saber sobre IA.
