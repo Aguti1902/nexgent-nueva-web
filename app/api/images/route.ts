@@ -60,11 +60,11 @@ export async function POST(request: NextRequest) {
       }, { status: 400 })
     }
 
-    // Validar tamaño (max 5MB)
-    const maxSize = 5 * 1024 * 1024 // 5MB
+    // Validar tamaño (max 20MB)
+    const maxSize = 20 * 1024 * 1024 // 20MB
     if (file.size > maxSize) {
       return NextResponse.json({ 
-        error: 'El archivo es demasiado grande. Tamaño máximo: 5MB' 
+        error: 'El archivo es demasiado grande. Tamaño máximo: 20MB' 
       }, { status: 400 })
     }
 
@@ -98,11 +98,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      image: {
-        name: fileName,
-        url: urlData.publicUrl,
-        size: file.size
-      }
+      url: urlData.publicUrl,
+      name: fileName,
+      size: file.size
     })
   } catch (error) {
     console.error('Error in POST /api/images:', error)
