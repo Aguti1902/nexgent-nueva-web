@@ -5,6 +5,13 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaArrowLeft, FaSave, FaEye, FaImage, FaTrash } from 'react-icons/fa'
+import { createClient } from '@supabase/supabase-js'
+
+// Cliente de Supabase para subir imágenes directamente
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
 
 export default function NuevoArticuloBlog() {
   const router = useRouter()
@@ -90,27 +97,35 @@ export default function NuevoArticuloBlog() {
       }
       reader.readAsDataURL(file)
 
-      // Subir imagen a Supabase Storage
-      const formData = new FormData()
-      formData.append('file', file)
+      // Generar nombre único para el archivo
+      const timestamp = Date.now()
+      const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_')
+      const fileName = `${timestamp}-${sanitizedName}`
 
-      const uploadResponse = await fetch('/api/images', {
-        method: 'POST',
-        body: formData,
-      })
+      // Subir DIRECTAMENTE a Supabase Storage (sin pasar por nuestra API)
+      const { data, error } = await supabase.storage
+        .from('blog-images')
+        .upload(fileName, file, {
+          contentType: file.type,
+          cacheControl: '3600',
+          upsert: false
+        })
 
-      const uploadData = await uploadResponse.json()
-
-      if (!uploadResponse.ok) {
-        throw new Error(uploadData.error || 'Error al subir la imagen')
+      if (error) {
+        throw new Error(error.message)
       }
 
+      // Obtener URL pública
+      const { data: urlData } = supabase.storage
+        .from('blog-images')
+        .getPublicUrl(fileName)
+
       // Guardar la URL pública de Supabase
-      setFormData(prev => ({ ...prev, imagenDestacada: uploadData.url }))
+      setFormData(prev => ({ ...prev, imagenDestacada: urlData.publicUrl }))
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error al procesar imagen:', error)
-      alert('Error al subir la imagen. Por favor, inténtalo de nuevo.')
+      alert(`Error al subir la imagen: ${error.message || 'Por favor, inténtalo de nuevo.'}`)
       setFormData(prev => ({ ...prev, imagenDestacada: '' }))
     } finally {
       setUploadingImage(false)
