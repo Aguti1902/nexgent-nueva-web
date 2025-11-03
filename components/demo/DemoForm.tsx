@@ -133,26 +133,13 @@ export default function DemoForm() {
     setErrors(prev => ({ ...prev, [field]: error }))
   }
 
-  // Cargar script de Calendly al montar el componente
-  useEffect(() => {
-    const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')
-    
-    if (!existingScript) {
-      const script = document.createElement('script')
-      script.src = 'https://assets.calendly.com/assets/external/widget.js'
-      script.type = 'text/javascript'
-      script.async = true
-      document.head.appendChild(script)
-    }
-  }, [])
-
-  // Ocultar el indicador de carga después de 2 segundos (tiempo para que Calendly renderice)
+  // Ocultar el indicador de carga después de 1 segundo
   useEffect(() => {
     if (currentStep === 4) {
       setCalendlyLoading(true)
       const timer = setTimeout(() => {
         setCalendlyLoading(false)
-      }, 2000)
+      }, 1000)
       
       return () => clearTimeout(timer)
     }
@@ -478,11 +465,13 @@ export default function DemoForm() {
                 </div>
               )}
               
-              {/* Calendly Widget - Método simple con data-url */}
-              <div 
-                className="calendly-inline-widget w-full rounded-lg overflow-hidden" 
-                data-url={`https://calendly.com/nexgent-demo?hide_gdpr_banner=1&primary_color=000000&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`}
-                style={{ minWidth: '100%', height: '600px' }}
+              {/* Calendly Iframe - Método más directo y confiable */}
+              <iframe
+                src={`https://calendly.com/nexgent-demo?embed_domain=${typeof window !== 'undefined' ? window.location.hostname : ''}&embed_type=Inline&hide_gdpr_banner=1&primary_color=000000&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}`}
+                width="100%"
+                height="600"
+                frameBorder="0"
+                className="rounded-lg"
               />
             </motion.div>
           )}
