@@ -238,7 +238,7 @@ export default function DemoForm() {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 relative">
       {/* CSS para ocultar el título de Calendly */}
       <style jsx global>{`
         iframe[src*="calendly"] {
@@ -247,11 +247,12 @@ export default function DemoForm() {
         
         .calendly-iframe-container {
           position: relative !important;
+          z-index: 1 !important;
         }
       `}</style>
       
-      {/* Barra de progreso */}
-      <div className="flex items-center mb-4 w-full">
+      {/* Barra de progreso con z-index alto */}
+      <div className="flex items-center mb-4 w-full relative z-10">
         {[1, 2, 3, 4].map((step, index) => (
           <div key={step} className={`flex items-center ${index < 3 ? 'flex-1' : ''}`}>
             <div

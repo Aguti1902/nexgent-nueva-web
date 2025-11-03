@@ -42,21 +42,21 @@ export default function DemoHero() {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="space-y-6"
+            className="space-y-8"
           >
             <div>
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="font-monda text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight"
+                className="font-monda text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight"
               >
                 Números que hablan por sí solos.
               </motion.h1>
             </div>
 
             {/* Estadísticas */}
-            <div className="space-y-4">
+            <div className="space-y-5">
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
@@ -65,10 +65,10 @@ export default function DemoHero() {
                   transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                   className="space-y-1"
                 >
-                  <div className="font-monda text-4xl lg:text-5xl font-bold">
+                  <div className="font-monda text-5xl lg:text-6xl font-bold">
                     {stat.number}
                   </div>
-                  <div className="text-gray-400 text-sm lg:text-base">
+                  <div className="text-gray-400 text-base lg:text-lg">
                     {stat.label}
                   </div>
                 </motion.div>
@@ -80,19 +80,19 @@ export default function DemoHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
-              className="pt-2"
+              className="pt-3"
             >
-              <p className="text-xs text-gray-400 uppercase tracking-wider mb-3 text-left">
+              <p className="text-sm text-gray-400 uppercase tracking-wider mb-4 text-left">
                 YA CONFÍAN EN NEXGENT
               </p>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-5">
                 {trustedLogos.map((client, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4, delay: 0.9 + index * 0.1 }}
-                    className="relative h-6 flex items-center justify-start opacity-60 hover:opacity-100 transition-opacity duration-300"
+                    className="relative h-8 flex items-center justify-start opacity-60 hover:opacity-100 transition-opacity duration-300"
                     style={{
                       filter: 'brightness(0) invert(1)',
                     }}
