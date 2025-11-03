@@ -8,16 +8,16 @@ import AIBookingChat from './AIBookingChat'
 
 const stats = [
   {
-    number: '90.000+',
+    number: '500+',
     label: 'Clientes satisfechos',
   },
   {
-    number: '40h',
+    number: '10.000h',
     label: 'Automatizadas al mes',
   },
   {
-    number: '80%',
-    label: 'Más de rapidez en los cobros',
+    number: '95%',
+    label: 'Tasa de satisfacción',
   },
 ]
 
@@ -122,11 +122,11 @@ export default function DemoHero() {
                 A un paso de optimizar tu gestión
               </h2>
               <p className="text-gray-600 mb-8">
-                Déjanos tu información y elige la opción que más se ajusta a tu disponibilidad.
+                Déjanos tu información y agenda una demo personalizada con nuestro equipo.
               </p>
 
               {/* Tabs para cambiar entre formulario y chat */}
-              <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="grid grid-cols-1 gap-4 mb-8">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
@@ -146,15 +146,12 @@ export default function DemoHero() {
                   </span>
                 </motion.button>
 
+                {/* BOTÓN "HABLA CON IA" - OCULTO TEMPORALMENTE */}
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveTab('chat')}
-                  className={`flex flex-col items-center justify-center p-6 rounded-xl border-2 transition-all duration-300 ${
-                    activeTab === 'chat'
-                      ? 'border-black bg-blue-50'
-                      : 'border-gray-300 hover:border-gray-400'
-                  }`}
+                  className="hidden flex-col items-center justify-center p-6 rounded-xl border-2 transition-all duration-300 border-gray-300 hover:border-gray-400"
                 >
                   <svg className="w-8 h-8 mb-2 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
