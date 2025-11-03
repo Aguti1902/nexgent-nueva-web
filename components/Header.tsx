@@ -148,7 +148,7 @@ export default function Header() {
                       <div className="pt-4 border-t border-gray-200">
                         <Link
                           href="/contacto"
-                          className="flex items-center justify-center gap-2 w-full bg-black text-white rounded-lg px-4 py-3 hover:bg-gray-800 transition-colors"
+                          className="flex items-center justify-center gap-2 w-full bg-black text-white rounded-lg px-4 py-3 hover:bg-gray-800 transition-colors whitespace-nowrap"
                         >
                           <FaHandshake className="text-lg" />
                           <span className="font-medium">¿No ves tu industria? Contáctanos</span>

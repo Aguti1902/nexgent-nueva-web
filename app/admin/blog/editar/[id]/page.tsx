@@ -273,7 +273,7 @@ export default function EditarArticuloBlog() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setPreview(!preview)}
-              className="flex items-center gap-2 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all"
+              className="flex items-center gap-2 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all whitespace-nowrap"
             >
               <FaEye />
               {preview ? 'Editar' : 'Vista previa'}
@@ -281,7 +281,7 @@ export default function EditarArticuloBlog() {
             <button
               onClick={handleSubmit}
               disabled={saving}
-              className="flex items-center gap-2 bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
             >
               {saving ? (
                 <>

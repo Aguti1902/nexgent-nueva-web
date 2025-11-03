@@ -263,7 +263,7 @@ export default function CaseStudies() {
                     href="/demo"
                     whileHover={{ scale: 1.05, boxShadow: "0 20px 60px rgba(255,255,255,0.3)" }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-white text-black font-bold py-5 px-14 rounded-full transition-all duration-300 text-lg hover:bg-gray-100 shadow-xl"
+                    className="bg-white text-black font-bold py-5 px-14 rounded-full transition-all duration-300 text-lg hover:bg-gray-100 shadow-xl whitespace-nowrap"
                   >
                     ¿Quieres resultados así?
                   </motion.a>

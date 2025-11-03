@@ -452,7 +452,7 @@ export default function ArticuloBlogPage() {
                 </p>
                 <Link
                   href="/demo"
-                  className="inline-block bg-white text-blue-600 px-10 py-5 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl hover:scale-105 transform"
+                  className="inline-block bg-white text-blue-600 px-10 py-5 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-xl hover:shadow-2xl hover:scale-105 transform whitespace-nowrap"
                 >
                   Solicitar demo gratuita →
                 </Link>

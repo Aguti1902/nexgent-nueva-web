@@ -188,7 +188,7 @@ export default function Testimonials() {
           </p>
           <a
             href="/demo"
-            className="inline-block bg-black text-white px-8 py-4 rounded-full font-semibold hover:bg-gray-800 transition-all duration-300 hover:shadow-xl"
+            className="inline-block bg-black text-white px-8 py-4 rounded-full font-semibold hover:bg-gray-800 transition-all duration-300 hover:shadow-xl whitespace-nowrap"
           >
             Solicita tu demo gratuita
           </a>

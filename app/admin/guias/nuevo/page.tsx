@@ -141,7 +141,7 @@ export default function NuevaGuia() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setPreview(!preview)}
-              className="flex items-center gap-2 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all"
+              className="flex items-center gap-2 px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all whitespace-nowrap"
             >
               <FaEye />
               {preview ? 'Editar' : 'Vista previa'}

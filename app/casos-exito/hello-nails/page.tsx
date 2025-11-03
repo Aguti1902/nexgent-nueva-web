@@ -378,7 +378,7 @@ export default function HelloNailsCaseStudy() {
             </p>
             <Link
               href="/contacto"
-              className="inline-block bg-white text-black font-bold px-12 py-5 rounded-full text-lg hover:bg-gray-100 transition-all duration-300 shadow-xl"
+              className="inline-block bg-white text-black font-bold px-12 py-5 rounded-full text-lg hover:bg-gray-100 transition-all duration-300 shadow-xl whitespace-nowrap"
             >
               Solicita tu demo gratuita
             </Link>
