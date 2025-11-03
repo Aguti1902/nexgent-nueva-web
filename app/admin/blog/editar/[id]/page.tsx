@@ -42,12 +42,31 @@ export default function EditarArticuloBlog() {
     const authenticated = localStorage.getItem('adminAuthenticated')
     if (authenticated === 'true') {
       setIsAuthenticated(true)
+      loadArticle()
+    } else {
+      router.push('/admin/login')
+    }
+  }, [router, articleId])
+
+  const loadArticle = async () => {
+    try {
+      // Verificar si es un UUID válido (artículos de Supabase)
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+      const isUUID = uuidRegex.test(articleId)
       
-      // Cargar artículo
-      const articles = getAllBlogArticles()
-      const article = articles.find(a => a.id === articleId)
-      
-      if (article) {
+      if (!isUUID) {
+        // Es un artículo predefinido, no se puede editar
+        alert('⚠️ Este artículo es predefinido y no se puede editar. Solo puedes editar artículos creados en el admin.')
+        router.push('/admin')
+        return
+      }
+
+      // Cargar artículo desde Supabase
+      const response = await fetch(`/api/blog?id=${articleId}`)
+      const data = await response.json()
+
+      if (response.ok && data.article) {
+        const article = data.article
         setFormData({
           titulo: article.title,
           slug: article.slug,
@@ -55,16 +74,22 @@ export default function EditarArticuloBlog() {
           extracto: article.excerpt,
           contenido: article.content,
           autor: article.author,
-          tiempoLectura: article.readTime,
-          imagenDestacada: article.image || '',
+          tiempoLectura: article.read_time || article.readTime || '5 min',
+          imagenDestacada: article.image_url || article.image || '',
           published: article.published,
         })
+      } else {
+        alert('❌ No se encontró el artículo')
+        router.push('/admin')
       }
+    } catch (error) {
+      console.error('Error loading article:', error)
+      alert('❌ Error al cargar el artículo')
+      router.push('/admin')
+    } finally {
       setLoading(false)
-    } else {
-      router.push('/admin/login')
     }
-  }, [router, articleId])
+  }
 
   const categorias = ['IA & Negocios', 'Casos de Éxito', 'Guías Prácticas', 'Análisis & Datos']
 

@@ -1,13 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdmin } from '@/lib/supabase'
 
-// GET - Obtener todos los artículos
+// GET - Obtener todos los artículos o uno específico por ID
 export async function GET(request: NextRequest) {
   try {
     const supabaseAdmin = getSupabaseAdmin()
     const { searchParams } = new URL(request.url)
     const published = searchParams.get('published')
+    const id = searchParams.get('id')
 
+    // Si se proporciona ID, obtener un artículo específico
+    if (id) {
+      // @ts-ignore - Supabase types not generated yet
+      const { data, error } = await supabaseAdmin
+        .from('blog_articles')
+        .select('*')
+        .eq('id', id)
+        .single()
+
+      if (error) {
+        console.error('Error fetching article:', error)
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      return NextResponse.json({ article: data })
+    }
+
+    // Si no hay ID, obtener todos los artículos
     // @ts-ignore - Supabase types not generated yet
     let query = supabaseAdmin
       .from('blog_articles')
