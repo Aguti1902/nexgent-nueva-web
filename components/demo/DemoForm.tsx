@@ -144,14 +144,38 @@ export default function DemoForm() {
         script.async = true
         script.onload = () => {
           // Inicializar Calendly cuando el script esté cargado
-          if ((window as any).Calendly) {
-            console.log('Calendly cargado correctamente')
-          }
+          initCalendly()
         }
         document.body.appendChild(script)
+      } else {
+        // Si el script ya existe, inicializar directamente
+        initCalendly()
       }
     }
-  }, [currentStep])
+  }, [currentStep, formData.name, formData.email, formData.phone, formData.company])
+
+  const initCalendly = () => {
+    const calendlyElement = document.getElementById('calendly-embed')
+    if (calendlyElement && (window as any).Calendly) {
+      // Limpiar el contenido previo
+      calendlyElement.innerHTML = ''
+      
+      // Inicializar Calendly con prefill
+      ;(window as any).Calendly.initInlineWidget({
+        url: 'https://calendly.com/nexgent-demo',
+        parentElement: calendlyElement,
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          customAnswers: {
+            a1: formData.phone, // Campo personalizado para teléfono
+            a2: formData.company, // Campo personalizado para empresa
+          },
+        },
+        utm: {},
+      })
+    }
+  }
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -476,8 +500,8 @@ export default function DemoForm() {
 
               {/* Calendly Widget */}
               <div 
-                className="calendly-inline-widget rounded-lg overflow-hidden border border-gray-200" 
-                data-url={`https://calendly.com/nexgent-demo?hide_gdpr_banner=1&primary_color=000000&hide_event_type_details=0&hide_landing_page_details=0&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&a1=${encodeURIComponent(formData.phone)}&a2=${encodeURIComponent(formData.company)}`}
+                id="calendly-embed"
+                className="rounded-lg overflow-hidden border border-gray-200" 
                 style={{ minWidth: '320px', height: '700px' }}
               />
 
