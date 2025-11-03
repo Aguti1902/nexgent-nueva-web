@@ -35,7 +35,7 @@ export default function DemoHero() {
 
   return (
     <section className="min-h-screen text-white flex items-center justify-center">
-      <div className="w-full max-w-[1600px] mx-auto px-6 lg:px-12 py-6">
+      <div className="w-full max-w-[1600px] mx-auto px-6 lg:px-12 pt-10 pb-6 md:py-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Lado izquierdo - Estadísticas */}
           <motion.div
