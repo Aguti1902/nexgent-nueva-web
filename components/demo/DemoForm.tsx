@@ -201,9 +201,16 @@ export default function DemoForm() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
+      {/* CSS para ocultar el título de Calendly */}
+      <style jsx global>{`
+        iframe[src*="calendly"] {
+          margin-top: -40px !important;
+        }
+      `}</style>
+      
       {/* Barra de progreso */}
-      <div className="flex items-center mb-6 w-full">
+      <div className="flex items-center mb-4 w-full">
         {[1, 2, 3, 4].map((step, index) => (
           <div key={step} className={`flex items-center ${index < 3 ? 'flex-1' : ''}`}>
             <div
@@ -453,11 +460,11 @@ export default function DemoForm() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="-mx-4 md:-mx-8 relative"
+              className="-mx-4 md:-mx-8 relative -mt-2"
             >
               {/* Indicador de carga */}
               {calendlyLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white z-10 rounded-lg" style={{ height: '600px' }}>
+                <div className="absolute inset-0 flex items-center justify-center bg-white z-10 rounded-lg" style={{ height: '550px' }}>
                   <div className="text-center">
                     <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-black mb-4"></div>
                     <p className="text-gray-600 font-medium">Cargando calendario...</p>
@@ -469,10 +476,10 @@ export default function DemoForm() {
               <iframe
                 src={`https://calendly.com/nexgent-demo/30min?embed_domain=${typeof window !== 'undefined' ? window.location.hostname : ''}&embed_type=Inline&hide_event_type_details=1&hide_gdpr_banner=1&primary_color=000000&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&background_color=ffffff&text_color=000000`}
                 width="100%"
-                height="600"
+                height="550"
                 frameBorder="0"
                 className="rounded-lg"
-                style={{ border: 'none' }}
+                style={{ border: 'none', marginTop: '-10px' }}
               />
             </motion.div>
           )}
@@ -514,13 +521,13 @@ export default function DemoForm() {
         
         {/* Botón "Atrás" solo en paso 4 */}
         {currentStep === 4 && (
-          <div className="flex justify-start mt-4">
+          <div className="flex justify-start mt-2">
             <motion.button
               type="button"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handlePrevious}
-              className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-3 px-6 rounded-lg transition-all duration-300 flex items-center gap-2"
+              className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-5 rounded-lg transition-all duration-300 flex items-center gap-2 text-sm"
             >
               <FaArrowLeft />
               Atrás
