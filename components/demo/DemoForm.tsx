@@ -485,31 +485,13 @@ export default function DemoForm() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="space-y-4"
             >
-              <div className="flex items-center gap-2 mb-4">
-                <FaCalendar className="text-black text-xl" />
-                <h3 className="text-xl font-bold text-black">Elige tu horario preferido</h3>
-              </div>
-
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
-                <p className="text-sm text-gray-700">
-                  📅 Selecciona el día y hora que mejor te convenga en nuestro calendario.
-                </p>
-              </div>
-
-              {/* Calendly Widget */}
+              {/* Calendly Widget - Solo el calendario */}
               <div 
                 id="calendly-embed"
-                className="rounded-lg overflow-hidden border border-gray-200" 
+                className="rounded-lg overflow-hidden" 
                 style={{ minWidth: '320px', height: '700px' }}
               />
-
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
-                <p className="text-sm text-gray-700">
-                  💡 Una vez reserves, recibirás un email de confirmación automático con toda la información.
-                </p>
-              </div>
             </motion.div>
           )}
         </AnimatePresence>
