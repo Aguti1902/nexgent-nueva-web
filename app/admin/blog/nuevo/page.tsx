@@ -20,6 +20,9 @@ export default function NuevoArticuloBlog() {
     imagenDestacada: '',
   })
   const [preview, setPreview] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
+  const [uploadingImage, setUploadingImage] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     const authenticated = localStorage.getItem('adminAuthenticated')
@@ -57,42 +60,83 @@ export default function NuevoArticuloBlog() {
     }
   }
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      // Validar tamaño (max 5MB para Supabase)
-      if (file.size > 5 * 1024 * 1024) {
-        alert('La imagen es muy grande. Por favor, selecciona una imagen menor a 5MB.')
-        return
+      processImageFile(file)
+    }
+  }
+
+  const processImageFile = async (file: File) => {
+    // Validar tipo de archivo
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor, selecciona un archivo de imagen válido')
+      return
+    }
+
+    // Validar tamaño (máx 20MB)
+    if (file.size > 20 * 1024 * 1024) {
+      alert('La imagen debe ser menor de 20MB')
+      return
+    }
+
+    setUploadingImage(true)
+
+    try {
+      // Mostrar preview temporal mientras sube
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setFormData(prev => ({ ...prev, imagenDestacada: reader.result as string }))
+      }
+      reader.readAsDataURL(file)
+
+      // Subir imagen a Supabase Storage
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const uploadResponse = await fetch('/api/images', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const uploadData = await uploadResponse.json()
+
+      if (!uploadResponse.ok) {
+        throw new Error(uploadData.error || 'Error al subir la imagen')
       }
 
-      // Mostrar loading
-      const loadingMsg = alert('Subiendo imagen...')
+      // Guardar la URL pública de Supabase
+      setFormData(prev => ({ ...prev, imagenDestacada: uploadData.url }))
       
-      try {
-        // Subir a Supabase Storage
-        const uploadFormData = new FormData()
-        uploadFormData.append('file', file)
-        
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: uploadFormData
-        })
-        
-        if (response.ok) {
-          const data = await response.json()
-          setFormData(prev => ({
-            ...prev,
-            imagenDestacada: data.url // URL de Supabase
-          }))
-          alert('✅ Imagen subida correctamente')
-        } else {
-          alert('❌ Error al subir la imagen')
-        }
-      } catch (error) {
-        console.error('Error uploading image:', error)
-        alert('❌ Error al subir la imagen')
-      }
+    } catch (error) {
+      console.error('Error al procesar imagen:', error)
+      alert('Error al subir la imagen. Por favor, inténtalo de nuevo.')
+      setFormData(prev => ({ ...prev, imagenDestacada: '' }))
+    } finally {
+      setUploadingImage(false)
+    }
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+
+    const file = e.dataTransfer.files?.[0]
+    if (file) {
+      processImageFile(file)
     }
   }
 
@@ -301,7 +345,13 @@ export default function NuevoArticuloBlog() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Imagen destacada
               </label>
-              {formData.imagenDestacada ? (
+              {uploadingImage ? (
+                <div className="border-2 border-dashed border-blue-500 bg-blue-50 rounded-lg p-8 text-center">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                  <p className="text-blue-600 font-semibold mb-2">Subiendo imagen...</p>
+                  <p className="text-xs text-gray-500">Por favor espera, esto puede tardar unos segundos</p>
+                </div>
+              ) : formData.imagenDestacada ? (
                 <div className="relative">
                   <img 
                     src={formData.imagenDestacada} 
@@ -317,23 +367,31 @@ export default function NuevoArticuloBlog() {
                   </button>
                 </div>
               ) : (
-                <label className="block cursor-pointer">
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-500 transition-all">
-                    <FaImage className="text-4xl text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-600 mb-2">Arrastra una imagen o haz clic para seleccionar</p>
-                    <p className="text-xs text-gray-500">PNG, JPG o WebP (máx. 2MB)</p>
-                  </div>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageUpload}
-                  />
-                </label>
+                <div
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  className={`border-2 border-dashed rounded-lg p-8 text-center transition-all ${
+                    isDragging
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-300 hover:border-blue-500'
+                  }`}
+                >
+                  <label className="cursor-pointer block">
+                    <FaImage className={`text-4xl mx-auto mb-4 ${isDragging ? 'text-blue-500' : 'text-gray-400'}`} />
+                    <p className={`mb-2 ${isDragging ? 'text-blue-600 font-semibold' : 'text-gray-600'}`}>
+                      {isDragging ? '¡Suelta la imagen aquí!' : 'Arrastra una imagen o haz clic para seleccionar'}
+                    </p>
+                    <p className="text-xs text-gray-500">PNG, JPG o WebP (máx. 20MB)</p>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                  </label>
+                </div>
               )}
-              <p className="text-xs text-gray-500 mt-2">
-                ⚠️ Nota: Las imágenes se guardan en formato base64. Para producción, usa un servicio como Cloudinary.
-              </p>
             </div>
 
             {/* Contenido */}

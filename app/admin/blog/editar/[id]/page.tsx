@@ -17,6 +17,7 @@ export default function EditarArticuloBlog() {
   const [preview, setPreview] = useState(false)
   const [saving, setSaving] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
+  const [uploadingImage, setUploadingImage] = useState(false)
   
   const [formData, setFormData] = useState({
     titulo: '',
@@ -81,7 +82,7 @@ export default function EditarArticuloBlog() {
     }
   }
 
-  const processImageFile = (file: File) => {
+  const processImageFile = async (file: File) => {
     // Validar tipo de archivo
     if (!file.type.startsWith('image/')) {
       alert('Por favor, selecciona un archivo de imagen válido')
@@ -94,11 +95,41 @@ export default function EditarArticuloBlog() {
       return
     }
 
-    const reader = new FileReader()
-    reader.onloadend = () => {
-      setFormData(prev => ({ ...prev, imagenDestacada: reader.result as string }))
+    setUploadingImage(true)
+
+    try {
+      // Mostrar preview temporal mientras sube
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setFormData(prev => ({ ...prev, imagenDestacada: reader.result as string }))
+      }
+      reader.readAsDataURL(file)
+
+      // Subir imagen a Supabase Storage
+      const formData = new FormData()
+      formData.append('file', file)
+
+      const uploadResponse = await fetch('/api/images', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const uploadData = await uploadResponse.json()
+
+      if (!uploadResponse.ok) {
+        throw new Error(uploadData.error || 'Error al subir la imagen')
+      }
+
+      // Guardar la URL pública de Supabase
+      setFormData(prev => ({ ...prev, imagenDestacada: uploadData.url }))
+      
+    } catch (error) {
+      console.error('Error al procesar imagen:', error)
+      alert('Error al subir la imagen. Por favor, inténtalo de nuevo.')
+      setFormData(prev => ({ ...prev, imagenDestacada: '' }))
+    } finally {
+      setUploadingImage(false)
     }
-    reader.readAsDataURL(file)
   }
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -354,7 +385,13 @@ export default function EditarArticuloBlog() {
                 Imagen destacada
               </label>
               
-              {formData.imagenDestacada ? (
+              {uploadingImage ? (
+                <div className="border-2 border-dashed border-blue-500 bg-blue-50 rounded-lg p-8 text-center">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                  <p className="text-blue-600 font-semibold mb-2">Subiendo imagen...</p>
+                  <p className="text-xs text-gray-500">Por favor espera, esto puede tardar unos segundos</p>
+                </div>
+              ) : formData.imagenDestacada ? (
                 <div className="relative mb-4">
                   <img 
                     src={formData.imagenDestacada} 
