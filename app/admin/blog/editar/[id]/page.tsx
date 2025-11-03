@@ -16,6 +16,7 @@ export default function EditarArticuloBlog() {
   const [loading, setLoading] = useState(true)
   const [preview, setPreview] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
   
   const [formData, setFormData] = useState({
     titulo: '',
@@ -76,13 +77,50 @@ export default function EditarArticuloBlog() {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      // En producción, aquí subirías la imagen a un servicio
-      // Por ahora, simulamos con un URL temporal
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setFormData(prev => ({ ...prev, imagenDestacada: reader.result as string }))
-      }
-      reader.readAsDataURL(file)
+      processImageFile(file)
+    }
+  }
+
+  const processImageFile = (file: File) => {
+    // Validar tipo de archivo
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor, selecciona un archivo de imagen válido')
+      return
+    }
+
+    // Validar tamaño (máx 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('La imagen debe ser menor de 5MB')
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setFormData(prev => ({ ...prev, imagenDestacada: reader.result as string }))
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+
+    const file = e.dataTransfer.files?.[0]
+    if (file) {
+      processImageFile(file)
     }
   }
 
@@ -332,17 +370,30 @@ export default function EditarArticuloBlog() {
                   </button>
                 </div>
               ) : (
-                <label className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-500 transition-all cursor-pointer block">
-                  <FaImage className="text-4xl text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-2">Arrastra una imagen o haz clic para seleccionar</p>
-                  <p className="text-xs text-gray-500">PNG, JPG o WebP (máx. 5MB)</p>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageUpload}
-                  />
-                </label>
+                <div
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  className={`border-2 border-dashed rounded-lg p-8 text-center transition-all ${
+                    isDragging
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-300 hover:border-blue-500'
+                  }`}
+                >
+                  <label className="cursor-pointer block">
+                    <FaImage className={`text-4xl mx-auto mb-4 ${isDragging ? 'text-blue-500' : 'text-gray-400'}`} />
+                    <p className={`mb-2 ${isDragging ? 'text-blue-600 font-semibold' : 'text-gray-600'}`}>
+                      {isDragging ? '¡Suelta la imagen aquí!' : 'Arrastra una imagen o haz clic para seleccionar'}
+                    </p>
+                    <p className="text-xs text-gray-500">PNG, JPG o WebP (máx. 5MB)</p>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                  </label>
+                </div>
               )}
             </div>
 
