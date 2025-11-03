@@ -47,6 +47,7 @@ export default function DemoForm() {
 
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [calendlyLoading, setCalendlyLoading] = useState(true)
 
   const totalSteps = 4
 
@@ -132,35 +133,52 @@ export default function DemoForm() {
     setErrors(prev => ({ ...prev, [field]: error }))
   }
 
-  // Cargar script de Calendly cuando llegamos al paso 4
+  // Cargar script de Calendly al montar el componente
+  useEffect(() => {
+    const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')
+    
+    if (!existingScript) {
+      const script = document.createElement('script')
+      script.src = 'https://assets.calendly.com/assets/external/widget.js'
+      script.type = 'text/javascript'
+      document.head.appendChild(script)
+    }
+  }, [])
+
+  // Inicializar Calendly cuando llegamos al paso 4
   useEffect(() => {
     if (currentStep === 4) {
-      // Verificar si ya existe el script
-      const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')
-      
-      if (!existingScript) {
-        const script = document.createElement('script')
-        script.src = 'https://assets.calendly.com/assets/external/widget.js'
-        script.async = true
-        script.onload = () => {
-          // Inicializar Calendly cuando el script esté cargado
-          initCalendly()
-        }
-        document.body.appendChild(script)
-      } else {
-        // Si el script ya existe, inicializar directamente
+      setCalendlyLoading(true)
+      // Esperar un momento para asegurar que el DOM esté listo
+      const timer = setTimeout(() => {
         initCalendly()
-      }
+      }, 100)
+      
+      return () => clearTimeout(timer)
     }
-  }, [currentStep, formData.name, formData.email, formData.phone, formData.company])
+  }, [currentStep])
 
   const initCalendly = () => {
     const calendlyElement = document.getElementById('calendly-embed')
-    if (calendlyElement && (window as any).Calendly) {
-      // Limpiar el contenido previo
-      calendlyElement.innerHTML = ''
-      
-      // Inicializar Calendly con prefill
+    
+    if (!calendlyElement) {
+      console.error('Calendly element not found')
+      return
+    }
+
+    // Verificar si Calendly está disponible
+    if (!(window as any).Calendly) {
+      console.log('Calendly script not loaded yet, retrying...')
+      // Reintentar después de 500ms
+      setTimeout(() => initCalendly(), 500)
+      return
+    }
+
+    // Limpiar contenido previo
+    calendlyElement.innerHTML = ''
+    
+    // Inicializar Calendly
+    try {
       ;(window as any).Calendly.initInlineWidget({
         url: 'https://calendly.com/nexgent-demo',
         parentElement: calendlyElement,
@@ -168,12 +186,18 @@ export default function DemoForm() {
           name: formData.name,
           email: formData.email,
           customAnswers: {
-            a1: formData.phone, // Campo personalizado para teléfono
-            a2: formData.company, // Campo personalizado para empresa
+            a1: formData.phone,
+            a2: formData.company,
           },
         },
         utm: {},
       })
+      console.log('Calendly initialized successfully')
+      // Marcar como cargado después de un breve delay para que el iframe renderice
+      setTimeout(() => setCalendlyLoading(false), 1000)
+    } catch (error) {
+      console.error('Error initializing Calendly:', error)
+      setCalendlyLoading(false)
     }
   }
 
@@ -485,8 +509,18 @@ export default function DemoForm() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
-              className="-mx-4 md:-mx-8"
+              className="-mx-4 md:-mx-8 relative"
             >
+              {/* Indicador de carga */}
+              {calendlyLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-white z-10 rounded-lg" style={{ height: '600px' }}>
+                  <div className="text-center">
+                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-black mb-4"></div>
+                    <p className="text-gray-600 font-medium">Cargando calendario...</p>
+                  </div>
+                </div>
+              )}
+              
               {/* Calendly Widget - Solo el calendario */}
               <div 
                 id="calendly-embed"
