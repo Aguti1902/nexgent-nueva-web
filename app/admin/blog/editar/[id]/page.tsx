@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { FaArrowLeft, FaSave, FaEye, FaImage, FaTrash } from 'react-icons/fa'
 import { getBlogArticleBySlug, getAllBlogArticles, BlogArticle } from '@/data/blog-articles'
 
@@ -14,6 +15,7 @@ export default function EditarArticuloBlog() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
   const [preview, setPreview] = useState(false)
+  const [saving, setSaving] = useState(false)
   
   const [formData, setFormData] = useState({
     titulo: '',
@@ -84,31 +86,44 @@ export default function EditarArticuloBlog() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setSaving(true)
     
-    // Actualizar artículo en localStorage
-    const articles = getAllBlogArticles()
-    const updatedArticles = articles.map(a => 
-      a.id === articleId
-        ? {
-            ...a,
-            title: formData.titulo,
-            slug: formData.slug,
-            category: formData.categoria,
-            excerpt: formData.extracto,
-            content: formData.contenido,
-            author: formData.autor,
-            readTime: formData.tiempoLectura,
-            image: formData.imagenDestacada,
-            published: formData.published,
-          }
-        : a
-    )
-    
-    localStorage.setItem('blogArticles', JSON.stringify(updatedArticles))
-    alert('Artículo actualizado correctamente!')
-    router.push('/admin')
+    try {
+      // Actualizar artículo en Supabase
+      const response = await fetch(`/api/blog?id=${articleId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: formData.titulo,
+          slug: formData.slug,
+          excerpt: formData.extracto,
+          content: formData.contenido,
+          category: formData.categoria,
+          author: formData.autor,
+          read_time: formData.tiempoLectura,
+          image_url: formData.imagenDestacada,
+          published: formData.published,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error al actualizar el artículo')
+      }
+
+      alert('Artículo actualizado correctamente!')
+      router.push('/admin')
+    } catch (error) {
+      console.error('Error al guardar:', error)
+      alert('Error al guardar el artículo. Por favor, inténtalo de nuevo.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   if (!isAuthenticated || loading) {
@@ -128,8 +143,14 @@ export default function EditarArticuloBlog() {
       <header className="bg-white border-b border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link href="/admin" className="font-monda text-2xl font-bold text-black">
-              nex<span className="text-blue-500">gent</span>
+            <Link href="/admin" className="flex items-center">
+              <Image
+                src="/images/ISOTIPO.png"
+                alt="NexGent"
+                width={40}
+                height={40}
+                className="w-10 h-10"
+              />
             </Link>
             <span className="text-gray-300">|</span>
             <Link 
@@ -150,10 +171,20 @@ export default function EditarArticuloBlog() {
             </button>
             <button
               onClick={handleSubmit}
-              className="flex items-center gap-2 bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all"
+              disabled={saving}
+              className="flex items-center gap-2 bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <FaSave />
-              Guardar cambios
+              {saving ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                  Guardando...
+                </>
+              ) : (
+                <>
+                  <FaSave />
+                  Guardar cambios
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -340,10 +371,20 @@ export default function EditarArticuloBlog() {
               </Link>
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all flex items-center gap-2"
+                disabled={saving}
+                className="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <FaSave />
-                Guardar cambios
+                {saving ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Guardando...
+                  </>
+                ) : (
+                  <>
+                    <FaSave />
+                    Guardar cambios
+                  </>
+                )}
               </button>
             </div>
           </form>

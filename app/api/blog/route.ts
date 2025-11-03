@@ -70,3 +70,48 @@ export async function POST(request: NextRequest) {
   }
 }
 
+// PUT - Actualizar artículo existente
+export async function PUT(request: NextRequest) {
+  try {
+    const supabaseAdmin = getSupabaseAdmin()
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    
+    if (!id) {
+      return NextResponse.json({ error: 'ID is required' }, { status: 400 })
+    }
+
+    const body = await request.json()
+
+    const updateData = {
+      title: body.title,
+      slug: body.slug,
+      excerpt: body.excerpt,
+      content: body.content,
+      category: body.category,
+      author: body.author,
+      read_time: body.read_time,
+      image_url: body.image_url,
+      published: body.published,
+    }
+
+    // @ts-ignore - Supabase types not generated yet
+    const { data, error } = await supabaseAdmin
+      .from('blog_articles')
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (error) {
+      console.error('Error updating article:', error)
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    return NextResponse.json({ article: data }, { status: 200 })
+  } catch (error) {
+    console.error('Unexpected error:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
