@@ -10,6 +10,9 @@ import { getAllBlogArticles, getAllBlogArticlesAsync, type BlogArticle } from '@
 export default function BlogPage() {
   const [articles, setArticles] = useState<BlogArticle[]>([])
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [email, setEmail] = useState('')
+  const [isSubscribing, setIsSubscribing] = useState(false)
+  const [subscriptionMessage, setSubscriptionMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
   useEffect(() => {
     // Cargar artículos inmediatamente desde datos predefinidos
@@ -28,6 +31,44 @@ export default function BlogPage() {
     }
     loadSupabaseArticles()
   }, [])
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Validar email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!email || !emailRegex.test(email)) {
+      setSubscriptionMessage({ type: 'error', text: 'Por favor, introduce un email válido' })
+      return
+    }
+
+    setIsSubscribing(true)
+    setSubscriptionMessage(null)
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, source: 'blog' }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubscriptionMessage({ type: 'success', text: '¡Suscripción exitosa! Revisa tu email.' })
+        setEmail('')
+      } else {
+        setSubscriptionMessage({ type: 'error', text: data.error || 'Error al suscribirse' })
+      }
+    } catch (error) {
+      console.error('Error subscribing:', error)
+      setSubscriptionMessage({ type: 'error', text: 'Error de conexión. Inténtalo de nuevo.' })
+    } finally {
+      setIsSubscribing(false)
+    }
+  }
 
   const featuredArticle = articles.length > 0 ? articles[0] : null
 
@@ -269,16 +310,34 @@ export default function BlogPage() {
               <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
                 Únete a +8,400 empresarios que reciben cada semana artículos, casos de éxito y mejores prácticas sobre IA para negocios.
               </p>
-              <div className="max-w-md mx-auto flex gap-3">
-                <input
-                  type="email"
-                  placeholder="tu@email.com"
-                  className="flex-1 px-6 py-4 rounded-lg text-black focus:outline-none"
-                />
-                <button className="bg-black text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-800 transition-all whitespace-nowrap">
-                  Suscribirme gratis
-                </button>
-              </div>
+              <form onSubmit={handleSubscribe} className="max-w-md mx-auto">
+                <div className="flex gap-3">
+                  <input
+                    type="email"
+                    placeholder="tu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={isSubscribing}
+                    className="flex-1 px-6 py-4 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubscribing}
+                    className="bg-black text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-800 transition-all whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubscribing ? 'Suscribiendo...' : 'Suscribirme gratis'}
+                  </button>
+                </div>
+                {subscriptionMessage && (
+                  <div className={`mt-4 p-3 rounded-lg ${
+                    subscriptionMessage.type === 'success'
+                      ? 'bg-green-500/20 border border-green-300 text-green-100'
+                      : 'bg-red-500/20 border border-red-300 text-red-100'
+                  }`}>
+                    {subscriptionMessage.text}
+                  </div>
+                )}
+              </form>
               <p className="text-sm text-blue-100 mt-4">Sin spam. Cancela cuando quieras. 100% gratis.</p>
             </div>
           </div>
