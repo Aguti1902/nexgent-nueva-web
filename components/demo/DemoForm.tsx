@@ -135,19 +135,20 @@ export default function DemoForm() {
   // Cargar script de Calendly cuando llegamos al paso 4
   useEffect(() => {
     if (currentStep === 4) {
-      const script = document.createElement('script')
-      script.src = 'https://assets.calendly.com/assets/external/widget.js'
-      script.async = true
-      document.body.appendChild(script)
-
-      return () => {
-        try {
-          if (script.parentNode) {
-            document.body.removeChild(script)
+      // Verificar si ya existe el script
+      const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')
+      
+      if (!existingScript) {
+        const script = document.createElement('script')
+        script.src = 'https://assets.calendly.com/assets/external/widget.js'
+        script.async = true
+        script.onload = () => {
+          // Inicializar Calendly cuando el script esté cargado
+          if ((window as any).Calendly) {
+            console.log('Calendly cargado correctamente')
           }
-        } catch (error) {
-          console.log('Error removing Calendly script:', error)
         }
+        document.body.appendChild(script)
       }
     }
   }, [currentStep])
@@ -476,7 +477,7 @@ export default function DemoForm() {
               {/* Calendly Widget */}
               <div 
                 className="calendly-inline-widget rounded-lg overflow-hidden border border-gray-200" 
-                data-url="https://calendly.com/tu-usuario-calendly/demo-nexgent?hide_gdpr_banner=1&primary_color=000000"
+                data-url={`https://calendly.com/nexgent-demo?hide_gdpr_banner=1&primary_color=000000&hide_event_type_details=0&hide_landing_page_details=0&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&a1=${encodeURIComponent(formData.phone)}&a2=${encodeURIComponent(formData.company)}`}
                 style={{ minWidth: '320px', height: '700px' }}
               />
 
