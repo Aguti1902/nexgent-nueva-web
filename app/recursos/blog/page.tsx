@@ -196,9 +196,21 @@ export default function BlogPage() {
                       href={`/recursos/blog/articulos/${article.slug}`}
                       className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:border-blue-500 hover:shadow-xl transition-all duration-300 group"
                     >
-                      <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                        <FaBook className="text-5xl text-gray-400" />
-                      </div>
+                      {article.image ? (
+                        <div className="h-48 relative overflow-hidden">
+                          <Image
+                            src={article.image}
+                            alt={article.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                        </div>
+                      ) : (
+                        <div className="h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                          <FaBook className="text-5xl text-gray-400" />
+                        </div>
+                      )}
                       <div className="p-6">
                         <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
                           <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded font-semibold">{article.category}</span>
