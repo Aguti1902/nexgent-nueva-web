@@ -115,7 +115,7 @@ export default function DemoHero() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="bg-white rounded-3xl shadow-2xl overflow-hidden max-h-[85vh] overflow-y-auto"
+            className="bg-white rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
           >
             <div className="p-6 lg:p-8">
               <h2 className="font-monda text-2xl lg:text-3xl font-bold text-black mb-3">
