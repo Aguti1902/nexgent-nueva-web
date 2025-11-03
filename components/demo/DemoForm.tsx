@@ -233,9 +233,9 @@ export default function DemoForm() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Barra de progreso */}
-      <div className="flex items-center mb-8 w-full">
+      <div className="flex items-center mb-6 w-full">
         {[1, 2, 3, 4].map((step, index) => (
           <div key={step} className={`flex items-center ${index < 3 ? 'flex-1' : ''}`}>
             <div
@@ -485,12 +485,13 @@ export default function DemoForm() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.3 }}
+              className="-mx-4 md:-mx-8"
             >
               {/* Calendly Widget - Solo el calendario */}
               <div 
                 id="calendly-embed"
-                className="rounded-lg overflow-hidden" 
-                style={{ minWidth: '320px', height: '700px' }}
+                className="rounded-lg overflow-hidden w-full" 
+                style={{ minWidth: '100%', height: '600px' }}
               />
             </motion.div>
           )}
@@ -532,13 +533,13 @@ export default function DemoForm() {
         
         {/* Botón "Atrás" solo en paso 4 */}
         {currentStep === 4 && (
-          <div className="flex justify-start mt-8">
+          <div className="flex justify-start mt-4">
             <motion.button
               type="button"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handlePrevious}
-              className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-4 px-8 rounded-lg transition-all duration-300 flex items-center gap-2"
+              className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-3 px-6 rounded-lg transition-all duration-300 flex items-center gap-2"
             >
               <FaArrowLeft />
               Atrás
