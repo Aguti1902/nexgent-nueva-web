@@ -202,10 +202,18 @@ export default function DemoForm() {
 
   return (
     <div className="space-y-3">
-      {/* CSS para ocultar el título de Calendly */}
+      {/* CSS para ocultar el título de Calendly y prevenir scroll */}
       <style jsx global>{`
         iframe[src*="calendly"] {
           margin-top: -40px !important;
+          overflow: hidden !important;
+          position: relative !important;
+        }
+        
+        /* Prevenir scroll dentro del iframe */
+        .calendly-iframe-container {
+          overflow: hidden !important;
+          position: relative !important;
         }
       `}</style>
       
@@ -473,14 +481,17 @@ export default function DemoForm() {
               )}
               
               {/* Calendly Iframe - Directo al calendario del evento específico */}
-              <iframe
-                src={`https://calendly.com/nexgent-demo/30min?embed_domain=${typeof window !== 'undefined' ? window.location.hostname : ''}&embed_type=Inline&hide_event_type_details=1&hide_gdpr_banner=1&primary_color=000000&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&background_color=ffffff&text_color=000000`}
-                width="100%"
-                height="550"
-                frameBorder="0"
-                className="rounded-lg"
-                style={{ border: 'none', marginTop: '-10px' }}
-              />
+              <div className="calendly-iframe-container overflow-hidden">
+                <iframe
+                  src={`https://calendly.com/nexgent-demo/30min?embed_domain=${typeof window !== 'undefined' ? window.location.hostname : ''}&embed_type=Inline&hide_event_type_details=1&hide_gdpr_banner=1&primary_color=000000&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&background_color=ffffff&text_color=000000`}
+                  width="100%"
+                  height="550"
+                  frameBorder="0"
+                  scrolling="no"
+                  className="rounded-lg"
+                  style={{ border: 'none', marginTop: '-10px', overflow: 'hidden' }}
+                />
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
