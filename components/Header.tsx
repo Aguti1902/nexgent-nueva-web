@@ -233,7 +233,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden mt-6 pb-6 space-y-1 animate-fadeInUp max-h-[70vh] overflow-y-auto">
+          <div className="lg:hidden fixed inset-0 top-[80px] bg-white z-[9998] overflow-y-auto p-6 space-y-1 animate-fadeInUp">
             <Link
               href="/"
               className="block text-gray-900 hover:bg-gray-50 transition-colors duration-300 font-medium py-3 px-2 rounded-lg"
