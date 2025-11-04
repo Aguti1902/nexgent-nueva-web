@@ -52,7 +52,7 @@ export default function RecordatoriosPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Solicita una demo
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -224,7 +224,7 @@ export default function RecordatoriosPage() {
               Únete a las <strong className="text-yellow-400">+900 empresas</strong> que ya recuperan miles de euros mensuales con recordatorios automáticos y ve los resultados.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Agenda tu demo
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

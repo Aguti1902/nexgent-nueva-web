@@ -30,7 +30,7 @@ export default function BaseDatosIAPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Comienza ahora
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -248,7 +248,7 @@ export default function BaseDatosIAPage() {
               Más de <strong className="text-indigo-400">+800 empresas</strong> ya usan nuestra plataforma de análisis con IA. Descubre insights ocultos en tus datos y crece más rápido.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Comienza análisis gratis
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

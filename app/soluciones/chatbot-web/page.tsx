@@ -65,7 +65,7 @@ export default function ChatbotWebPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Agenda tu demo
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -271,7 +271,7 @@ export default function ChatbotWebPage() {
               Únete a las <strong className="text-blue-400">+1,200 empresas</strong> que ya usan nuestro chatbot con IA. Instalación en 5 minutos, sin código necesario.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Agenda tu demo
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

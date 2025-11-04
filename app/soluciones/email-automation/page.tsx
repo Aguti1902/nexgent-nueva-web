@@ -65,7 +65,7 @@ export default function EmailAutomationPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Agenda tu demo
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -269,7 +269,7 @@ export default function EmailAutomationPage() {
               Únete a las <strong className="text-purple-400">+2,500 empresas</strong> que ya automatizan sus campañas con IA. Sin tarjeta de crédito para empezar.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Agenda tu demo
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

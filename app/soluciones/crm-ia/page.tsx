@@ -65,7 +65,7 @@ export default function CRMIAPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Agenda tu demo
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -253,7 +253,7 @@ export default function CRMIAPage() {
               Únete a las <strong className="text-green-400">+1,800 empresas</strong> que ya usan nuestro CRM con IA y descubre cómo IA puede transformar tu equipo de ventas.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Agenda tu demo
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

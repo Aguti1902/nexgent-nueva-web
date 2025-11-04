@@ -30,7 +30,7 @@ export default function RestaurantesPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Solicita una demo
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -244,7 +244,7 @@ export default function RestaurantesPage() {
               Más de <strong className="text-orange-400">+570 restaurantes</strong> ya automatizan su gestión con IA. Más reservas, menos cancelaciones, equipo liberado.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Agenda tu demo gratuita
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

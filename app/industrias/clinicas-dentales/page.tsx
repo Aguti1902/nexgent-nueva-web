@@ -30,7 +30,7 @@ export default function ClinicasDentalesPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Solicita una demo
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -236,7 +236,7 @@ export default function ClinicasDentalesPage() {
               Más de <strong className="text-blue-400">+350 clínicas dentales</strong> ya automatizan su gestión con IA. Reduce no-shows, aumenta ingresos y mejora la experiencia de tus pacientes.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Agenda tu demo gratuita
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

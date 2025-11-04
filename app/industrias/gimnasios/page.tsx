@@ -30,7 +30,7 @@ export default function GimnasiosPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Solicita una demo
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -246,7 +246,7 @@ export default function GimnasiosPage() {
               Más de <strong className="text-red-400">+410 gimnasios</strong> ya maximizan ocupación y retención con IA. Clases llenas, socios motivados, gestión automatizada.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Agenda tu demo gratuita
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

@@ -30,7 +30,7 @@ export default function EcommercePage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Solicita una demo
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -244,7 +244,7 @@ export default function EcommercePage() {
               Más de <strong className="text-purple-400">+920 ecommerce</strong> ya venden más con IA. Recupera carritos, atiende 24/7 y aumenta tu conversión automáticamente.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Agenda tu demo
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

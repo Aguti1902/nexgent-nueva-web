@@ -30,7 +30,7 @@ export default function ConsultoriaPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Solicita una demo
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -236,7 +236,7 @@ export default function ConsultoriaPage() {
               Más de <strong className="text-slate-400">+460 consultorías</strong> ya cierran más deals con IA. Enfócate en consultar, no en admin.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Agenda tu demo gratuita
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

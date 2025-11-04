@@ -133,7 +133,7 @@ export default function GestionReservasPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Solicita una demo gratuita
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -352,7 +352,7 @@ export default function GestionReservasPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Solicita una demo gratuita
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

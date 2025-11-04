@@ -137,7 +137,7 @@ export default function LlamadasIAPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Prueba una llamada demo ahora
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -421,7 +421,7 @@ export default function LlamadasIAPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Prueba una llamada demo ahora
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">

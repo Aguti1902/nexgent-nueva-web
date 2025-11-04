@@ -30,7 +30,7 @@ export default function AsistenteVirtualPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button variant="primary" size="lg" href="/contacto">
+                  <Button variant="primary" size="lg" href="/demo">
                     Crea tu asistente
                   </Button>
                   <Button variant="outline" size="lg" href="/casos-exito">
@@ -240,7 +240,7 @@ export default function AsistenteVirtualPage() {
               Más de <strong className="text-purple-400">+1,500 empresas</strong> ya tienen su asistente virtual. Agenda una demo y conoce a tu futuro empleado más productivo.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="white" size="lg" href="/contacto">
+              <Button variant="white" size="lg" href="/demo">
                 Crea tu asistente ahora
               </Button>
               <Button variant="gray" size="lg" href="/casos-exito">
