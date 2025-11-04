@@ -34,9 +34,9 @@ export default function DemoHero() {
   const [activeTab, setActiveTab] = useState<'form' | 'chat'>('form')
 
   return (
-    <section className="w-full text-white flex items-center justify-center">
+    <section className="w-full text-white flex items-center justify-center py-4">
       <div className="w-full max-w-[1600px] mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center lg:items-stretch">
           {/* Lado izquierdo - Estadísticas */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -115,7 +115,7 @@ export default function DemoHero() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="bg-white rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto flex flex-col justify-center"
           >
             <div className="p-6 lg:p-8">
               <h2 className="font-monda text-2xl lg:text-3xl font-bold text-black mb-3">

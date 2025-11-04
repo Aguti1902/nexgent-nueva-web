@@ -49,6 +49,7 @@ export default function DemoForm() {
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const [calendlyLoading, setCalendlyLoading] = useState(true)
   const [isSavingData, setIsSavingData] = useState(false)
+  const [bookingSuccess, setBookingSuccess] = useState(false)
 
   const totalSteps = 4
 
@@ -145,6 +146,22 @@ export default function DemoForm() {
       return () => clearTimeout(timer)
     }
   }, [currentStep])
+
+  // Escuchar evento de Calendly cuando se complete la reserva
+  useEffect(() => {
+    const handleCalendlyEvent = (e: MessageEvent) => {
+      if (e.data.event && e.data.event === 'calendly.event_scheduled') {
+        console.log('✅ Reunión agendada con éxito!')
+        setBookingSuccess(true)
+      }
+    }
+
+    window.addEventListener('message', handleCalendlyEvent)
+    
+    return () => {
+      window.removeEventListener('message', handleCalendlyEvent)
+    }
+  }, [])
 
   const handleNext = async () => {
     if (currentStep < totalSteps) {
@@ -494,7 +511,7 @@ export default function DemoForm() {
             </motion.div>
           )}
 
-          {/* PASO 4: Calendly */}
+          {/* PASO 4: Calendly o Mensaje de Éxito */}
           {currentStep === 4 && (
             <motion.div
               key="step4"
@@ -504,27 +521,100 @@ export default function DemoForm() {
               transition={{ duration: 0.3 }}
               className="-mx-4 md:-mx-8 relative -mt-2"
             >
-              {/* Indicador de carga */}
-              {calendlyLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-white z-10 rounded-lg" style={{ height: '550px' }}>
-                  <div className="text-center">
-                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-black mb-4"></div>
-                    <p className="text-gray-600 font-medium">Cargando calendario...</p>
+              {bookingSuccess ? (
+                /* Mensaje de Éxito */
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-col items-center justify-center text-center py-16 px-6"
+                >
+                  {/* Icono de Check animado */}
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                    className="mb-6"
+                  >
+                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center">
+                      <FaCheck className="text-white text-4xl" />
+                    </div>
+                  </motion.div>
+
+                  {/* Texto de éxito */}
+                  <motion.h3
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="font-monda text-3xl font-bold text-black mb-3"
+                  >
+                    ¡Reunión creada con éxito!
+                  </motion.h3>
+                  
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-gray-600 text-lg mb-2"
+                  >
+                    Te hemos enviado un email de confirmación a
+                  </motion.p>
+                  
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="text-black font-bold text-lg mb-6"
+                  >
+                    {formData.email}
+                  </motion.p>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-6"
+                  >
+                    <p className="text-sm text-gray-700">
+                      <strong>Próximos pasos:</strong> Revisa tu email para confirmar la reunión. 
+                      Recibirás el enlace de la videollamada y podrás añadirlo a tu calendario.
+                    </p>
+                  </motion.div>
+
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.7 }}
+                    className="text-gray-500 text-sm"
+                  >
+                    ¡Estamos deseando conocerte! 🚀
+                  </motion.p>
+                </motion.div>
+              ) : (
+                <>
+                  {/* Indicador de carga */}
+                  {calendlyLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-white z-10 rounded-lg" style={{ height: '550px' }}>
+                      <div className="text-center">
+                        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-black mb-4"></div>
+                        <p className="text-gray-600 font-medium">Cargando calendario...</p>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Calendly Iframe - Directo al calendario del evento específico */}
+                  <div className="calendly-iframe-container">
+                    <iframe
+                      src={`https://calendly.com/nexgent-demo/30min?embed_domain=${typeof window !== 'undefined' ? window.location.hostname : ''}&embed_type=Inline&hide_event_type_details=1&hide_gdpr_banner=1&primary_color=000000&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&background_color=ffffff&text_color=000000`}
+                      width="100%"
+                      height="550"
+                      frameBorder="0"
+                      className="rounded-lg"
+                      style={{ border: 'none', marginTop: '-10px' }}
+                    />
                   </div>
-                </div>
+                </>
               )}
-              
-              {/* Calendly Iframe - Directo al calendario del evento específico */}
-              <div className="calendly-iframe-container">
-                <iframe
-                  src={`https://calendly.com/nexgent-demo/30min?embed_domain=${typeof window !== 'undefined' ? window.location.hostname : ''}&embed_type=Inline&hide_event_type_details=1&hide_gdpr_banner=1&primary_color=000000&name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&background_color=ffffff&text_color=000000`}
-                  width="100%"
-                  height="550"
-                  frameBorder="0"
-                  className="rounded-lg"
-                  style={{ border: 'none', marginTop: '-10px' }}
-                />
-              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -572,8 +662,8 @@ export default function DemoForm() {
           </div>
         )}
         
-        {/* Botón "Atrás" solo en paso 4 */}
-        {currentStep === 4 && (
+        {/* Botón "Atrás" solo en paso 4 (oculto si ya se completó la reserva) */}
+        {currentStep === 4 && !bookingSuccess && (
           <div className="flex justify-start mt-2">
             <motion.button
               type="button"
