@@ -42,7 +42,7 @@ export default function DemoHero() {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
-            className="space-y-8"
+            className="space-y-8 pt-8 md:pt-12"
           >
             <div>
               <motion.h1 
@@ -117,7 +117,7 @@ export default function DemoHero() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="bg-white rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto flex flex-col justify-center"
           >
-            <div className="p-6 lg:p-8">
+            <div className="py-8 px-6 lg:py-10 lg:px-8">
               <h2 className="font-monda text-2xl lg:text-3xl font-bold text-black mb-3">
                 A un paso de optimizar tu gestión
               </h2>
