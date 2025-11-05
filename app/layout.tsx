@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Poppins, Monda } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import ConditionalLayout from '@/components/ConditionalLayout'
 import { NexibotProvider } from '@/contexts/NexibotContext'
@@ -43,6 +44,20 @@ export default function RootLayout({
   return (
     <html lang="es" className="scroll-smooth">
       <body className={`${poppins.variable} ${monda.variable} font-poppins antialiased bg-white text-secondary`}>
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-V67C1VFPP5"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-V67C1VFPP5');
+          `}
+        </Script>
+
         <NexibotProvider>
           <ConditionalLayout>
             {children}
