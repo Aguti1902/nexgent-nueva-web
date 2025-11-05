@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { FaStar } from 'react-icons/fa'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
 const testimonials = [
@@ -64,16 +64,31 @@ const testimonials = [
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detectar si es móvil
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  const itemsPerPage = isMobile ? 1 : 3
 
   const nextTestimonials = () => {
-    setCurrentIndex((prev) => (prev + 3 >= testimonials.length ? 0 : prev + 3))
+    setCurrentIndex((prev) => (prev + itemsPerPage >= testimonials.length ? 0 : prev + itemsPerPage))
   }
 
   const prevTestimonials = () => {
-    setCurrentIndex((prev) => (prev - 3 < 0 ? Math.max(0, testimonials.length - 3) : prev - 3))
+    setCurrentIndex((prev) => (prev - itemsPerPage < 0 ? Math.max(0, testimonials.length - itemsPerPage) : prev - itemsPerPage))
   }
 
-  const visibleTestimonials = testimonials.slice(currentIndex, currentIndex + 3)
+  const visibleTestimonials = testimonials.slice(currentIndex, currentIndex + itemsPerPage)
 
   return (
     <section className="py-24 bg-gray-50 overflow-x-hidden w-full max-w-full">
@@ -107,7 +122,7 @@ export default function Testimonials() {
             </button>
             <button
               onClick={nextTestimonials}
-              disabled={currentIndex + 3 >= testimonials.length}
+              disabled={currentIndex + itemsPerPage >= testimonials.length}
               className="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-gray-300 disabled:hover:bg-transparent disabled:hover:text-black"
             >
               <FaChevronRight />
@@ -115,7 +130,7 @@ export default function Testimonials() {
           </div>
 
           {/* Testimonials Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {visibleTestimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.id}
@@ -160,12 +175,12 @@ export default function Testimonials() {
 
           {/* Indicators */}
           <div className="flex justify-center gap-2 mt-12">
-            {Array.from({ length: Math.ceil(testimonials.length / 3) }).map((_, index) => (
+            {Array.from({ length: Math.ceil(testimonials.length / itemsPerPage) }).map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentIndex(index * 3)}
+                onClick={() => setCurrentIndex(index * itemsPerPage)}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  Math.floor(currentIndex / 3) === index
+                  Math.floor(currentIndex / itemsPerPage) === index
                     ? 'w-8 bg-black'
                     : 'w-2 bg-gray-300 hover:bg-gray-400'
                 }`}
