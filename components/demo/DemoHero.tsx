@@ -34,7 +34,7 @@ export default function DemoHero() {
   const [activeTab, setActiveTab] = useState<'form' | 'chat'>('form')
 
   return (
-    <section className="w-full text-white flex items-center justify-center pt-12 pb-4 md:pt-16 lg:pt-20">
+    <section className="w-full text-white flex items-center justify-center py-12 md:py-16 lg:py-20">
       <div className="w-full max-w-[1600px] mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center lg:items-stretch">
           {/* Lado izquierdo - Estadísticas */}
