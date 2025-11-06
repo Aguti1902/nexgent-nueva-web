@@ -160,6 +160,17 @@ export default function Header() {
               </div>
 
               <Link
+                href="/nexibot"
+                className="flex items-center gap-2 text-gray-700 hover:text-black transition-colors duration-300 font-medium px-4 py-2 group"
+              >
+                <FaRobot className="text-blue-600 group-hover:text-purple-600 transition-colors" />
+                <span>Nexibot</span>
+                <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
+                  Beta
+                </span>
+              </Link>
+
+              <Link
                 href="/casos-exito"
                 className="text-gray-700 hover:text-black transition-colors duration-300 font-medium px-4 py-2"
               >
@@ -301,6 +312,23 @@ export default function Header() {
                 </div>
               )}
             </div>
+
+            <Link
+              href="/nexibot"
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-50 to-purple-50 hover:from-blue-100 hover:to-purple-100 transition-all duration-300 font-bold py-4 px-3 rounded-lg border-2 border-blue-200"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <FaRobot className="text-2xl text-blue-600" />
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-900">Nexibot</span>
+                  <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
+                    Beta
+                  </span>
+                </div>
+                <p className="text-xs text-gray-600 mt-0.5">Crea agentes de IA en 60 segundos</p>
+              </div>
+            </Link>
 
             <Link
               href="/casos-exito"
