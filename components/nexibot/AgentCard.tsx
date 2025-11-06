@@ -1,102 +1,104 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { AgentTemplate } from '@/lib/nexibot/agent-templates'
-import { FaClock, FaRocket, FaCheckCircle } from 'react-icons/fa'
+import { motion } from 'framer-motion'
+import { FaClock, FaStar, FaArrowRight, FaCheck } from 'react-icons/fa'
 import Link from 'next/link'
 
 interface AgentCardProps {
   agent: AgentTemplate
-  index: number
 }
 
-const categoryColors = {
-  'customer-service': 'bg-blue-100 text-blue-800',
-  'sales': 'bg-green-100 text-green-800',
-  'operations': 'bg-purple-100 text-purple-800',
-  'marketing': 'bg-pink-100 text-pink-800'
-}
-
-const categoryLabels = {
-  'customer-service': 'Atención Cliente',
-  'sales': 'Ventas',
-  'operations': 'Operaciones',
-  'marketing': 'Marketing'
-}
-
-export default function AgentCard({ agent, index }: AgentCardProps) {
+export default function AgentCard({ agent }: AgentCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="bg-white rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-200 hover:border-black transition-all duration-300 hover:shadow-2xl group"
+      whileHover={{ y: -8 }}
+      className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col"
     >
-      {/* Icon y Category */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="text-5xl">{agent.icon}</div>
-        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${categoryColors[agent.category]}`}>
-          {categoryLabels[agent.category]}
-        </span>
-      </div>
-
-      {/* Title */}
-      <h3 className="font-monda text-xl lg:text-2xl font-bold text-black mb-3 group-hover:text-blue-600 transition-colors">
-        {agent.name}
-      </h3>
-
-      {/* Description */}
-      <p className="text-gray-600 mb-6 leading-relaxed">
-        {agent.description}
-      </p>
-
-      {/* Features */}
-      <div className="space-y-2 mb-6">
-        {agent.features.slice(0, 3).map((feature, idx) => (
-          <div key={idx} className="flex items-start gap-2">
-            <FaCheckCircle className="text-green-500 mt-1 flex-shrink-0" />
-            <span className="text-sm text-gray-700">{feature}</span>
+      {/* Header con icon y badge */}
+      <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-6 relative">
+        {agent.popular && (
+          <div className="absolute top-4 right-4 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+            <FaStar /> Popular
           </div>
-        ))}
-      </div>
-
-      {/* Stats */}
-      <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-200">
-        <div className="flex items-center gap-2">
-          <FaClock className="text-gray-400" />
-          <span className="text-sm text-gray-600">{agent.estimatedSetupTime}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <FaRocket className="text-gray-400" />
-          <span className="text-sm text-gray-600">{agent.monthlyConversations.toLocaleString()} msg/mes</span>
+        )}
+        <div className="text-6xl mb-4">{agent.icon}</div>
+        <h3 className="font-monda text-2xl font-bold text-white mb-2">
+          {agent.name}
+        </h3>
+        <div className="flex items-center gap-2 text-white/80 text-sm">
+          <FaClock className="text-sm" />
+          <span>Setup en {agent.estimatedSetupTime}</span>
         </div>
       </div>
 
-      {/* CTA Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <Link
-          href={`/nexibot/agent/${agent.id}`}
-          className="flex-1 bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-all duration-300 text-center"
-        >
-          Ver detalles
-        </Link>
-        <button
-          className="flex-1 border-2 border-black text-black px-6 py-3 rounded-lg font-semibold hover:bg-black hover:text-white transition-all duration-300"
-        >
-          Activar ahora
-        </button>
-      </div>
+      {/* Content */}
+      <div className="p-6 flex-1 flex flex-col">
+        <p className="text-gray-600 mb-6 leading-relaxed">
+          {agent.description}
+        </p>
 
-      {/* Pricing Badge */}
-      <div className="mt-4 text-center">
-        <span className="text-sm text-gray-500">
-          Desde <span className="font-bold text-black">
-            {agent.pricing === 'starter' ? '€99' : agent.pricing === 'professional' ? '€299' : '€699'}
-          </span>/mes
-        </span>
+        {/* Features principales (top 3) */}
+        <div className="mb-6 space-y-2">
+          <h4 className="font-semibold text-black text-sm mb-3">Características clave:</h4>
+          {agent.features.slice(0, 3).map((feature, idx) => (
+            <div key={idx} className="flex items-start gap-2 text-sm text-gray-700">
+              <FaCheck className="text-green-500 mt-1 flex-shrink-0" />
+              <span>{feature}</span>
+            </div>
+          ))}
+          {agent.features.length > 3 && (
+            <p className="text-xs text-gray-400 pl-6">
+              +{agent.features.length - 3} características más
+            </p>
+          )}
+        </div>
+
+        {/* Integraciones */}
+        <div className="mb-6">
+          <h4 className="font-semibold text-black text-sm mb-3">Integraciones:</h4>
+          <div className="flex flex-wrap gap-2">
+            {agent.integrations.slice(0, 3).map((integration, idx) => (
+              <span
+                key={idx}
+                className="bg-blue-50 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
+              >
+                {integration}
+              </span>
+            ))}
+            {agent.integrations.length > 3 && (
+              <span className="bg-gray-100 text-gray-600 text-xs font-medium px-3 py-1 rounded-full">
+                +{agent.integrations.length - 3}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Pricing */}
+        <div className="mt-auto pt-6 border-t border-gray-200">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <p className="text-xs text-gray-500 mb-1">Plan recomendado:</p>
+              <p className="font-bold text-black capitalize">{agent.recommendedPlan}</p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-gray-500 mb-1">Desde:</p>
+              <p className="font-bold text-2xl text-black">
+                €{agent.price[agent.recommendedPlan]}<span className="text-sm font-normal text-gray-500">/mes</span>
+              </p>
+            </div>
+          </div>
+
+          {/* CTA Button */}
+          <Link
+            href={`/nexibot/catalog/${agent.id}`}
+            className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 flex items-center justify-center gap-2 group"
+          >
+            Ver detalles
+            <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
       </div>
     </motion.div>
   )
 }
-

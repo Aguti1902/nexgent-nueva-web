@@ -1,317 +1,397 @@
+export type AgentCategory = 'customer-service' | 'sales' | 'booking' | 'ecommerce' | 'marketing'
+
 export interface AgentTemplate {
   id: string
   name: string
-  icon: string
-  category: 'customer-service' | 'sales' | 'operations' | 'marketing'
   description: string
+  category: AgentCategory
+  icon: string
   features: string[]
   integrations: string[]
   useCases: string[]
-  pricing: 'starter' | 'professional' | 'business'
+  complexity: 'simple' | 'medium' | 'complex'
+  recommendedPlan: 'starter' | 'professional' | 'business'
   estimatedSetupTime: string
-  monthlyConversations: number
+  price: {
+    starter: number
+    professional: number
+    business: number
+  }
+  popular?: boolean
 }
 
 export const agentTemplates: AgentTemplate[] = [
   {
     id: 'whatsapp-customer-service',
-    name: 'Atención Cliente WhatsApp 24/7',
+    name: 'Asistente WhatsApp 24/7',
+    description: 'Atiende consultas de clientes por WhatsApp automáticamente con IA. Responde preguntas frecuentes, deriva casos complejos y mantiene el contexto de la conversación.',
+    category: 'customer-service',
     icon: '💬',
-    category: 'customer-service',
-    description: 'Responde consultas de clientes automáticamente por WhatsApp, 24/7 sin interrupciones',
     features: [
-      'Respuestas instantáneas 24/7',
-      'Comprende lenguaje natural',
-      'Escala a humano cuando necesario',
+      'Respuestas automáticas con GPT-4',
+      'Base de conocimiento personalizada',
+      'Detección de intención del cliente',
+      'Escalado a humano cuando es necesario',
       'Historial de conversaciones',
-      'Métricas de satisfacción'
+      'Soporte multiidioma'
     ],
-    integrations: ['WhatsApp Business', 'OpenAI GPT-4', 'Supabase'],
+    integrations: ['WhatsApp Business API', 'OpenAI GPT-4', 'Supabase'],
     useCases: [
-      'Responder FAQs',
-      'Información de productos',
-      'Estado de pedidos',
-      'Horarios y ubicación'
+      'Atención al cliente 24/7',
+      'Responder FAQs automáticamente',
+      'Calificación de leads',
+      'Soporte post-venta'
     ],
-    pricing: 'starter',
-    estimatedSetupTime: '15 minutos',
-    monthlyConversations: 1000
+    complexity: 'medium',
+    recommendedPlan: 'professional',
+    estimatedSetupTime: '3 minutos',
+    price: {
+      starter: 149,
+      professional: 299,
+      business: 699
+    },
+    popular: true
   },
   {
-    id: 'appointment-booking-agent',
-    name: 'Gestor de Citas Inteligente',
+    id: 'booking-assistant',
+    name: 'Agente de Reservas Inteligente',
+    description: 'Gestiona reservas automáticamente. Consulta disponibilidad, confirma citas, envía recordatorios y sincroniza con tu calendario.',
+    category: 'booking',
     icon: '📅',
-    category: 'operations',
-    description: 'Agenda, confirma y gestiona citas automáticamente vía WhatsApp o web',
     features: [
-      'Agendamiento automático',
-      'Confirmaciones y recordatorios',
+      'Consulta de disponibilidad en tiempo real',
+      'Confirmación automática de citas',
+      'Recordatorios por WhatsApp y email',
       'Reprogramación inteligente',
-      'Sincronización con calendario',
-      'Notificaciones personalizadas'
+      'Gestión de cancelaciones',
+      'Sincronización con Google Calendar'
     ],
-    integrations: ['Google Calendar', 'WhatsApp', 'Calendly', 'Email'],
+    integrations: ['Google Calendar', 'WhatsApp', 'Email', 'Calendly'],
     useCases: [
-      'Clínicas y consultorios',
+      'Clínicas dentales',
       'Salones de belleza',
-      'Gimnasios y centros wellness',
-      'Consultoría y servicios'
-    ],
-    pricing: 'professional',
-    estimatedSetupTime: '20 minutos',
-    monthlyConversations: 2000
-  },
-  {
-    id: 'lead-qualification-agent',
-    name: 'Calificador de Leads Automático',
-    icon: '🎯',
-    category: 'sales',
-    description: 'Califica leads automáticamente, detecta intención de compra y agenda demos',
-    features: [
-      'Calificación inteligente de leads',
-      'Scoring automático',
-      'Detección de intención de compra',
-      'Agendamiento de demos',
-      'Integración con CRM'
-    ],
-    integrations: ['HubSpot', 'Salesforce', 'WhatsApp', 'Email', 'LinkedIn'],
-    useCases: [
-      'SaaS y tech',
-      'Servicios B2B',
-      'E-commerce alto ticket',
-      'Inmobiliarias'
-    ],
-    pricing: 'professional',
-    estimatedSetupTime: '25 minutos',
-    monthlyConversations: 3000
-  },
-  {
-    id: 'order-tracking-agent',
-    name: 'Seguimiento de Pedidos',
-    icon: '📦',
-    category: 'customer-service',
-    description: 'Proporciona información en tiempo real sobre estado de pedidos y envíos',
-    features: [
-      'Estado de pedido en tiempo real',
-      'Tracking de envíos',
-      'Notificaciones automáticas',
-      'Gestión de devoluciones',
-      'Soporte post-venta'
-    ],
-    integrations: ['Shopify', 'WooCommerce', 'Correos', 'DHL', 'WhatsApp'],
-    useCases: [
-      'E-commerce',
-      'Retail online',
-      'Marketplaces',
-      'Dropshipping'
-    ],
-    pricing: 'professional',
-    estimatedSetupTime: '30 minutos',
-    monthlyConversations: 5000
-  },
-  {
-    id: 'social-media-responder',
-    name: 'Respuestas Automáticas Redes Sociales',
-    icon: '📱',
-    category: 'marketing',
-    description: 'Responde mensajes y comentarios en Instagram, Facebook y TikTok automáticamente',
-    features: [
-      'Respuestas en múltiples plataformas',
-      'Detección de sentimiento',
-      'Respuestas personalizadas',
-      'Filtrado de spam',
-      'Análisis de engagement'
-    ],
-    integrations: ['Instagram', 'Facebook', 'TikTok', 'Twitter/X', 'LinkedIn'],
-    useCases: [
-      'Marcas y retail',
-      'Influencers',
-      'Agencias de marketing',
-      'E-commerce'
-    ],
-    pricing: 'business',
-    estimatedSetupTime: '35 minutos',
-    monthlyConversations: 10000
-  },
-  {
-    id: 'restaurant-reservations',
-    name: 'Reservas para Restaurantes',
-    icon: '🍽️',
-    category: 'operations',
-    description: 'Gestiona reservas, lista de espera y pedidos para domicilio/recogida',
-    features: [
-      'Sistema de reservas completo',
-      'Gestión de lista de espera',
-      'Pedidos online',
-      'Confirmaciones automáticas',
-      'Gestión de aforo'
-    ],
-    integrations: ['WhatsApp', 'Google Calendar', 'Uber Eats', 'Glovo'],
-    useCases: [
       'Restaurantes',
-      'Cafeterías',
-      'Bares y pubs',
-      'Food trucks'
-    ],
-    pricing: 'professional',
-    estimatedSetupTime: '20 minutos',
-    monthlyConversations: 3000
-  },
-  {
-    id: 'gym-member-assistant',
-    name: 'Asistente para Gimnasios',
-    icon: '💪',
-    category: 'operations',
-    description: 'Gestiona membresías, clases, reservas de equipamiento y recordatorios',
-    features: [
-      'Reserva de clases',
-      'Gestión de membresías',
-      'Recordatorios de entrenamientos',
-      'Control de aforo',
-      'Renovaciones automáticas'
-    ],
-    integrations: ['WhatsApp', 'Google Calendar', 'Stripe', 'Email'],
-    useCases: [
       'Gimnasios',
-      'Estudios de yoga',
-      'CrossFit boxes',
-      'Centros deportivos'
+      'Consultorías'
     ],
-    pricing: 'professional',
-    estimatedSetupTime: '25 minutos',
-    monthlyConversations: 4000
+    complexity: 'medium',
+    recommendedPlan: 'professional',
+    estimatedSetupTime: '4 minutos',
+    price: {
+      starter: 149,
+      professional: 299,
+      business: 699
+    },
+    popular: true
   },
   {
-    id: 'real-estate-agent',
-    name: 'Agente Inmobiliario Virtual',
-    icon: '🏠',
+    id: 'lead-qualifier',
+    name: 'Calificador de Leads con IA',
+    description: 'Califica leads automáticamente, hace preguntas clave, asigna puntuación y agenda demos solo con los más calificados.',
     category: 'sales',
-    description: 'Califica interesados, agenda visitas y proporciona información de propiedades',
+    icon: '🎯',
     features: [
-      'Información de propiedades',
-      'Calificación de interesados',
-      'Agendamiento de visitas',
-      'Seguimiento automático',
-      'Documentación digital'
+      'Scoring automático de leads',
+      'Preguntas de calificación inteligentes',
+      'Segmentación por interés',
+      'Agendado automático de demos',
+      'Notificaciones a equipo de ventas',
+      'CRM integration'
     ],
-    integrations: ['WhatsApp', 'Google Calendar', 'CRM', 'Email', 'DocuSign'],
+    integrations: ['WhatsApp', 'Email', 'Google Calendar', 'CRM', 'Slack'],
     useCases: [
+      'SaaS y software',
       'Inmobiliarias',
-      'Promotoras',
-      'Agentes independientes',
-      'Plataformas de alquiler'
+      'Consultorías',
+      'Servicios B2B'
     ],
-    pricing: 'business',
-    estimatedSetupTime: '30 minutos',
-    monthlyConversations: 5000
+    complexity: 'complex',
+    recommendedPlan: 'business',
+    estimatedSetupTime: '5 minutos',
+    price: {
+      starter: 199,
+      professional: 399,
+      business: 799
+    }
   },
   {
-    id: 'hotel-concierge',
-    name: 'Conserje Virtual para Hoteles',
-    icon: '🏨',
-    category: 'customer-service',
-    description: 'Atiende solicitudes de huéspedes, gestiona reservas y proporciona recomendaciones',
+    id: 'ecommerce-support',
+    name: 'Soporte E-commerce',
+    description: 'Asistente especializado en e-commerce. Seguimiento de pedidos, gestión de devoluciones, recomendaciones de productos.',
+    category: 'ecommerce',
+    icon: '🛒',
     features: [
-      'Check-in/check-out digital',
-      'Servicios de habitación',
-      'Recomendaciones locales',
-      'Gestión de incidencias',
-      'Servicios adicionales'
+      'Seguimiento de pedidos en tiempo real',
+      'Gestión de devoluciones',
+      'Recomendaciones de productos con IA',
+      'Recuperación de carritos abandonados',
+      'Notificaciones de stock',
+      'Respuestas sobre envíos'
     ],
-    integrations: ['WhatsApp', 'Email', 'PMS hotelero', 'Google Maps'],
-    useCases: [
-      'Hoteles',
-      'Hostales',
-      'Apartamentos turísticos',
-      'Resorts'
-    ],
-    pricing: 'business',
-    estimatedSetupTime: '40 minutos',
-    monthlyConversations: 8000
-  },
-  {
-    id: 'ecommerce-shopping-assistant',
-    name: 'Asistente de Compras E-commerce',
-    icon: '🛍️',
-    category: 'sales',
-    description: 'Ayuda a encontrar productos, recomienda y procesa pedidos vía chat',
-    features: [
-      'Recomendaciones personalizadas',
-      'Búsqueda de productos',
-      'Proceso de compra guiado',
-      'Upselling inteligente',
-      'Soporte post-venta'
-    ],
-    integrations: ['Shopify', 'WooCommerce', 'WhatsApp', 'Stripe', 'PayPal'],
+    integrations: ['WooCommerce', 'Shopify', 'WhatsApp', 'Email'],
     useCases: [
       'Tiendas online',
       'Marketplaces',
-      'Fashion retail',
-      'Electrónica'
+      'Dropshipping',
+      'Retail digital'
     ],
-    pricing: 'business',
-    estimatedSetupTime: '35 minutos',
-    monthlyConversations: 10000
+    complexity: 'complex',
+    recommendedPlan: 'business',
+    estimatedSetupTime: '6 minutos',
+    price: {
+      starter: 199,
+      professional: 399,
+      business: 799
+    },
+    popular: true
   },
   {
-    id: 'hr-recruitment-assistant',
-    name: 'Asistente de Reclutamiento',
-    icon: '👔',
-    category: 'operations',
-    description: 'Filtra candidatos, agenda entrevistas y gestiona proceso de selección',
+    id: 'appointment-reminder',
+    name: 'Sistema de Recordatorios',
+    description: 'Envía recordatorios automáticos de citas por WhatsApp, email y SMS. Reduce no-shows hasta un 80%.',
+    category: 'booking',
+    icon: '⏰',
     features: [
-      'Screening inicial de CVs',
-      'Preguntas de calificación',
-      'Agendamiento de entrevistas',
-      'Seguimiento de candidatos',
-      'Feedback automático'
+      'Recordatorios automáticos 24h antes',
+      'Confirmación de asistencia',
+      'Recordatorio final 2h antes',
+      'Multicanal (WhatsApp, Email, SMS)',
+      'Personalización de mensajes',
+      'Estadísticas de asistencia'
     ],
-    integrations: ['LinkedIn', 'Email', 'Google Calendar', 'ATS', 'WhatsApp'],
+    integrations: ['Google Calendar', 'WhatsApp', 'Email', 'Twilio SMS'],
     useCases: [
-      'Departamentos de RRHH',
-      'Agencias de reclutamiento',
-      'Startups en crecimiento',
-      'Empresas tech'
+      'Clínicas médicas',
+      'Dentistas',
+      'Terapeutas',
+      'Salones de belleza'
     ],
-    pricing: 'business',
-    estimatedSetupTime: '45 minutos',
-    monthlyConversations: 6000
+    complexity: 'simple',
+    recommendedPlan: 'starter',
+    estimatedSetupTime: '2 minutos',
+    price: {
+      starter: 99,
+      professional: 199,
+      business: 399
+    }
   },
   {
-    id: 'financial-advisor-bot',
-    name: 'Asesor Financiero Virtual',
-    icon: '💰',
+    id: 'feedback-collector',
+    name: 'Recolector de Feedback',
+    description: 'Solicita y recopila feedback de clientes automáticamente después de cada interacción. Analiza sentimiento con IA.',
+    category: 'customer-service',
+    icon: '⭐',
+    features: [
+      'Encuestas automáticas post-servicio',
+      'Análisis de sentimiento con IA',
+      'Alertas de feedback negativo',
+      'Dashboard de métricas',
+      'Seguimiento de NPS',
+      'Integración con Google Reviews'
+    ],
+    integrations: ['WhatsApp', 'Email', 'Google Reviews', 'Trustpilot'],
+    useCases: [
+      'Restaurantes',
+      'Hoteles',
+      'E-commerce',
+      'Servicios profesionales'
+    ],
+    complexity: 'medium',
+    recommendedPlan: 'professional',
+    estimatedSetupTime: '3 minutos',
+    price: {
+      starter: 129,
+      professional: 249,
+      business: 499
+    }
+  },
+  {
+    id: 'social-media-responder',
+    name: 'Respuestas Redes Sociales',
+    description: 'Responde automáticamente DMs y comentarios en Instagram, Facebook y TikTok con IA contextual.',
+    category: 'marketing',
+    icon: '📱',
+    features: [
+      'Respuestas automáticas en Instagram DM',
+      'Comentarios en posts de Facebook',
+      'TikTok DM automation',
+      'Detección de intención',
+      'Respuestas personalizadas',
+      'Analytics de engagement'
+    ],
+    integrations: ['Instagram', 'Facebook', 'TikTok', 'OpenAI'],
+    useCases: [
+      'Influencers',
+      'Marcas de moda',
+      'Restaurantes',
+      'Gimnasios'
+    ],
+    complexity: 'medium',
+    recommendedPlan: 'professional',
+    estimatedSetupTime: '4 minutos',
+    price: {
+      starter: 149,
+      professional: 299,
+      business: 599
+    }
+  },
+  {
+    id: 'invoice-automation',
+    name: 'Facturación Automática',
+    description: 'Genera y envía facturas automáticamente. Recordatorios de pago, seguimiento de cobros y conciliación bancaria.',
     category: 'sales',
-    description: 'Proporciona información financiera, calcula hipotecas y agenda consultas',
+    icon: '💳',
     features: [
-      'Calculadora de hipotecas',
-      'Información de productos financieros',
-      'Calificación de clientes',
-      'Agendamiento de asesorías',
-      'Documentación requerida'
+      'Generación automática de facturas',
+      'Envío por email',
+      'Recordatorios de pago',
+      'Integración con Stripe/PayPal',
+      'Conciliación bancaria',
+      'Reportes financieros'
     ],
-    integrations: ['WhatsApp', 'Email', 'CRM financiero', 'Google Calendar'],
+    integrations: ['Stripe', 'PayPal', 'Email', 'Google Sheets', 'QuickBooks'],
     useCases: [
-      'Bancos',
-      'Asesoras financieras',
-      'Corredurías de seguros',
-      'Gestoras de inversión'
+      'Freelancers',
+      'Agencias',
+      'SaaS',
+      'Consultorías'
     ],
-    pricing: 'business',
-    estimatedSetupTime: '50 minutos',
-    monthlyConversations: 4000
+    complexity: 'complex',
+    recommendedPlan: 'business',
+    estimatedSetupTime: '5 minutos',
+    price: {
+      starter: 179,
+      professional: 349,
+      business: 699
+    }
+  },
+  {
+    id: 'onboarding-assistant',
+    name: 'Asistente de Onboarding',
+    description: 'Guía a nuevos clientes paso a paso en su proceso de onboarding. Envía recursos, responde preguntas y hace seguimiento.',
+    category: 'customer-service',
+    icon: '🎓',
+    features: [
+      'Flujo de onboarding automatizado',
+      'Envío secuencial de recursos',
+      'Check-ins automáticos',
+      'Respuestas a FAQs',
+      'Escalado a soporte humano',
+      'Métricas de completitud'
+    ],
+    integrations: ['Email', 'Slack', 'WhatsApp', 'CRM'],
+    useCases: [
+      'SaaS',
+      'Plataformas educativas',
+      'Apps móviles',
+      'Servicios digitales'
+    ],
+    complexity: 'medium',
+    recommendedPlan: 'professional',
+    estimatedSetupTime: '4 minutos',
+    price: {
+      starter: 149,
+      professional: 299,
+      business: 599
+    }
+  },
+  {
+    id: 'abandoned-cart',
+    name: 'Recuperación de Carritos',
+    description: 'Recupera carritos abandonados automáticamente con mensajes personalizados y ofertas especiales.',
+    category: 'ecommerce',
+    icon: '🛍️',
+    features: [
+      'Detección de carritos abandonados',
+      'Mensajes personalizados por WhatsApp',
+      'Descuentos automáticos',
+      'Secuencia de 3 mensajes',
+      'A/B testing de mensajes',
+      'ROI tracking'
+    ],
+    integrations: ['Shopify', 'WooCommerce', 'WhatsApp', 'Email'],
+    useCases: [
+      'E-commerce',
+      'Tiendas online',
+      'Marketplaces'
+    ],
+    complexity: 'medium',
+    recommendedPlan: 'professional',
+    estimatedSetupTime: '3 minutos',
+    price: {
+      starter: 149,
+      professional: 299,
+      business: 599
+    }
+  },
+  {
+    id: 'recruitment-assistant',
+    name: 'Asistente de Reclutamiento',
+    description: 'Automatiza el pre-screening de candidatos, agenda entrevistas y envía seguimiento.',
+    category: 'sales',
+    icon: '👔',
+    features: [
+      'Pre-screening automatizado',
+      'Preguntas de calificación',
+      'Agendado de entrevistas',
+      'Envío de pruebas técnicas',
+      'Notificaciones a RRHH',
+      'Base de datos de candidatos'
+    ],
+    integrations: ['Email', 'Google Calendar', 'LinkedIn', 'Calendly'],
+    useCases: [
+      'Agencias de reclutamiento',
+      'Departamentos de RRHH',
+      'Startups en crecimiento'
+    ],
+    complexity: 'complex',
+    recommendedPlan: 'business',
+    estimatedSetupTime: '5 minutos',
+    price: {
+      starter: 179,
+      professional: 349,
+      business: 699
+    }
+  },
+  {
+    id: 'event-registration',
+    name: 'Registro de Eventos',
+    description: 'Gestiona inscripciones a eventos, envía confirmaciones, recordatorios y follow-ups post-evento.',
+    category: 'booking',
+    icon: '🎟️',
+    features: [
+      'Formulario de inscripción automatizado',
+      'Confirmaciones instantáneas',
+      'Recordatorios de evento',
+      'Check-in digital',
+      'Encuestas post-evento',
+      'Certificados de asistencia'
+    ],
+    integrations: ['Email', 'WhatsApp', 'Google Forms', 'Zoom'],
+    useCases: [
+      'Conferencias',
+      'Webinars',
+      'Talleres',
+      'Eventos corporativos'
+    ],
+    complexity: 'medium',
+    recommendedPlan: 'professional',
+    estimatedSetupTime: '4 minutos',
+    price: {
+      starter: 129,
+      professional: 249,
+      business: 499
+    }
   }
 ]
 
-export function getAgentsByCategory(category: AgentTemplate['category']) {
-  return agentTemplates.filter(agent => agent.category === category)
+export const getCategoryEmoji = (category: AgentCategory): string => {
+  const emojiMap: Record<AgentCategory, string> = {
+    'customer-service': '💬',
+    'sales': '💰',
+    'booking': '📅',
+    'ecommerce': '🛒',
+    'marketing': '📢'
+  }
+  return emojiMap[category]
 }
-
-export function getAgentById(id: string) {
-  return agentTemplates.find(agent => agent.id === id)
-}
-
-export function getAgentsByPricing(pricing: AgentTemplate['pricing']) {
-  return agentTemplates.filter(agent => agent.pricing === pricing)
-}
-
