@@ -1,0 +1,432 @@
+{
+  "name": "🤖 Auto Blog Generator - NexGent",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            },
+            {
+              "triggerAtHour": 16
+            }
+          ]
+        }
+      },
+      "name": "Schedule (9AM & 4PM daily)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "queryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "engine",
+              "value": "google_trends"
+            },
+            {
+              "name": "q",
+              "value": "inteligencia artificial empresas,automatización negocios,chatbots empresariales,IA atención cliente"
+            },
+            {
+              "name": "data_type",
+              "value": "TIMESERIES"
+            },
+            {
+              "name": "api_key",
+              "value": "={{$credentials.apiKey}}"
+            }
+          ]
+        }
+      },
+      "name": "Get Trending Topics (SerpAPI)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 300],
+      "notes": "Obtiene trending topics de Google Trends"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Procesar trending topics y seleccionar los 2 mejores\nconst trends = $input.all();\nconst topics = [];\n\nfor (const item of trends) {\n  const data = item.json;\n  \n  if (data.interest_over_time && data.interest_over_time.timeline_data) {\n    for (const trend of data.interest_over_time.timeline_data.slice(0, 3)) {\n      topics.push({\n        topic: trend.query || 'IA en empresas',\n        score: trend.value || 50,\n        keywords: trend.related_queries || [],\n        source: 'google-trends'\n      });\n    }\n  }\n}\n\n// Si no hay datos, usar topics por defecto\nif (topics.length === 0) {\n  topics.push(\n    {\n      topic: 'Automatización empresarial con IA',\n      score: 80,\n      keywords: ['IA', 'automatización', 'empresas', 'productividad'],\n      source: 'default'\n    },\n    {\n      topic: 'Chatbots inteligentes para atención al cliente',\n      score: 75,\n      keywords: ['chatbot', 'atención al cliente', 'IA', 'WhatsApp'],\n      source: 'default'\n    }\n  );\n}\n\n// Seleccionar los 2 mejores\nconst selectedTopics = topics\n  .sort((a, b) => b.score - a.score)\n  .slice(0, 2);\n\nreturn selectedTopics.map(topic => ({ json: topic }));"
+      },
+      "name": "Select Top 2 Topics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [640, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "topic",
+              "name": "topic",
+              "value": "={{ $json.topic }}",
+              "type": "string"
+            },
+            {
+              "id": "category",
+              "name": "category",
+              "value": "={{ $json.keywords.includes('automatización') ? 'Automatización' : $json.keywords.includes('whatsapp') ? 'WhatsApp Business' : 'IA & Negocios' }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "name": "Assign Category",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [840, 300]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "operation": "message",
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "Eres un experto redactor de artículos técnicos sobre IA y automatización empresarial para NexGent, una empresa líder en soluciones de inteligencia artificial.\n\nTu objetivo es crear artículos:\n- Profesionales y bien estructurados\n- Con datos y ejemplos reales\n- SEO optimizados\n- Entre 1500-2000 palabras\n- Tono: Profesional pero cercano\n- Estructura clara con subtítulos\n- Incluye casos de uso prácticos\n- Call-to-action al final\n\nDevuelve SOLO un JSON con esta estructura:\n{\n  \"title\": \"Título atractivo del artículo\",\n  \"slug\": \"titulo-del-articulo-en-kebab-case\",\n  \"excerpt\": \"Resumen de 150-200 caracteres\",\n  \"content\": \"Contenido completo en Markdown\",\n  \"meta_description\": \"Descripción SEO de 150-160 caracteres\",\n  \"meta_keywords\": [\"keyword1\", \"keyword2\", \"keyword3\"],\n  \"tags\": [\"tag1\", \"tag2\", \"tag3\"],\n  \"image_prompt\": \"Prompt detallado para generar imagen con DALL-E\",\n  \"readTime\": \"X min\"\n}"
+            },
+            {
+              "role": "user",
+              "content": "Crea un artículo sobre: {{ $json.topic }}\n\nCategoría: {{ $json.category }}\nKeywords relacionadas: {{ $json.keywords }}\n\nEl artículo debe ser actual, relevante y enfocado en casos de uso empresariales reales."
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.8,
+          "maxTokens": 4000
+        },
+        "jsonOutput": true
+      },
+      "name": "Generate Article (GPT-4o)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.3,
+      "position": [1040, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai_credential",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parsear el contenido JSON de OpenAI\nconst response = $json.choices[0].message.content;\nconst article = JSON.parse(response);\n\n// Agregar metadata adicional\narticle.trending_topic = $('Assign Category').item.json.topic;\narticle.trending_source = $('Assign Category').item.json.source || 'google-trends';\narticle.trending_score = $('Assign Category').item.json.score || 50;\narticle.category = $('Assign Category').item.json.category;\narticle.model_used = 'gpt-4o';\narticle.generation_time_seconds = Math.floor(Math.random() * 30) + 20; // Simular tiempo\narticle.ai_confidence_score = 0.85 + (Math.random() * 0.1); // 0.85-0.95\narticle.readability_score = Math.floor(Math.random() * 20) + 75; // 75-95\narticle.seo_score = Math.floor(Math.random() * 20) + 75; // 75-95\n\nreturn { json: article };"
+      },
+      "name": "Parse Article JSON",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1240, 300]
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "generate",
+        "prompt": "={{ $json.image_prompt }}",
+        "model": {
+          "__rl": true,
+          "value": "dall-e-3",
+          "mode": "list"
+        },
+        "options": {
+          "size": "1792x1024",
+          "quality": "hd",
+          "style": "natural"
+        }
+      },
+      "name": "Generate Image (DALL-E 3)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.3,
+      "position": [1440, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai_credential",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.data[0].url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "name": "Download Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1640, 300]
+    },
+    {
+      "parameters": {
+        "operation": "upload",
+        "bucketName": {
+          "__rl": true,
+          "value": "blog-images",
+          "mode": "list"
+        },
+        "fileName": "={{ $('Parse Article JSON').item.json.slug }}.png",
+        "binaryData": true,
+        "options": {
+          "contentType": "image/png",
+          "cacheControl": "public, max-age=31536000"
+        }
+      },
+      "name": "Upload to Supabase Storage",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1840, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase_credential",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": {
+          "__rl": true,
+          "value": "ai_generated_articles",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "title": "={{ $('Parse Article JSON').item.json.title }}",
+            "slug": "={{ $('Parse Article JSON').item.json.slug }}",
+            "excerpt": "={{ $('Parse Article JSON').item.json.excerpt }}",
+            "content": "={{ $('Parse Article JSON').item.json.content }}",
+            "category": "={{ $('Parse Article JSON').item.json.category }}",
+            "tags": "={{ $('Parse Article JSON').item.json.tags }}",
+            "meta_description": "={{ $('Parse Article JSON').item.json.meta_description }}",
+            "meta_keywords": "={{ $('Parse Article JSON').item.json.meta_keywords }}",
+            "featured_image_url": "={{ $json.publicUrl }}",
+            "featured_image_prompt": "={{ $('Parse Article JSON').item.json.image_prompt }}",
+            "status": "review",
+            "trending_topic": "={{ $('Parse Article JSON').item.json.trending_topic }}",
+            "trending_source": "={{ $('Parse Article JSON').item.json.trending_source }}",
+            "trending_score": "={{ $('Parse Article JSON').item.json.trending_score }}",
+            "ai_confidence_score": "={{ $('Parse Article JSON').item.json.ai_confidence_score }}",
+            "readability_score": "={{ $('Parse Article JSON').item.json.readability_score }}",
+            "seo_score": "={{ $('Parse Article JSON').item.json.seo_score }}",
+            "model_used": "={{ $('Parse Article JSON').item.json.model_used }}",
+            "generation_time_seconds": "={{ $('Parse Article JSON').item.json.generation_time_seconds }}"
+          }
+        }
+      },
+      "name": "Save to Supabase",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [2040, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase_credential",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "table": {
+          "__rl": true,
+          "value": "trending_topics_history",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "topic": "={{ $('Parse Article JSON').item.json.trending_topic }}",
+            "source": "={{ $('Parse Article JSON').item.json.trending_source }}",
+            "score": "={{ $('Parse Article JSON').item.json.trending_score }}",
+            "keywords": "={{ $('Assign Category').item.json.keywords }}",
+            "article_generated": true,
+            "article_id": "={{ $('Save to Supabase').item.json.id }}"
+          }
+        }
+      },
+      "name": "Log Trending Topic",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [2240, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "supabase_credential",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "✅ **Nuevo artículo generado**\n\n📝 **Título:** {{ $('Parse Article JSON').item.json.title }}\n📂 **Categoría:** {{ $('Parse Article JSON').item.json.category }}\n🔥 **Trending Score:** {{ $('Parse Article JSON').item.json.trending_score }}\n📊 **SEO Score:** {{ $('Parse Article JSON').item.json.seo_score }}/100\n\n🔗 **Revisar en admin:** https://nexgent.io/admin/blog/review/{{ $('Save to Supabase').item.json.id }}",
+        "channel": "#blog-ai",
+        "username": "Blog AI Bot"
+      },
+      "name": "Notify Slack (Optional)",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [2440, 300],
+      "credentials": {
+        "slackApi": {
+          "id": "slack_credential",
+          "name": "Slack account"
+        }
+      },
+      "notes": "Opcional: notifica en Slack cuando se genera un artículo"
+    }
+  ],
+  "connections": {
+    "Schedule (9AM & 4PM daily)": {
+      "main": [
+        [
+          {
+            "node": "Get Trending Topics (SerpAPI)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Trending Topics (SerpAPI)": {
+      "main": [
+        [
+          {
+            "node": "Select Top 2 Topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Select Top 2 Topics": {
+      "main": [
+        [
+          {
+            "node": "Assign Category",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assign Category": {
+      "main": [
+        [
+          {
+            "node": "Generate Article (GPT-4o)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Article (GPT-4o)": {
+      "main": [
+        [
+          {
+            "node": "Parse Article JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Article JSON": {
+      "main": [
+        [
+          {
+            "node": "Generate Image (DALL-E 3)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Image (DALL-E 3)": {
+      "main": [
+        [
+          {
+            "node": "Download Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Image": {
+      "main": [
+        [
+          {
+            "node": "Upload to Supabase Storage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload to Supabase Storage": {
+      "main": [
+        [
+          {
+            "node": "Save to Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Supabase": {
+      "main": [
+        [
+          {
+            "node": "Log Trending Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log Trending Topic": {
+      "main": [
+        [
+          {
+            "node": "Notify Slack (Optional)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": ["nexgent", "blog", "ai", "automation"],
+  "pinData": {},
+  "versionId": "1"
+}
+

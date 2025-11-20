@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog, FaSignOutAlt, FaEye, FaEyeSlash, FaCalendarCheck } from 'react-icons/fa'
+import { FaBook, FaQuestionCircle, FaChartLine, FaPlus, FaEdit, FaTrash, FaImage, FaCog, FaSignOutAlt, FaEye, FaEyeSlash, FaCalendarCheck, FaRobot } from 'react-icons/fa'
 import { getAllBlogArticles, BlogArticle } from '@/data/blog-articles'
 import { articles as predefinedHelpArticles } from '@/app/recursos/centro-ayuda/articulos/articles-data'
 
@@ -336,6 +336,14 @@ export default function AdminDashboard() {
             >
               <FaBook />
               <span className="font-medium">Artículos del Blog</span>
+            </button>
+            
+            <button
+              onClick={() => router.push('/admin/blog/ai-review')}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-gray-700 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 hover:text-white group"
+            >
+              <FaRobot className="group-hover:animate-pulse" />
+              <span className="font-medium">🤖 Blog AI Review</span>
             </button>
             
             <button
