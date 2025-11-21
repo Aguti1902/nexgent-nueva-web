@@ -9,14 +9,14 @@ export default function CalculadoraEmbed() {
   const [numFranquicias, setNumFranquicias] = useState(50)
   const [agenteWhatsApp, setAgenteWhatsApp] = useState(true)
   const [agenteLlamadas, setAgenteLlamadas] = useState(false)
-  const [mensajesPorFranquicia, setMensajesPorFranquicia] = useState(500)
-  const [llamadasPorFranquicia, setLlamadasPorFranquicia] = useState(100)
-  const [minutosPorLlamada, setMinutosPorLlamada] = useState(3)
+  const [mensajesPorFranquicia, setMensajesPorFranquicia] = useState(5000)
+  const [llamadasPorFranquicia, setLlamadasPorFranquicia] = useState(500)
+  const [minutosPorLlamada, setMinutosPorLlamada] = useState(2)
 
-  const PRECIO_BASE_FRANQUICIA = 29
-  const PRECIO_MENSAJE = 0.02
-  const PRECIO_LLAMADA_BASE = 0.15
-  const PRECIO_MINUTO = 0.08
+  const PRECIO_BASE_FRANQUICIA = 0 // Sin base, solo por uso
+  const PRECIO_MENSAJE = 0.01 // 1 céntimo por mensaje
+  const PRECIO_LLAMADA_BASE = 0.05 // 5 céntimos por llamada
+  const PRECIO_MINUTO = 0.05 // 5 céntimos por minuto
 
   const getDescuentoVolumen = (num: number) => {
     if (num >= 500) return 0.30
@@ -33,12 +33,11 @@ export default function CalculadoraEmbed() {
   })
 
   useEffect(() => {
-    const base = agenteWhatsApp || agenteLlamadas ? PRECIO_BASE_FRANQUICIA : 0
     const whatsapp = agenteWhatsApp ? mensajesPorFranquicia * PRECIO_MENSAJE : 0
     const llamadas = agenteLlamadas 
       ? (llamadasPorFranquicia * PRECIO_LLAMADA_BASE) + (llamadasPorFranquicia * minutosPorLlamada * PRECIO_MINUTO)
       : 0
-    const totalPorFranquicia = base + whatsapp + llamadas
+    const totalPorFranquicia = whatsapp + llamadas
     const totalMensual = totalPorFranquicia * numFranquicias
     const porcentajeDescuento = getDescuentoVolumen(numFranquicias)
     const descuento = totalMensual * porcentajeDescuento
@@ -106,7 +105,7 @@ export default function CalculadoraEmbed() {
                 <span className="text-sm">Mensajes/franquicia/mes</span>
                 <span className="font-bold">{mensajesPorFranquicia.toLocaleString()}</span>
               </div>
-              <input type="range" min="100" max="5000" step="100" value={mensajesPorFranquicia} onChange={(e) => setMensajesPorFranquicia(parseInt(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer" />
+              <input type="range" min="500" max="100000" step="500" value={mensajesPorFranquicia} onChange={(e) => setMensajesPorFranquicia(parseInt(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer" />
             </div>
           )}
 
@@ -116,9 +115,9 @@ export default function CalculadoraEmbed() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-sm">Llamadas/franquicia/mes</span>
-                  <span className="font-bold">{llamadasPorFranquicia}</span>
+                  <span className="font-bold">{llamadasPorFranquicia.toLocaleString()}</span>
                 </div>
-                <input type="range" min="10" max="1000" step="10" value={llamadasPorFranquicia} onChange={(e) => setLlamadasPorFranquicia(parseInt(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer" />
+                <input type="range" min="50" max="5000" step="50" value={llamadasPorFranquicia} onChange={(e) => setLlamadasPorFranquicia(parseInt(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer" />
               </div>
               <div>
                 <div className="flex items-center justify-between mb-3">

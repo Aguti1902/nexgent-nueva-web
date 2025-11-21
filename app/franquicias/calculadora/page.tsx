@@ -10,15 +10,15 @@ export default function CalculadoraPresupuesto() {
   const [numFranquicias, setNumFranquicias] = useState(50)
   const [agenteWhatsApp, setAgenteWhatsApp] = useState(true)
   const [agenteLlamadas, setAgenteLlamadas] = useState(false)
-  const [mensajesPorFranquicia, setMensajesPorFranquicia] = useState(500)
-  const [llamadasPorFranquicia, setLlamadasPorFranquicia] = useState(100)
-  const [minutosPorLlamada, setMinutosPorLlamada] = useState(3)
+  const [mensajesPorFranquicia, setMensajesPorFranquicia] = useState(5000)
+  const [llamadasPorFranquicia, setLlamadasPorFranquicia] = useState(500)
+  const [minutosPorLlamada, setMinutosPorLlamada] = useState(2)
 
   // Precios base (en €)
-  const PRECIO_BASE_FRANQUICIA = 29 // € por franquicia/mes
-  const PRECIO_MENSAJE = 0.02 // € por mensaje
-  const PRECIO_LLAMADA_BASE = 0.15 // € por llamada
-  const PRECIO_MINUTO = 0.08 // € por minuto
+  const PRECIO_BASE_FRANQUICIA = 0 // Sin base, solo por uso
+  const PRECIO_MENSAJE = 0.01 // € por mensaje (1 céntimo)
+  const PRECIO_LLAMADA_BASE = 0.05 // € por llamada (5 céntimos)
+  const PRECIO_MINUTO = 0.05 // € por minuto (5 céntimos)
 
   // Descuentos por volumen de franquicias
   const getDescuentoVolumen = (num: number) => {
@@ -31,7 +31,6 @@ export default function CalculadoraPresupuesto() {
 
   // Cálculos
   const [costes, setCostes] = useState({
-    basePorFranquicia: 0,
     whatsappPorFranquicia: 0,
     llamadasPorFranquicia: 0,
     totalPorFranquicia: 0,
@@ -42,9 +41,6 @@ export default function CalculadoraPresupuesto() {
   })
 
   useEffect(() => {
-    // Coste base por franquicia
-    const base = agenteWhatsApp || agenteLlamadas ? PRECIO_BASE_FRANQUICIA : 0
-
     // Coste WhatsApp por franquicia
     const whatsapp = agenteWhatsApp ? mensajesPorFranquicia * PRECIO_MENSAJE : 0
 
@@ -54,7 +50,7 @@ export default function CalculadoraPresupuesto() {
       : 0
 
     // Total por franquicia
-    const totalPorFranquicia = base + whatsapp + llamadas
+    const totalPorFranquicia = whatsapp + llamadas
 
     // Total mensual sin descuento
     const totalMensual = totalPorFranquicia * numFranquicias
@@ -70,7 +66,6 @@ export default function CalculadoraPresupuesto() {
     const ahorroAnual = descuento * 12
 
     setCostes({
-      basePorFranquicia: base,
       whatsappPorFranquicia: whatsapp,
       llamadasPorFranquicia: llamadas,
       totalPorFranquicia,
@@ -239,17 +234,17 @@ export default function CalculadoraPresupuesto() {
                   </div>
                   <input
                     type="range"
-                    min="100"
-                    max="5000"
-                    step="100"
+                    min="500"
+                    max="100000"
+                    step="500"
                     value={mensajesPorFranquicia}
                     onChange={(e) => setMensajesPorFranquicia(parseInt(e.target.value))}
                     className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-500"
                   />
                   <div className="flex justify-between text-xs text-gray-500 mt-2">
-                    <span>100</span>
-                    <span>2500</span>
-                    <span>5000</span>
+                    <span>500</span>
+                    <span>50K</span>
+                    <span>100K</span>
                   </div>
                 </motion.div>
               )}
@@ -273,17 +268,17 @@ export default function CalculadoraPresupuesto() {
                     </div>
                     <input
                       type="range"
-                      min="10"
-                      max="1000"
-                      step="10"
+                      min="50"
+                      max="5000"
+                      step="50"
                       value={llamadasPorFranquicia}
                       onChange={(e) => setLlamadasPorFranquicia(parseInt(e.target.value))}
                       className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
                     />
                     <div className="flex justify-between text-xs text-gray-500 mt-2">
-                      <span>10</span>
-                      <span>500</span>
-                      <span>1000</span>
+                      <span>50</span>
+                      <span>2,500</span>
+                      <span>5,000</span>
                     </div>
                   </div>
 
@@ -330,12 +325,6 @@ export default function CalculadoraPresupuesto() {
                 <div className="bg-white/10 backdrop-blur rounded-xl p-6 mb-6">
                   <p className="text-white/80 text-sm mb-4">Coste por franquicia/mes:</p>
                   <div className="space-y-3">
-                    {(agenteWhatsApp || agenteLlamadas) && (
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-white/90">Base de plataforma</span>
-                        <span className="font-semibold">{costes.basePorFranquicia.toFixed(2)}€</span>
-                      </div>
-                    )}
                     {agenteWhatsApp && (
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-white/90">WhatsApp ({mensajesPorFranquicia} mensajes)</span>
