@@ -498,696 +498,162 @@ export default function CalculadoraPresupuesto() {
         </div>
       </section>
 
-      {/* INFORME DETALLADO DE IMPACTO */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <div className="inline-flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-              <FaChartLine />
-              Análisis de Impacto Detallado
-            </div>
-            <h2 className="font-monda text-4xl lg:text-5xl font-bold text-black mb-4">
-              Impacto real en {sectorData.descripcion}
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Proyecciones basadas en {numFranquicias} franquicias con datos reales de clientes en {sectorData.nombre}
-            </p>
-          </motion.div>
-
-          {/* Métricas principales */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
-            >
-              <div className="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center mb-4">
-                <FaClock className="text-white text-2xl" />
-              </div>
-              <div className="text-4xl font-bold text-red-600 mb-2">
-                -{sectorData.impacto.reduccionNoShows}%
-              </div>
-              <p className="text-gray-700 font-semibold mb-1">Reducción No-shows</p>
-              <p className="text-sm text-gray-600 mb-3">
-                Menos citas perdidas gracias a recordatorios automáticos
-              </p>
-              <div className="pt-3 border-t border-gray-200">
-                <p className="text-xs text-gray-500">Ahorro mensual estimado:</p>
-                <p className="text-lg font-bold text-black">
-                  {(numFranquicias * 450 * (sectorData.impacto.reduccionNoShows / 100)).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
-            >
-              <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mb-4">
-                <FaChartLine className="text-white text-2xl" />
-              </div>
-              <div className="text-4xl font-bold text-green-600 mb-2">
-                +{sectorData.impacto.aumentoCitas}%
-              </div>
-              <p className="text-gray-700 font-semibold mb-1">Más citas agendadas</p>
-              <p className="text-sm text-gray-600 mb-3">
-                Más reservas captadas 24/7 sin intervención humana
-              </p>
-              <div className="pt-3 border-t border-gray-200">
-                <p className="text-xs text-gray-500">Ingresos adicionales/mes:</p>
-                <p className="text-lg font-bold text-black">
-                  {(numFranquicias * 1200 * (sectorData.impacto.aumentoCitas / 100)).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
-            >
-              <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mb-4">
-                <FaClock className="text-white text-2xl" />
-              </div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">
-                {sectorData.impacto.ahorroHoras}h
-              </div>
-              <p className="text-gray-700 font-semibold mb-1">Ahorradas/semana</p>
-              <p className="text-sm text-gray-600 mb-3">
-                Tiempo liberado por franquicia para tareas de valor
-              </p>
-              <div className="pt-3 border-t border-gray-200">
-                <p className="text-xs text-gray-500">Coste laboral ahorrado/mes:</p>
-                <p className="text-lg font-bold text-black">
-                  {(numFranquicias * sectorData.impacto.ahorroHoras * 4.33 * 15).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
-            >
-              <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center mb-4">
-                <FaMoneyBillWave className="text-white text-2xl" />
-              </div>
-              <div className="text-4xl font-bold text-purple-600 mb-2">
-                +{sectorData.impacto.aumentoIngresos}%
-              </div>
-              <p className="text-gray-700 font-semibold mb-1">Aumento Ingresos</p>
-              <p className="text-sm text-gray-600 mb-3">
-                Incremento de facturación en los primeros 6 meses
-              </p>
-              <div className="pt-3 border-t border-gray-200">
-                <p className="text-xs text-gray-500">Facturación adicional/mes:</p>
-                <p className="text-lg font-bold text-black">
-                  {(numFranquicias * 2800 * (sectorData.impacto.aumentoIngresos / 100)).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Proyección temporal */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 mb-12"
-          >
-            <h3 className="font-bold text-2xl text-black mb-6 flex items-center gap-3">
-              <FaChartBar className="text-blue-600" />
-              Proyección de impacto en el tiempo
-            </h3>
-            
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <div className="text-center p-6 bg-blue-50 rounded-xl">
-                <p className="text-sm text-gray-600 mb-2">Primer trimestre (3 meses)</p>
-                <p className="text-3xl font-bold text-blue-600 mb-2">
-                  +{Math.round(sectorData.impacto.aumentoIngresos * 0.5)}%
-                </p>
-                <p className="text-xs text-gray-500">Fase de adopción y aprendizaje</p>
-              </div>
-              <div className="text-center p-6 bg-green-50 rounded-xl">
-                <p className="text-sm text-gray-600 mb-2">Segundo trimestre (6 meses)</p>
-                <p className="text-3xl font-bold text-green-600 mb-2">
-                  +{sectorData.impacto.aumentoIngresos}%
-                </p>
-                <p className="text-xs text-gray-500">Rendimiento óptimo alcanzado</p>
-              </div>
-              <div className="text-center p-6 bg-purple-50 rounded-xl">
-                <p className="text-sm text-gray-600 mb-2">Primer año (12 meses)</p>
-                <p className="text-3xl font-bold text-purple-600 mb-2">
-                  +{Math.round(sectorData.impacto.aumentoIngresos * 1.4)}%
-                </p>
-                <p className="text-xs text-gray-500">Con optimizaciones continuas</p>
-              </div>
-            </div>
-
-            {/* Gráfico de barras visual */}
-            <div className="space-y-4">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-700">Mes 1-3: Implementación</span>
-                  <span className="text-sm font-bold text-blue-600">
-                    +{(numFranquicias * 1400 * (sectorData.impacto.aumentoIngresos * 0.5 / 100)).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€/mes
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-4">
-                  <div
-                    className="bg-gradient-to-r from-blue-400 to-blue-600 h-4 rounded-full transition-all duration-1000"
-                    style={{ width: `${50}%` }}
-                  ></div>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-700">Mes 4-6: Optimización</span>
-                  <span className="text-sm font-bold text-green-600">
-                    +{(numFranquicias * 2800 * (sectorData.impacto.aumentoIngresos / 100)).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€/mes
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-4">
-                  <div
-                    className="bg-gradient-to-r from-green-400 to-green-600 h-4 rounded-full transition-all duration-1000"
-                    style={{ width: `100%` }}
-                  ></div>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-700">Mes 7-12: Máximo rendimiento</span>
-                  <span className="text-sm font-bold text-purple-600">
-                    +{(numFranquicias * 2800 * (sectorData.impacto.aumentoIngresos * 1.4 / 100)).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€/mes
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-4">
-                  <div
-                    className="bg-gradient-to-r from-purple-400 to-purple-600 h-4 rounded-full transition-all duration-1000"
-                    style={{ width: `${Math.min(sectorData.impacto.aumentoIngresos * 1.4, 100)}%` }}
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Comparativa Antes vs Después */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-br from-gray-900 to-black text-white rounded-2xl p-8 shadow-2xl mb-12"
-          >
-            <h3 className="font-bold text-2xl mb-8 text-center">
-              Comparativa: Tu red SIN NexGent vs CON NexGent
-            </h3>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Sin NexGent */}
-              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <FaTimes className="text-red-500 text-2xl" />
-                  <h4 className="font-bold text-xl">Sin automatización</h4>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      <strong>{Math.round(numFranquicias * 0.3)}</strong> franquicias pierden llamadas diariamente
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      <strong>{Math.round(numFranquicias * 15)}</strong> horas/día perdidas en tareas repetitivas
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      <strong>{sectorData.impacto.reduccionNoShows}%</strong> de no-shows por falta de recordatorios
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      Atención solo en horario laboral (9-20h)
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      Equipos saturados = peor experiencia cliente
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      Sin datos centralizados ni métricas unificadas
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-6 pt-6 border-t border-red-500/30">
-                  <p className="text-xs text-white/60 mb-2">Pérdidas mensuales estimadas:</p>
-                  <p className="text-3xl font-bold text-red-400">
-                    -{(numFranquicias * 850).toLocaleString('es-ES')}€
-                  </p>
-                </div>
-              </div>
-
-              {/* Con NexGent */}
-              <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <FaCheck className="text-green-500 text-2xl" />
-                  <h4 className="font-bold text-xl">Con NexGent activo</h4>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      <strong>100%</strong> de consultas atendidas al instante
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      <strong>{sectorData.impacto.ahorroHoras * numFranquicias}</strong> horas/semana liberadas para vender
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      <strong>{100 - sectorData.impacto.reduccionNoShows}%</strong> menos no-shows con recordatorios IA
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      Atención 24/7/365 sin coste adicional
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      Equipo enfocado en tareas de alto valor
-                    </p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <p className="text-sm text-white/90">
-                      Dashboard centralizado con BI en tiempo real
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-6 pt-6 border-t border-green-500/30">
-                  <p className="text-xs text-white/60 mb-2">Beneficio neto mensual:</p>
-                  <p className="text-3xl font-bold text-green-400">
-                    +{(numFranquicias * 2100).toLocaleString('es-ES')}€
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 text-center p-6 bg-white/5 rounded-xl border border-white/10">
-              <p className="text-sm text-white/70 mb-2">Diferencia total mensual para tu red:</p>
-              <p className="text-5xl font-bold text-green-400 mb-2">
-                +{(numFranquicias * 2950).toLocaleString('es-ES')}€
-              </p>
-              <p className="text-xl text-white/80">
-                = {(numFranquicias * 2950 * 12).toLocaleString('es-ES')}€ al año
-              </p>
-            </div>
-          </motion.div>
-
-          {/* ROI Detallado */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200"
-          >
-            <h3 className="font-bold text-2xl text-black mb-6 flex items-center gap-3">
-              <FaMoneyBillWave className="text-green-600" />
-              Análisis de Retorno de Inversión (ROI)
-            </h3>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
-                <p className="text-sm text-gray-600 mb-2">Inversión mensual NexGent</p>
-                <p className="text-3xl font-bold text-blue-600 mb-1">
-                  {costes.totalConDescuento.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€
-                </p>
-                <p className="text-xs text-gray-500">Para {numFranquicias} franquicias</p>
-              </div>
-
-              <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
-                <p className="text-sm text-gray-600 mb-2">Beneficio generado/mes</p>
-                <p className="text-3xl font-bold text-green-600 mb-1">
-                  {(numFranquicias * 2950).toLocaleString('es-ES')}€
-                </p>
-                <p className="text-xs text-gray-500">Ahorro + ingresos adicionales</p>
-              </div>
-
-              <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl">
-                <p className="text-sm text-gray-600 mb-2">ROI mensual</p>
-                <p className="text-3xl font-bold text-purple-600 mb-1">
-                  {Math.round(((numFranquicias * 2950) / (costes.totalConDescuento || 1)) * 100)}%
-                </p>
-                <p className="text-xs text-gray-500">Retorno sobre inversión</p>
-              </div>
-            </div>
-
-            <div className="mt-8 p-6 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl text-white">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-white/90 mb-1">Recuperas tu inversión en:</p>
-                  <p className="text-4xl font-bold">
-                    {Math.max(1, Math.round((costes.totalConDescuento / (numFranquicias * 2950)) * 30))} días
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm text-white/90 mb-1">Beneficio neto anual:</p>
-                  <p className="text-3xl font-bold">
-                    {((numFranquicias * 2950 * 12) - (costes.totalConDescuento * 12)).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-6 grid md:grid-cols-2 gap-4">
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-600 mb-1">💡 Ahorro en costes laborales:</p>
-                <p className="text-xl font-bold text-black">
-                  {(numFranquicias * sectorData.impacto.ahorroHoras * 4.33 * 15).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€/mes
-                </p>
-              </div>
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <p className="text-xs text-gray-600 mb-1">💡 Ingresos adicionales capturados:</p>
-                <p className="text-xl font-bold text-black">
-                  {(numFranquicias * 1650).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€/mes
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* DESGLOSE POR ÁREAS DE IMPACTO */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="font-monda text-4xl font-bold text-black mb-4">
-              Cómo mejorará cada área de tu franquicia
-            </h2>
-            <p className="text-xl text-gray-600">
-              Impacto detallado por departamento y función
-            </p>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Atención al Cliente */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 border border-blue-200"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-14 h-14 bg-blue-500 rounded-xl flex items-center justify-center">
-                  <FaHeadset className="text-white text-2xl" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-xl text-black">Atención al Cliente</h3>
-                  <p className="text-sm text-gray-600">Experiencia de usuario mejorada</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Tiempo de respuesta</span>
-                    <span className="text-lg font-bold text-blue-600">-95%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">De 8 minutos → 2.3 segundos de media</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Consultas atendidas</span>
-                    <span className="text-lg font-bold text-blue-600">+240%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">De ~300 a ~1,020 consultas/mes por franquicia</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Disponibilidad</span>
-                    <span className="text-lg font-bold text-blue-600">24/7/365</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Incluye noches, fines de semana y festivos</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Satisfacción cliente (NPS)</span>
-                    <span className="text-lg font-bold text-blue-600">+32 puntos</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Respuestas instantáneas = clientes más felices</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Gestión de Citas */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-200"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-14 h-14 bg-green-500 rounded-xl flex items-center justify-center">
-                  <FaCalendarCheck className="text-white text-2xl" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-xl text-black">Gestión de Citas</h3>
-                  <p className="text-sm text-gray-600">Agenda siempre llena</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Tasa de ocupación</span>
-                    <span className="text-lg font-bold text-green-600">+{sectorData.impacto.aumentoCitas}%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Agendas más llenas sin esfuerzo adicional</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Cancelaciones last-minute</span>
-                    <span className="text-lg font-bold text-green-600">-{Math.round(sectorData.impacto.reduccionNoShows * 0.6)}%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Recordatorios automáticos 24h y 2h antes</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Reagendamientos automáticos</span>
-                    <span className="text-lg font-bold text-green-600">100%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">La IA propone alternativas al instante</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Confirmaciones</span>
-                    <span className="text-lg font-bold text-green-600">+89%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Más clientes confirman = menos huecos vacíos</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Eficiencia Operativa */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 border border-purple-200"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-14 h-14 bg-purple-500 rounded-xl flex items-center justify-center">
-                  <FaRobot className="text-white text-2xl" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-xl text-black">Eficiencia Operativa</h3>
-                  <p className="text-sm text-gray-600">Equipos más productivos</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Tiempo en llamadas</span>
-                    <span className="text-lg font-bold text-purple-600">-{Math.round(sectorData.impacto.ahorroHoras * 2.5)}%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">{sectorData.impacto.ahorroHoras}h/semana liberadas por local</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Tareas repetitivas</span>
-                    <span className="text-lg font-bold text-purple-600">-82%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">La IA gestiona FAQs, precios, horarios, etc.</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Errores en reservas</span>
-                    <span className="text-lg font-bold text-purple-600">-94%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Integración directa con CRM = 0 errores de transcripción</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Coste por consulta</span>
-                    <span className="text-lg font-bold text-purple-600">0.08€</span>
-                  </div>
-                  <p className="text-xs text-gray-600">vs. 4.50€ de una recepcionista tradicional</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Ventas y Conversión */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-8 border border-orange-200"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-14 h-14 bg-orange-500 rounded-xl flex items-center justify-center">
-                  <FaChartLine className="text-white text-2xl" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-xl text-black">Ventas y Conversión</h3>
-                  <p className="text-sm text-gray-600">Más ingresos por franquicia</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Tasa de conversión</span>
-                    <span className="text-lg font-bold text-orange-600">+{Math.round(sectorData.impacto.aumentoCitas * 0.8)}%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">De consulta a cita/reserva confirmada</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Leads capturados fuera de horario</span>
-                    <span className="text-lg font-bold text-orange-600">+190%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">El 35% de consultas llegan fuera del horario laboral</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Cross-selling automático</span>
-                    <span className="text-lg font-bold text-orange-600">+18%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">La IA sugiere servicios complementarios</p>
-                </div>
-
-                <div className="bg-white rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700">Ticket medio</span>
-                    <span className="text-lg font-bold text-orange-600">+{Math.round(sectorData.impacto.aumentoIngresos * 0.4)}%</span>
-                  </div>
-                  <p className="text-xs text-gray-600">Upselling inteligente en cada interacción</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Resumen de valor por franquicia */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-12 bg-gradient-to-r from-black to-gray-900 text-white rounded-2xl p-8 shadow-2xl"
-          >
-            <h3 className="font-bold text-2xl mb-6 text-center">
-              💡 Valor generado por franquicia al mes
-            </h3>
-
-            <div className="grid md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <p className="text-sm text-white/70 mb-2">Ahorro en personal</p>
-                <p className="text-3xl font-bold text-green-400">
-                  {(sectorData.impacto.ahorroHoras * 4.33 * 15).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€
-                </p>
-              </div>
-              <div className="text-center">
-                <p className="text-sm text-white/70 mb-2">Ingresos adicionales</p>
-                <p className="text-3xl font-bold text-blue-400">
-                  1,650€
-                </p>
-              </div>
-              <div className="text-center">
-                <p className="text-sm text-white/70 mb-2">Citas recuperadas</p>
-                <p className="text-3xl font-bold text-purple-400">
-                  450€
-                </p>
-              </div>
-              <div className="text-center">
-                <p className="text-sm text-white/70 mb-2">Coste NexGent</p>
-                <p className="text-3xl font-bold text-red-400">
-                  -{costes.totalPorFranquicia.toFixed(0)}€
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8 pt-8 border-t border-white/20 text-center">
-              <p className="text-white/80 mb-2">Beneficio neto por franquicia:</p>
-              <p className="text-5xl font-bold text-green-400">
-                +{(sectorData.impacto.ahorroHoras * 4.33 * 15 + 1650 + 450 - costes.totalPorFranquicia).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€/mes
-              </p>
-              <p className="text-white/60 text-sm mt-3">
-                × {numFranquicias} franquicias = <strong className="text-white">{((sectorData.impacto.ahorroHoras * 4.33 * 15 + 1650 + 450 - costes.totalPorFranquicia) * numFranquicias).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€/mes</strong> para tu red
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* INFORME DETALLADO */}
+      <InformeDetallado
+        sector={sector}
+        numFranquicias={numFranquicias}
+        costes={costes}
+        mensajesPorFranquicia={mensajesPorFranquicia}
+        llamadasPorFranquicia={llamadasPorFranquicia}
+        minutosPorLlamada={minutosPorLlamada}
+        impacto={sectorData.impacto}
+        agenteWhatsApp={agenteWhatsApp}
+        agenteLlamadas={agenteLlamadas}
+      />
 
       {/* PLAN DE REVENTA */}
       <section className="py-20 bg-gradient-to-br from-gray-900 to-black text-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 text-green-400 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+              <FaTrophy />
+              Genera ingresos pasivos con tu red
+            </div>
+            <h2 className="font-monda text-4xl font-bold mb-4">
+              Tú decides cuánto cobrar a tus franquiciados
+            </h2>
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              Añade un margen sobre el coste de NexGent y convierte la IA en una fuente adicional de ingresos recurrentes para tu central
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            {/* Configurador de margen */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-8"
+            >
+              <h3 className="font-bold text-2xl mb-6 flex items-center gap-3">
+                <FaChartBar className="text-green-400" />
+                Configura tu margen
+              </h3>
+
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-white/80">Margen de reventa:</span>
+                  <span className="text-4xl font-bold text-green-400">{margenReventa}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="5"
+                  value={margenReventa}
+                  onChange={(e) => setMargenReventa(parseInt(e.target.value))}
+                  className="w-full h-3 bg-white/10 rounded-lg appearance-none cursor-pointer accent-green-500"
+                />
+                <div className="flex justify-between text-xs text-white/60 mt-2">
+                  <span>0%</span>
+                  <span>50%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+
+              <div className="space-y-4 bg-white/5 rounded-xl p-6">
+                <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                  <span className="text-white/70">Tu coste por franquicia:</span>
+                  <span className="font-semibold">{costes.totalPorFranquicia.toFixed(2)}€/mes</span>
+                </div>
+                <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                  <span className="text-white/70">Precio a franquiciado:</span>
+                  <span className="font-semibold text-green-400">{costes.precioReventaFranquicia.toFixed(2)}€/mes</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-white/70">Tu margen por franquicia:</span>
+                  <span className="font-bold text-xl text-green-400">
+                    {(costes.precioReventaFranquicia - costes.totalPorFranquicia).toFixed(2)}€/mes
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Proyección de ingresos */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-8 shadow-2xl"
+            >
+              <h3 className="font-bold text-2xl mb-2 flex items-center gap-3">
+                <FaMoneyBillWave />
+                Tus ingresos pasivos
+              </h3>
+              <p className="text-white/90 text-sm mb-8">
+                Con {numFranquicias} franquicias y {margenReventa}% de margen
+              </p>
+
+              <div className="space-y-6">
+                <div className="bg-white/10 backdrop-blur rounded-xl p-6">
+                  <p className="text-white/80 text-sm mb-2">Ingresos mensuales recurrentes:</p>
+                  <p className="text-5xl font-bold">
+                    {costes.ingresoMensualReventa.toLocaleString('es-ES', { minimumFractionDigits: 0 })}€
+                  </p>
+                  <p className="text-white/70 text-xs mt-2">
+                    = {(costes.precioReventaFranquicia - costes.totalPorFranquicia).toFixed(2)}€ × {numFranquicias} franquicias
+                  </p>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur rounded-xl p-6">
+                  <p className="text-white/80 text-sm mb-2">Ingresos anuales proyectados:</p>
+                  <p className="text-4xl font-bold">
+                    {costes.ingresoAnualReventa.toLocaleString('es-ES', { minimumFractionDigits: 0 })}€
+                  </p>
+                  <p className="text-white/70 text-xs mt-2">
+                    Ingresos 100% pasivos sin gestión operativa
+                  </p>
+                </div>
+
+                <div className="bg-black/30 rounded-xl p-4 border border-white/20">
+                  <p className="text-xs text-white/70 mb-2">💡 Consejo:</p>
+                  <p className="text-sm">
+                    La mayoría de franquicias cobran entre 15-30% de margen. Así cubres soporte y generas ingresos adicionales.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <p className="text-white/60 text-sm max-w-2xl mx-auto">
+              <strong className="text-white">Nota:</strong> El precio que cobres a tus franquiciados es completamente flexible. 
+              Muchas centrales incluyen soporte, formación y consultoría en el precio final, justificando márgenes más altos.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* INFORME DETALLADO */}
+      <InformeDetallado
+        sector={sector}
+        numFranquicias={numFranquicias}
+        costes={costes}
+        mensajesPorFranquicia={mensajesPorFranquicia}
+        llamadasPorFranquicia={llamadasPorFranquicia}
+        minutosPorLlamada={minutosPorLlamada}
+        impacto={sectorData.impacto}
+        agenteWhatsApp={agenteWhatsApp}
+        agenteLlamadas={agenteLlamadas}
+      />
+
+      {/* Info adicional */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
