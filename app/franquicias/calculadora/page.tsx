@@ -1,11 +1,71 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { FaPhone, FaWhatsapp, FaCheck, FaArrowRight, FaCalculator, FaChartLine, FaUsers, FaRobot } from 'react-icons/fa'
+import { FaPhone, FaWhatsapp, FaCheck, FaArrowRight, FaCalculator, FaChartLine, FaUsers, FaRobot, FaClock, FaTrophy, FaMoneyBillWave, FaChartBar } from 'react-icons/fa'
+
+// Configuración por sector
+const sectorConfig = {
+  'estetica-belleza': {
+    nombre: 'Estética y Belleza',
+    impacto: {
+      reduccionNoShows: 68,
+      aumentoCitas: 45,
+      ahorroHoras: 25,
+      aumentoIngresos: 32
+    },
+    descripcion: 'tus centros de estética y belleza'
+  },
+  'clinicas-dentales': {
+    nombre: 'Clínicas Dentales',
+    impacto: {
+      reduccionNoShows: 78,
+      aumentoCitas: 52,
+      ahorroHoras: 30,
+      aumentoIngresos: 41
+    },
+    descripcion: 'tu red de clínicas dentales'
+  },
+  'restauracion': {
+    nombre: 'Restauración',
+    impacto: {
+      reduccionNoShows: 55,
+      aumentoCitas: 35,
+      ahorroHoras: 22,
+      aumentoIngresos: 28
+    },
+    descripcion: 'tu cadena de restaurantes'
+  },
+  'gimnasios-fitness': {
+    nombre: 'Gimnasios y Fitness',
+    impacto: {
+      reduccionNoShows: 62,
+      aumentoCitas: 48,
+      ahorroHoras: 28,
+      aumentoIngresos: 37
+    },
+    descripcion: 'tu red de gimnasios'
+  },
+  'inmobiliarias': {
+    nombre: 'Inmobiliarias',
+    impacto: {
+      reduccionNoShows: 55,
+      aumentoCitas: 65,
+      ahorroHoras: 32,
+      aumentoIngresos: 55
+    },
+    descripcion: 'tu red inmobiliaria'
+  }
+}
 
 export default function CalculadoraPresupuesto() {
+  const searchParams = useSearchParams()
+  const sectorParam = searchParams?.get('sector') as keyof typeof sectorConfig | null
+  const sector = sectorParam && sectorConfig[sectorParam] ? sectorParam : 'estetica-belleza'
+  const sectorData = sectorConfig[sector]
+
   // Estados
   const [numFranquicias, setNumFranquicias] = useState(50)
   const [agenteWhatsApp, setAgenteWhatsApp] = useState(true)
@@ -13,6 +73,7 @@ export default function CalculadoraPresupuesto() {
   const [mensajesPorFranquicia, setMensajesPorFranquicia] = useState(5000)
   const [llamadasPorFranquicia, setLlamadasPorFranquicia] = useState(500)
   const [minutosPorLlamada, setMinutosPorLlamada] = useState(2)
+  const [margenReventa, setMargenReventa] = useState(20) // % de margen para reventa
 
   // Precios base (en €)
   const PRECIO_BASE_FRANQUICIA = 0 // Sin base, solo por uso
@@ -37,7 +98,10 @@ export default function CalculadoraPresupuesto() {
     totalMensual: 0,
     descuento: 0,
     totalConDescuento: 0,
-    ahorroAnual: 0
+    ahorroAnual: 0,
+    precioReventaFranquicia: 0,
+    ingresoMensualReventa: 0,
+    ingresoAnualReventa: 0
   })
 
   useEffect(() => {
@@ -65,6 +129,11 @@ export default function CalculadoraPresupuesto() {
     // Ahorro anual
     const ahorroAnual = descuento * 12
 
+    // Cálculos de reventa
+    const precioReventaFranquicia = totalPorFranquicia * (1 + margenReventa / 100)
+    const ingresoMensualReventa = (precioReventaFranquicia - totalPorFranquicia) * numFranquicias
+    const ingresoAnualReventa = ingresoMensualReventa * 12
+
     setCostes({
       whatsappPorFranquicia: whatsapp,
       llamadasPorFranquicia: llamadas,
@@ -72,9 +141,12 @@ export default function CalculadoraPresupuesto() {
       totalMensual,
       descuento,
       totalConDescuento,
-      ahorroAnual
+      ahorroAnual,
+      precioReventaFranquicia,
+      ingresoMensualReventa,
+      ingresoAnualReventa
     })
-  }, [numFranquicias, agenteWhatsApp, agenteLlamadas, mensajesPorFranquicia, llamadasPorFranquicia, minutosPorLlamada])
+  }, [numFranquicias, agenteWhatsApp, agenteLlamadas, mensajesPorFranquicia, llamadasPorFranquicia, minutosPorLlamada, margenReventa])
 
   const descuentoPorcentaje = getDescuentoVolumen(numFranquicias) * 100
 
@@ -94,13 +166,13 @@ export default function CalculadoraPresupuesto() {
               Calcula tu presupuesto personalizado
             </div>
             <h1 className="font-monda text-5xl lg:text-6xl font-bold text-black mb-6">
-              Calculadora de presupuesto{' '}
+              Calculadora para{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                para franquicias
+                {sectorData.nombre}
               </span>
             </h1>
             <p className="text-xl text-gray-600 mb-4">
-              Configura las necesidades de tu red de franquicias y obtén un presupuesto instantáneo
+              Descubre cuánto costaría automatizar {sectorData.descripcion} y cuánto vas a ganar con NexGent
             </p>
             <p className="text-sm text-gray-500 italic">
               * Precios orientativos. Contacta con nosotros para un presupuesto definitivo
@@ -421,6 +493,231 @@ export default function CalculadoraPresupuesto() {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ESTADÍSTICAS DE IMPACTO */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="font-monda text-4xl font-bold text-black mb-4">
+              Impacto real en {sectorData.descripcion}
+            </h2>
+            <p className="text-xl text-gray-600">
+              Así es como NexGent transformará tu negocio
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-gradient-to-br from-red-50 to-orange-50 border border-red-200 rounded-2xl p-6"
+            >
+              <div className="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center mb-4">
+                <FaClock className="text-white text-2xl" />
+              </div>
+              <div className="text-4xl font-bold text-red-600 mb-2">
+                -{sectorData.impacto.reduccionNoShows}%
+              </div>
+              <p className="text-gray-700 font-semibold mb-1">No-shows</p>
+              <p className="text-sm text-gray-600">
+                Menos citas perdidas gracias a recordatorios automáticos
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-6"
+            >
+              <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mb-4">
+                <FaChartLine className="text-white text-2xl" />
+              </div>
+              <div className="text-4xl font-bold text-green-600 mb-2">
+                +{sectorData.impacto.aumentoCitas}%
+              </div>
+              <p className="text-gray-700 font-semibold mb-1">Citas agendadas</p>
+              <p className="text-sm text-gray-600">
+                Más reservas captadas 24/7 sin intervención humana
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-2xl p-6"
+            >
+              <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mb-4">
+                <FaClock className="text-white text-2xl" />
+              </div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">
+                {sectorData.impacto.ahorroHoras}h
+              </div>
+              <p className="text-gray-700 font-semibold mb-1">Ahorradas/semana</p>
+              <p className="text-sm text-gray-600">
+                Tiempo liberado por franquicia para tareas de valor
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-2xl p-6"
+            >
+              <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center mb-4">
+                <FaMoneyBillWave className="text-white text-2xl" />
+              </div>
+              <div className="text-4xl font-bold text-purple-600 mb-2">
+                +{sectorData.impacto.aumentoIngresos}%
+              </div>
+              <p className="text-gray-700 font-semibold mb-1">Ingresos promedio</p>
+              <p className="text-sm text-gray-600">
+                Aumento de facturación en los primeros 6 meses
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* PLAN DE REVENTA */}
+      <section className="py-20 bg-gradient-to-br from-gray-900 to-black text-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 text-green-400 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+              <FaTrophy />
+              Genera ingresos pasivos con tu red
+            </div>
+            <h2 className="font-monda text-4xl font-bold mb-4">
+              Tú decides cuánto cobrar a tus franquiciados
+            </h2>
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              Añade un margen sobre el coste de NexGent y convierte la IA en una fuente adicional de ingresos recurrentes para tu central
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            {/* Configurador de margen */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-white/5 backdrop-blur border border-white/10 rounded-2xl p-8"
+            >
+              <h3 className="font-bold text-2xl mb-6 flex items-center gap-3">
+                <FaChartBar className="text-green-400" />
+                Configura tu margen
+              </h3>
+
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-white/80">Margen de reventa:</span>
+                  <span className="text-4xl font-bold text-green-400">{margenReventa}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="5"
+                  value={margenReventa}
+                  onChange={(e) => setMargenReventa(parseInt(e.target.value))}
+                  className="w-full h-3 bg-white/10 rounded-lg appearance-none cursor-pointer accent-green-500"
+                />
+                <div className="flex justify-between text-xs text-white/60 mt-2">
+                  <span>0%</span>
+                  <span>50%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+
+              <div className="space-y-4 bg-white/5 rounded-xl p-6">
+                <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                  <span className="text-white/70">Tu coste por franquicia:</span>
+                  <span className="font-semibold">{costes.totalPorFranquicia.toFixed(2)}€/mes</span>
+                </div>
+                <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                  <span className="text-white/70">Precio a franquiciado:</span>
+                  <span className="font-semibold text-green-400">{costes.precioReventaFranquicia.toFixed(2)}€/mes</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-white/70">Tu margen por franquicia:</span>
+                  <span className="font-bold text-xl text-green-400">
+                    {(costes.precioReventaFranquicia - costes.totalPorFranquicia).toFixed(2)}€/mes
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Proyección de ingresos */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-8 shadow-2xl"
+            >
+              <h3 className="font-bold text-2xl mb-2 flex items-center gap-3">
+                <FaMoneyBillWave />
+                Tus ingresos pasivos
+              </h3>
+              <p className="text-white/90 text-sm mb-8">
+                Con {numFranquicias} franquicias y {margenReventa}% de margen
+              </p>
+
+              <div className="space-y-6">
+                <div className="bg-white/10 backdrop-blur rounded-xl p-6">
+                  <p className="text-white/80 text-sm mb-2">Ingresos mensuales recurrentes:</p>
+                  <p className="text-5xl font-bold">
+                    {costes.ingresoMensualReventa.toLocaleString('es-ES', { minimumFractionDigits: 0 })}€
+                  </p>
+                  <p className="text-white/70 text-xs mt-2">
+                    = {(costes.precioReventaFranquicia - costes.totalPorFranquicia).toFixed(2)}€ × {numFranquicias} franquicias
+                  </p>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur rounded-xl p-6">
+                  <p className="text-white/80 text-sm mb-2">Ingresos anuales proyectados:</p>
+                  <p className="text-4xl font-bold">
+                    {costes.ingresoAnualReventa.toLocaleString('es-ES', { minimumFractionDigits: 0 })}€
+                  </p>
+                  <p className="text-white/70 text-xs mt-2">
+                    Ingresos 100% pasivos sin gestión operativa
+                  </p>
+                </div>
+
+                <div className="bg-black/30 rounded-xl p-4 border border-white/20">
+                  <p className="text-xs text-white/70 mb-2">💡 Consejo:</p>
+                  <p className="text-sm">
+                    La mayoría de franquicias cobran entre 15-30% de margen. Así cubres soporte y generas ingresos adicionales.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="mt-12 text-center">
+            <p className="text-white/60 text-sm max-w-2xl mx-auto">
+              <strong className="text-white">Nota:</strong> El precio que cobres a tus franquiciados es completamente flexible. 
+              Muchas centrales incluyen soporte, formación y consultoría en el precio final, justificando márgenes más altos.
+            </p>
           </div>
         </div>
       </section>

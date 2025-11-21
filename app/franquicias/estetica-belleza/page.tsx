@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FaArrowRight, FaCheck, FaTimes, FaRobot, FaWhatsapp, FaCalendarCheck, FaBell, FaChartLine } from 'react-icons/fa'
-import CalculadoraEmbed from '@/components/franquicias/CalculadoraEmbed'
+import CalculadoraCTA from '@/components/franquicias/CalculadoraCTA'
 
 export default function EsteticaBellezaPage() {
   return (
@@ -246,20 +246,8 @@ export default function EsteticaBellezaPage() {
         </div>
       </section>
 
-      {/* Calculadora */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="font-monda text-4xl font-bold text-black mb-6">
-              ¿Cuánto costaría para tu cadena de estética?
-            </h2>
-            <p className="text-xl text-gray-600">
-              Calcula tu inversión exacta según tus necesidades
-            </p>
-          </div>
-          <CalculadoraEmbed />
-        </div>
-      </section>
+      {/* Calculadora CTA */}
+      <CalculadoraCTA sector="estetica-belleza" />
 
       {/* CTA Final */}
       <section className="py-20 bg-gradient-to-br from-pink-600 to-rose-600 text-white">

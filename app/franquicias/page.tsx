@@ -3,8 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { FaArrowRight, FaCheck, FaTimes, FaRobot, FaChartLine, FaUsers, FaCut, FaTooth, FaUtensils, FaDumbbell, FaHome, FaWhatsapp, FaCalendarCheck, FaClock, FaStar, FaShieldAlt, FaHeadset, FaBolt } from 'react-icons/fa'
-import CalculadoraEmbed from '@/components/franquicias/CalculadoraEmbed'
+import { FaArrowRight, FaCheck, FaTimes, FaRobot, FaChartLine, FaUsers, FaCut, FaTooth, FaUtensils, FaDumbbell, FaHome, FaWhatsapp, FaCalendarCheck, FaClock, FaStar, FaShieldAlt, FaHeadset, FaBolt, FaCalculator } from 'react-icons/fa'
 
 export default function FranquiciasHub() {
   const sectores = [
@@ -77,12 +76,12 @@ export default function FranquiciasHub() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero POTENTE */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
-        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-blue-100 rounded-full blur-3xl opacity-20 -z-10" />
+      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-white">
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-blue-50 rounded-full blur-3xl opacity-30 -z-10" />
         
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold mb-6">
+            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-bold mb-6 border border-blue-200">
               <FaBolt />
               Más de 847 franquicias ya confían en NexGent
             </div>
@@ -297,7 +296,7 @@ export default function FranquiciasHub() {
       </section>
 
       {/* PRUEBA SOCIAL: Stats */}
-      <section className="py-20 bg-black text-white">
+      <section className="py-20 bg-gradient-to-br from-gray-900 to-black text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="text-center mb-16">
             <h2 className="font-monda text-4xl lg:text-5xl font-bold mb-6">
@@ -338,24 +337,8 @@ export default function FranquiciasHub() {
         </div>
       </section>
 
-      {/* CALCULADORA */}
-      <section id="sectores" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="font-monda text-4xl lg:text-5xl font-bold text-black mb-6">
-              ¿Cuánto costaría para tu franquicia?
-            </h2>
-            <p className="text-xl text-gray-600">
-              Calcula tu inversión exacta en 30 segundos
-            </p>
-          </div>
-
-          <CalculadoraEmbed />
-        </div>
-      </section>
-
       {/* Sectores */}
-      <section className="py-20 bg-white">
+      <section id="sectores" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="font-monda text-4xl lg:text-5xl font-bold text-black mb-6">

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FaArrowRight, FaCheck, FaTimes, FaRobot, FaWhatsapp, FaCalendarCheck, FaUsers, FaChartLine } from 'react-icons/fa'
-import CalculadoraEmbed from '@/components/franquicias/CalculadoraEmbed'
+import CalculadoraCTA from '@/components/franquicias/CalculadoraCTA'
 
 export default function GimnasiosFitnessPage() {
   return (
@@ -147,20 +147,8 @@ export default function GimnasiosFitnessPage() {
         </div>
       </section>
 
-      {/* Calculadora */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="font-monda text-4xl font-bold text-black mb-6">
-              ¿Cuánto costaría para tu cadena de gimnasios?
-            </h2>
-            <p className="text-xl text-gray-600">
-              Inversión para captar un 62% más de socios
-            </p>
-          </div>
-          <CalculadoraEmbed />
-        </div>
-      </section>
+      {/* Calculadora CTA */}
+      <CalculadoraCTA sector="gimnasios-fitness" />
 
       <section className="py-20 bg-gradient-to-br from-green-600 to-emerald-600 text-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center">
