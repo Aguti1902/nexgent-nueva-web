@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FaArrowRight, FaCheck, FaTimes, FaRobot, FaWhatsapp, FaCalendarCheck, FaFilter, FaChartLine } from 'react-icons/fa'
+import CalculadoraEmbed from '@/components/franquicias/CalculadoraEmbed'
 
 export default function InmobiliariasPage() {
   return (
@@ -143,6 +144,21 @@ export default function InmobiliariasPage() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Calculadora */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="font-monda text-4xl font-bold text-black mb-6">
+              ¿Cuánto costaría para tu red inmobiliaria?
+            </h2>
+            <p className="text-xl text-gray-600">
+              Inversión para aumentar conversión un 55%
+            </p>
+          </div>
+          <CalculadoraEmbed />
         </div>
       </section>
 

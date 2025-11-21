@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { FaArrowRight, FaCheck, FaTimes, FaRobot, FaWhatsapp, FaCalendarCheck, FaPhone, FaChartLine } from 'react-icons/fa'
+import CalculadoraEmbed from '@/components/franquicias/CalculadoraEmbed'
 
 export default function RestauracionPage() {
   return (
@@ -150,6 +151,21 @@ export default function RestauracionPage() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Calculadora */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="font-monda text-4xl font-bold text-black mb-6">
+              ¿Cuánto costaría para tu cadena de restaurantes?
+            </h2>
+            <p className="text-xl text-gray-600">
+              Calcula tu inversión para llenar tus locales
+            </p>
+          </div>
+          <CalculadoraEmbed />
         </div>
       </section>
 
