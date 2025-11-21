@@ -130,7 +130,7 @@ export default function FranquiciasHub() {
       </section>
 
       {/* Caso de Éxito: Hello Nails */}
-      <section className="py-20 bg-gradient-to-br from-pink-500 to-rose-500 text-white">
+      <section className="py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Imagen */}
