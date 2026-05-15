@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -60,7 +60,7 @@ const sectorConfig = {
   }
 }
 
-export default function CalculadoraPresupuesto() {
+function CalculadoraPresupuesto() {
   const searchParams = useSearchParams()
   const sectorParam = searchParams?.get('sector') as keyof typeof sectorConfig | null
   const sector = sectorParam && sectorConfig[sectorParam] ? sectorParam : 'estetica-belleza'
@@ -1342,6 +1342,14 @@ export default function CalculadoraPresupuesto() {
         </div>
       </section>
     </main>
+  )
+}
+
+export default function CalculadoraPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><p className="text-gray-500">Cargando calculadora...</p></div>}>
+      <CalculadoraPresupuesto />
+    </Suspense>
   )
 }
 
