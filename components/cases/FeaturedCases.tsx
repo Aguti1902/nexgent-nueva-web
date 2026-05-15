@@ -7,27 +7,6 @@ import { FaWhatsapp, FaPhoneAlt, FaClock, FaCalendarCheck, FaNetworkWired } from
 
 const cases = [
   {
-    company: 'Hello Nails',
-    industry: 'Salón de Belleza y Uñas',
-    franchises: 'Más de 200 centros',
-    logo: '/images/logos/HELLO NAILS.png',
-    image: '/images/FOTO HELLO NAILS.webp',
-    projectType: 'Transformación digital completa con IA para gestión automática de reservas, recordatorios y atención al cliente 24/7',
-    features: [
-      { icon: FaWhatsapp, title: 'Agente de IA por WhatsApp', description: 'Respuesta inmediata a consultas' },
-      { icon: FaPhoneAlt, title: 'Sistema de seguimiento', description: 'Automatización de leads' },
-      { icon: FaClock, title: 'Disponibilidad 24/7', description: 'Sin límite de horario' },
-      { icon: FaCalendarCheck, title: 'Gestión de reservas', description: 'Reservas y recordatorios' },
-      { icon: FaNetworkWired, title: 'Plataforma unificada', description: 'Para todos los centros' },
-    ],
-    results: [
-      { value: '+42%', label: 'Aumento en reservas' },
-      { value: '-68%', label: 'Reducción no-shows' },
-      { value: '€2.1K', label: 'Ingresos extra mensuales' },
-      { value: '95%', label: 'Ocupación promedio' },
-    ],
-  },
-  {
     company: 'Urban Fitness',
     industry: 'Cadena de Gimnasios',
     franchises: '8 centros deportivos',

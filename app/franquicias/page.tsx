@@ -129,72 +129,6 @@ export default function FranquiciasHub() {
         </div>
       </section>
 
-      {/* Caso de Éxito: Hello Nails */}
-      <section className="py-20 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Imagen */}
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <Image
-                  src="/images/FOTO HELLO NAILS.webp"
-                  alt="Hello Nails"
-                  width={600}
-                  height={400}
-                  className="w-full h-auto"
-                />
-                <div className="absolute top-4 left-4 bg-white/20 backdrop-blur px-4 py-2 rounded-full">
-                  <p className="font-bold text-sm">Cliente desde 2024</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Contenido */}
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div className="flex items-center gap-3 mb-6">
-                <Image
-                  src="/images/logos/HELLO NAILS.png"
-                  alt="Hello Nails Logo"
-                  width={60}
-                  height={60}
-                  className="bg-white rounded-xl p-2"
-                />
-                <div>
-                  <h3 className="font-bold text-2xl">Hello Nails</h3>
-                  <p className="text-white/80">Cadena de salones de manicura</p>
-                </div>
-              </div>
-
-              <blockquote className="text-2xl font-semibold mb-6 italic">
-                "Pasamos de perder el 40% de las llamadas a tener el 100% de atención automatizada. La ocupación de nuestros salones aumentó un 45% en 3 meses."
-              </blockquote>
-
-              <p className="text-white/90 mb-8">
-                Antes de NexGent, Hello Nails perdía decenas de reservas cada día porque el equipo estaba atendiendo clientes presenciales. Ahora, su agente de IA responde al instante por WhatsApp, agenda citas y confirma 24h antes. Resultado: más ingresos, menos trabajo manual.
-              </p>
-
-              <div className="grid grid-cols-3 gap-6 mb-8">
-                {[
-                  { value: '+45%', label: 'Ocupación' },
-                  { value: '100%', label: 'Respuestas' },
-                  { value: '-68%', label: 'No-shows' }
-                ].map((stat, i) => (
-                  <div key={i} className="bg-white/20 backdrop-blur rounded-xl p-4 text-center">
-                    <p className="text-3xl font-bold">{stat.value}</p>
-                    <p className="text-sm text-white/80">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-
-              <Link href="/casos-exito" className="inline-flex items-center gap-2 bg-white text-pink-600 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-all">
-                Ver más casos de éxito
-                <FaArrowRight />
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* PROBLEMA: Lo que te está costando NO tener esto */}
       <section className="py-20 bg-red-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
@@ -401,7 +335,7 @@ export default function FranquiciasHub() {
             {[
               {
                 q: '"¿Y si mis franquiciados no quieren cambiar?"',
-                a: 'NexGent no reemplaza a nadie, AYUDA a tu equipo. Después de 2 semanas, tus franquiciados no querrán volver atrás. Se acabó el teléfono sonando sin parar, se acabó perder tiempo en lo mismo de siempre. Hello Nails: 100% de adopción en 3 semanas.'
+                a: 'NexGent no reemplaza a nadie, AYUDA a tu equipo. Después de 2 semanas, tus franquiciados no querrán volver atrás. Se acabó el teléfono sonando sin parar, se acabó perder tiempo en lo mismo de siempre. Urban Fitness: 100% de adopción en 3 semanas.'
               },
               {
                 q: '"Ya tenemos un CRM, ¿tenemos que cambiarlo?"',

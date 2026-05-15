@@ -207,13 +207,13 @@ export default function SalonesBellezaPage() {
                 </div>
               </div>
               <div className="bg-gradient-to-br from-black to-gray-900 rounded-3xl p-10 text-white shadow-2xl">
-                <h3 className="font-monda text-3xl font-bold mb-8">Hello Nails Beauty Salon</h3>
+                <h3 className="font-monda text-3xl font-bold mb-8">Nova Dental Clínica</h3>
                 <div className="space-y-8">
                   {[
-                    {value: '+42%', label: 'Aumento en reservas'},
-                    {value: '-68%', label: 'Reducción no-shows'},
-                    {value: '€2.1K', label: 'Ingresos extra mensuales'},
-                    {value: '95%', label: 'Ocupación promedio'},
+                    {value: '-78%', label: 'Reducción no-shows'},
+                    {value: '+65%', label: 'Más citas mensuales'},
+                    {value: '€8.5K', label: 'Ingresos extra/mes'},
+                    {value: '98%', label: 'Satisfacción pacientes'},
                   ].map((stat, idx) => (
                     <div key={idx}>
                       <p className="text-5xl font-bold text-pink-400 mb-2">{stat.value}</p>
@@ -221,8 +221,8 @@ export default function SalonesBellezaPage() {
                     </div>
                   ))}
                   <div className="pt-6 border-t border-gray-700">
-                    <p className="text-gray-300 italic mb-4 leading-relaxed">"Antes perdíamos el 30% de citas por no-shows y teníamos huecos sin llenar. Ahora el sistema gestiona todo automáticamente: reservas, confirmaciones, recordatorios. Pasamos de 68% a 95% de ocupación. €2,100 más por mes solo optimizando la agenda. Increíble."</p>
-                    <p className="text-sm text-gray-400 font-semibold">— Teresa Messía, Propietaria Hello Nails</p>
+                    <p className="text-gray-300 italic mb-4 leading-relaxed">"Antes perdíamos pacientes por falta de seguimiento. Ahora el sistema gestiona todo automáticamente: citas, confirmaciones, recordatorios. Los ingresos se dispararon y el equipo puede centrarse en lo importante."</p>
+                    <p className="text-sm text-gray-400 font-semibold">— Equipo Nova Dental</p>
                   </div>
                 </div>
               </div>

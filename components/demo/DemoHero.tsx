@@ -23,7 +23,6 @@ const stats = [
 
 const trustedLogos = [
   { name: 'Nova Dental', logo: '/images/logos/NOVA DENTAL.png' },
-  { name: 'Hello Nails', logo: '/images/logos/HELLO NAILS.png' },
   { name: 'Teresa Messia', logo: '/images/logos/TERESA.png' },
   { name: 'IQ Mind', logo: '/images/logos/IQMIND.svg' },
   { name: 'Spa Deluxe', logo: '/images/logos/SPADELUXE.png' },
