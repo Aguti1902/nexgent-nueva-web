@@ -1,61 +1,53 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Button from '@/components/ui/Button'
-import { FaCheckCircle } from 'react-icons/fa'
+import Link from 'next/link'
 
 export default function FinalCTA() {
   return (
-    <section className="py-32 bg-black text-white relative overflow-hidden w-full max-w-full border-b border-gray-800">
-      {/* Grid de fondo */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:100px_100px]" />
-      </div>
+    <section className="py-32 bg-[#0a0a0a] w-full overflow-hidden relative">
+      {/* Dot pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.08]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+        }}
+      />
 
-      <div className="container-custom relative z-10">
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center max-w-4xl mx-auto"
+          transition={{ duration: 0.7 }}
         >
-          <h2 className="font-monda text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-[1.1]">
-            ¿Listo para automatizar
+          <h2
+            className="font-monda font-bold text-white leading-tight mb-6"
+            style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}
+          >
+            ¿Tu franquicia
             <br />
-            tu negocio?
+            es la próxima?
           </h2>
-          
-          <p className="text-2xl text-gray-400 mb-12 leading-relaxed">
-            Agenda una demo gratuita y descubre cómo la IA puede
-            <br className="hidden md:block" />
-            transformar tu empresa.
+
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl mx-auto">
+            Agenda una llamada de 30 minutos y te mostramos exactamente qué construiríamos para ti.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button 
-              variant="white" 
-              size="lg" 
-              href="/demo"
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/contacto"
+              className="bg-white text-black font-bold px-10 py-5 rounded-full text-lg hover:bg-gray-100 transition-all duration-200 shadow-2xl whitespace-nowrap"
             >
-              Solicita una demo gratuita
-            </Button>
-          </div>
-
-          {/* Beneficios en línea */}
-          <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-400">
-            <div className="flex items-center gap-2">
-              <FaCheckCircle className="text-white" />
-              <span>Sin permanencia</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaCheckCircle className="text-white" />
-              <span>Listo en 48h</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FaCheckCircle className="text-white" />
-              <span>Soporte completo</span>
-            </div>
+              Agenda una llamada gratuita
+            </Link>
+            <Link
+              href="/casos-exito/hello-nails"
+              className="flex items-center justify-center gap-2 border border-white/20 text-white font-semibold px-8 py-5 rounded-full hover:bg-white/10 hover:border-white/40 transition-all duration-200 whitespace-nowrap"
+            >
+              Ver caso Hello Nails →
+            </Link>
           </div>
         </motion.div>
       </div>

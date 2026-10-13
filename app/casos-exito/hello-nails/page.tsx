@@ -2,185 +2,279 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { FaCheckCircle, FaArrowRight, FaCalendarAlt } from 'react-icons/fa'
 import Link from 'next/link'
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import { FaCheckCircle, FaArrowRight } from 'react-icons/fa'
+
+const metrics = [
+  { value: '+42%', label: 'Reservas', detail: 'incremento mensual' },
+  { value: '-68%', label: 'No-shows', detail: 'reducción de ausencias' },
+  { value: '€2.1K', label: 'Extra/mes', detail: 'ingresos adicionales por centro' },
+  { value: '95%', label: 'Ocupación', detail: 'promedio en todos los centros' },
+]
+
+const beforeAfter = [
+  { metric: 'Ocupación promedio', before: '68%', after: '95%' },
+  { metric: 'No-shows', before: '30%', after: '9.6%' },
+  { metric: 'Reservas/mes', before: '2,400', after: '3,408' },
+  { metric: 'Tiempo gestión/día', before: '4 horas', after: '25 min' },
+]
+
+const solution = [
+  'CRM a medida para +200 centros de franquicia',
+  'Agente IA en WhatsApp para agendar, confirmar y gestionar citas',
+  'Sistema de llamadas con IA para recordatorios y recuperación de citas',
+  'Panel centralizado con analytics para franquiciados',
+  'Integración completa con los sistemas existentes de Hello Nails',
+]
+
+const timeline = [
+  { phase: 'Semanas 1–2', title: 'Análisis y diseño', description: 'Mapeo completo de la operativa de Hello Nails: flujos de trabajo, sistemas existentes y cuellos de botella en los 200 centros.' },
+  { phase: 'Semanas 3–6', title: 'Desarrollo del CRM', description: 'Construcción del panel multi-franquicia, gestión de clientes, historial de citas y sistema de reportes desde cero.' },
+  { phase: 'Semanas 7–8', title: 'Integración IA', description: 'Configuración del agente de WhatsApp y el sistema de llamadas. Entrenamiento con datos reales de la franquicia.' },
+  { phase: 'Mes 3+', title: 'Lanzamiento y optimización', description: 'Despliegue en todos los centros, formación del equipo y refinamiento continuo de la IA con datos reales.' },
+]
 
 export default function HelloNailsCaseStudy() {
-  const timeline = [
-    { phase: 'Semana 1-2', title: 'Análisis y Setup', description: 'Análisis profundo del negocio, configuración inicial del sistema y personalización del agente de IA.' },
-    { phase: 'Semana 3-4', title: 'Implementación', description: 'Despliegue del sistema en los 200 centros, integración con sistemas existentes y capacitación del equipo.' },
-    { phase: 'Mes 2', title: 'Optimización', description: 'Ajustes basados en datos reales, optimización de respuestas y automatización de procesos adicionales.' },
-    { phase: 'Mes 3+', title: 'Crecimiento', description: 'Expansión de funcionalidades, escalado a nuevos centros y mejora continua basada en feedback.' },
-  ]
-
-  const beforeAfter = [
-    { metric: 'Ocupación', before: '68%', after: '95%', improvement: '+27 puntos' },
-    { metric: 'No-shows', before: '30%', after: '9.6%', improvement: '-68%' },
-    { metric: 'Reservas mensuales', before: '2,400', after: '3,408', improvement: '+42%' },
-    { metric: 'Tiempo de gestión/día', before: '4h', after: '25min', improvement: '-89%' },
-  ]
-
-  // Datos para gráficos
-  const evolutionData = [
-    { mes: 'Mes 1', ocupacion: 68, reservas: 2400, noShows: 30 },
-    { mes: 'Mes 2', ocupacion: 75, reservas: 2700, noShows: 22 },
-    { mes: 'Mes 3', ocupacion: 85, reservas: 3000, noShows: 15 },
-    { mes: 'Mes 4', ocupacion: 92, reservas: 3300, noShows: 12 },
-    { mes: 'Mes 5', ocupacion: 95, reservas: 3408, noShows: 9.6 },
-  ]
-
-  const ocupacionData = [
-    { periodo: 'Antes', valor: 68 },
-    { periodo: 'Después', valor: 95 },
-  ]
-
-  const reservasData = [
-    { periodo: 'Antes', valor: 2400 },
-    { periodo: 'Después', valor: 3408 },
-  ]
-
-  const pieData = [
-    { name: 'Citas completadas', value: 90.4 },
-    { name: 'No-shows', value: 9.6 },
-  ]
-
-  const COLORS = ['#10b981', '#ef4444']
-
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 bg-gradient-to-br from-pink-50 via-white to-purple-50">
-        <div className="container-custom px-6">
-          <div className="max-w-7xl mx-auto">
-            <Link href="/casos-exito" className="inline-flex items-center text-gray-600 hover:text-black mb-8 transition-colors">
-              <span className="mr-2">←</span> Volver a casos de éxito
-            </Link>
-            
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="relative w-48 h-24 mb-6">
-                  <Image
-                    src="/images/logos/HELLO NAILS.png"
-                    alt="Hello Nails Logo"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-                <h1 className="font-monda text-5xl md:text-6xl font-bold text-black mb-6">
-                  Caso de éxito: Hello Nails
-                </h1>
-                <p className="text-xl text-gray-600 mb-4">
-                  Salón de Belleza y Uñas • Más de 200 centros
-                </p>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  Descubre cómo Hello Nails transformó su gestión de reservas en 200+ centros, 
-                  aumentando un 42% las reservas y reduciendo los no-shows en un 68% con IA.
-                </p>
-              </motion.div>
+      <section className="relative pt-32 pb-0 bg-[#0a0a0a] overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-[0.1]"
+          style={{
+            backgroundImage: 'radial-gradient(circle, #ffffff 1px, transparent 1px)',
+            backgroundSize: '40px 40px',
+          }}
+        />
 
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="relative h-96 rounded-3xl overflow-hidden shadow-2xl"
-              >
+        <div className="relative z-10 max-w-7xl mx-auto px-6 pb-20">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-white/50 hover:text-white/80 transition-colors mb-12 text-sm"
+          >
+            ← Volver al inicio
+          </Link>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              <span className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-xs font-semibold text-white/70 uppercase tracking-widest mb-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#82cbd4]" />
+                Caso de éxito real
+              </span>
+
+              <div className="relative w-44 h-14 mb-6 brightness-0 invert opacity-90">
                 <Image
-                  src="/images/FOTO HELLO NAILS.webp"
-                  alt="Hello Nails - Salón de belleza"
+                  src="/images/logos/HELLO NAILS.png"
+                  alt="Hello Nails"
                   fill
-                  className="object-cover"
+                  className="object-contain object-left"
                 />
-              </motion.div>
+              </div>
+
+              <h1
+                className="font-monda font-bold text-white leading-tight mb-6"
+                style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+              >
+                Cómo Hello Nails automatizó sus +200 centros con IA
+              </h1>
+
+              <p className="text-white/60 text-lg leading-relaxed">
+                Salón de uñas y belleza · Más de 200 centros en España
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="relative h-80 lg:h-96 rounded-3xl overflow-hidden"
+            >
+              <Image
+                src="/images/FOTO HELLO NAILS.webp"
+                alt="Hello Nails - Salón de belleza"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Métricas banner */}
+        <div className="border-t border-white/10 bg-white/5">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+              {metrics.map((metric, index) => (
+                <motion.div
+                  key={metric.value}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                  className="text-center"
+                >
+                  <p className="font-monda font-bold text-white text-4xl lg:text-5xl leading-none mb-1">{metric.value}</p>
+                  <p className="text-white font-semibold text-sm">{metric.label}</p>
+                  <p className="text-white/40 text-xs mt-0.5">{metric.detail}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Resumen del desafío */}
-      <section className="py-16 bg-white">
-        <div className="container-custom px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12">
-              <div>
-                <h2 className="font-monda text-3xl font-bold text-black mb-6">El Desafío</h2>
-                <p className="text-gray-700 leading-relaxed mb-4">
-                  Con más de 200 centros operando simultáneamente, Hello Nails enfrentaba un problema crítico: 
-                  <strong> el 30% de las citas no se completaban</strong> debido a ausencias de clientes.
-                </p>
-                <p className="text-gray-700 leading-relaxed">
-                  La gestión manual de reservas, confirmaciones y recordatorios consumía más de 4 horas diarias 
-                  por centro, mientras que la ocupación promedio se mantenía en un bajo 68%, dejando huecos 
-                  significativos en la agenda.
-                </p>
-              </div>
-              <div>
-                <h2 className="font-monda text-3xl font-bold text-black mb-6">La Solución</h2>
-                <p className="text-gray-700 leading-relaxed mb-4">
-                  Implementamos un <strong>sistema completo de IA</strong> que automatiza:
-                </p>
-                <ul className="space-y-3">
-                  {[
-                    'Gestión automática de reservas 24/7',
-                    'Recordatorios personalizados por WhatsApp y SMS',
-                    'Confirmaciones automáticas de citas',
-                    'Reprogramación inteligente de huecos',
-                    'Atención al cliente con IA'
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <FaCheckCircle className="text-green-500 mt-1 flex-shrink-0" />
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+      {/* El problema */}
+      <section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-16">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">El problema</p>
+              <h2 className="font-monda font-bold text-3xl text-black mb-6">Antes de NexGent</h2>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Con más de 200 centros operando simultáneamente, Hello Nails enfrentaba un problema crítico: el <strong>30% de las citas no se completaban</strong> por ausencias de clientes.
+              </p>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                La gestión manual de reservas y recordatorios consumía más de 4 horas diarias por centro. La ocupación promedio se mantenía en un bajo 68%, dejando horas sin facturar cada día.
+              </p>
+              <p className="text-gray-700 leading-relaxed">
+                Además, <strong>no existía un sistema centralizado</strong>: cada centro gestionaba sus propias reservas de forma inconsistente, sin visibilidad para los franquiciados.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">La solución</p>
+              <h2 className="font-monda font-bold text-3xl text-black mb-6">Lo que construimos</h2>
+              <ul className="space-y-3">
+                {solution.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <FaCheckCircle className="text-black mt-1 flex-shrink-0 text-sm" />
+                    <span className="text-gray-700">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Antes vs Después */}
-      <section className="py-20 bg-gradient-to-br from-gray-900 to-black text-white">
-        <div className="container-custom px-6">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="font-monda text-4xl md:text-5xl font-bold mb-4">Antes vs Después</h2>
-              <p className="text-gray-400 text-lg">Impacto medible en métricas clave</p>
-            </motion.div>
+      <section className="py-24 bg-[#0a0a0a]">
+        <div className="max-w-6xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-14"
+          >
+            <h2 className="font-monda font-bold text-white text-4xl md:text-5xl">Antes y después</h2>
+            <p className="text-white/50 mt-3">Impacto real en métricas clave de negocio</p>
+          </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              {beforeAfter.map((item, index) => (
+          <div className="grid md:grid-cols-2 gap-5">
+            {beforeAfter.map((item, index) => (
+              <motion.div
+                key={item.metric}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white/5 border border-white/10 rounded-2xl p-6"
+              >
+                <p className="text-white/50 text-sm mb-4">{item.metric}</p>
+                <div className="flex items-center gap-4">
+                  <div>
+                    <p className="text-xs text-white/30 mb-1">Antes</p>
+                    <p className="font-monda font-bold text-red-400 text-3xl">{item.before}</p>
+                  </div>
+                  <FaArrowRight className="text-white/20 text-xl flex-shrink-0" />
+                  <div>
+                    <p className="text-xs text-white/30 mb-1">Después</p>
+                    <p className="font-monda font-bold text-[#82cbd4] text-3xl">{item.after}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonial */}
+      <section className="py-24 bg-white">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-8">
+              <div className="relative w-10 h-10">
+                <Image src="/images/logos/HELLO NAILS.png" alt="Hello Nails" fill className="object-contain" />
+              </div>
+            </div>
+
+            <blockquote
+              className="font-monda font-bold text-black leading-tight mb-8"
+              style={{ fontSize: 'clamp(1.3rem, 2.5vw, 2rem)' }}
+            >
+              "Pasamos de perder reservas cada día a tener el 100% automatizado. NexGent construyó nuestro CRM e integró la IA que ahora gestiona WhatsApp y llamadas."
+            </blockquote>
+
+            <p className="text-gray-500">Hello Nails · Cadena de salones con +200 centros</p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Cronología */}
+      <section className="py-24 bg-[#f9fafb]">
+        <div className="max-w-5xl mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mb-14 text-center"
+          >
+            <h2 className="font-monda font-bold text-black text-4xl">Cómo lo construimos</h2>
+            <p className="text-gray-500 mt-3">Del primer análisis al sistema en producción</p>
+          </motion.div>
+
+          <div className="relative">
+            <div className="absolute left-7 top-0 bottom-0 w-px bg-gray-200" />
+
+            <div className="space-y-8">
+              {timeline.map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-white/5 rounded-2xl p-8 border border-white/10"
+                  className="relative pl-20"
                 >
-                  <h3 className="font-bold text-xl mb-6">{item.metric}</h3>
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <p className="text-sm text-gray-400 mb-1">Antes</p>
-                      <p className="text-3xl font-bold text-red-400">{item.before}</p>
-                    </div>
-                    <FaArrowRight className="text-2xl text-gray-400" />
-                    <div>
-                      <p className="text-sm text-gray-400 mb-1">Después</p>
-                      <p className="text-3xl font-bold text-green-400">{item.after}</p>
-                    </div>
+                  <div className="absolute left-0 w-14 h-14 bg-black text-white rounded-full flex items-center justify-center text-xs font-bold font-monda text-center leading-tight">
+                    {index + 1}
                   </div>
-                  <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-3 text-center">
-                    <p className="text-green-400 font-bold">{item.improvement}</p>
+                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                    <span className="inline-block bg-black text-white px-3 py-1 rounded-full text-xs font-bold mb-3">
+                      {item.phase}
+                    </span>
+                    <h3 className="font-monda font-bold text-black text-xl mb-2">{item.title}</h3>
+                    <p className="text-gray-600 leading-relaxed text-sm">{item.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -189,203 +283,30 @@ export default function HelloNailsCaseStudy() {
         </div>
       </section>
 
-      {/* Gráficos Interactivos */}
-      <section className="py-20 bg-white">
-        <div className="container-custom px-6">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="font-monda text-4xl md:text-5xl font-bold text-black mb-4">
-                Evolución de Métricas
-              </h2>
-              <p className="text-gray-600 text-lg">Datos en tiempo real de la transformación</p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
-              {/* Gráfico de Ocupación */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-pink-50 to-white rounded-2xl p-8 shadow-xl border-2 border-pink-200"
-              >
-                <h3 className="font-bold text-xl text-black mb-6">Ocupación (%)</h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={ocupacionData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                    <XAxis dataKey="periodo" stroke="#6b7280" />
-                    <YAxis domain={[0, 100]} stroke="#6b7280" />
-                    <Tooltip 
-                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
-                      itemStyle={{ color: '#fff' }}
-                      labelStyle={{ color: '#fff' }}
-                    />
-                    <Bar dataKey="valor" fill="#ec4899" name="Ocupación (%)" radius={[8, 8, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-                <div className="mt-6 bg-pink-50 border border-pink-300 rounded-lg p-4">
-                  <p className="text-pink-800 font-bold text-center">
-                    +42% aumento en ocupación
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Gráfico de Reservas */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-br from-purple-50 to-white rounded-2xl p-8 shadow-xl border-2 border-purple-200"
-              >
-                <h3 className="font-bold text-xl text-black mb-6">Reservas Mensuales</h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={reservasData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                    <XAxis dataKey="periodo" stroke="#6b7280" />
-                    <YAxis stroke="#6b7280" />
-                    <Tooltip 
-                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
-                      itemStyle={{ color: '#fff' }}
-                      labelStyle={{ color: '#fff' }}
-                    />
-                    <Bar dataKey="valor" fill="#a855f7" name="Reservas" radius={[8, 8, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-                <div className="mt-6 bg-purple-50 border border-purple-300 rounded-lg p-4">
-                  <p className="text-purple-800 font-bold text-center">
-                    +1,008 reservas más al mes
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Gráfico Circular */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-8 shadow-xl border-2 border-pink-200"
-            >
-              <h3 className="font-bold text-2xl text-black mb-8 text-center">Tasa de Asistencia Actual</h3>
-              <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-                <ResponsiveContainer width="100%" height={300} className="max-w-md">
-                  <PieChart>
-                    <Pie
-                      data={pieData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, value }) => `${name}: ${value}%`}
-                      outerRadius={100}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip 
-                      contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }}
-                      itemStyle={{ color: '#fff' }}
-                      labelStyle={{ color: '#fff' }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-green-500"></div>
-                    <div>
-                      <p className="font-bold text-lg text-black">90.4% Citas completadas</p>
-                      <p className="text-gray-600">Clientes que asisten a su cita</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-red-500"></div>
-                    <div>
-                      <p className="font-bold text-lg text-black">9.6% No-shows</p>
-                      <p className="text-gray-600">Reducción del 68% vs antes</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Cronología */}
-      <section className="py-20 bg-gray-50">
-        <div className="container-custom px-6">
-          <div className="max-w-5xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="font-monda text-4xl md:text-5xl font-bold text-black mb-4">
-                Cronología del Proyecto
-              </h2>
-              <p className="text-gray-600 text-lg">De la implementación al éxito</p>
-            </motion.div>
-
-            <div className="relative">
-              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-300" />
-              
-              <div className="space-y-12">
-                {timeline.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="relative pl-20"
-                  >
-                    <div className="absolute left-0 w-16 h-16 bg-black text-white rounded-full flex items-center justify-center font-bold">
-                      <FaCalendarAlt className="text-2xl" />
-                    </div>
-                    <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-200">
-                      <div className="flex items-center gap-4 mb-3">
-                        <span className="bg-black text-white px-4 py-1 rounded-full text-sm font-bold">
-                          {item.phase}
-                        </span>
-                      </div>
-                      <h3 className="font-monda text-2xl font-bold text-black mb-3">{item.title}</h3>
-                      <p className="text-gray-600 leading-relaxed">{item.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Final */}
-      <section className="py-20 bg-black text-white">
-        <div className="container-custom px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="font-monda text-4xl md:text-5xl font-bold mb-6">
-              ¿Listo para transformar tu negocio?
+      <section className="py-24 bg-[#0a0a0a]">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <h2 className="font-monda font-bold text-white leading-tight mb-6" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}>
+              ¿Tu franquicia es la próxima?
             </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Agenda una demo y descubre cómo podemos ayudarte a conseguir resultados similares
+            <p className="text-white/60 text-lg mb-10">
+              Agenda una llamada de 30 minutos y te mostramos exactamente qué construiríamos para ti.
             </p>
             <Link
               href="/contacto"
-              className="inline-block bg-white text-black font-bold px-12 py-5 rounded-full text-lg hover:bg-gray-100 transition-all duration-300 shadow-xl whitespace-nowrap"
+              className="inline-block bg-white text-black font-bold px-10 py-5 rounded-full text-lg hover:bg-gray-100 transition-all duration-200 shadow-2xl whitespace-nowrap"
             >
-              Solicita tu demo gratuita
+              Agenda una llamada gratuita
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
     </>
   )
 }
-

@@ -1,10 +1,10 @@
 import HeroSection from '@/components/home/HeroSection'
 import LogoMarquee from '@/components/home/LogoMarquee'
-import StatsSection from '@/components/home/StatsSection'
 import WhatWeDo from '@/components/home/WhatWeDo'
-import Benefits from '@/components/home/Benefits'
+import HelloNailsCase from '@/components/home/HelloNailsCase'
+import HowItWorks from '@/components/home/HowItWorks'
+import Features from '@/components/home/Features'
 import Testimonials from '@/components/home/Testimonials'
-import CaseStudies from '@/components/home/CaseStudies'
 import FinalCTA from '@/components/home/FinalCTA'
 
 export default function Home() {
@@ -13,10 +13,10 @@ export default function Home() {
       <HeroSection />
       <LogoMarquee />
       <WhatWeDo />
-      <StatsSection />
-      <Benefits />
+      <HelloNailsCase />
+      <HowItWorks />
+      <Features />
       <Testimonials />
-      <CaseStudies />
       <FinalCTA />
     </>
   )
