@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async rewrites() {
+    return [{ source: '/consultores', destination: '/consultores/index.html' }]
+  },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
