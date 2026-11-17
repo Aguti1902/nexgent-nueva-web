@@ -1,0 +1,8 @@
+[
+ {"slug":"casos-de-exito","name":"Casos de éxito","cover":"pi4","description":"Resultados reales de Nexi en redes de franquicias: citas confirmadas, llamadas atendidas y horas de recepción ahorradas, con los datos del panel."},
+ {"slug":"franquicias","name":"Franquicias","cover":"pi3","description":"Cómo decide una red de franquicias, cómo se hace un piloto en sedes propias y cómo gana la central, el franquiciado y el cliente."},
+ {"slug":"whatsapp-e-ia","name":"WhatsApp e IA","cover":"pi2","description":"API oficial de WhatsApp Business, recordatorios, IA conversacional y lo que de verdad funciona para agendar citas por chat."},
+ {"slug":"voz-ia","name":"Voz e IA telefónica","cover":"pi5","description":"Agentes de voz que cogen el teléfono, reservan y pasan a recepción lo que hace falta. Qué esperar y cómo medirlo."},
+ {"slug":"atencion-al-cliente","name":"Atención al cliente","cover":"pi1","description":"Contactos sin respuesta, horarios, ausencias y tiempos de espera: la atención en una red multisede, con datos."},
+ {"slug":"guias","name":"Guías y datos","cover":"pi6","description":"Guías prácticas, normativa (RGPD, AI Act, VeriFactu) y datos del sector de la franquicia en España."}
+]

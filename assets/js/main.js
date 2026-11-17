@@ -173,6 +173,20 @@
   }
 
   /* ---------- form ---------- */
+  const SB_URL = 'https://lualgzhmwclrnuqgmxlb.supabase.co/rest/v1/web_leads';
+  const SB_KEY = 'sb_publishable_BBw3Zv_CRtM1vfeufZgPrQ_Pefo9tho';
+  function saveLead(d) {
+    try {
+      const q = new URLSearchParams(location.search), utm = {};
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid'].forEach(k => { if (q.get(k)) utm[k] = q.get(k).slice(0, 120); });
+      const v = k => (d.get(k) || '').toString().trim();
+      const row = { nombre: v('nombre').slice(0, 200), empresa: v('empresa').slice(0, 200) || null, cargo: v('cargo').slice(0, 200) || null,
+        sedes: v('sedes').slice(0, 20) || null, sector: v('sector').slice(0, 200) || null, email: v('email').slice(0, 254),
+        telefono: v('telefono').slice(0, 40) || null, mensaje: v('mensaje').slice(0, 4000) || null, origen: 'web',
+        pagina: location.pathname.slice(0, 500), referrer: document.referrer.slice(0, 500) || null, utm: Object.keys(utm).length ? utm : null };
+      fetch(SB_URL, { method: 'POST', keepalive: true, headers: { apikey: SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(row) }).catch(() => {});
+    } catch (e) {}
+  }
   const form = $('#leadForm');
   form && form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -187,6 +201,8 @@
       const lead = { 'Nombre': d.get('nombre'), 'Empresa / red': d.get('empresa'), 'Cargo': d.get('cargo') || '-', 'Nº de sedes': d.get('sedes') || '-',
         'Sector': d.get('sector') || '-', 'Email': d.get('email'), 'Teléfono': d.get('telefono') || '-',
         _subject: `Nueva solicitud de diagnóstico · ${d.get('empresa')}`, _replyto: d.get('email'), _template: 'table', _captcha: 'false' };
+      // Copia en el panel de NexGent (Supabase, solo inserción). No bloquea el envío por correo.
+      saveLead(d);
       // Envío a info@nexgent.io con FormSubmit (https://formsubmit.co)
       const r = await fetch('https://formsubmit.co/ajax/info@nexgent.io', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(lead) });
       const data = await r.json().catch(() => ({}));
