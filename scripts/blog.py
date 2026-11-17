@@ -65,6 +65,11 @@ def load():
         datetime.date.fromisoformat(meta["date"])
         meta.setdefault("author", "Equipo NexGent")
         meta.setdefault("cover", CAT[meta["category"]].get("cover", "pi1"))
+        img_dir = ROOT / "assets" / "img" / "blog" / f.stem
+        if not meta.get("image") and (img_dir / "cover.jpg").exists():
+            meta["image"] = f"/assets/img/blog/{f.stem}/cover.jpg"
+        if not meta.get("og") and (img_dir / "og.jpg").exists():
+            meta["og"] = f"/assets/img/blog/{f.stem}/og.jpg"
         meta["minutes"] = max(2, round(words(meta["body"]) / 220))
         if not meta.get("draft"):
             posts.append(meta)
@@ -118,7 +123,15 @@ FOOT = """<footer class="footer">
 <script src="/assets/js/main.js"></script>"""
 
 
-def page(title, description, canonical, body, jsonld=None, og_type="website"):
+def cover_html(p, eager=False):
+    if p.get("image"):
+        load = 'fetchpriority="high"' if eager else 'loading="lazy"'
+        return (f'<div class="post__img has-img"><img src="{esc(p["image"])}" alt="{esc(p.get("imageAlt") or p["title"])}" '
+                f'width="1600" height="900" {load} decoding="async"></div>')
+    return f'<div class="post__img {esc(p["cover"])}"></div>'
+
+
+def page(title, description, canonical, body, jsonld=None, og_type="website", image=None):
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>\n' if jsonld else ""
     catlinks = "".join(f'<a href="/blog/categoria/{c["slug"]}">{esc(c["name"])}</a>' for c in CATS)
     return f"""<!DOCTYPE html>
@@ -134,6 +147,11 @@ def page(title, description, canonical, body, jsonld=None, og_type="website"):
 <meta property="og:type" content="{og_type}">
 <meta property="og:url" content="{SITE}{canonical}">
 <meta property="og:locale" content="es_ES">
+<meta property="og:image" content="{SITE}{image or '/assets/img/og-nexgent.jpg'}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{SITE}{image or '/assets/img/og-nexgent.jpg'}">
 <meta name="theme-color" content="#000000">
 <link rel="alternate" type="application/rss+xml" title="Blog de NexGent" href="/blog/feed.xml">
 <link rel="icon" type="image/png" href="/assets/img/favicon.png">
@@ -160,7 +178,7 @@ def page(title, description, canonical, body, jsonld=None, og_type="website"):
 def card(p):
     c = CAT[p["category"]]
     return (f'<a class="post bcard reveal" href="/blog/{p["slug"]}" data-cat="{p["category"]}">'
-            f'<div class="post__img {esc(p["cover"])}"></div>'
+            + cover_html(p) +
             f'<span class="chip chip--dark">{esc(c["name"])}</span>'
             f'<h3>{esc(p["title"])}</h3>'
             f'<p class="bcard__desc">{esc(p["description"])}</p>'
@@ -198,13 +216,15 @@ def build():
               "author": {"@type": "Organization" if p["author"].startswith("Equipo") else "Person", "name": p["author"]},
               "publisher": {"@type": "Organization", "name": "NexGent", "logo": {"@type": "ImageObject", "url": f"{SITE}/assets/img/logo-nexgent.png"}},
               "mainEntityOfPage": f"{SITE}/blog/{p['slug']}", "articleSection": c["name"], "keywords": ", ".join(p.get("keywords", []))}
+        if p.get("image"):
+            ld["image"] = [f"{SITE}{p['image']}"] + ([f"{SITE}{p['og']}"] if p.get("og") else [])
         crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Blog", "item": f"{SITE}/blog"},
             {"@type": "ListItem", "position": 2, "name": c["name"], "item": f"{SITE}/blog/categoria/{c['slug']}"},
             {"@type": "ListItem", "position": 3, "name": p["title"]}]}
         body = f"""<nav class="crumbs" aria-label="Migas de pan"><a href="/blog">Blog</a><span aria-hidden="true">/</span><a href="/blog/categoria/{c['slug']}">{esc(c['name'])}</a></nav>
 <article class="article apost">
-<div class="post__img {esc(p['cover'])}"></div>
+{cover_html(p, True)}
 <a class="chip chip--dark" href="/blog/categoria/{c['slug']}">{esc(c['name'])}</a>
 <h1 class="apost__title">{esc(p['title'])}</h1>
 <p class="apost__meta"><time datetime="{p['date']}">{fecha(p['date'])}</time> · {p['minutes']} min de lectura · {esc(p['author'])}</p>
@@ -219,7 +239,7 @@ def build():
 </aside>
 </article>
 {"<section class='brelated'><h2 class='h2 h2--dark'>Sigue leyendo</h2><div class='blogp__grid'>" + "".join(card(q) for q in related) + "</div></section>" if related else ""}"""
-        (OUT / f"{p['slug']}.html").write_text(page(f"{p['title']} · NexGent", p["description"], f"/blog/{p['slug']}", body, [ld, crumbs], "article"), encoding="utf-8")
+        (OUT / f"{p['slug']}.html").write_text(page(f"{p['title']} · NexGent", p["description"], f"/blog/{p['slug']}", body, [ld, crumbs], "article", p.get("og")), encoding="utf-8")
 
     # Portada y categorías
     def listing(cat):
@@ -239,7 +259,7 @@ def build():
     # Home: últimos 3
     idx = ROOT / "index.html"
     s = idx.read_text(encoding="utf-8")
-    latest = "".join(f'<a class="post spot reveal" href="/blog/{p["slug"]}"><div class="post__img {esc(p["cover"])}"></div><span class="chip chip--dark">{esc(CAT[p["category"]]["name"])}</span><h3>{esc(p["title"])}</h3></a>' for p in posts[:3])
+    latest = "".join(f'<a class="post spot reveal" href="/blog/{p["slug"]}">{cover_html(p)}<span class="chip chip--dark">{esc(CAT[p["category"]]["name"])}</span><h3>{esc(p["title"])}</h3></a>' for p in posts[:3])
     if "<!-- blog:latest -->" in s:
         s = re.sub(r"<!-- blog:latest -->.*?<!-- /blog:latest -->", lambda m: f"<!-- blog:latest -->{latest}<!-- /blog:latest -->", s, flags=re.S)
         idx.write_text(s, encoding="utf-8")

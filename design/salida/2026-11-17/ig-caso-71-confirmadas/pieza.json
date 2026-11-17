@@ -1,0 +1,43 @@
+{
+ "tipo": "carrusel",
+ "fondo": "/tmp/dt/ai/0.png",
+ "etiqueta": "Casos de éxito",
+ "titulo": "71 % de las citas, confirmadas solas por WhatsApp",
+ "subtitulo": "Así lo hizo una red líder de centros de uñas con más de 230 centros",
+ "diapositivas": [
+  {
+   "tipo": "portada"
+  },
+  {
+   "tipo": "texto",
+   "kicker": "El problema",
+   "titulo": "Recepción no da abasto para confirmar cada cita",
+   "texto": "Llamar una a una a todas las clientas del día siguiente consume horas en cada centro. Y cada hueco que se queda vacío es dinero perdido."
+  },
+  {
+   "tipo": "dato",
+   "numero": "1.479",
+   "titulo": "citas avisadas por WhatsApp en un mes",
+   "nota": "Periodo: 18 de octubre a 16 de noviembre"
+  },
+  {
+   "tipo": "dato",
+   "numero": "71 %",
+   "titulo": "confirmadas por la propia clienta, sin llamar a nadie",
+   "nota": "1.049 citas confirmadas de 1.479 avisadas"
+  },
+  {
+   "tipo": "lista",
+   "titulo": "Qué hizo la IA",
+   "items": [
+    "Avisó a cada clienta antes de su cita",
+    "Respondió 1.290 mensajes de forma automática",
+    "Liberó 123 huecos con antelación por cancelaciones",
+    "Dejó a recepción solo los casos que lo necesitaban"
+   ]
+  },
+  {
+   "tipo": "cta"
+  }
+ ]
+}
