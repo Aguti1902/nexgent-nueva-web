@@ -4,12 +4,12 @@
   "redirects": [
     {
       "source": "/reunion-consultores",
-      "destination": "https://calendly.com/agutierrezgomez00/nexgent-programa-de-consultores-20-min",
+      "destination": "https://calendly.com/nexgent-demo/30min",
       "permanent": false
     },
     {
       "source": "/reunion",
-      "destination": "https://calendly.com/agutierrezgomez00/nexgent-diagnostico-para-redes-de-franquicia-30-min",
+      "destination": "https://calendly.com/nexgent-demo/30min",
       "permanent": false
     },
     {
