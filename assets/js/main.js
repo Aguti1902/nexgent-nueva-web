@@ -184,8 +184,9 @@
         sedes: v('sedes').slice(0, 20) || null, sector: v('sector').slice(0, 200) || null, email: v('email').slice(0, 254),
         telefono: v('telefono').slice(0, 40) || null, mensaje: v('mensaje').slice(0, 4000) || null, origen: 'web',
         pagina: location.pathname.slice(0, 500), referrer: document.referrer.slice(0, 500) || null, utm: Object.keys(utm).length ? utm : null };
-      fetch(SB_URL, { method: 'POST', keepalive: true, headers: { apikey: SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(row) }).catch(() => {});
-    } catch (e) {}
+      return fetch(SB_URL, { method: 'POST', keepalive: true, headers: { apikey: SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(row) })
+        .then(r => r.ok).catch(() => false);
+    } catch (e) { return Promise.resolve(false); }
   }
   const form = $('#leadForm');
   form && form.addEventListener('submit', async e => {
@@ -202,11 +203,14 @@
         'Sector': d.get('sector') || '-', 'Email': d.get('email'), 'Teléfono': d.get('telefono') || '-',
         _subject: `Nueva solicitud de diagnóstico · ${d.get('empresa')}`, _replyto: d.get('email'), _template: 'table', _captcha: 'false' };
       // Copia en el panel de NexGent (Supabase, solo inserción). No bloquea el envío por correo.
-      saveLead(d);
-      // Envío a info@nexgent.io con FormSubmit (https://formsubmit.co)
-      const r = await fetch('https://formsubmit.co/ajax/info@nexgent.io', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(lead) });
-      const data = await r.json().catch(() => ({}));
-      if (!r.ok || String(data.success) !== 'true') throw new Error('error');
+      // 1) Se guarda en la base de datos de NexGent (la lee Alba y aparece en Solicitudes del panel).
+      // 2) Aviso por correo a info@nexgent.io con FormSubmit, solo como extra: si falla, la solicitud ya está guardada.
+      const [saved, mailed] = await Promise.all([
+        saveLead(d),
+        fetch('https://formsubmit.co/ajax/info@nexgent.io', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(lead) })
+          .then(r => r.json().then(j => r.ok && String(j.success) === 'true').catch(() => false)).catch(() => false)
+      ]);
+      if (!saved && !mailed) throw new Error('error');
       form.reset(); btn.textContent = 'Solicitud enviada ✓';
       msg.textContent = '¡Gracias! Hemos recibido tu solicitud. Te escribimos muy pronto.';
     } catch (err) {
