@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NexGent · IA que atiende a los clientes de tu red de franquicias</title>
+<meta name="description" content="NexGent desarrolla Nexi, la IA que atiende por WhatsApp y por teléfono a los clientes de las redes de franquicias: responde 24/7, agenda citas y envía recordatorios.">
+<meta property="og:title" content="NexGent · Ningún cliente de tu red sin respuesta">
+<meta property="og:description" content="IA por WhatsApp y voz para redes de franquicias. Proyectos a medida, piloto en sedes propias.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"NEXGENT AI SYSTEMS, S.L.","alternateName":"NexGent","url":"https://nexgent.io","taxID":"B22534564","address":{"@type":"PostalAddress","streetAddress":"Calle Julio Verne 12","postalCode":"18210","addressLocality":"Peligros","addressRegion":"Granada","addressCountry":"ES"},"sameAs":["https://www.linkedin.com/company/nexgentai","https://www.instagram.com/nexgentai"]}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<div class="loader" id="loader" aria-hidden="true"><img src="assets/img/logo-nexgent-blanco.png" alt=""><span class="loader__bar"></span></div>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+<a class="wa-float" id="waFloat" href="https://wa.me/34684486647" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg></a>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="#top" class="logo" aria-label="NexGent, inicio"><img class="logo__w" src="assets/img/logo-nexgent-blanco.png" alt="NexGent" width="112" height="28"><img class="logo__d" src="assets/img/logo-nexgent.png" alt="" width="112" height="28" aria-hidden="true"></a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#nosotros">Sobre nosotros</a>
+      <a href="#caso">Caso de éxito</a>
+      <a href="#como-trabajamos">Cómo trabajamos</a>
+      <a href="blog.html">Blog</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <a href="#contacto" class="btn btn--sm btn--light magnetic">Solicitar diagnóstico</a>
+    <button class="nav__burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#nosotros">Sobre nosotros</a>
+    <a href="#caso">Caso de éxito</a>
+    <a href="#como-trabajamos">Cómo trabajamos</a>
+    <a href="blog.html">Blog</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__content">
+    <p class="eyebrow reveal-up"><span class="dot"></span> Conoce a Nexi · IA por WhatsApp y voz</p>
+    <h1 class="hero__title">
+      <span class="line reveal-up">Ningún cliente de tu red</span>
+      <span class="line reveal-up">sin respuesta.</span>
+      <span class="rotator reveal-up" aria-live="polite"><span class="rotator__track">
+        <span class="grad">Por WhatsApp.</span>
+        <span class="grad">Por teléfono.</span>
+        <span class="grad">De madrugada.</span>
+        <span class="grad">En domingo.</span>
+        <span class="grad">Por WhatsApp.</span>
+      </span></span>
+    </h1>
+    <p class="hero__sub reveal-up">Nexi atiende a los clientes de todas las sedes de tu red de franquicias: responde, agenda citas y envía recordatorios. Al momento y a cualquier hora.</p>
+    <div class="hero__ctas reveal-up">
+      <a href="#contacto" class="btn btn--grad magnetic">Solicitar diagnóstico</a>
+      <a href="#video" class="btn btn--ghost magnetic"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg> Ver el vídeo</a>
+    </div>
+    <p class="hero__trust reveal-up">Empezamos con un piloto en sedes propias de tu red. Sigues solo si funciona.</p>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"><span></span></div>
+</section>
+
+<!-- STATEMENT -->
+<section class="statement" aria-label="Lo que hacemos">
+  <p class="statement__text" data-words>No vendemos tecnología. Vendemos que ningún cliente de tu red se quede sin respuesta. Y un ingreso nuevo para la central.</p>
+</section>
+
+
+<!-- VÍDEO -->
+<section class="film" id="video" aria-label="Vídeo de NexGent">
+  <div class="film__head container">
+    <p class="kicker">En un minuto</p>
+    <h2 class="h2">Mira a Nexi <span class="grad">en acción.</span></h2>
+  </div>
+  <div class="film__frame" id="filmFrame">
+    <video id="film" src="assets/video/nexgent.mp4" poster="assets/video/poster.jpg" muted playsinline loop preload="metadata" aria-label="Vídeo: cómo Nexi atiende a los clientes de una red de franquicias"></video>
+    <button class="film__sound" id="filmSound" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path id="filmWaves" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".35"/></svg><span>Activar sonido</span></button>
+  </div>
+</section>
+
+<!-- DEMO / JOURNEY (pinned) -->
+<section class="journey" id="demo">
+  <div class="journey__pin">
+    <div class="journey__steps">
+      <p class="kicker">Un martes cualquiera</p>
+      <ol>
+        <li class="jstep is-active"><span class="jstep__time">23:47</span><h3>La clienta escribe</h3><p>El centro cerró hace horas. Ella quiere cita para el sábado.</p></li>
+        <li class="jstep"><span class="jstep__time">23:47 · 3 s</span><h3>Nexi responde</h3><p>Al momento, en su idioma y con el tono de tu marca.</p></li>
+        <li class="jstep"><span class="jstep__time">23:48</span><h3>Cita agendada</h3><p>Directo en vuestra agenda. Sin que nadie del equipo toque nada.</p></li>
+        <li class="jstep"><span class="jstep__time">Viernes · 10:00</span><h3>Recordatorio</h3><p>24 horas antes. Puede confirmar o cambiar con un toque.</p></li>
+        <li class="jstep"><span class="jstep__time">Sábado · 11:00</span><h3>Llega a su cita</h3><p>Una clienta atendida. Una venta que no se ha perdido.</p></li>
+      </ol>
+      <div class="journey__progress"><span></span></div>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone" id="phone">
+        <div class="phone__notch"></div>
+        <div class="phone__status"><span id="phoneClock">23:47</span><span class="phone__icons">●●● ▮</span></div>
+        <div class="wa__head">
+          <div class="wa__avatar">N</div>
+          <div><strong>Tu centro · Nexi</strong><small id="waState">en línea</small></div>
+        </div>
+        <div class="wa__body" id="waBody">
+          <div class="msg msg--in" data-step="0">Hola! ¿Tenéis hueco el sábado por la mañana? 💅<time>23:47</time></div>
+          <div class="msg msg--out" data-step="1">¡Hola, Laura! Sí: el sábado tengo hueco a las 10:00, 11:00 o 12:30. ¿Cuál te va mejor?<time>23:47</time></div>
+          <div class="msg msg--in" data-step="2">A las 11 perfecto<time>23:48</time></div>
+          <div class="msg msg--out" data-step="2"><span class="msg__card">✅ Cita confirmada<br><b>Sábado · 11:00</b><br>Manicura semipermanente</span><time>23:48</time></div>
+          <div class="msg msg--out" data-step="3">Hola Laura 👋 Te recordamos tu cita mañana a las 11:00. ¿Confirmas?<span class="msg__btns"><span>Confirmar</span><span>Cambiar</span></span><time>10:00</time></div>
+          <div class="msg msg--in" data-step="3">Confirmo 🙌<time>10:02</time></div>
+          <div class="msg msg--sys" data-step="4">Laura ha llegado a su cita · 10:58</div>
+        </div>
+        <div class="wa__input"><span>Mensaje</span><i></i></div>
+      </div>
+      <div class="phone-shadow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 24/7 ZOOM -->
+<section class="zoom" aria-label="Disponible siempre, en todas las sedes">
+  <div class="zoom__pin">
+    <div class="zoom__big grad" id="zoomBig">24/7</div>
+    <p class="zoom__cap" id="zoomCap">Todos los días del año. A cualquier hora.</p>
+    <div class="sedes-wrap" id="sedesWrap">
+      <p class="kicker">Toda tu red, a la vez</p>
+      <h2 class="h2">Cada punto es una sede.<br><span class="grad">Ninguna se queda sin atender.</span></h2>
+      <div class="sedes" id="sedesGrid" aria-hidden="true"></div>
+      <p class="sedes__count"><b id="sedesCount">0</b> sedes atendiendo ahora mismo <small>· Ejemplo de una red de <span id="sedesTotal">240</span> sedes</small></p>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section class="voice section-dark">
+  <div class="container voice__grid">
+    <div>
+      <p class="kicker">Voz con IA</p>
+      <h2 class="h2 reveal">Y también coge<br><span class="grad">el teléfono.</span></h2>
+      <p class="lead reveal">Nexi atiende las llamadas con una voz natural. Entiende lo que la persona necesita, agenda, cambia o cancela, y si algo se sale de lo normal, pasa la llamada a tu equipo.</p>
+    </div>
+    <div class="call reveal">
+      <div class="call__top"><span class="call__live"></span> Llamada atendida por Nexi <span class="call__timer" id="callTimer">00:00</span></div>
+      <canvas id="waveCanvas" aria-hidden="true"></canvas>
+      <div class="call__lines" id="callLines">
+        <p><b>Cliente</b> Quería mover mi cita del jueves.</p>
+        <p class="ai"><b>Nexi</b> Claro. ¿Te va bien el viernes a las 17:30?</p>
+        <p><b>Cliente</b> Perfecto, gracias.</p>
+        <p class="ai"><b>Nexi</b> Hecho. Te llega la confirmación por WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- TÚNEL DE MENSAJES -->
+<section class="tunnel" id="mensajes" aria-label="Mensajes de todas las sedes">
+  <div class="tunnel__pin">
+    <div class="tunnel__glow" aria-hidden="true"></div>
+    <div class="tunnel__world" id="tWorld" aria-hidden="true"></div>
+    <div class="tunnel__copy">
+      <p class="tline is-on"><span class="kicker">Ahora mismo, en tu red</span>Cientos de mensajes <span class="grad">cada día.</span></p>
+      <p class="tline">De todas tus sedes. <span class="grad">A todas horas.</span></p>
+      <p class="tline">Nexi los contesta <span class="grad">todos.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- BENTO -->
+<section class="bento-sec section-light" id="producto">
+  <div class="container">
+    <p class="kicker kicker--dark">Lo que hace Nexi</p>
+    <h2 class="h2 h2--dark reveal">Todo lo que pasa entre<br>“hola” y “ya estoy aquí”.</h2>
+    <div class="bento">
+      <article class="card card--wide spot reveal">
+        <div class="card__ui ui-chat">
+          <div class="b b1">¿Abrís el domingo?</div><div class="b b2">¡Sí! De 10:00 a 14:00 😊</div><div class="b b1">¿Me reservas a las 12?</div><div class="b b2">Hecho ✅</div>
+        </div>
+        <h3>Responde WhatsApp 24/7</h3><p>Por la API oficial de WhatsApp Business. Respuestas al momento, en cualquier sede.</p>
+      </article>
+      <article class="card spot reveal">
+        <div class="card__ui ui-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <h3>Atiende llamadas</h3><p>Voz natural. Ninguna llamada perdida en hora punta.</p>
+      </article>
+      <article class="card spot reveal">
+        <div class="card__ui ui-cal"><span></span><span></span><span class="on"></span><span></span><span class="on"></span><span></span><span></span><span class="on"></span><span></span><span class="on"></span><span></span><span class="on"></span><span></span><span></span></div>
+        <h3>Agenda, cambia y cancela</h3><p>Conectado a vuestra agenda. Sin dobles reservas.</p>
+      </article>
+      <article class="card spot reveal">
+        <div class="card__ui ui-notif"><div>⏰ Tu cita es mañana a las 11:00</div><div>⏰ Recuerda: hoy a las 17:30</div><div>⏰ ¿Confirmas tu cita del sábado?</div></div>
+        <h3>Recordatorios automáticos</h3><p>Antes de cada cita, con confirmación de un toque.</p>
+      </article>
+      <article class="card spot reveal">
+        <div class="card__ui ui-orbit"><b>Nexi</b><i></i><i></i><i></i><span class="o1">CRM</span><span class="o2">Agenda</span><span class="o3">ERP</span></div>
+        <h3>Se conecta con lo que ya usáis</h3><p>Vuestro sistema de citas, CRM o ERP. Proyecto a medida.</p>
+      </article>
+      <article class="card card--wide spot reveal">
+        <div class="card__ui ui-bars"><i style="--h:42%"></i><i style="--h:65%"></i><i style="--h:51%"></i><i style="--h:80%"></i><i style="--h:72%"></i><i style="--h:94%"></i><i style="--h:60%"></i><i style="--h:88%"></i><i style="--h:70%"></i><i style="--h:97%"></i></div>
+        <h3>Panel para la central</h3><p>Todas las sedes en una pantalla: contactos atendidos, citas, llamadas y consumo. <small class="muted">Datos ilustrativos.</small></p>
+      </article>
+      <article class="card spot reveal">
+        <div class="card__ui ui-gauge"><svg viewBox="0 0 120 70" aria-hidden="true"><path d="M10 64a50 50 0 0 1 100 0" fill="none" stroke="#e8e8ed" stroke-width="10" stroke-linecap="round"/><path class="gauge-arc" d="M10 64a50 50 0 0 1 100 0" fill="none" stroke="url(#gg)" stroke-width="10" stroke-linecap="round"/><defs><linearGradient id="gg"><stop offset="0" stop-color="#82cbd6"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs></svg></div>
+        <h3>Monedero prepago</h3><p>Pagas por adelantado lo que usas. Lo que sobra, pasa al mes siguiente.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- PANEL EXPLOTADO -->
+<section class="dash" id="panel" aria-label="Panel de la central">
+  <div class="dash__pin">
+    <div class="dash__copy container">
+      <p class="kicker">Panel de la central</p>
+      <h2 class="h2">Toda tu red,<br><span class="grad">en una pantalla.</span></h2>
+    </div>
+    <div class="dash__stage">
+      <div class="dash__board" id="dBoard">
+        <div class="dl dl--base">
+          <aside class="db-side"><img src="assets/img/logo-nexgent-blanco.png" alt=""><i class="on"></i><i></i><i></i><i></i><i></i><i></i></aside>
+          <div class="db-top"><b>Resumen de la red</b><div class="db-filters"><span>Hoy</span><span>7 días</span><span class="on">30 días</span><span>Año</span></div><div class="db-user">AG</div></div>
+        </div>
+        <div class="dl dw dw--kpi" data-z="1" style="left:10%;top:15%;width:15.5%;height:16%"><small>Contactos atendidos</small><b>100 %</b><em>↑ 24/7 · fuera de horario</em></div>
+        <div class="dl dw dw--kpi" data-z="1.3" style="left:26.5%;top:15%;width:15.5%;height:16%"><small>Citas por IA</small><b>2.480</b><em>↑ 18 % vs mes anterior</em></div>
+        <div class="dl dw dw--kpi" data-z="1.6" style="left:43%;top:15%;width:15.5%;height:16%"><small>Llamadas atendidas</small><b>1.312</b><em>85 % sin recepción</em></div>
+        <div class="dl dw dw--kpi" data-z="1.9" style="left:59.5%;top:15%;width:15.5%;height:16%"><small>Confirmadas</small><b>71 %</b><em>de las citas avisadas</em><span class="dl__tag">KPIs de toda la red</span></div>
+        <div class="dl dw" data-z="2.4" style="left:10%;top:34%;width:44%;height:33%"><small>Citas por día · WhatsApp y voz</small>
+          <svg viewBox="0 0 600 200" preserveAspectRatio="none"><defs><linearGradient id="dchg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fcad8" stop-opacity=".55"/><stop offset="1" stop-color="#6fcad8" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0 150 C40 140 60 100 100 110 S160 60 200 80 S260 120 300 70 S360 40 400 60 S460 20 500 40 S560 30 600 10 L600 200 L0 200Z" fill="url(#dchg)"/>
+          <path class="dch-line" d="M0 150 C40 140 60 100 100 110 S160 60 200 80 S260 120 300 70 S360 40 400 60 S460 20 500 40 S560 30 600 10" fill="none" stroke="#6fcad8" stroke-width="3"/>
+          <path class="dch-line" d="M0 175 C50 170 80 150 120 155 S180 130 220 140 S280 150 320 125 S380 110 420 118 S480 95 520 100 S570 92 600 80" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="6 6" opacity=".8"/></svg>
+          <div class="dw-legend"><span><i style="background:#6fcad8"></i>WhatsApp</span><span><i style="background:#3b82f6"></i>Voz</span></div>
+          <span class="dl__tag">Citas en tiempo real</span></div>
+        <div class="dl dw" data-z="3.2" style="left:55.5%;top:34%;width:19.5%;height:33%"><small>Avisos de cita</small>
+          <div class="dw-donut"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="12"/><circle cx="50" cy="50" r="38" fill="none" stroke="#6fcad8" stroke-width="12" stroke-dasharray="169.6 238.8" transform="rotate(-90 50 50)"/><circle cx="50" cy="50" r="38" fill="none" stroke="#ff6b6b" stroke-width="12" stroke-dasharray="19.8 238.8" stroke-dashoffset="-169.6" transform="rotate(-90 50 50)"/><circle cx="50" cy="50" r="38" fill="none" stroke="#f5b14c" stroke-width="12" stroke-dasharray="49.4 238.8" stroke-dashoffset="-189.4" transform="rotate(-90 50 50)"/></svg><b>71 %</b></div>
+          <div class="dw-legend dw-legend--col"><span><i style="background:#6fcad8"></i>Confirmadas</span><span><i style="background:#ff6b6b"></i>Canceladas</span><span><i style="background:#f5b14c"></i>Sin respuesta</span></div></div>
+        <div class="dl dw dw--feed" data-z="4.2" style="left:76.5%;top:15%;width:20.5%;height:52%"><small><i class="live"></i>En directo</small>
+          <p><b>Sede Norte</b>Cita agendada por WhatsApp<em>ahora</em></p>
+          <p><b>Sede Centro</b>Llamada atendida · 1:04<em>1 min</em></p>
+          <p><b>Sede Playa</b>Cita movida al viernes<em>3 min</em></p>
+          <p><b>Sede Sur</b>Clienta nueva registrada<em>4 min</em></p>
+          <p><b>Sede Este</b>Recordatorio confirmado<em>6 min</em></p>
+          <p><b>Sede Centro</b>Pasada a recepción<em>9 min</em></p>
+          <span class="dl__tag">Actividad en directo</span></div>
+        <div class="dl dw" data-z="2.8" style="left:10%;top:70%;width:30%;height:25%"><small>Contactos por hora</small>
+          <div class="dw-heat"><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.22"></i><i style="--h:0.18"></i><i style="--h:0.49"></i><i style="--h:0.34"></i><i style="--h:0.29"></i><i style="--h:0.49"></i><i style="--h:0.80"></i><i style="--h:0.73"></i><i style="--h:0.71"></i><i style="--h:0.38"></i><i style="--h:0.57"></i><i style="--h:0.42"></i><i style="--h:0.35"></i><i style="--h:0.31"></i><i style="--h:0.63"></i><i style="--h:0.59"></i><i style="--h:0.41"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.24"></i><i style="--h:0.34"></i><i style="--h:0.69"></i><i style="--h:0.76"></i><i style="--h:0.78"></i><i style="--h:0.30"></i><i style="--h:0.61"></i><i style="--h:0.65"></i><i style="--h:0.55"></i><i style="--h:0.36"></i><i style="--h:0.53"></i><i style="--h:0.30"></i><i style="--h:0.81"></i><i style="--h:0.77"></i><i style="--h:0.44"></i><i style="--h:0.52"></i><i style="--h:0.60"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.30"></i><i style="--h:0.27"></i><i style="--h:0.61"></i><i style="--h:0.51"></i><i style="--h:0.35"></i><i style="--h:0.43"></i><i style="--h:0.74"></i><i style="--h:0.28"></i><i style="--h:0.28"></i><i style="--h:0.63"></i><i style="--h:0.42"></i><i style="--h:0.57"></i><i style="--h:0.53"></i><i style="--h:0.46"></i><i style="--h:0.41"></i><i style="--h:0.41"></i><i style="--h:0.43"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.08"></i><i style="--h:0.26"></i><i style="--h:0.37"></i><i style="--h:0.44"></i><i style="--h:0.59"></i><i style="--h:0.79"></i><i style="--h:0.31"></i><i style="--h:0.29"></i><i style="--h:0.39"></i><i style="--h:0.71"></i><i style="--h:0.62"></i><i style="--h:0.39"></i><i style="--h:0.45"></i><i style="--h:0.36"></i><i style="--h:0.53"></i><i style="--h:0.56"></i><i style="--h:0.64"></i><i style="--h:0.64"></i></div><div class="dw-hours"><span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>24h</span></div>
+          <span class="dl__tag">Fuera de horario, también</span></div>
+        <div class="dl dw" data-z="3.6" style="left:41.5%;top:70%;width:17%;height:25%"><small>Monedero del mes</small>
+          <div class="dw-bar"><span>Mensajes</span><i style="--v:.68"></i><em>68 %</em></div>
+          <div class="dw-bar"><span>Minutos</span><i style="--v:.21"></i><em>21 %</em></div>
+          <div class="dw-bar"><span>Saldo</span><i style="--v:.82"></i><em>OK</em></div></div>
+        <div class="dl dw dw--list" data-z="4.6" style="left:60%;top:70%;width:37%;height:25%"><small>Sedes</small>
+          <p><i class="ok"></i>Sede Centro<span>412 citas</span><span class="sp">▁▃▅▆█</span></p><p><i class="ok"></i>Sede Norte<span>389 citas</span><span class="sp">▂▃▄▆▇</span></p><p><i class="warn"></i>Sede Sur<span>Recarga en 2 días</span><span class="sp">▃▄▃▅▆</span></p>
+          <span class="dl__tag">El estado de cada sede</span></div>
+      </div>
+    </div>
+    <p class="dash__note">Datos ilustrativos.</p>
+  </div>
+</section>
+
+
+<!-- CARACTERÍSTICAS DEL PANEL -->
+<section class="pfeat section-dark" aria-label="Características del panel">
+  <div class="container">
+    <div class="pfeat__grid">
+      <article class="pf reveal"><span class="pf__ic"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></span><h3>Toda la red y cada sede</h3><p>Vista de la central con todas las sedes, y el detalle de cada centro con un clic.</p></article>
+      <article class="pf reveal"><span class="pf__ic"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><h3>Resultado de los avisos</h3><p>Citas avisadas, confirmadas, canceladas y sin respuesta, día a día.</p></article>
+      <article class="pf reveal"><span class="pf__ic"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><h3>Llamadas con IA</h3><p>Citas cogidas, cambiadas o canceladas, llamadas pasadas a recepción y clientas nuevas.</p></article>
+      <article class="pf reveal"><span class="pf__ic"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 15h2"/></svg></span><h3>Consumo y monedero</h3><p>Mensajes y minutos gastados en el mes, lo que queda incluido y cuándo toca recargar.</p></article>
+      <article class="pf reveal"><span class="pf__ic"><svg viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><h3>Alertas</h3><p>Avisos que no se pudieron enviar, números mal escritos o sedes sin saldo, a la vista.</p></article>
+      <article class="pf reveal"><span class="pf__ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span><h3>Cualquier periodo</h3><p>Hoy, 7 días, 30 días, un año o las fechas que quieras, con gráficas día a día.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<section class="marquee-sec section-light" aria-label="Sectores">
+  <div class="marquee"><div class="marquee__track">
+    <span>Estética y belleza</span><span>Inmobiliarias</span><span>Clínicas y salud</span><span>Talleres y automoción</span><span>Centros deportivos</span><span>Estética y belleza</span><span>Inmobiliarias</span><span>Clínicas y salud</span><span>Talleres y automoción</span><span>Centros deportivos</span>
+  </div></div>
+  <div class="marquee marquee--rev"><div class="marquee__track">
+    <span>WhatsApp</span><span>Llamadas</span><span>Recordatorios</span><span>Citas</span><span>Panel de la central</span><span>Integraciones</span><span>WhatsApp</span><span>Llamadas</span><span>Recordatorios</span><span>Citas</span><span>Panel de la central</span><span>Integraciones</span>
+  </div></div>
+</section>
+
+
+<!-- PARA QUIÉN -->
+<section class="sectors section-light" id="sectores">
+  <div class="container">
+    <p class="kicker kicker--dark">Para quién es</p>
+    <h2 class="h2 h2--dark reveal">Redes con citas.<br>Redes con clientes que escriben.</h2>
+    <div class="sectors__grid">
+      <article class="scard spot reveal"><div class="scard__ic"><svg viewBox="0 0 24 24"><path d="M12 3c2 3 5 4.5 5 8a5 5 0 0 1-10 0c0-3.5 3-5 5-8z"/><path d="M9 20h6"/></svg></div><h3>Estética y belleza</h3><p>Citas, cambios y recordatorios en cada centro. El equipo, centrado en la clienta que tiene delante.</p></article>
+      <article class="scard spot reveal"><div class="scard__ic"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div><h3>Inmobiliarias</h3><p>Responde a cada lead al momento y agenda visitas a los pisos, también el fin de semana.</p></article>
+      <article class="scard spot reveal"><div class="scard__ic"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/><rect x="3" y="3" width="18" height="18" rx="5"/></svg></div><h3>Clínicas y salud</h3><p>Primeras visitas, revisiones y recordatorios. Sin colas al teléfono en recepción.</p></article>
+      <article class="scard spot reveal"><div class="scard__ic"><svg viewBox="0 0 24 24"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><path d="M9 17h6"/></svg></div><h3>Talleres y automoción</h3><p>Citas de revisión e ITV, avisos de recogida y llamadas atendidas en hora punta.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- TODOS GANAN -->
+<section class="win section-light">
+  <div class="container">
+    <p class="kicker kicker--dark">Todos ganan</p>
+    <h2 class="h2 h2--dark reveal">Un sistema. Tres ganadores.</h2>
+    <div class="win__grid">
+      <article class="wcard spot reveal"><span class="wcard__n">01</span><h3>La central de la red</h3><p>Un ingreso recurrente nuevo por cada sede, sin invertir ni sumar trabajo. Y una foto clara de cómo se atiende en toda la red.</p></article>
+      <article class="wcard spot reveal"><span class="wcard__n">02</span><h3>El franquiciado</h3><p>Atiende todos los contactos, también fuera de horario. No pierde citas ni ventas y su equipo se centra en el cliente que tiene delante.</p></article>
+      <article class="wcard spot reveal"><span class="wcard__n">03</span><h3>El cliente final</h3><p>Respuesta al momento, a cualquier hora y por el canal que ya usa. Sin esperas ni llamadas sin contestar.</p></article>
+    </div>
+  </div>
+</section>
+
+
+<!-- FILAS GIGANTES -->
+<section class="rows" aria-hidden="true">
+  <div class="rows__r" data-dir="-1"><span>WhatsApp · Llamadas · Citas · Recordatorios · WhatsApp · Llamadas · Citas ·</span></div>
+  <div class="rows__r rows__r--o" data-dir="1"><span>24/7 · Todas las sedes · A la vez · 24/7 · Todas las sedes · A la vez ·</span></div>
+  <div class="rows__r rows__r--g" data-dir="-1"><span>Ningún cliente sin respuesta · Ningún cliente sin respuesta ·</span></div>
+</section>
+
+<!-- CÓMO TRABAJAMOS (horizontal) -->
+<section class="how section-dark" id="como-trabajamos">
+  <div class="how__pin">
+    <div class="how__head container">
+      <p class="kicker">Cómo trabajamos</p>
+      <h2 class="h2">Sin saltos al vacío.<br><span class="grad">Paso a paso.</span></h2>
+    </div>
+    <div class="how__track" id="howTrack">
+      <article class="hcard"><span class="hcard__n">01</span><span class="chip">1–2 semanas</span><h3>Diagnóstico de atención</h3><p>Medimos cuántos mensajes y llamadas reciben tus sedes, cuántos se quedan sin respuesta y cuánto vale eso para la red.</p><div class="hcard__viz viz-scan"><i></i></div></article>
+      <article class="hcard"><span class="hcard__n">02</span><span class="chip">30–60 días</span><h3>Piloto de pago</h3><p>Activamos Nexi en 2 a 5 sedes propias de la red, con los criterios de éxito acordados por escrito antes de empezar.</p><div class="hcard__viz viz-dots"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i></i><i class="on"></i><i></i></div></article>
+      <article class="hcard"><span class="hcard__n">03</span><span class="chip">Por oleadas</span><h3>Despliegue en la red</h3><p>Si el piloto cumple, extendemos Nexi sede a sede, por oleadas, con formación y soporte para cada franquiciado.</p><div class="hcard__viz viz-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></article>
+      <article class="hcard hcard--cta"><h3>¿Empezamos por el diagnóstico?</h3><p>Es el primer paso y te da números reales de tu red.</p><a href="#contacto" class="btn btn--grad magnetic">Solicitar diagnóstico</a></article>
+    </div>
+  </div>
+</section>
+
+<!-- CASO DE ÉXITO -->
+<section class="case section-dark" id="caso">
+  <div class="container case__grid">
+    <div class="case__copy">
+      <p class="kicker">Caso de éxito</p>
+      <h2 class="h2 reveal">Una red líder de centros de uñas.<br><span class="grad">De España a Latinoamérica.</span></h2>
+      <p class="lead reveal">Más de 230 centros en España y una expansión a Latinoamérica en marcha. Nexi ya atiende a sus clientas por WhatsApp y por teléfono: avisa de las citas, recoge las confirmaciones y coge las llamadas.</p>
+      <div class="stats">
+        <div class="stat reveal"><span class="stat__n" data-count="230" data-prefix="+">0</span><span class="stat__l">centros en España</span></div>
+        <div class="stat reveal"><span class="stat__n">2</span><span class="stat__l">canales: WhatsApp y voz</span></div>
+        <div class="stat reveal"><span class="stat__n">24/7</span><span class="stat__l">en todas las sedes</span></div>
+      </div>
+    </div>
+    <div class="globe-wrap"><canvas id="globeCanvas" aria-label="Globo 3D con la expansión de la red de España a Latinoamérica" role="img"></canvas><span class="globe-tag">España → Latinoamérica</span></div>
+  </div>
+
+  <div class="container results">
+    <div class="results__head reveal">
+      <p class="kicker">Resultados reales · un solo centro de la red</p>
+      <h3 class="h3">1 de cada 3 llamadas<br><span class="grad">acaba en una cita reservada por la IA.</span></h3>
+    </div>
+    <div class="results__grid">
+      <article class="rpanel reveal">
+        <header><span class="rpanel__tag">WhatsApp · Recordatorios</span><small>30 días</small></header>
+        <div class="rpanel__donut">
+          <svg viewBox="0 0 140 140" aria-hidden="true">
+            <circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="16"/>
+            <circle class="seg seg1" cx="70" cy="70" r="54" fill="none" stroke="#5fc4d4" stroke-width="16" style="--len:240.6;--off:0"/>
+            <circle class="seg seg2" cx="70" cy="70" r="54" fill="none" stroke="#ff6b6b" stroke-width="16" style="--len:28.2;--off:-240.6"/>
+            <circle class="seg seg3" cx="70" cy="70" r="54" fill="none" stroke="#f5b14c" stroke-width="16" style="--len:70.4;--off:-268.8"/>
+          </svg>
+          <div class="rpanel__center"><b><span data-count="71">0</span> %</b><small>confirmadas</small></div>
+        </div>
+        <ul class="rlegend">
+          <li><i style="background:#5fc4d4"></i><b data-count="1049">0</b> clientas confirmaron por WhatsApp</li>
+          <li><i style="background:#ff6b6b"></i><b data-count="123">0</b> cancelaron con antelación: huecos liberados</li>
+          <li><i style="background:#f5b14c"></i><b data-count="307">0</b> recibieron el aviso sin contestar</li>
+        </ul>
+        <div class="rkpis">
+          <div><b data-count="1479">0</b><small>citas avisadas</small></div>
+          <div><b data-count="1290">0</b><small>respuestas automáticas</small></div>
+          <div><b data-count="2837">0</b><small>mensajes gestionados</small></div>
+        </div>
+      </article>
+      <article class="rpanel reveal">
+        <header><span class="rpanel__tag">Llamadas con IA</span><small>21 días</small></header>
+        <div class="rbig"><b data-count="243">0</b><span>llamadas atendidas<br>por Nexi</span></div>
+        <div class="rbars">
+          <div class="rbar"><span>Citas reservadas</span><b data-count="80">0</b><i style="--w:100%"></i></div>
+          <div class="rbar"><span>Pasadas a recepción</span><b data-count="36">0</b><i style="--w:45%"></i></div>
+          <div class="rbar"><span>Citas canceladas</span><b data-count="28">0</b><i style="--w:35%"></i></div>
+          <div class="rbar"><span>Citas cambiadas de día u hora</span><b data-count="21">0</b><i style="--w:26%"></i></div>
+          <div class="rbar"><span>Clientas nuevas dadas de alta</span><b data-count="9">0</b><i style="--w:11%"></i></div>
+        </div>
+        <div class="rkpis">
+          <div><b><span data-count="85">0</span> %</b><small>resueltas sin recepción</small></div>
+          <div><b><span data-count="33">0</span> %</b><small>terminan en cita</small></div>
+          <div><b>1:10</b><small>min de media por llamada</small></div>
+        </div>
+      </article>
+    </div>
+    <p class="results__note reveal">Datos del panel de NexGent de un centro de la red: recordatorios del 18 de octubre al 16 de noviembre de 2026 y llamadas con IA del 27 de octubre al 16 de noviembre de 2026. La red tiene más de 230 centros.</p>
+  </div>
+</section>
+
+<!-- CALCULADORA -->
+<section class="calc section-light" id="calculadora">
+  <div class="container">
+    <p class="kicker kicker--dark">Calcula lo que pierde tu red</p>
+    <h2 class="h2 h2--dark reveal">Cada mensaje sin respuesta<br>es una cita que no llega.</h2>
+    <div class="calc__box reveal">
+      <form class="calc__inputs" id="calcForm" onsubmit="return false">
+        <label>Sedes de la red <output id="o_sedes">120</output><input type="range" id="sedes" min="5" max="500" step="5" value="120"></label>
+        <label>Contactos al mes por sede <output id="o_contactos">600</output><input type="range" id="contactos" min="50" max="3000" step="50" value="600"></label>
+        <label>% que hoy se queda sin respuesta <output id="o_perdidos">15 %</output><input type="range" id="perdidos" min="1" max="50" step="1" value="15"></label>
+        <label>% de esos contactos que acabaría en cita <output id="o_conv">40 %</output><input type="range" id="conv" min="5" max="90" step="5" value="40"></label>
+        <label>Ticket medio (€) <output id="o_ticket">35 €</output><input type="range" id="ticket" min="10" max="300" step="5" value="35"></label>
+      </form>
+      <div class="calc__out">
+        <small>Ventas que tu red podría recuperar</small>
+        <div class="calc__big"><span id="r_mes">0 €</span><em>al mes</em></div>
+        <div class="calc__year"><span id="r_ano">0 €</span> al año · <span id="r_citas">0</span> citas al mes</div>
+        <svg class="calc__chart" id="calcChart" viewBox="0 0 400 140" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <p class="calc__note">Estimación orientativa: sedes × contactos × % sin respuesta × % que acaba en cita × ticket medio. Tus cifras reales salen del diagnóstico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE NOSOTROS -->
+<section class="about section-light" id="nosotros">
+  <div class="container">
+    <p class="kicker kicker--dark">Sobre nosotros</p>
+    <h2 class="h2 h2--dark reveal">Hacemos que la IA trabaje<br>para redes enteras.</h2>
+    <div class="about__grid">
+      <p class="lead lead--dark reveal">NexGent AI Systems nace en Granada en 2025 con una idea sencilla: en una red de franquicias, cada mensaje sin contestar es una venta perdida, y multiplicada por cientos de sedes es mucho dinero. Diseñamos a Nexi para eso: atender a todos los clientes, en todas las sedes, a cualquier hora.</p>
+      <ul class="values reveal">
+        <li><b>Solo a medida.</b> Cada red es distinta. Nos adaptamos a vuestros procesos, no al revés.</li>
+        <li><b>Pilotos de pago.</b> Primero demostramos que funciona en tus sedes. Después crecemos juntos.</li>
+        <li><b>Datos protegidos.</b> Cumplimos el RGPD y usamos la API oficial de WhatsApp Business.</li>
+      </ul>
+    </div>
+    <div class="team">
+      <article class="member spot reveal"><div class="member__av">AG</div><h3>Alejandro Gutiérrez</h3><p>Cofundador y CEO · Desarrollo de negocio</p></article>
+      <article class="member spot reveal"><div class="member__av">FM</div><h3>Francesc Murcia</h3><p>Cofundador · Producto e integraciones</p></article>
+      <article class="member spot reveal"><div class="member__av">RS</div><h3>Ricard Sánchez</h3><p>Socio · Alianzas</p></article>
+      <article class="member spot reveal"><div class="member__av">IB</div><h3>Iván Becerro</h3><p>Socio · Pilotos y seguimiento</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG PREVIEW -->
+<section class="blogp section-light">
+  <div class="container">
+    <div class="blogp__head"><div><p class="kicker kicker--dark">Blog</p><h2 class="h2 h2--dark reveal">Ideas para redes que crecen.</h2></div><a href="blog.html" class="link-arrow">Ver todo el blog →</a></div>
+    <div class="blogp__grid">
+      <a class="post spot reveal" href="blog.html#fuera-de-horario"><div class="post__img pi1"></div><span class="chip chip--dark">Atención al cliente</span><h3>El cliente que escribe a las 23:47 y nadie le contesta</h3></a>
+      <a class="post spot reveal" href="blog.html#api-whatsapp"><div class="post__img pi2"></div><span class="chip chip--dark">WhatsApp</span><h3>API oficial de WhatsApp Business: qué es y por qué importa</h3></a>
+      <a class="post spot reveal" href="blog.html#piloto"><div class="post__img pi3"></div><span class="chip chip--dark">Franquicias</span><h3>Cómo es un piloto de IA en una red de franquicias</h3></a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq section-light" id="preguntas">
+  <div class="container container--narrow">
+    <p class="kicker kicker--dark">Preguntas frecuentes</p>
+    <h2 class="h2 h2--dark reveal">Lo que nos suelen preguntar.</h2>
+    <div class="faq__list">
+      <details><summary>¿Suena a robot?</summary><p>No. Nexi escribe y habla de forma natural, con el tono de tu marca. Lo ajustamos durante el piloto con conversaciones reales de tus sedes.</p></details>
+      <details><summary>¿Qué pasa si la IA no sabe qué responder?</summary><p>Pasa la conversación o la llamada a una persona de tu equipo, con todo el contexto, para que no haya que repetir nada.</p></details>
+      <details><summary>¿Usáis la API oficial de WhatsApp?</summary><p>Sí. Trabajamos con la API oficial de WhatsApp Business de Meta, que es la vía autorizada para empresas.</p></details>
+      <details><summary>¿Cuánto cuesta?</summary><p>Cada red es un proyecto a medida. Trabajamos con un pack mensual por sede que incluye mensajes y minutos de llamadas, y un monedero prepago para lo que se use de más. Te damos un presupuesto después del diagnóstico.</p></details>
+      <details><summary>¿Cuánto tarda en estar funcionando?</summary><p>Depende de las integraciones de tu red. El piloto en las primeras sedes dura de 30 a 60 días y, si cumple, desplegamos por oleadas.</p></details>
+      <details><summary>¿Qué pasa con los datos de mis clientes?</summary><p>Cumplimos el RGPD. Los datos se usan solo para atender a tus clientes, firmamos el contrato de encargo del tratamiento y no los compartimos con terceros para otros fines.</p></details>
+      <details><summary>¿Funciona en Latinoamérica?</summary><p>Sí. Nexi atiende en español de España y de Latinoamérica, y puede acompañar la expansión internacional de tu red.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contact section-dark" id="contacto">
+  <div class="contact__glow" aria-hidden="true"></div>
+  <div class="contact__rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="container contact__grid">
+    <div>
+      <p class="kicker">Contacto</p>
+      <h2 class="h2 h2--xl" id="ctaTitle">Tu red, atendiendo<br><span class="grad">el 100 % de los contactos.</span></h2>
+      <p class="lead reveal">Cuéntanos cómo es tu red y te proponemos un diagnóstico de atención. Sin compromiso.</p>
+      <ul class="contact__alt reveal">
+        <li><span>WhatsApp</span><a href="https://wa.me/34684486647">+34 684 486 647</a></li>
+        <li><span>LinkedIn</span><a href="https://www.linkedin.com/company/nexgentai">linkedin.com/company/nexgentai</a></li>
+      </ul>
+    </div>
+    <form class="form" id="leadForm" novalidate>
+      <input type="text" name="web" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <div class="form__row"><label>Nombre<input name="nombre" required autocomplete="name"></label><label>Empresa / red<input name="empresa" required autocomplete="organization"></label></div>
+      <div class="form__row"><label>Cargo<input name="cargo" autocomplete="organization-title"></label><label>Nº de sedes<input name="sedes" type="number" min="1" inputmode="numeric"></label></div>
+      <label>Sector<select name="sector"><option>Estética y belleza</option><option>Inmobiliaria</option><option>Clínicas y salud</option><option>Talleres y automoción</option><option>Otro</option></select></label>
+      <div class="form__row"><label>Email<input name="email" type="email" required autocomplete="email"></label><label>Teléfono<input name="telefono" type="tel" autocomplete="tel"></label></div>
+      <label class="check"><input type="checkbox" required name="privacidad"><span>He leído y acepto la <a href="legal.html#privacidad">política de privacidad</a>.</span></label>
+      <button class="btn btn--grad btn--block magnetic" type="submit">Solicitar diagnóstico</button>
+      <p class="form__msg" id="formMsg" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div>
+        <img class="footer__logo" src="assets/img/logo-nexgent-blanco.png" alt="NexGent" width="168" height="42">
+        <p class="footer__claim">IA que atiende a los clientes de las redes de franquicias. Por WhatsApp y por teléfono, en todas las sedes.</p>
+      </div>
+      <a href="#contacto" class="btn btn--grad magnetic">Solicitar diagnóstico</a>
+    </div>
+    <div class="footer__grid">
+      <div><h4>Empresa</h4><a href="#nosotros">Sobre nosotros</a><a href="#caso">Caso de éxito</a><a href="#como-trabajamos">Cómo trabajamos</a><a href="blog.html">Blog</a></div>
+      <div><h4>Producto</h4><a href="#demo">Cómo funciona</a><a href="#producto">Lo que hace Nexi</a><a href="#sectores">Sectores</a><a href="#calculadora">Calculadora</a></div>
+      <div><h4>Contacto</h4><a href="#contacto">Solicitar diagnóstico</a><a href="https://wa.me/34684486647">WhatsApp</a><a href="https://www.linkedin.com/company/nexgentai">LinkedIn</a><a href="https://www.instagram.com/nexgentai">Instagram</a></div>
+      <div><h4>Legal</h4><a href="legal.html#aviso-legal">Aviso legal</a><a href="legal.html#privacidad">Privacidad</a><a href="legal.html#cookies">Cookies</a></div>
+    </div>
+    <div class="footer__bottom"><p>© 2026 NEXGENT AI SYSTEMS, S.L. · NIF B22534564 · Calle Julio Verne 12, 18210 Peligros (Granada)</p><p>Hecho en Granada</p></div>
+  </div>
+</footer>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/three-scenes.js"></script>
+</body>
+</html>

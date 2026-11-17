@@ -1,8 +1,0 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Allow: /
-Disallow: /consultores
-
-# Sitemap
-Sitemap: https://nexgent.ai/sitemap.xml
-

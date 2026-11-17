@@ -1,28 +1,72 @@
 {
-  "functions": {
-    "app/api/images/route.ts": {
-      "maxDuration": 60,
-      "memory": 1024
+  "framework": null,
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/contacto",
+      "destination": "/#contacto",
+      "permanent": true
+    },
+    {
+      "source": "/demo",
+      "destination": "/#contacto",
+      "permanent": true
+    },
+    {
+      "source": "/agendar-demo",
+      "destination": "/#contacto",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:slug*",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/soluciones/:slug*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/sobre-nosotros",
+      "destination": "/#nosotros",
+      "permanent": true
+    },
+    {
+      "source": "/casos-de-exito/:slug*",
+      "destination": "/#caso",
+      "permanent": true
+    },
+    {
+      "source": "/precios",
+      "destination": "/#contacto",
+      "permanent": true
+    },
+    {
+      "source": "/privacidad",
+      "destination": "/legal#privacidad",
+      "permanent": true
+    },
+    {
+      "source": "/aviso-legal",
+      "destination": "/legal#aviso-legal",
+      "permanent": true
+    },
+    {
+      "source": "/cookies",
+      "destination": "/legal#cookies",
+      "permanent": true
     }
-  },
+  ],
   "headers": [
     {
-      "source": "/api/images",
+      "source": "/assets/(.*)",
       "headers": [
         {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, DELETE, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type"
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
         }
       ]
     }
   ]
 }
-

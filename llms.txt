@@ -1,0 +1,8 @@
+# NexGent
+
+> NEXGENT AI SYSTEMS, S.L. (Granada, España) desarrolla Nexi, un sistema de inteligencia artificial que atiende a los clientes de redes de franquicias por WhatsApp (API oficial de WhatsApp Business) y por teléfono con voz: responde 24/7, agenda, cambia y cancela citas y envía recordatorios.
+
+- Clientes: franquiciadores (centrales de redes de franquicias), no sedes sueltas.
+- Sectores: estética y belleza, inmobiliarias, clínicas y salud, talleres y automoción.
+- Modelo: proyectos a medida. Diagnóstico de atención, piloto de pago de 30 a 60 días en 2 a 5 sedes propias y despliegue por oleadas.
+- Contacto: https://nexgent.io/#contacto · WhatsApp +34 684 486 647 · https://www.linkedin.com/company/nexgentai
