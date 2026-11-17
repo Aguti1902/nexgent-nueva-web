@@ -23,10 +23,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css?v=a0932aa3">
+<link rel="stylesheet" href="/assets/css/blog.css?v=a0932aa3">
 </head>
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 <header class="nav" id="nav">
   <div class="nav__inner">
     <a href="/" class="logo" aria-label="NexGent, inicio"><img class="logo__w" src="/assets/img/logo-nexgent-blanco.png" alt="NexGent" width="112" height="28"><img class="logo__d" src="/assets/img/logo-nexgent.png" alt="" width="112" height="28" aria-hidden="true"></a>
@@ -48,10 +50,16 @@
     <a href="/#contacto">Contacto</a>
   </div>
 </header>
-<main id="main" class="page">
-<div class="container">
-<p class="kicker kicker--dark"><a href="/blog">Blog</a></p><h1>Guías y datos</h1><p class="lead lead--dark" style="margin-top:24px">Guías prácticas, normativa (RGPD, AI Act, VeriFactu) y datos del sector de la franquicia en España.</p><nav class="bfilters" aria-label="Categorías del blog"><a class="bfilter" href="/blog">Todo</a><a class="bfilter" href="/blog/categoria/casos-de-exito">Casos de éxito</a><a class="bfilter" href="/blog/categoria/franquicias">Franquicias</a><a class="bfilter" href="/blog/categoria/whatsapp-e-ia">WhatsApp e IA</a><a class="bfilter" href="/blog/categoria/voz-ia">Voz e IA telefónica</a><a class="bfilter" href="/blog/categoria/atencion-al-cliente">Atención al cliente</a><a class="bfilter is-on" href="/blog/categoria/guias" aria-current="page">Guías y datos</a></nav><p class="bempty">Muy pronto publicaremos el primer artículo de esta categoría.</p>
-</div>
+<main id="main" class="bx">
+<header class="bxhero">
+  <div class="bxhero__bg" aria-hidden="true"><i></i><i></i></div>
+  <div class="container bxhero__in">
+    <p class="kicker"><a href="/blog">Blog</a> · Categoría</p>
+    <h1 class="bxhero__title">Guías y datos</h1>
+    <p class="bxhero__lead">Guías prácticas, normativa (RGPD, AI Act, VeriFactu) y datos del sector de la franquicia en España.</p>
+    <nav class="bxfilters" aria-label="Categorías del blog"><a class="bxfilter" href="/blog" data-cat="all">Todo <b>5</b></a><a class="bxfilter" href="/blog/categoria/casos-de-exito" data-cat="casos-de-exito">Casos de éxito <b>2</b></a><a class="bxfilter" href="/blog/categoria/franquicias" data-cat="franquicias">Franquicias <b>1</b></a><a class="bxfilter" href="/blog/categoria/whatsapp-e-ia" data-cat="whatsapp-e-ia">WhatsApp e IA <b>1</b></a><a class="bxfilter" href="/blog/categoria/voz-ia" data-cat="voz-ia">Voz e IA telefónica <b>0</b></a><a class="bxfilter" href="/blog/categoria/atencion-al-cliente" data-cat="atencion-al-cliente">Atención al cliente <b>1</b></a><a class="bxfilter is-on" href="/blog/categoria/guias" data-cat="guias" aria-current="page">Guías y datos <b>0</b></a></nav>
+  </div>
+</header><section class="bxlist"><div class="container"><p class="bxempty">Muy pronto publicaremos el primer artículo de esta categoría.</p></div></section>
 </main>
 <footer class="footer">
   <div class="container">
@@ -74,6 +82,7 @@
 <script src="/assets/vendor/gsap.min.js"></script>
 <script src="/assets/vendor/ScrollTrigger.min.js"></script>
 <script src="/assets/vendor/lenis.min.js"></script>
-<script src="/assets/js/main.js"></script>
+<script src="/assets/js/main.js?v=a0932aa3"></script>
+<script src="/assets/js/blog.js?v=a0932aa3"></script>
 </body>
 </html>

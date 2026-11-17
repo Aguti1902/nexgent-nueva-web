@@ -21,7 +21,7 @@ Genera:
 - blog/feed.xml               RSS
 Los artículos con "draft": true no se publican.
 """
-import html, json, re, sys, datetime
+import html, json, re, sys, datetime, hashlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -29,6 +29,17 @@ SRC = ROOT / "content" / "blog"
 OUT = ROOT / "blog"
 SITE = "https://nexgent.io"
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+
+def asset_version():
+    h = hashlib.md5()
+    for f in ("assets/css/style.css", "assets/css/blog.css", "assets/js/main.js", "assets/js/blog.js", "assets/js/three-scenes.js"):
+        fp = ROOT / f
+        if fp.exists():
+            h.update(fp.read_bytes())
+    return h.hexdigest()[:8]
+
+
+V = asset_version()
 
 CATS = json.loads((SRC / "categories.json").read_text(encoding="utf-8"))
 CAT = {c["slug"]: c for c in CATS}
@@ -120,7 +131,8 @@ FOOT = """<footer class="footer">
 <script src="/assets/vendor/gsap.min.js"></script>
 <script src="/assets/vendor/ScrollTrigger.min.js"></script>
 <script src="/assets/vendor/lenis.min.js"></script>
-<script src="/assets/js/main.js"></script>"""
+<script src="/assets/js/main.js?v=__V__"></script>
+<script src="/assets/js/blog.js?v=__V__"></script>"""
 
 
 def cover_html(p, eager=False):
@@ -159,17 +171,17 @@ def page(title, description, canonical, body, jsonld=None, og_type="website", im
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css?v={V}">
+<link rel="stylesheet" href="/assets/css/blog.css?v={V}">
 {ld}</head>
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 {NAV}
-<main id="main" class="page">
-<div class="container">
+<main id="main" class="bx">
 {body}
-</div>
 </main>
-{FOOT.replace("__CATLINKS__", catlinks)}
+{FOOT.replace("__CATLINKS__", catlinks).replace("__V__", V)}
 </body>
 </html>
 """
@@ -177,20 +189,39 @@ def page(title, description, canonical, body, jsonld=None, og_type="website", im
 
 def card(p):
     c = CAT[p["category"]]
-    return (f'<a class="post bcard reveal" href="/blog/{p["slug"]}" data-cat="{p["category"]}">'
-            + cover_html(p) +
-            f'<span class="chip chip--dark">{esc(c["name"])}</span>'
+    return (f'<a class="bxcard" href="/blog/{p["slug"]}" data-cat="{p["category"]}">'
+            f'<div class="bxcard__img">{img_tag(p)}</div>'
+            f'<div class="bxcard__body"><span class="bxcat bxcat--{p["category"]}">{esc(c["name"])}</span>'
             f'<h3>{esc(p["title"])}</h3>'
-            f'<p class="bcard__desc">{esc(p["description"])}</p>'
-            f'<span class="bcard__meta">{fecha(p["date"])} · {p["minutes"]} min</span></a>')
+            f'<p>{esc(p["description"])}</p>'
+            f'<span class="bxmeta">{fecha(p["date"])} · {p["minutes"]} min de lectura</span></div></a>')
 
 
-def filters(active):
-    items = [f'<a class="bfilter{" is-on" if active is None else ""}" href="/blog"{" aria-current=\"page\"" if active is None else ""}>Todo</a>']
+def img_tag(p, eager=False):
+    if p.get("image"):
+        load = 'fetchpriority="high"' if eager else 'loading="lazy"'
+        return f'<img src="{esc(p["image"])}" alt="{esc(p.get("imageAlt") or p["title"])}" width="1600" height="900" {load} decoding="async">'
+    return f'<span class="bxph {esc(p["cover"])}"></span>'
+
+
+def featured(p):
+    c = CAT[p["category"]]
+    return (f'<a class="bxfeat" href="/blog/{p["slug"]}" data-cat="{p["category"]}">'
+            f'<div class="bxfeat__img">{img_tag(p, True)}</div>'
+            f'<div class="bxfeat__body"><span class="bxfeat__tag">Último artículo</span>'
+            f'<span class="bxcat bxcat--{p["category"]}">{esc(c["name"])}</span>'
+            f'<h2>{esc(p["title"])}</h2><p>{esc(p["description"])}</p>'
+            f'<span class="bxmeta">{fecha(p["date"])} · {p["minutes"]} min de lectura</span>'
+            f'<span class="bxmore">Leer artículo <i aria-hidden="true">→</i></span></div></a>')
+
+
+def filters(active, posts):
+    n = lambda slug: sum(1 for q in posts if slug is None or q["category"] == slug)
+    items = [f'<a class="bxfilter{" is-on" if active is None else ""}" href="/blog" data-cat="all"{" aria-current=\"page\"" if active is None else ""}>Todo <b>{n(None)}</b></a>']
     for c in CATS:
         on = active == c["slug"]
-        items.append(f'<a class="bfilter{" is-on" if on else ""}" href="/blog/categoria/{c["slug"]}"{" aria-current=\"page\"" if on else ""}>{esc(c["name"])}</a>')
-    return '<nav class="bfilters" aria-label="Categorías del blog">' + "".join(items) + "</nav>"
+        items.append(f'<a class="bxfilter{" is-on" if on else ""}" href="/blog/categoria/{c["slug"]}" data-cat="{c["slug"]}"{" aria-current=\"page\"" if on else ""}>{esc(c["name"])} <b>{n(c["slug"])}</b></a>')
+    return '<nav class="bxfilters" aria-label="Categorías del blog">' + "".join(items) + "</nav>"
 
 
 def build():
@@ -222,39 +253,83 @@ def build():
             {"@type": "ListItem", "position": 1, "name": "Blog", "item": f"{SITE}/blog"},
             {"@type": "ListItem", "position": 2, "name": c["name"], "item": f"{SITE}/blog/categoria/{c['slug']}"},
             {"@type": "ListItem", "position": 3, "name": p["title"]}]}
-        body = f"""<nav class="crumbs" aria-label="Migas de pan"><a href="/blog">Blog</a><span aria-hidden="true">/</span><a href="/blog/categoria/{c['slug']}">{esc(c['name'])}</a></nav>
-<article class="article apost">
-{cover_html(p, True)}
-<a class="chip chip--dark" href="/blog/categoria/{c['slug']}">{esc(c['name'])}</a>
-<h1 class="apost__title">{esc(p['title'])}</h1>
-<p class="apost__meta"><time datetime="{p['date']}">{fecha(p['date'])}</time> · {p['minutes']} min de lectura · {esc(p['author'])}</p>
-<p class="apost__lead">{esc(p['description'])}</p>
-<div class="prose">
+        share_url = f"{SITE}/blog/{p['slug']}"
+        body = f"""<header class="bxah">
+  <div class="bxah__bg" aria-hidden="true"></div>
+  <div class="container bxah__in">
+    <nav class="bxcrumbs" aria-label="Migas de pan"><a href="/blog">Blog</a><span aria-hidden="true">/</span><a href="/blog/categoria/{c['slug']}">{esc(c['name'])}</a></nav>
+    <a class="bxcat bxcat--{c['slug']} bxcat--dark" href="/blog/categoria/{c['slug']}">{esc(c['name'])}</a>
+    <h1 class="bxah__title">{esc(p['title'])}</h1>
+    <p class="bxah__lead">{esc(p['description'])}</p>
+    <div class="bxah__meta">
+      <span class="bxauthor"><img src="/assets/img/favicon.png" alt="" width="40" height="40"><span><b>{esc(p['author'])}</b><small><time datetime="{p['date']}">{fecha(p['date'])}</time> · {p['minutes']} min de lectura</small></span></span>
+      <span class="bxshare" data-url="{share_url}" data-title="{esc(p['title'])}">
+        <a class="bxshare__b" href="https://www.linkedin.com/sharing/share-offsite/?url={share_url}" target="_blank" rel="noopener" aria-label="Compartir en LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.86-3.06-1.87 0-2.15 1.46-2.15 2.96V21H9z"/></svg></a>
+        <a class="bxshare__b" href="https://wa.me/?text={html.escape(p['title'], quote=True)}%20{share_url}" target="_blank" rel="noopener" aria-label="Compartir por WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg></a>
+        <button class="bxshare__b bxcopy" type="button" aria-label="Copiar enlace"><svg viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><span class="bxcopy__ok">¡Copiado!</span></button>
+      </span>
+    </div>
+  </div>
+</header>
+<div class="container"><figure class="bxcover">{img_tag(p, True)}</figure></div>
+<section class="bxread">
+  <div class="container bxread__grid">
+    <article class="bxprose" id="articulo">
 {p['body']}
-</div>
-<aside class="apost__cta">
-<h2>¿Cuántos clientes se quedan sin respuesta en tu red?</h2>
-<p>En el diagnóstico de atención medimos los mensajes y las llamadas que reciben tus sedes y cuántos se pierden. Con esos números decides si un piloto tiene sentido.</p>
-<a href="/#contacto" class="btn btn--grad magnetic">Solicitar diagnóstico</a>
-</aside>
-</article>
-{"<section class='brelated'><h2 class='h2 h2--dark'>Sigue leyendo</h2><div class='blogp__grid'>" + "".join(card(q) for q in related) + "</div></section>" if related else ""}"""
+    </article>
+    <aside class="bxside" aria-label="En este artículo">
+      <div class="bxtoc"><p class="bxtoc__t">En este artículo</p><ol id="bxtoc"></ol></div>
+      <div class="bxmini"><p><b>¿Cuántos contactos pierden tus sedes?</b>Lo medimos en el diagnóstico de atención.</p><a href="/#contacto" class="btn btn--grad btn--sm">Solicitar diagnóstico</a></div>
+    </aside>
+  </div>
+</section>
+<section class="bxcta">
+  <div class="bxcta__rings" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="container bxcta__in">
+    <p class="kicker">Diagnóstico de atención</p>
+    <h2>¿Cuántos clientes se quedan <span class="grad">sin respuesta en tu red?</span></h2>
+    <p>Medimos los mensajes y las llamadas que reciben tus sedes y cuántos se pierden. Con esos números decides si un piloto tiene sentido.</p>
+    <a href="/#contacto" class="btn btn--grad magnetic">Solicitar diagnóstico</a>
+  </div>
+</section>
+{"<section class='bxrel'><div class='container'><div class='bxrel__head'><h2>Sigue leyendo</h2><a href='/blog'>Ver todo el blog →</a></div><div class='bxgrid'>" + "".join(card(q) for q in related) + "</div></div></section>" if related else ""}"""
         (OUT / f"{p['slug']}.html").write_text(page(f"{p['title']} · NexGent", p["description"], f"/blog/{p['slug']}", body, [ld, crumbs], "article", p.get("og")), encoding="utf-8")
 
     # Portada y categorías
     def listing(cat):
         sel = [p for p in posts if cat is None or p["category"] == cat]
         if cat is None:
-            head = '<p class="kicker kicker--dark">Blog</p><h1>Ideas para redes<br><span class="grad">que crecen.</span></h1><p class="lead lead--dark" style="margin-top:24px">Casos de éxito, franquicias, WhatsApp e IA de voz, sin jerga.</p>'
+            kick, h1, lead = "Blog de NexGent", 'Ideas para redes<br><span class="grad">que crecen.</span>', "Casos de éxito con datos reales, franquicias, WhatsApp e IA de voz. Sin jerga."
         else:
             c = CAT[cat]
-            head = f'<p class="kicker kicker--dark"><a href="/blog">Blog</a></p><h1>{esc(c["name"])}</h1><p class="lead lead--dark" style="margin-top:24px">{esc(c["description"])}</p>'
-        grid = '<div class="blogp__grid bgrid">' + "".join(card(p) for p in sel) + "</div>" if sel else '<p class="bempty">Muy pronto publicaremos el primer artículo de esta categoría.</p>'
-        return head + filters(cat) + grid
+            kick, h1, lead = '<a href="/blog">Blog</a> · Categoría', esc(c["name"]), esc(c["description"])
+        head = f"""<header class="bxhero">
+  <div class="bxhero__bg" aria-hidden="true"><i></i><i></i></div>
+  <div class="container bxhero__in">
+    <p class="kicker">{kick}</p>
+    <h1 class="bxhero__title">{h1}</h1>
+    <p class="bxhero__lead">{lead}</p>
+    {filters(cat, posts)}
+  </div>
+</header>"""
+        if not sel:
+            return head + '<section class="bxlist"><div class="container"><p class="bxempty">Muy pronto publicaremos el primer artículo de esta categoría.</p></div></section>'
+        first, rest = sel[0], sel[1:]
+        grid = '<div class="bxgrid">' + "".join(card(p) for p in rest) + "</div>" if rest else ""
+        all_cards = '<template id="bxall">' + "".join(card(p) for p in posts) + "</template>" if cat is None else ""
+        return head + f'<section class="bxlist"><div class="container">{featured(first)}{grid}<p class="bxempty" hidden>No hay artículos en esta categoría todavía.</p>{all_cards}</div></section>'
 
     (ROOT / "blog.html").write_text(page("Blog · NexGent", "Casos de éxito, franquicias, WhatsApp e IA de voz: ideas para que ninguna sede de tu red deje a un cliente sin respuesta.", "/blog", listing(None), {"@context": "https://schema.org", "@type": "Blog", "name": "Blog de NexGent", "url": f"{SITE}/blog", "inLanguage": "es-ES"}), encoding="utf-8")
     for c in CATS:
         (OUT / "categoria" / f"{c['slug']}.html").write_text(page(f"{c['name']} · Blog de NexGent", c["description"], f"/blog/categoria/{c['slug']}", listing(c["slug"])), encoding="utf-8")
+
+    # Versión de estilos y scripts en las páginas de la raíz (evita cachés antiguas)
+    for f in ("index.html", "legal.html", "404.html"):
+        fp = ROOT / f
+        if fp.exists():
+            t = fp.read_text(encoding="utf-8")
+            t = re.sub(r'(assets/(?:css/style\.css|js/main\.js|js/three-scenes\.js))(\?v=[0-9a-f]+)?"', lambda m: f'{m.group(1)}?v={V}"', t)
+            fp.write_text(t, encoding="utf-8")
 
     # Home: últimos 3
     idx = ROOT / "index.html"
