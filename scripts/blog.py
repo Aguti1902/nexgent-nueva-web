@@ -293,7 +293,13 @@ def build():
   </div>
 </section>
 {"<section class='bxrel'><div class='container'><div class='bxrel__head'><h2>Sigue leyendo</h2><a href='/blog'>Ver todo el blog →</a></div><div class='bxgrid'>" + "".join(card(q) for q in related) + "</div></div></section>" if related else ""}"""
-        (OUT / f"{p['slug']}.html").write_text(page(f"{p['title']} · NexGent", p["description"], f"/blog/{p['slug']}", body, [ld, crumbs], "article", p.get("og")), encoding="utf-8")
+        lds = [ld, crumbs]
+        faqs = re.findall(r'<details class="bxq"><summary>(.*?)</summary>(.*?)</details>', p["body"], re.S)
+        if faqs:
+            strip = lambda t: re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", t))).strip()
+            lds.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+                {"@type": "Question", "name": strip(q), "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in faqs]})
+        (OUT / f"{p['slug']}.html").write_text(page(f"{p['title']} · NexGent", p["description"], f"/blog/{p['slug']}", body, lds, "article", p.get("og")), encoding="utf-8")
 
     # Portada y categorías
     def listing(cat):

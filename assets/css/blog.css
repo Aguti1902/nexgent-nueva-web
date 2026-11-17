@@ -188,3 +188,45 @@
 .bxprose figure{margin:40px 0}
 .bxprose figure.shot img{width:100%;height:auto;display:block;border-radius:18px;border:1px solid rgba(0,0,0,.06);box-shadow:0 30px 60px -30px rgba(11,11,20,.35);background:#fff}
 .bxprose figure figcaption{margin-top:12px;font-size:14px;line-height:1.5;color:#86868b;text-align:center}
+
+/* ---- piezas de contenido ---- */
+.bxprose .bxkey{margin:0 0 40px;padding:26px 28px 22px;border-radius:22px;background:#fff;box-shadow:0 1px 0 var(--line-d);position:relative;overflow:hidden}
+.bxprose .bxkey::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:var(--grad)}
+.bxprose .bxkey>p:first-child{margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--b)}
+.bxprose .bxkey ul{margin:0;padding-left:20px;font-size:17px;line-height:1.6}
+.bxprose .bxkey li{margin-bottom:8px}
+.bxprose .bxstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:32px 0}
+.bxprose .bxstats div{padding:22px 20px;border-radius:20px;background:#000;color:#f5f5f7;position:relative;overflow:hidden}
+.bxprose .bxstats div::after{content:"";position:absolute;right:-30px;bottom:-40px;width:110px;height:110px;border-radius:50%;background:#3b82f6;filter:blur(40px);opacity:.45}
+.bxprose .bxstats b{display:block;font-family:var(--display);font-size:clamp(30px,3.4vw,40px);line-height:1;letter-spacing:-.03em;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:8px}
+.bxprose .bxstats span{position:relative;z-index:1;display:block;font-size:14px;line-height:1.4;color:#a1a1a6}
+.bxprose .bxnote{margin:32px 0;padding:22px 24px;border-radius:20px;background:rgba(74,168,216,.09);border:1px solid rgba(74,168,216,.22);font-size:17px;line-height:1.6;color:#2c3e50}
+.bxprose .bxnote p{margin:0}
+.bxprose .bxnote p+p{margin-top:10px}
+.bxprose .bxnote strong{color:#1d1d1f}
+.bxprose .bxex{margin:28px 0;padding:22px;border-radius:22px;background:#e9f0e6;display:flex;flex-direction:column;gap:10px;font-family:var(--text)}
+.bxprose .bxex span{align-self:flex-start;max-width:86%;padding:12px 16px;border-radius:4px 18px 18px 18px;background:#fff;font-size:15.5px;line-height:1.5;color:#1d1d1f;box-shadow:0 1px 1px rgba(0,0,0,.06)}
+.bxprose .bxex span.me{align-self:flex-end;border-radius:18px 4px 18px 18px;background:#d9fdd3}
+.bxprose .bxex small{align-self:center;font-size:12px;color:#6b7a66}
+.bxprose ol.bxsteps{list-style:none;padding:0;counter-reset:s;margin:28px 0}
+.bxprose ol.bxsteps>li{counter-increment:s;position:relative;padding:0 0 0 58px;margin:0 0 24px}
+.bxprose ol.bxsteps>li::before{content:counter(s);position:absolute;left:0;top:0;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fff;font-weight:700;font-size:15px}
+.bxprose ol.bxsteps>li::after{content:"";position:absolute;left:18px;top:46px;bottom:-18px;width:2px;background:var(--line-d)}
+.bxprose ol.bxsteps>li:last-child::after{display:none}
+.bxprose ol.bxsteps strong{display:block;font-size:19px;margin-bottom:4px}
+.bxprose .bxfaq{margin:24px 0 0;display:flex;flex-direction:column;gap:10px}
+.bxprose details.bxq{border-radius:18px;background:#fff;box-shadow:0 1px 0 var(--line-d);overflow:hidden}
+.bxprose details.bxq summary{list-style:none;cursor:pointer;padding:20px 56px 20px 22px;font-weight:600;font-size:17px;line-height:1.4;color:var(--ink);position:relative}
+.bxprose details.bxq summary::-webkit-details-marker{display:none}
+.bxprose details.bxq summary::after{content:"+";position:absolute;right:20px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--light);font-size:20px;font-weight:400;transition:transform .4s var(--ease)}
+.bxprose details.bxq[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.bxprose details.bxq>div{padding:0 22px 20px;font-size:16.5px;line-height:1.65}
+.bxprose details.bxq>div p{margin:0 0 10px}
+.bxprose details.bxq>div p:last-child{margin:0}
+.bxprose .bxsrc{font-size:14.5px;line-height:1.6;color:#86868b;border-top:1px solid var(--line-d);padding-top:20px;margin-top:48px}
+.bxprose .bxsrc a{color:#6e6e73}
+@media (max-width:640px){
+  .bxprose .bxstats{grid-template-columns:1fr 1fr}
+  .bxprose .bxkey{padding:22px 20px 18px}
+  .bxprose ol.bxsteps>li{padding-left:50px}
+}
