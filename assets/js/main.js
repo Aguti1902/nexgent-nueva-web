@@ -183,9 +183,14 @@
     const btn = form.querySelector('button[type=submit]'); const label = btn.textContent;
     btn.disabled = true; btn.textContent = 'Enviando…'; msg.textContent = '';
     try {
-      const r = await fetch('/api/diagnostico', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.fromEntries(d)) });
+      if (d.get('web')) throw new Error('error'); // anti-spam
+      const lead = { 'Nombre': d.get('nombre'), 'Empresa / red': d.get('empresa'), 'Cargo': d.get('cargo') || '-', 'Nº de sedes': d.get('sedes') || '-',
+        'Sector': d.get('sector') || '-', 'Email': d.get('email'), 'Teléfono': d.get('telefono') || '-',
+        _subject: `Nueva solicitud de diagnóstico · ${d.get('empresa')}`, _replyto: d.get('email'), _template: 'table', _captcha: 'false' };
+      // Envío a info@nexgent.io con FormSubmit (https://formsubmit.co)
+      const r = await fetch('https://formsubmit.co/ajax/info@nexgent.io', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(lead) });
       const data = await r.json().catch(() => ({}));
-      if (!r.ok || !data.ok) throw new Error(data.error || 'error');
+      if (!r.ok || String(data.success) !== 'true') throw new Error('error');
       form.reset(); btn.textContent = 'Solicitud enviada ✓';
       msg.textContent = '¡Gracias! Hemos recibido tu solicitud. Te escribimos muy pronto.';
     } catch (err) {

@@ -22,7 +22,7 @@ Se publica en Vercel (proyecto `nexgent-nueva-web`) automáticamente al subir ca
 
 ## Pendiente
 
-1. **Formulario:** envía cada solicitud a info@nexgent.io (función `api/diagnostico.js`) y la guarda en Supabase (`demo_requests`). Sin configurar nada usa FormSubmit: la primera vez llega a info@nexgent.io un correo de activación que hay que confirmar. Para usar Resend, añade en Vercel `RESEND_API_KEY` (y `RESEND_FROM` con un remitente del dominio verificado).
+1. **Formulario:** cada solicitud se envía por email a info@nexgent.io con FormSubmit (formsubmit.co), directamente desde el navegador. La primera vez hay que pulsar el enlace «Activate Form» del correo que FormSubmit envía a info@nexgent.io.
 2. **Logo:** ya está el oficial (`assets/img/`), en versión oscura y blanca, con favicon.
 3. **Caso de éxito:** muestra datos reales de un centro de Hello Nails (recordatorios del 18 oct al 16 nov y llamadas con IA del 27 oct al 16 nov de 2026), sin nombrar a la marca. Antes de publicar, confirmad con Hello Nails que se pueden enseñar.
 4. **Equipo:** revisar nombres, cargos y si los cuatro socios quieren salir en la web.
