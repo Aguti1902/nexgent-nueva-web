@@ -118,6 +118,13 @@ FOOT = """<footer class="footer">
 <script src="/assets/js/main.js"></script>"""
 
 
+
+def seo_title(p):
+    """<title> del artículo: usa "seoTitle" si existe y añade « · NexGent» solo si cabe en 65 caracteres."""
+    t = p.get("seoTitle") or p["title"]
+    return f"{t} · NexGent" if len(t) + 10 <= 65 else t
+
+
 def page(title, description, canonical, body, jsonld=None, og_type="website"):
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>\n' if jsonld else ""
     catlinks = "".join(f'<a href="/blog/categoria/{c["slug"]}">{esc(c["name"])}</a>' for c in CATS)
@@ -219,7 +226,7 @@ def build():
 </aside>
 </article>
 {"<section class='brelated'><h2 class='h2 h2--dark'>Sigue leyendo</h2><div class='blogp__grid'>" + "".join(card(q) for q in related) + "</div></section>" if related else ""}"""
-        (OUT / f"{p['slug']}.html").write_text(page(f"{p['title']} · NexGent", p["description"], f"/blog/{p['slug']}", body, [ld, crumbs], "article"), encoding="utf-8")
+        (OUT / f"{p['slug']}.html").write_text(page(seo_title(p), p["description"], f"/blog/{p['slug']}", body, [ld, crumbs], "article"), encoding="utf-8")
 
     # Portada y categorías
     def listing(cat):
