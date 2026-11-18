@@ -1,0 +1,34 @@
+{
+ "tipo": "historia",
+ "fondo": "/home/claude/ai/n1.png",
+ "etiqueta": "Para centrales",
+ "diapositivas": [
+  {
+   "tipo": "portada",
+   "titulo": "Cómo probar la IA sin arriesgar tu red",
+   "texto": "Nunca en toda la red de golpe."
+  },
+  {
+   "tipo": "lista",
+   "titulo": "Un piloto de verdad",
+   "items": [
+    "30 días con clientes reales",
+    "De 3 a 5 sedes propias",
+    "El éxito, acordado por escrito",
+    "Si cumple, despliegue por oleadas"
+   ]
+  },
+  {
+   "tipo": "dato",
+   "numero": "70 %",
+   "titulo": "es el mínimo de llamadas resueltas sin una persona que proponemos para el piloto",
+   "nota": "Criterio por defecto del piloto de voz"
+  },
+  {
+   "tipo": "cta",
+   "titulo": "¿Diriges una red de franquicias?",
+   "texto": "Te contamos cómo sería en tus sedes propias.",
+   "boton": "Escríbenos por privado"
+  }
+ ]
+}
