@@ -23,6 +23,7 @@ Salidas:
   carrusel  -> 01.jpg, 02.jpg… (1080x1350) y portada en post.jpg
   dato      -> dato.jpg (1080x1350)
   linkedin  -> linkedin.jpg (1200x1200)
+  banner    -> banner.jpg (1584x396, portada de perfil de LinkedIn; texto en la mitad derecha)
   historia  -> h01.jpg, h02.jpg… (1080x1920, historias de Instagram a pantalla completa). Usa
                "diapositivas" (portada, dato, texto, lista, cta). El texto queda entre y=260 e y=1580,
                fuera de lo que tapa Instagram. La portada usa "fondo" (IA vertical 9:16) si lo hay.
@@ -494,10 +495,39 @@ def historia(spec, out):
         save(img, out, f"h{i:02d}.jpg")
 
 
+def banner(spec, out):
+    """Portada de perfil de LinkedIn (1584x396). La foto de perfil tapa abajo a la izquierda:
+    el texto va en la mitad derecha. Campos: etiqueta, titulo (2 líneas), subtitulo (1 línea), cta."""
+    W, H = 1584, 396
+    img = bg_from(spec, W, H, 4) if spec.get("fondo") else brand_bg(W, H, 4)
+    img = Image.blend(img, Image.new("RGB", (W, H), NIGHT), 0.35)
+    dots = Image.new("L", (W, H), 0)
+    dd = ImageDraw.Draw(dots)
+    for yy in range(18, H, 34):
+        for xx in range(18, W, 34):
+            dd.ellipse([xx, yy, xx + 2, yy + 2], fill=46)
+    img = Image.composite(Image.new("RGB", (W, H), (110, 140, 160)), img, dots)
+    d = ImageDraw.Draw(img)
+    x0, maxw = 600, W - 600 - 64
+    y = 44
+    if spec.get("etiqueta"):
+        chip(img, d, x0, y, spec["etiqueta"], 22)
+        y += 62
+    f, lines, sz = fit_text(d, spec.get("titulo", ""), "display", maxw, 130, 58, 34, 1.04)
+    y = draw_lines(d, (x0, y), lines[:2], f, sz, lh=1.04) + 12
+    if spec.get("subtitulo"):
+        fs = font("text", 26)
+        d.text((x0, y), wrap(d, spec["subtitulo"], fs, maxw)[0], font=fs, fill=(220, 224, 232))
+        y += 44
+    fb = font("semi", 26)
+    cta = spec.get("cta", "Reserva 30 minutos  ·  nexgent.io/reunion")
+    d.text((x0, y), cta, font=fb, fill=TURQ)
+    save(img, out, "banner.jpg")
+
 def main():
     spec = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
     out = Path(sys.argv[2])
-    {"blog": blog, "post": post, "carrusel": carrusel, "dato": dato, "linkedin": linkedin, "historia": historia}[spec["tipo"]](spec, out)
+    {"blog": blog, "post": post, "carrusel": carrusel, "dato": dato, "linkedin": linkedin, "historia": historia, "banner": banner}[spec["tipo"]](spec, out)
     print("\n".join(sorted(p.name for p in out.glob("*.jpg") if not p.name.startswith("thumb-"))))
 
 
