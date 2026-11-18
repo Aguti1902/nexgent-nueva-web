@@ -41,225 +41,6 @@ function truck(statusColor) {
   return g;
 }
 
-/* =============== HERO: flota sobre un mapa low-poly =============== */
-(function hero() {
-  const canvas = $('#e3Hero'); if (!canvas) return;
-  let renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: !small, powerPreference: 'high-performance' }); } catch (e) { return; }
-  renderer.setPixelRatio(DPR); renderer.setClearColor(0x000000, 1);
-  const scene = new THREE.Scene(); scene.fog = new THREE.Fog(0x000000, 55, 135);
-  const camera = new THREE.PerspectiveCamera(small ? 50 : 36, 1, .1, 400);
-  sizer(renderer, camera, canvas.parentElement);
-  lights(scene);
-  const world = new THREE.Group(); scene.add(world);
-
-  const N = 24, CELL = 4, HALF = N * CELL / 2, ROADS = [-48, -32, -16, 0, 16, 32, 48];
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(260, 260), mat(0x040608, { roughness: 1 }));
-  ground.rotation.x = -Math.PI / 2; world.add(ground);
-  const grid = new THREE.GridHelper(96, 24, 0x0f2028, 0x0a141a); grid.position.y = .005; world.add(grid);
-
-  // carreteras
-  const roadM = mat(0x0b1016, { roughness: 1 });
-  ROADS.forEach(v => { box(world, 96 + 2, .02, 1.7, roadM, 0, 0, v); box(world, 1.7, .021, 96 + 2, roadM, v, 0, 0); });
-  const dash = [];
-  ROADS.forEach(v => { for (let s = -HALF; s < HALF; s += 2.2) { dash.push(s, .04, v, s + 1, .04, v, v, .04, s, v, .04, s + 1); } });
-  const dg = new THREE.BufferGeometry(); dg.setAttribute('position', new THREE.Float32BufferAttribute(dash, 3));
-  world.add(new THREE.LineSegments(dg, new THREE.LineBasicMaterial({ color: 0x2a6f7c, transparent: true, opacity: .55 })));
-
-  // almacenes
-  const depots = [[1, 1], [4, 4], [5, 1]].map(([i, j]) => [-48 + i * 16 + 8, -48 + j * 16 + 8]);
-  const depotRings = [];
-  depots.forEach(([x, z], k) => {
-    const d = box(world, 9, 2.6, 7, mat(0x16212b, { roughness: .6 }), x, 0, z); edges(d, C.cyan, .9);
-    box(world, 9.2, .12, 7.2, glow(C.cyan, .25), x, 2.6, z);
-    const r = ring(5.6, 5.9, k === 2 ? C.a : C.cyan, .6); r.position.set(x, .05, z); world.add(r); depotRings.push(r);
-  });
-  const nearDepot = (x, z) => depots.some(([dx, dz]) => Math.abs(dx - x) < 7 && Math.abs(dz - z) < 6);
-
-  // edificios (instanciados) y luces de azotea
-  const cells = [];
-  for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
-    const x = -HALF + i * CELL + CELL / 2, z = -HALF + j * CELL + CELL / 2;
-    if (Math.random() < .22 || nearDepot(x, z)) continue;
-    const dist = Math.hypot(x, z), h = (.25 + Math.pow(Math.random(), 3) * 5.5) * Math.max(.35, 1.5 - dist / 60);
-    cells.push([x, z, h, 1.7 + Math.random() * .6, 1.7 + Math.random() * .6]);
-  }
-  const bm = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), mat(0xffffff, { roughness: .85 }), cells.length);
-  const m4 = new THREE.Matrix4(), col = new THREE.Color(), tops = [];
-  cells.forEach(([x, z, h, w, d], k) => {
-    m4.makeScale(w, h, d); m4.setPosition(x, h / 2, z); bm.setMatrixAt(k, m4);
-    col.setHSL(.57, .25, .055 + Math.random() * .045); bm.setColorAt(k, col);
-    if (Math.random() < .55) tops.push(x + (Math.random() - .5) * w * .6, h + .05, z + (Math.random() - .5) * d * .6);
-  });
-  world.add(bm);
-  const tg = new THREE.BufferGeometry(); tg.setAttribute('position', new THREE.Float32BufferAttribute(tops, 3));
-  world.add(new THREE.Points(tg, new THREE.PointsMaterial({ color: 0x9fe6f0, size: small ? .35 : .28, transparent: true, opacity: .75, depthWrite: false })));
-
-  // ruta destacada
-  const route = [[0, 5], [2, 5], [2, 3], [4, 3], [4, 1], [6, 1]].map(([i, j]) => new THREE.Vector3(ROADS[i], .06, ROADS[j]));
-  const routeM = glow(C.cyan, .5);
-  for (let k = 0; k < route.length - 1; k++) {
-    const a = route[k], b = route[k + 1], len = a.distanceTo(b), mid = a.clone().add(b).multiplyScalar(.5);
-    const seg = new THREE.Mesh(new THREE.BoxGeometry(Math.abs(b.x - a.x) || .35, .02, Math.abs(b.z - a.z) || .35), routeM);
-    seg.position.copy(mid); world.add(seg); void len;
-  }
-  const routeLen = []; let acc = 0; route.forEach((p, k) => { if (k) acc += p.distanceTo(route[k - 1]); routeLen.push(acc); });
-  const at = (path, lens, d) => { d = ((d % lens.at(-1)) + lens.at(-1)) % lens.at(-1); let k = 1; while (lens[k] < d) k++; const t = (d - lens[k - 1]) / (lens[k] - lens[k - 1]); return [path[k - 1].clone().lerp(path[k], t), path[k].clone().sub(path[k - 1]).normalize()]; };
-  const pulses = Array.from({ length: 6 }, () => { const s = new THREE.Mesh(new THREE.SphereGeometry(.28, 12, 8), glow(0xb8eef2)); world.add(s); return s; });
-
-  // camiones
-  const NT = small ? 10 : 16, trucks = [];
-  const statuses = [C.g, C.g, C.g, C.a, C.g, C.g, C.r, C.g, C.a, C.g, C.g, C.g, C.g, C.a, C.g, C.g];
-  for (let k = 0; k < NT; k++) {
-    const st = statuses[k % statuses.length], g = truck(st); g.scale.setScalar(.85); world.add(g);
-    const i = Math.floor(Math.random() * 7), j = Math.floor(Math.random() * 7);
-    trucks.push({ g, st, a: [i, j], b: [i, j], t: 1, speed: st === C.r ? 0 : (st === C.a ? 4 : 6 + Math.random() * 3) });
-  }
-  trucks[0].route = true; trucks[0].d = 0; trucks[0].speed = 7;
-  const red = trucks.find(t => t.st === C.r);
-  if (red) { red.a = red.b = [3, 4]; red.g.position.set(ROADS[3] + .9, 0, ROADS[4] + 6); red.g.rotation.y = 0; red.parked = true; }
-  const pick = tr => {
-    const [i, j] = tr.b, opts = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([di, dj]) => [i + di, j + dj]).filter(([a, b]) => a >= 0 && a < 7 && b >= 0 && b < 7 && !(a === tr.a[0] && b === tr.a[1]));
-    tr.a = tr.b; tr.b = opts[Math.floor(Math.random() * opts.length)]; tr.t = 0;
-  };
-  const place = (tr, dt) => {
-    if (tr.parked) return;
-    if (tr.route) {
-      tr.d += tr.speed * dt; const [p, dir] = at(route, routeLen, tr.d);
-      tr.g.position.set(p.x + dir.z * .55, 0, p.z - dir.x * .55); tr.g.rotation.y = Math.atan2(dir.x, dir.z); return;
-    }
-    if (tr.t >= 1) pick(tr);
-    const A = new THREE.Vector3(ROADS[tr.a[0]], 0, ROADS[tr.a[1]]), B = new THREE.Vector3(ROADS[tr.b[0]], 0, ROADS[tr.b[1]]);
-    tr.t = Math.min(1, tr.t + tr.speed * dt / A.distanceTo(B));
-    const p = A.lerp(B, tr.t), dir = B.clone().sub(new THREE.Vector3(ROADS[tr.a[0]], 0, ROADS[tr.a[1]])).normalize();
-    tr.g.position.set(p.x + dir.z * .55, 0, p.z - dir.x * .55); tr.g.rotation.y = Math.atan2(dir.x, dir.z);
-  };
-  trucks.forEach(tr => { if (!tr.route && !tr.parked) { pick(tr); tr.t = Math.random(); } place(tr, 0); });
-
-  // etiquetas HTML
-  const labelsBox = $('#e3Labels');
-  const labels = small ? [] : [
-    { obj: trucks[0].g, html: '<b>Camión 07</b><i></i>En ruta · llega 12:40', dy: 3 },
-    red && { obj: red.g, html: '<b>Camión 12</b><i class="r"></i>Parado 14 min · avisado', dy: 3 },
-    { pos: new THREE.Vector3(depots[1][0], 3, depots[1][1]), html: '<b>Almacén norte</b><i class="a"></i>Ocupación 86 %', dy: 1.5 }
-  ].filter(Boolean).map(l => { const el = document.createElement('div'); el.className = 'e3-lbl'; el.innerHTML = l.html; labelsBox.appendChild(el); return { ...l, el }; });
-  const v3 = new THREE.Vector3();
-  const drawLabels = () => {
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    labels.forEach(l => {
-      if (l.obj) v3.copy(l.obj.position).setY(l.dy); else v3.copy(l.pos);
-      world.localToWorld(v3); v3.project(camera);
-      const x = (v3.x * .5 + .5) * w, y = (-v3.y * .5 + .5) * h;
-      const cx = Math.abs(x - w / 2) < w * .34 && y > h * .15 && y < h * .8;
-      l.el.style.opacity = v3.z < 1 && x > 40 && x < w - 40 && y > 90 && y < h - 40 && !cx ? 1 : 0;
-      l.el.style.transform = `translate(${x}px,${y}px) translate(-50%,-130%)`;
-    });
-  };
-
-  // cámara
-  const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-  addEventListener('pointermove', e => { mouse.tx = e.clientX / innerWidth - .5; mouse.ty = e.clientY / innerHeight - .5; }, { passive: true });
-  const R = small ? 78 : 74, H = small ? 64 : 44;
-  const frame = (t, dt) => {
-    mouse.x += (mouse.tx - mouse.x) * .04; mouse.y += (mouse.ty - mouse.y) * .04;
-    const sc = clamp(scrollY / innerHeight);
-    const ang = .75 + t * .025 + mouse.x * .25;
-    camera.position.set(Math.sin(ang) * (R - sc * 14), H + mouse.y * 8 - sc * 10, Math.cos(ang) * (R - sc * 14));
-    camera.lookAt(0, 0, 0);
-    trucks.forEach(tr => { place(tr, dt); const r = tr.g.userData.ring; r.material.opacity = .45 + .4 * Math.sin(t * 3 + tr.g.id); });
-    depotRings.forEach((r, k) => { const s = 1 + ((t * .5 + k * .33) % 1) * .5; r.scale.setScalar(s); r.material.opacity = .7 * (1 - (s - 1) / .5); });
-    pulses.forEach((p, k) => { const [pos] = at(route, routeLen, t * 14 + k * routeLen.at(-1) / pulses.length); p.position.copy(pos).setY(.25); });
-    renderer.render(scene, camera); drawLabels();
-  };
-  if (reduce) { frame(0, 0); return; }
-  loop(canvas, frame);
-})();
-
-/* =============== feed de agentes del hero =============== */
-(function feed() {
-  const ul = $('#e3Feed'); if (!ul || reduce) return;
-  const msgs = [
-    ['Rutas', 'Reordena 3 entregas por un atasco en la A-7'], ['Mantenimiento', 'Camión 12: revisión de frenos en 2.000 km'], ['Clientes', 'Avisa a 2 clientes del nuevo horario de entrega'],
-    ['Stock', 'Prepara un pedido de reposición. Espera tu OK'], ['Rutas', 'Camión 07 llega 6 min antes de lo previsto'], ['Informes', 'Resumen del día listo para las 9:00'],
-    ['Mantenimiento', 'Cámara de frío 2: temperatura estable'], ['Clientes', 'Responde a 5 consultas por WhatsApp'], ['Rutas', 'Propone juntar dos repartos en Málaga este']];
-  let k = 3;
-  setInterval(() => {
-    if (document.hidden) return;
-    const [a, b] = msgs[k++ % msgs.length], li = document.createElement('li');
-    li.innerHTML = `<b></b>`; li.firstChild.textContent = a; li.append(b);
-    ul.prepend(li); while (ul.children.length > 3) ul.lastElementChild.remove();
-  }, 3600);
-})();
-
-/* =============== el problema: diez herramientas → una vista =============== */
-(function problem() {
-  const sec = $('.e3-problem'); if (!sec) return;
-  const items = $$('.e3-tool, .e3-core', sec);
-  const upd = () => {
-    const r = sec.getBoundingClientRect(), tot = r.height - innerHeight;
-    const p = reduce ? 1 : clamp((-r.top / Math.max(1, tot) - .12) / .6);
-    const e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-    items.forEach(el => el.style.setProperty('--p', e.toFixed(3)));
-  };
-  addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
-})();
-
-/* =============== funcionalidades: pequeñas animaciones =============== */
-(function features() {
-  // migas de la escena viva
-  const crumbs = $$('.e3-crumbs span');
-  if (crumbs.length && !reduce) { let k = 0; setInterval(() => { crumbs.forEach((c, i) => c.classList.toggle('on', i === k)); k = (k + 1) % crumbs.length; }, 2200); }
-  // reloj del rebobinado (sincronizado con la animación de 8 s)
-  const clock = $('[data-clock]');
-  if (clock && !reduce) { const t0 = performance.now(); setInterval(() => { const f = Math.min(1, (((performance.now() - t0) / 8000) % 1) / .8); const m = 360 + Math.round(f * 720); clock.textContent = String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }, 120); }
-  // mapa de calor
-  const heat = $('#e3Heat');
-  if (heat) {
-    const cells = Array.from({ length: 96 }, () => heat.appendChild(document.createElement('i')));
-    const paint = t => cells.forEach((c, i) => { const x = i % 16, y = Math.floor(i / 16); const v = Math.max(0, Math.sin(x * .55 + t) * Math.cos(y * .9 - t * .7)) ** 2; c.style.setProperty('--o', (.06 + v * .85).toFixed(2)); });
-    let t = 0; paint(t); if (!reduce) setInterval(() => { if (!document.hidden) paint(t += .35); }, 1400);
-  }
-  // simulador
-  const sim = $('#e3Sim');
-  if (sim) {
-    const A = [88, 91, 94, 96, 97, 98, 98], B = [0, 11, 22, 31, 38, 43, 46], U = [92, 88, 84, 80, 77, 74, 71];
-    const out = $('#e3SimOut'), a = $('#e3SimA'), b = $('#e3SimB'), c = $('#e3SimC');
-    const upd = () => { const n = +sim.value; out.textContent = n ? `+${n} camión${n > 1 ? 'es' : ''}` : 'Sin cambios'; a.textContent = A[n] + ' %'; b.textContent = B[n] ? '−' + B[n] + ' %' : '0 %'; c.textContent = U[n] + ' %'; };
-    sim.addEventListener('input', upd); upd();
-  }
-})();
-
-/* =============== sectores: datos =============== */
-const SECTORS = [
-  { id: 'flotas', tab: 'Flotas', title: 'Flota de camiones', intro: 'Toda la flota sobre el mapa, en directo: dónde está cada camión, cómo va cada ruta y qué entrega llega tarde.',
-    ve: ['Cada camión en su ruta, con velocidad, carga y hora prevista de llegada', 'Paradas largas, desvíos y retrasos marcados en color', 'Almacenes y muelles con su ocupación', 'El día entero rebobinable para revisar qué pasó'],
-    agentes: ['Rutas', 'Mantenimiento', 'Atención a clientes'], datos: ['Samsara', 'Webfleet', 'GPS de la flota', 'ERP', 'Google Sheets', 'WhatsApp'] },
-  { id: 'almacen', tab: 'Almacén', title: 'Almacén', intro: 'La nave en 3D, estantería por estantería: qué hay, qué falta y qué está a punto de salir por el muelle.',
-    ve: ['Ocupación de cada estantería y cada hueco', 'Pedidos en preparación y muelles de carga', 'Productos por debajo del stock mínimo', 'Mapas de calor de las zonas con más movimiento'],
-    agentes: ['Stock', 'Pedidos', 'Muelles'], datos: ['Odoo', 'Holded', 'Tu ERP o SGA', 'Google Sheets', 'Correo de proveedores'] },
-  { id: 'tiendas', tab: 'Tiendas', title: 'Red de tiendas', intro: 'Todas tus tiendas en un mapa, con cómo va cada una hoy comparada con lo normal.',
-    ve: ['Ventas del día de cada tienda frente a lo habitual', 'Roturas de stock y reposiciones pendientes', 'Incidencias abiertas por tienda', 'Zonas y tiendas que se salen de lo normal'],
-    agentes: ['Ventas', 'Reposición', 'Atención a clientes'], datos: ['TPV', 'Stripe', 'ERP', 'WhatsApp', 'Google Sheets'] },
-  { id: 'software', tab: 'Software', title: 'Empresa de software', intro: 'Tus servicios como un pequeño barrio: cada edificio es un sistema, con su salud, sus despliegues y sus incidencias.',
-    ve: ['Estado de cada servicio y de cada servidor', 'Despliegues del día y lo que cambió', 'Incidencias abiertas y tiques de clientes', 'Ingresos y bajas de clientes en directo'],
-    agentes: ['Guardia', 'Soporte', 'Producto'], datos: ['Jira', 'Slack', 'Stripe', 'HubSpot', 'Gmail', 'Tu monitorización'] },
-  { id: 'fabrica', tab: 'Fábrica', title: 'Fábrica', intro: 'Cada línea de producción y cada máquina en 3D, con su ritmo, su estado y lo que necesita atención.',
-    ve: ['Producción por línea frente al objetivo del turno', 'Máquinas con su estado: en marcha, parada o en aviso', 'Paradas, cuellos de botella y mermas', 'Mantenimientos previstos y piezas de recambio'],
-    agentes: ['Producción', 'Mantenimiento', 'Calidad'], datos: ['Sensores de las máquinas', 'ERP', 'Odoo', 'Google Sheets', 'Outlook'] },
-  { id: 'clinicas', tab: 'Clínicas', title: 'Red de clínicas', intro: 'Todas las clínicas de un vistazo: agenda, salas ocupadas y huecos libres, sede por sede.',
-    ve: ['Ocupación de la agenda y de cada sala', 'Huecos libres que se pueden llenar hoy', 'Cancelaciones y citas sin confirmar', 'Facturación del día por clínica'],
-    agentes: ['Agenda', 'Recepción por WhatsApp y teléfono', 'Facturación'], datos: ['Programa de citas', 'Google Calendar', 'WhatsApp', 'Holded', 'Stripe'] },
-  { id: 'obras', tab: 'Obras', title: 'Obras y construcción', intro: 'Cada obra en 3D con su avance por fases, las entregas de material y lo que va con retraso.',
-    ve: ['Avance de cada obra por fases frente al plan', 'Entregas de material y alquiler de maquinaria', 'Retrasos y tareas bloqueadas', 'Documentación y permisos pendientes'],
-    agentes: ['Planificación', 'Compras', 'Documentación'], datos: ['Excel de planificación', 'ERP', 'Google Calendar', 'Gmail', 'WhatsApp'] },
-  { id: 'inmobiliaria', tab: 'Inmobiliaria', title: 'Inmobiliaria', intro: 'La cartera entera sobre el mapa: cada inmueble con su estado, sus visitas y sus interesados.',
-    ve: ['Inmuebles disponibles, reservados y vendidos', 'Visitas del día y de la semana', 'Interesados nuevos y a quién falta responder', 'Precio y tiempo en el mercado por zona'],
-    agentes: ['Captación', 'Visitas', 'Seguimiento'], datos: ['HubSpot', 'Portales inmobiliarios', 'WhatsApp', 'Google Calendar', 'Gmail'] },
-  { id: 'energia', tab: 'Energía', title: 'Instalaciones de energía', intro: 'Plantas solares, eólicas y baterías en 3D, con lo que producen ahora mismo y cualquier alarma.',
-    ve: ['Producción en directo frente a la prevista', 'Alarmas y equipos con bajo rendimiento', 'Estado de carga de las baterías', 'Mantenimientos y visitas técnicas'],
-    agentes: ['Producción', 'Mantenimiento', 'Informes'], datos: ['SCADA o monitorización', 'Previsión meteorológica', 'ERP', 'Google Sheets', 'Outlook'] }
-];
-
 /* =============== sectores: dioramas 3D =============== */
 const BUILD = {
   flotas(g) {
@@ -359,12 +140,349 @@ const BUILD = {
     });
     const bat = box(g, 2.2, 1.2, 1.2, mat(0x26323d), -4, 0, -4.5); edges(bat, C.g, .7); const lvl = box(g, 1.8, .14, .04, glow(C.g), -4, .5, -3.88);
     return t => { rotors.forEach((r, k) => r.rotation.z = t * (1.4 + k * .2)); lvl.scale.x = .6 + (Math.sin(t * .5) * .5 + .5) * .4; };
-  }
+  },
+  oficina(g) {
+    const glass = mat(0x1d2b38, { roughness: .2, metalness: .6 }), zones = [];
+    const tower = box(g, 4.2, 7, 4.2, glass, -1.5, 0, -1); edges(tower, C.cyan, .35);
+    for (let f = 0; f < 7; f++) { const w = box(g, 4.25, .08, 4.25, glow(C.cyan, .2), -1.5, f + .9, -1); zones.push(w); }
+    const side = box(g, 3.6, 4, 3, glass, 3.4, 0, 1.4); edges(side, C.cyan, .3);
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) zones.push(box(g, .9, .06, .7, glow(C.g, .9), 2.3 + i * 1.1, 4.02, .5 + j * .9));
+    for (let k = 0; k < 7; k++) { const a = k / 7 * Math.PI * 2 + .4; box(g, .45, .9 + Math.random() * .7, .45, mat(0x1d4a3a), Math.cos(a) * 8, 0, Math.sin(a) * 8); }
+    const sat = new THREE.Mesh(new THREE.TorusGeometry(1.4, .05, 8, 48), glow(C.cyan, .8)); sat.position.set(-1.5, 8.2, -1); sat.rotation.x = Math.PI / 2; g.add(sat);
+    let last = -1;
+    return t => { sat.rotation.z = t * .8; const s = Math.floor(t / 1.5); if (s !== last) { last = s; zones.forEach((z, k) => { if (k < 7) z.material.opacity = Math.random() < .7 ? .45 : .12; else z.material = glow(Math.random() < .75 ? C.g : C.a, .9); }); } };
+  },
+  hosteleria(g) {
+    box(g, 13, .05, 9, mat(0x17130f), 0, 0, 0);
+    const kitchen = box(g, 4, 2.2, 3, mat(0x26323d), -4, 0, -2.5); edges(kitchen, C.cyan, .35);
+    const tickets = [0, 1, 2, 3].map(k => box(g, .5, .6, .04, glow(0xffffff, .9), -5.3 + k * .8, 2.4, -1));
+    const tops = [];
+    for (let i = 0; i < 4; i++) for (let j = 0; j < 3; j++) {
+      const x = -.5 + i * 2.1, z = -2.4 + j * 2.4;
+      const leg = new THREE.Mesh(new THREE.CylinderGeometry(.08, .08, .8, 8), mat(0x3d4f5e)); leg.position.set(x, .4, z); g.add(leg);
+      const top = new THREE.Mesh(new THREE.CylinderGeometry(.75, .75, .08, 24), glow(C.g, .95)); top.position.set(x, .84, z); g.add(top); tops.push(top);
+    }
+    [[-5, 3.2], [-3, 3.6]].forEach(([x, z]) => { const p = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, 2, 6), mat(0x3d4f5e)); p.position.set(x, 1, z); g.add(p); const u = new THREE.Mesh(new THREE.ConeGeometry(1.3, .6, 8), mat(0xe8dcc8)); u.position.set(x, 2.1, z); g.add(u); });
+    let last = -1;
+    return t => { tickets.forEach((tk, k) => { tk.position.y = 2.4 + Math.sin(t * 2 + k) * .06; tk.material.opacity = (Math.floor(t * .8) + k) % 5 === 0 ? .25 : .9; }); const s = Math.floor(t / 1.4); if (s !== last) { last = s; tops.forEach(tp => { const r = Math.random(); tp.material = glow(r < .5 ? C.a : r < .8 ? C.g : C.cyan, .95); }); } };
+  },
+  hoteles(g) {
+    const body = box(g, 7, 6, 3.2, mat(0xdfe7ee, { roughness: .6 }), -1, 0, -1.5);
+    const rooms = [];
+    for (let f = 0; f < 5; f++) for (let r = 0; r < 6; r++) rooms.push(box(g, .8, .7, .05, glow(C.g, .95), -3.6 + r * 1.05, .7 + f * 1.05, .13));
+    box(g, 7.4, .3, 3.6, mat(0x3d4f5e), -1, 6, -1.5); void body;
+    const pool = box(g, 4.5, .12, 2.6, new THREE.MeshStandardMaterial({ color: 0x2a9fd6, emissive: 0x0b4a6e, roughness: .1, metalness: .2 }), 2.6, 0, 3); void pool;
+    [[5, 1], [5, 5], [-5, 4]].forEach(([x, z]) => { const p = new THREE.Mesh(new THREE.CylinderGeometry(.08, .12, 2.4, 6), mat(0x6b5a3e)); p.position.set(x, 1.2, z); g.add(p); const c = new THREE.Mesh(new THREE.ConeGeometry(1, .7, 6), mat(0x1d6a4a)); c.position.set(x, 2.6, z); g.add(c); });
+    let last = -1;
+    return t => { const s = Math.floor(t / 1.3); if (s !== last) { last = s; rooms.forEach(rm => { const r = Math.random(); rm.material = glow(r < .62 ? C.g : r < .82 ? C.a : 0x6e6e73, .95); }); } };
+  },
 };
 
+/* =============== sectores: datos =============== */
+const SECTORS = [
+  { id: 'tiendas', tab: 'Tiendas', title: 'Red de tiendas', intro: 'Todas tus tiendas en un mapa, con cómo va cada una hoy comparada con lo normal.',
+    ve: ['Ventas del día de cada tienda frente a lo habitual', 'Roturas de stock y reposiciones pendientes', 'Incidencias abiertas por tienda', 'Tiendas y zonas que se salen de lo normal'],
+    agentes: ['Ventas', 'Compras y stock', 'Atención al cliente'], datos: ['TPV', 'Stripe', 'ERP', 'WhatsApp', 'Google Sheets'] },
+  { id: 'oficina', tab: 'Oficina y servicios', title: 'Oficina y empresa de servicios', intro: 'Asesorías, agencias, despachos o consultoras: tus proyectos, clientes y plazos como un edificio vivo.',
+    ve: ['Proyectos y encargos por estado y por cliente', 'Plazos que vencen esta semana', 'Facturas emitidas, cobradas y vencidas', 'Carga de trabajo por departamento, sin vigilar a nadie'],
+    agentes: ['Atención al cliente', 'Finanzas', 'Documentación'], datos: ['Gmail', 'Outlook', 'Google Calendar', 'HubSpot', 'Holded', 'Slack'] },
+  { id: 'fabrica', tab: 'Fábrica', title: 'Fábrica', intro: 'Cada línea de producción y cada máquina en 3D, con su ritmo, su estado y lo que necesita atención.',
+    ve: ['Producción por línea frente al objetivo del turno', 'Máquinas en marcha, paradas o en aviso', 'Paradas, cuellos de botella y mermas', 'Mantenimientos previstos y recambios'],
+    agentes: ['Operaciones', 'Mantenimiento', 'Calidad'], datos: ['Sensores de las máquinas', 'ERP', 'Odoo', 'Google Sheets', 'Outlook'] },
+  { id: 'almacen', tab: 'Almacén', title: 'Almacén', intro: 'La nave en 3D, estantería por estantería: qué hay, qué falta y qué está a punto de salir.',
+    ve: ['Ocupación de cada estantería y cada hueco', 'Pedidos en preparación y muelles de carga', 'Productos por debajo del stock mínimo', 'Mapas de calor de las zonas con más movimiento'],
+    agentes: ['Compras y stock', 'Logística', 'Operaciones'], datos: ['Odoo', 'Holded', 'Tu ERP o SGA', 'Google Sheets', 'Correo de proveedores'] },
+  { id: 'flotas', tab: 'Flotas', title: 'Flota y logística', intro: 'Vehículos, rutas y entregas sobre el mapa, en directo, con lo que llega tarde marcado en color.',
+    ve: ['Cada vehículo en su ruta, con carga y hora prevista', 'Paradas largas, desvíos y retrasos', 'Almacenes y muelles con su ocupación', 'Revisiones, seguros e ITV que vencen'],
+    agentes: ['Logística', 'Mantenimiento', 'Atención al cliente'], datos: ['Samsara', 'Webfleet', 'GPS de la flota', 'ERP', 'WhatsApp'] },
+  { id: 'clinicas', tab: 'Clínicas', title: 'Clínicas y salud', intro: 'Todas las clínicas de un vistazo: agenda, salas ocupadas y huecos libres, sede por sede.',
+    ve: ['Ocupación de la agenda y de cada sala', 'Huecos libres que se pueden llenar hoy', 'Cancelaciones y citas sin confirmar', 'Facturación del día por clínica'],
+    agentes: ['Atención al cliente', 'Finanzas', 'Marketing'], datos: ['Programa de citas', 'Google Calendar', 'WhatsApp', 'Holded', 'Stripe'] },
+  { id: 'hosteleria', tab: 'Hostelería', title: 'Restaurantes y hostelería', intro: 'Cada local con sus mesas, sus reservas y su cocina, en directo y comparado con un día normal.',
+    ve: ['Mesas libres, ocupadas y reservadas', 'Comandas en cocina y tiempos de salida', 'Ventas por local y por franja horaria', 'Stock de cocina y pedidos a proveedores'],
+    agentes: ['Atención al cliente', 'Compras y stock', 'Dirección'], datos: ['TPV', 'Plataforma de reservas', 'WhatsApp', 'Google Sheets', 'Holded'] },
+  { id: 'hoteles', tab: 'Hoteles', title: 'Hoteles y alojamientos', intro: 'El hotel en 3D, habitación por habitación: ocupadas, por limpiar y libres para vender hoy.',
+    ve: ['Estado de cada habitación', 'Llegadas, salidas y peticiones de huéspedes', 'Ocupación y precio medio por noche', 'Averías y mantenimiento por planta'],
+    agentes: ['Atención al cliente', 'Mantenimiento', 'Ventas'], datos: ['Programa de gestión hotelera', 'Booking y otros canales', 'WhatsApp', 'Stripe', 'Outlook'] },
+  { id: 'software', tab: 'Software', title: 'Empresa de software', intro: 'Tus servicios como un pequeño barrio: cada edificio es un sistema, con su salud, sus despliegues y sus incidencias.',
+    ve: ['Estado de cada servicio y de cada servidor', 'Despliegues del día y lo que cambió', 'Incidencias abiertas y tiques de clientes', 'Ingresos y bajas de clientes en directo'],
+    agentes: ['Soporte técnico', 'Atención al cliente', 'Ventas'], datos: ['Jira', 'Slack', 'Stripe', 'HubSpot', 'Gmail', 'Tu monitorización'] },
+  { id: 'obras', tab: 'Obras', title: 'Obras y construcción', intro: 'Cada obra en 3D con su avance por fases, las entregas de material y lo que va con retraso.',
+    ve: ['Avance de cada obra por fases frente al plan', 'Entregas de material y alquiler de maquinaria', 'Retrasos y tareas bloqueadas', 'Documentación y permisos pendientes'],
+    agentes: ['Operaciones', 'Compras y stock', 'Documentación'], datos: ['Excel de planificación', 'ERP', 'Google Calendar', 'Gmail', 'WhatsApp'] },
+  { id: 'inmobiliaria', tab: 'Inmobiliaria', title: 'Inmobiliaria', intro: 'La cartera entera sobre el mapa: cada inmueble con su estado, sus visitas y sus interesados.',
+    ve: ['Inmuebles disponibles, reservados y vendidos', 'Visitas del día y de la semana', 'Interesados nuevos y a quién falta responder', 'Precio y tiempo en el mercado por zona'],
+    agentes: ['Ventas', 'Atención al cliente', 'Marketing'], datos: ['HubSpot', 'Portales inmobiliarios', 'WhatsApp', 'Google Calendar', 'Gmail'] },
+  { id: 'energia', tab: 'Energía', title: 'Instalaciones de energía', intro: 'Plantas solares, eólicas y baterías en 3D, con lo que producen ahora mismo y cualquier alarma.',
+    ve: ['Producción en directo frente a la prevista', 'Alarmas y equipos con bajo rendimiento', 'Estado de carga de las baterías', 'Mantenimientos y visitas técnicas'],
+    agentes: ['Operaciones', 'Mantenimiento', 'Dirección'], datos: ['SCADA o monitorización', 'Previsión meteorológica', 'ERP', 'Google Sheets', 'Outlook'] }
+];
+
+/* =============== agentes por área =============== */
+const AGENTS = [
+  { k: 'A', h: 200, name: 'Atención al cliente', what: 'Contesta a tus clientes por WhatsApp, correo y teléfono, agenda citas y resuelve dudas al momento, a cualquier hora.',
+    ex: [['Clínica', 'Llena los huecos de mañana con pacientes en lista de espera'], ['Tienda', 'Dice si un producto está en stock y lo reserva'], ['Hotel', 'Atiende peticiones de huéspedes a las 2 de la mañana']],
+    ok: 'Devoluciones, descuentos o cualquier excepción a tus normas.', aviso: 'Te resume el día a las 9:00. Si un cliente se queja, al momento.' },
+  { k: 'V', h: 150, name: 'Ventas', what: 'Sigue cada oportunidad, prepara presupuestos y te avisa de los clientes que se están enfriando antes de perderlos.',
+    ex: [['Inmobiliaria', 'Responde a interesados y propone visitas'], ['Servicios', 'Prepara el presupuesto con tus tarifas'], ['Software', 'Detecta clientes con riesgo de baja']],
+    ok: 'Enviar un presupuesto o aplicar un descuento.', aviso: 'Te avisa cuando una oportunidad grande se mueve.' },
+  { k: 'O', h: 30, name: 'Operaciones', what: 'Vigila que todo funcione como debe: pedidos, producción, servicios y plazos. Si algo se atasca, propone cómo reorganizarlo.',
+    ex: [['Fábrica', 'Reparte la carga entre líneas cuando una se para'], ['Obras', 'Avisa de qué tareas bloquean el avance'], ['Energía', 'Compara producción real con la prevista']],
+    ok: 'Cambiar la planificación del día.', aviso: 'Lo urgente, al momento. El resto, en tu resumen.' },
+  { k: 'C', h: 265, name: 'Compras y stock', what: 'Controla las existencias, prevé cuándo se acaba cada producto y prepara los pedidos a proveedores.',
+    ex: [['Tienda', 'Repone lo que más se vende antes de que falte'], ['Restaurante', 'Ajusta el pedido de cocina al fin de semana'], ['Almacén', 'Detecta productos parados que ocupan sitio']],
+    ok: 'Lanzar un pedido a un proveedor.', aviso: 'Te pide el OK dentro de tu horario.' },
+  { k: 'F', h: 120, name: 'Finanzas', what: 'Concilia cobros y pagos, persigue facturas vencidas y te da una previsión de caja siempre al día.',
+    ex: [['Servicios', 'Recuerda con amabilidad las facturas vencidas'], ['Clínica', 'Cuadra la caja de cada sede al cierre'], ['Cualquiera', 'Avisa si la caja va a quedarse corta']],
+    ok: 'Reclamar a un cliente o programar un pago.', aviso: 'Informe semanal los lunes. Si la caja se tuerce, antes.' },
+  { k: 'M', h: 10, name: 'Mantenimiento', what: 'Detecta lo que está a punto de fallar, programa revisiones y lleva el control de garantías y recambios.',
+    ex: [['Fábrica', 'Ve que una máquina vibra más de lo normal'], ['Flota', 'Programa la revisión antes de la ITV'], ['Hotel', 'Agrupa las averías por planta']],
+    ok: 'Parar una máquina o pedir un recambio.', aviso: 'Si algo va a romperse ya, te llama.' },
+  { k: 'L', h: 185, name: 'Logística', what: 'Organiza rutas, entregas y muelles, y avisa al cliente si algo va a llegar tarde.',
+    ex: [['Flota', 'Reordena entregas por un atasco'], ['Almacén', 'Asigna muelles a los camiones que llegan'], ['Tienda', 'Agrupa los pedidos online por zona']],
+    ok: 'Cambiar una ruta o una fecha de entrega.', aviso: 'Al momento si un cliente importante se ve afectado.' },
+  { k: 'Q', h: 330, name: 'Calidad', what: 'Revisa mermas, devoluciones y reclamaciones, y encuentra el patrón que hay detrás.',
+    ex: [['Fábrica', 'Relaciona un defecto con un lote de material'], ['Restaurante', 'Detecta un plato con más quejas'], ['Tienda', 'Ve qué producto se devuelve más']],
+    ok: 'Retirar un lote o cambiar un proceso.', aviso: 'En tu resumen diario.' },
+  { k: 'K', h: 300, name: 'Marketing', what: 'Mide campañas y reseñas, compara sedes y te propone acciones concretas para llenar los huecos.',
+    ex: [['Clínica', 'Propone una campaña para las horas flojas'], ['Hotel', 'Responde reseñas con tu tono'], ['Inmobiliaria', 'Ve qué portal trae más interesados']],
+    ok: 'Publicar o lanzar una campaña.', aviso: 'Informe de campañas cada semana.' },
+  { k: 'T', h: 225, name: 'Soporte técnico', what: 'Vigila tus sistemas, resuelve incidencias de primer nivel y te avisa si algo deja de funcionar.',
+    ex: [['Software', 'Detecta un servicio caído y abre la incidencia'], ['Tiendas', 'Ve qué TPV no está enviando ventas'], ['Oficina', 'Gestiona accesos y altas de herramientas']],
+    ok: 'Reiniciar un sistema o cambiar un acceso.', aviso: 'Una caída es urgente: te avisa a cualquier hora.' },
+  { k: 'D', h: 45, name: 'Documentación', what: 'Lleva contratos, permisos, licencias, seguros y certificados, y te avisa antes de que caduquen.',
+    ex: [['Obras', 'Controla permisos y documentación de cada obra'], ['Flota', 'Avisa de seguros e ITV que vencen'], ['Clínica', 'Revisa autorizaciones y contratos']],
+    ok: 'Firmar o enviar un documento.', aviso: 'Con 30, 15 y 5 días de margen.' },
+  { k: 'R', h: 170, name: 'Dirección', what: 'Junta lo que hacen los demás agentes y te lo cuenta: reunión diaria por voz, comparativa de sedes e informe del mes.',
+    ex: [['Cualquiera', 'Reunión diaria de 4 minutos por voz a las 8:45'], ['Red de sedes', 'Te dice qué sede va peor y por qué'], ['Cualquiera', 'Prepara el informe del mes para el consejo']],
+    ok: 'Nada: te informa para que decidas tú.', aviso: 'Cada mañana, a la hora que elijas.' }
+];
+
+/* =============== preguntas de ejemplo =============== */
+const ASKS = [
+  { q: 'Resúmeme el día', a: 'Dirección', h: 170, r: 'Hoy todo va bien. Ventas un 8 % por encima de un martes normal, 2 incidencias resueltas y 1 cosa pendiente de tu OK: un pedido de reposición de 240 unidades.', acts: ['Ver el pedido', 'Mañana'] },
+  { q: '¿Qué tienda va peor esta semana?', a: 'Ventas', h: 150, r: 'La tienda 14 (centro): un 18 % por debajo de su media. Coincide con una rotura de stock en 6 de sus productos más vendidos. Tengo la reposición preparada.', acts: ['Lánzala', 'Ver en 3D'] },
+  { q: '¿Qué máquina me puede fallar?', a: 'Mantenimiento', h: 10, r: 'La prensa 3 de la línea 2: vibra un 22 % más que hace cinco días. Te propongo revisarla el jueves en el cambio de turno, para no parar la producción.', acts: ['Prográmalo', 'Ver la máquina'] },
+  { q: '¿Cuántos huecos libres hay mañana?', a: 'Atención al cliente', h: 200, r: '23 huecos entre las 4 clínicas, 11 en la del norte. He escrito a 9 pacientes en lista de espera y 4 ya han reservado.', acts: ['Ver agenda', 'Sigue así'] },
+  { q: '¿Quién me debe dinero?', a: 'Finanzas', h: 120, r: '12 facturas vencidas. Las 3 más antiguas suman 9.100 €. ¿Mando un recordatorio amable a todos o prefieres revisarlas antes?', acts: ['Envíalo', 'Revisar'] },
+  { q: '¿Cómo van las obras?', a: 'Operaciones', h: 30, r: 'La obra de la avenida va al 62 %, cuatro días por delante. La del puerto, al 38 % y una semana tarde por una entrega de material. Ya he pedido fecha nueva al proveedor.', acts: ['Ver las obras', 'Gracias'] },
+  { q: '¿Qué habitaciones quedan para esta noche?', a: 'Ventas', h: 150, r: 'Quedan 7 libres: 5 dobles y 2 suites. Las 3 que se están limpiando estarán listas a las 14:00.', acts: ['Ver el hotel', 'Ok'] }
+];
+/* =============== HERO: un mundo de negocios con un equipo de agentes =============== */
+(function hero() {
+  const canvas = $('#e3Hero'); if (!canvas) return;
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: !small, powerPreference: 'high-performance' }); } catch (e) { return; }
+  renderer.setPixelRatio(DPR); renderer.setClearColor(0x000000, 1);
+  const scene = new THREE.Scene(); scene.fog = new THREE.Fog(0x000000, 70, 175);
+  const camera = new THREE.PerspectiveCamera(small ? 48 : 34, 1, .1, 500);
+  sizer(renderer, camera, canvas.parentElement); lights(scene);
+  const world = new THREE.Group(); scene.add(world);
+
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(160, 64), mat(0x030405, { roughness: 1 })); ground.rotation.x = -Math.PI / 2; ground.position.y = -.62; world.add(ground);
+  const pg = new THREE.PolarGridHelper(60, 24, 8, 96, 0x0f2630, 0x0a161c); pg.position.y = -.6; world.add(pg);
+
+  // núcleo de IA
+  const core = new THREE.Group(); world.add(core);
+  const cplat = new THREE.Mesh(new THREE.CylinderGeometry(6.5, 7, .8, 64), mat(0x0a1016, { roughness: .6 })); cplat.position.y = -.4; core.add(cplat);
+  const cedge = new THREE.Mesh(new THREE.TorusGeometry(6.6, .07, 8, 96), glow(C.cyan, .9)); cedge.rotation.x = Math.PI / 2; core.add(cedge);
+  const ico = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(3, 1)), new THREE.LineBasicMaterial({ color: 0x9fe6f0, transparent: true, opacity: .9 })); ico.position.y = 5; core.add(ico);
+  const orb = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 20), new THREE.MeshBasicMaterial({ color: 0x6fcad8 })); orb.position.y = 5; core.add(orb);
+  const halo = new THREE.Mesh(new THREE.SphereGeometry(2.3, 32, 20), new THREE.MeshBasicMaterial({ color: 0x3b82f6, transparent: true, opacity: .18, blending: THREE.AdditiveBlending, depthWrite: false })); halo.position.y = 5; core.add(halo);
+  const r1 = new THREE.Mesh(new THREE.TorusGeometry(4.4, .05, 8, 96), glow(C.cyan, .7)); r1.position.y = 5; core.add(r1);
+  const r2 = new THREE.Mesh(new THREE.TorusGeometry(5.2, .04, 8, 96), glow(C.blue, .6)); r2.position.y = 5; core.add(r2);
+  const beam = ring(6.8, 7.2, C.cyan, .5); beam.position.y = .02; core.add(beam);
+
+  // islas de negocio
+  const IDS = small ? ['tiendas', 'oficina', 'fabrica', 'clinicas', 'hosteleria', 'flotas'] : ['tiendas', 'oficina', 'fabrica', 'almacen', 'clinicas', 'hosteleria', 'flotas', 'hoteles'];
+  const RAD = small ? 24 : 27, islands = [];
+  IDS.forEach((id, k) => {
+    const a = k / IDS.length * Math.PI * 2 + .3, x = Math.cos(a) * RAD, z = Math.sin(a) * RAD;
+    const holder = new THREE.Group(); holder.position.set(x, 0, z); holder.scale.setScalar(.62); world.add(holder);
+    const plat = new THREE.Mesh(new THREE.CylinderGeometry(10, 10, .6, 64), mat(0x0a1016, { roughness: .9 })); plat.position.y = -.3; holder.add(plat);
+    const e = new THREE.Mesh(new THREE.TorusGeometry(10, .08, 8, 96), glow(C.cyan, .55)); e.rotation.x = Math.PI / 2; holder.add(e);
+    const g = new THREE.Group(); holder.add(g); g.rotation.y = -a + Math.PI / 2;
+    const tick = BUILD[id](g);
+    // enlace con el núcleo
+    const from = new THREE.Vector3(0, 5, 0), to = new THREE.Vector3(x, 1.5, z), mid = new THREE.Vector3(x * .5, 10, z * .5);
+    const curve = new THREE.QuadraticBezierCurve3(from, mid, to);
+    const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(curve.getPoints(48)), new THREE.LineBasicMaterial({ color: C.cyan, transparent: true, opacity: .22 })); world.add(line);
+    const agents = [0, 1].map(j => { const m = new THREE.Mesh(new THREE.SphereGeometry(.42, 14, 10), new THREE.MeshBasicMaterial({ color: j ? 0xb8eef2 : 0x7fb4ff })); world.add(m); return { m, o: Math.random(), sp: .12 + Math.random() * .08, dir: j ? 1 : -1 }; });
+    islands.push({ id, holder, tick, curve, agents, x, z });
+  });
+
+  // etiquetas HTML
+  const labelsBox = $('#e3Labels');
+  const LBL = { tiendas: '<b>Tienda 14</b><i class="a"></i>Ventas −18 % · agente revisando stock', oficina: '<b>Atención al cliente</b><i></i>38 consultas resueltas hoy', fabrica: '<b>Línea 2</b><i class="r"></i>Vibración anormal · aviso enviado', clinicas: '<b>Clínica norte</b><i></i>3 huecos libres · llenando agenda', hosteleria: '<b>Restaurante centro</b><i></i>Mesas al 86 % · cocina al día', flotas: '<b>Furgoneta 07</b><i></i>En ruta · llega 12:40' };
+  const labels = small ? [] : islands.filter(is => LBL[is.id] && ['tiendas', 'fabrica', 'clinicas', 'oficina'].includes(is.id)).map(is => { const el = document.createElement('div'); el.className = 'e3-lbl'; el.innerHTML = LBL[is.id]; labelsBox.appendChild(el); return { pos: new THREE.Vector3(is.x, 7, is.z), el }; });
+  const v3 = new THREE.Vector3();
+  const drawLabels = () => {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    labels.forEach(l => {
+      v3.copy(l.pos); world.localToWorld(v3); v3.project(camera);
+      const x = (v3.x * .5 + .5) * w, y = (-v3.y * .5 + .5) * h;
+      const cx = Math.abs(x - w / 2) < w * .34 && y > h * .15 && y < h * .8;
+      const feed = x > w - 360 && y > h - 260;
+      l.el.style.opacity = v3.z < 1 && x > 60 && x < w - 60 && y > 90 && y < h - 40 && !cx && !feed ? 1 : 0;
+      l.el.style.transform = `translate(${x}px,${y}px) translate(-50%,-130%)`;
+    });
+  };
+
+  const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+  addEventListener('pointermove', e => { mouse.tx = e.clientX / innerWidth - .5; mouse.ty = e.clientY / innerHeight - .5; }, { passive: true });
+  const R = small ? 86 : 80, H = small ? 62 : 44;
+  const frame = (t, dt) => {
+    mouse.x += (mouse.tx - mouse.x) * .04; mouse.y += (mouse.ty - mouse.y) * .04;
+    const sc = clamp(scrollY / innerHeight);
+    const ang = .6 + t * .03 + mouse.x * .25;
+    camera.position.set(Math.sin(ang) * (R - sc * 16), H + mouse.y * 8 - sc * 10, Math.cos(ang) * (R - sc * 16));
+    camera.lookAt(0, 2, 0);
+    ico.rotation.y = t * .3; ico.rotation.x = t * .17; r1.rotation.x = Math.PI / 2 + Math.sin(t * .5) * .4; r1.rotation.y = t * .4; r2.rotation.x = Math.PI / 2 + Math.cos(t * .4) * .5; r2.rotation.z = t * .3;
+    const pulse = 1 + Math.sin(t * 2) * .06; orb.scale.setScalar(pulse); halo.scale.setScalar(1 + Math.sin(t * 2) * .12);
+    beam.scale.setScalar(1 + (t * .4 % 1) * .6); beam.material.opacity = .5 * (1 - (t * .4 % 1));
+    islands.forEach(is => {
+      is.tick && is.tick(t);
+      is.agents.forEach(a => { let u = (a.o + t * a.sp) % 1; if (a.dir < 0) u = 1 - u; a.m.position.copy(is.curve.getPoint(u)); a.m.scale.setScalar(.8 + Math.sin(u * Math.PI) * .5); });
+    });
+    renderer.render(scene, camera); drawLabels();
+  };
+  if (reduce) { frame(0, 0); return; }
+  loop(canvas, frame);
+})();
+
+/* =============== palabra que cambia en la etiqueta del hero =============== */
+(function rotator() {
+  const el = $('#e3Rot'); if (!el || reduce) return;
+  const words = ['tiendas', 'oficinas', 'fábricas', 'clínicas', 'restaurantes', 'hoteles', 'almacenes', 'flotas', 'obras', 'inmobiliarias', 'tu empresa'];
+  let k = 0;
+  setInterval(() => { if (document.hidden) return; el.classList.add('out'); setTimeout(() => { k = (k + 1) % words.length; el.textContent = words[k]; el.classList.remove('out'); }, 350); }, 2200);
+})();
+
+/* =============== feed de agentes del hero =============== */
+(function feed() {
+  const ul = $('#e3Feed'); if (!ul || reduce) return;
+  const msgs = [
+    ['Atención al cliente', 'Responde 6 WhatsApp y agenda 2 citas'], ['Finanzas', 'Concilia 128 cobros de ayer'], ['Mantenimiento', 'Línea 2: vibración fuera de lo normal'],
+    ['Compras y stock', 'Prepara la reposición de la tienda 14. Espera tu OK'], ['Ventas', 'Envía 3 presupuestos aprobados'], ['Dirección', 'Tu resumen del día, listo para las 9:00'],
+    ['Logística', 'Reordena 4 entregas por un atasco'], ['Documentación', 'El seguro de la nave 2 vence en 15 días'], ['Atención al cliente', 'Llena 3 huecos libres de la clínica norte'],
+    ['Calidad', 'Detecta un lote con más devoluciones de lo normal'], ['Soporte técnico', 'El TPV de la tienda 6 vuelve a enviar ventas'], ['Marketing', 'Responde 4 reseñas nuevas']];
+  let k = 3;
+  setInterval(() => {
+    if (document.hidden) return;
+    const [a, b] = msgs[k++ % msgs.length], li = document.createElement('li');
+    li.innerHTML = '<b></b>'; li.firstChild.textContent = a; li.append(' ' + b);
+    ul.prepend(li); while (ul.children.length > 3) ul.lastElementChild.remove();
+  }, 3400);
+})();
+
+/* =============== el problema: diez herramientas → una vista =============== */
+(function problem() {
+  const sec = $('.e3-problem'); if (!sec) return;
+  const items = $$('.e3-tool, .e3-core', sec);
+  const upd = () => {
+    const r = sec.getBoundingClientRect(), tot = r.height - innerHeight;
+    const p = reduce ? 1 : clamp((-r.top / Math.max(1, tot) - .12) / .6);
+    const e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+    items.forEach(el => el.style.setProperty('--p', e.toFixed(3)));
+  };
+  addEventListener('scroll', upd, { passive: true }); addEventListener('resize', upd); upd();
+})();
+
+const esc = s => String(s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
+
+/* =============== equipo de agentes en órbita =============== */
+(function team() {
+  const orbit = $('#e3Orbit'), panel = $('#e3Agent'); if (!orbit || !panel) return;
+  const btns = AGENTS.map((a, k) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'e3-ag'; b.role = 'tab'; b.id = 'ag-' + k;
+    b.style.setProperty('--h', a.h); b.setAttribute('aria-controls', 'e3Agent'); b.setAttribute('aria-selected', 'false');
+    b.innerHTML = `<i>${a.k}</i><span>${esc(a.name)}</span>`;
+    b.addEventListener('click', () => { user = true; show(k); }); orbit.appendChild(b); return b;
+  });
+  let cur = -1, user = false, rot = 0;
+  const place = () => btns.forEach((b, k) => { const a = k / btns.length * Math.PI * 2 - Math.PI / 2 + rot; b.style.left = (50 + Math.cos(a) * 43) + '%'; b.style.top = (50 + Math.sin(a) * 43) + '%'; });
+  function show(k) {
+    if (k === cur) return; cur = k; const a = AGENTS[k];
+    btns.forEach((b, i) => b.setAttribute('aria-selected', i === k));
+    panel.setAttribute('aria-labelledby', 'ag-' + k); panel.style.setProperty('--h', a.h);
+    panel.classList.remove('is-swap'); void panel.offsetWidth; panel.classList.add('is-swap');
+    panel.innerHTML = `<div class="e3-agent__h"><i>${a.k}</i><div><h3>Agente de ${esc(a.name.charAt(0).toLowerCase() + a.name.slice(1))}</h3><small>Trabajando ahora</small></div></div>
+      <p>${esc(a.what)}</p>
+      <div><h4>Por ejemplo</h4><ul class="e3-ex">${a.ex.map(([s, t]) => `<li><b>${esc(s)}</b><span>${esc(t)}</span></li>`).join('')}</ul></div>
+      <div class="e3-agent__row"><div><h4>Te pide permiso para</h4><p>${esc(a.ok)}</p></div><div><h4>Cómo te avisa</h4><p>${esc(a.aviso)}</p></div></div>`;
+  }
+  place(); show(0);
+  if (reduce) return;
+  let vis = false; new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(orbit);
+  setInterval(() => { if (vis && !user && !document.hidden) show((cur + 1) % AGENTS.length); }, 4200);
+  let last = performance.now();
+  const spin = now => { const dt = (now - last) / 1000; last = now; if (vis) { rot += dt * .03; place(); } requestAnimationFrame(spin); };
+  requestAnimationFrame(spin);
+})();
+
+/* =============== habla con tu empresa =============== */
+(function talk() {
+  const box = $('#e3Asks'), body = $('#e3ChatBody'); if (!box || !body) return;
+  let busy = false, timer = 0, user = false, idx = 0;
+  const chips = ASKS.map((a, k) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'e3-ask'; b.textContent = a.q; b.addEventListener('click', () => { user = true; ask(k); }); box.appendChild(b); return b; });
+  const add = html => { const d = document.createElement('div'); d.innerHTML = html; const el = d.firstElementChild; body.appendChild(el); while (body.children.length > 6) body.firstElementChild.remove(); return el; };
+  function ask(k) {
+    if (busy) return; busy = true; idx = k;
+    chips.forEach((c, i) => c.classList.toggle('is-on', i === k));
+    const a = ASKS[k];
+    add(`<div class="e3-bub e3-bub--me">${esc(a.q)}</div>`);
+    const typing = add(`<div class="e3-bub e3-bub--ai" style="--h:${a.h}"><b><i>${esc(a.a.charAt(0))}</i>Agente de ${esc(a.a.toLowerCase())}</b><span class="e3-dots"><i></i><i></i><i></i></span></div>`);
+    setTimeout(() => {
+      typing.innerHTML = `<b><i>${esc(a.a.charAt(0))}</i>Agente de ${esc(a.a.toLowerCase())}</b>${esc(a.r)}<div class="e3-bub__acts">${a.acts.map(x => `<span>${esc(x)}</span>`).join('')}</div>`;
+      busy = false;
+    }, reduce ? 0 : 1100);
+  }
+  ask(0);
+  if (reduce) return;
+  let vis = false; new IntersectionObserver(([e]) => vis = e.isIntersecting, { threshold: .3 }).observe(body);
+  timer = setInterval(() => { if (vis && !user && !document.hidden) ask((idx + 1) % ASKS.length); }, 5200);
+  const mic = $('#e3Mic'); mic && mic.addEventListener('click', () => { mic.classList.toggle('is-on'); if (mic.classList.contains('is-on')) setTimeout(() => { mic.classList.remove('is-on'); user = true; ask(0); }, 1800); });
+})();
+
+/* =============== funcionalidades: pequeñas animaciones =============== */
+(function features() {
+  const crumbs = $('#e3Crumbs');
+  if (crumbs && !reduce) {
+    const sets = [['Empresa', 'Zona Sur', 'Tienda 14'], ['Empresa', 'Planta', 'Línea 2'], ['Empresa', 'Clínica norte', 'Sala 3'], ['Empresa', 'Nave 2', 'Estantería B4'], ['Empresa', 'Hotel centro', 'Planta 4']];
+    let s = 0, k = 0;
+    setInterval(() => {
+      const sp = $$('span', crumbs);
+      if (k === 0) { s = (s + 1) % sets.length; sp.forEach((x, i) => x.textContent = sets[s][i]); }
+      sp.forEach((x, i) => x.classList.toggle('on', i === k)); k = (k + 1) % 3;
+    }, 1800);
+  }
+  const clock = $('[data-clock]');
+  if (clock && !reduce) { const t0 = performance.now(); setInterval(() => { const f = Math.min(1, (((performance.now() - t0) / 8000) % 1) / .8); const m = 360 + Math.round(f * 720); clock.textContent = String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); }, 120); }
+  const heat = $('#e3Heat');
+  if (heat) {
+    const cells = Array.from({ length: 96 }, () => heat.appendChild(document.createElement('i')));
+    const paint = t => cells.forEach((c, i) => { const x = i % 16, y = Math.floor(i / 16); const v = Math.max(0, Math.sin(x * .55 + t) * Math.cos(y * .9 - t * .7)) ** 2; c.style.setProperty('--o', (.06 + v * .85).toFixed(2)); });
+    let t = 0; paint(t); if (!reduce) setInterval(() => { if (!document.hidden) paint(t += .35); }, 1400);
+  }
+  // simulador con escenarios de varios sectores
+  const tabs = $('#e3SimTabs'), sim = $('#e3Sim'), q = $('#e3SimQ'), out = $('#e3SimOut'), res = $('#e3SimRes');
+  if (tabs && sim) {
+    const SC = [
+      { t: 'Tiendas', q: '¿Y si abro los sábados por la tarde?', unit: n => n ? `${n} tienda${n > 1 ? 's' : ''}` : 'Ninguna', max: 4, r: [['Ventas de la semana', n => `+${[0, 2, 4, 5, 7][n]} %`], ['Horas de equipo', n => `+${n * 4} h`], ['Margen', n => `+${[0, 1.4, 2.6, 3.1, 3.9][n].toLocaleString('es-ES')} %`]] },
+      { t: 'Fábrica', q: '¿Y si añado un turno de noche?', unit: n => n ? `${n} línea${n > 1 ? 's' : ''}` : 'Ninguna', max: 3, r: [['Producción', n => `+${[0, 18, 34, 47][n]} %`], ['Pedidos a tiempo', n => `${[86, 92, 96, 97][n]} %`], ['Coste por unidad', n => `${['0', '−3', '−5', '−4'][n]} %`]] },
+      { t: 'Clínicas', q: '¿Y si alargo el horario de tarde?', unit: n => n ? `+${n} h al día` : 'Igual', max: 3, r: [['Citas a la semana', n => `+${[0, 42, 80, 104][n]}`], ['Lista de espera', n => `${['0', '−35', '−60', '−70'][n]} %`], ['Ocupación', n => `${[94, 91, 88, 82][n]} %`]] },
+      { t: 'Flota', q: '¿Y si añado vehículos?', unit: n => n ? `+${n} vehículo${n > 1 ? 's' : ''}` : 'Igual', max: 4, r: [['Entregas a tiempo', n => `${[88, 91, 94, 96, 97][n]} %`], ['Horas extra', n => `${['0', '−11', '−22', '−31', '−38'][n]} %`], ['Uso de la flota', n => `${[92, 88, 84, 80, 77][n]} %`]] }
+    ];
+    let cur = 0;
+    const draw = () => { const s = SC[cur], n = +sim.value; out.textContent = s.unit(n); res.innerHTML = s.r.map(([l, f]) => `<div><small>${l}</small><b>${f(n)}</b></div>`).join(''); };
+    SC.forEach((s, k) => { const b = document.createElement('button'); b.type = 'button'; b.role = 'tab'; b.textContent = s.t; b.setAttribute('aria-selected', k === 0); b.addEventListener('click', () => { cur = k; $$('button', tabs).forEach((x, i) => x.setAttribute('aria-selected', i === k)); q.textContent = s.q; sim.max = s.max; sim.value = Math.min(2, s.max); draw(); }); tabs.appendChild(b); });
+    sim.addEventListener('input', draw); q.textContent = SC[0].q; sim.max = SC[0].max; draw();
+  }
+})();
+
+/* =============== sectores: pestañas y diorama =============== */
 (function sectors() {
   const tabs = $('#e3Tabs'), panel = $('#e3Panel'), canvas = $('#e3Diorama'); if (!tabs || !panel) return;
-  const esc = s => s.replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
   SECTORS.forEach((s, k) => {
     const b = document.createElement('button'); b.className = 'e3-tab'; b.type = 'button'; b.role = 'tab'; b.id = 'tab-' + s.id;
     b.setAttribute('aria-selected', k === 0); b.setAttribute('aria-controls', 'e3Panel'); b.innerHTML = `<small>${String(k + 1).padStart(2, '0')}</small>${esc(s.tab)}`;
