@@ -99,6 +99,15 @@
           "value": "public, max-age=604800"
         }
       ]
+    },
+    {
+      "source": "/consultores/Nexgent-IA-consultores.pdf",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
     }
   ]
 }
