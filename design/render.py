@@ -509,17 +509,32 @@ def banner(spec, out):
     img = Image.composite(Image.new("RGB", (W, H), (110, 140, 160)), img, dots)
     d = ImageDraw.Draw(img)
     x0, maxw = 600, W - 600 - 64
-    y = 44
+    y = 30 if spec.get("datos") else 44
     if spec.get("etiqueta"):
-        chip(img, d, x0, y, spec["etiqueta"], 22)
-        y += 62
-    f, lines, sz = fit_text(d, spec.get("titulo", ""), "display", maxw, 130, 58, 34, 1.04)
+        chip(img, d, x0, y, spec["etiqueta"], 20)
+        y += 54
+    f, lines, sz = fit_text(d, spec.get("titulo", ""), "display", maxw, 110 if spec.get("datos") else 130, 50 if spec.get("datos") else 58, 32, 1.04)
     y = draw_lines(d, (x0, y), lines[:2], f, sz, lh=1.04) + 12
     if spec.get("subtitulo"):
         fs = font("text", 26)
         d.text((x0, y), wrap(d, spec["subtitulo"], fs, maxw)[0], font=fs, fill=(220, 224, 232))
         y += 44
-    fb = font("semi", 26)
+    datos = spec.get("datos") or []
+    if datos:
+        y += 6
+        xx = x0
+        for num, txt in datos:
+            fn, ft = font("display", 34), font("medium", 18)
+            w = max(d.textlength(num, font=fn), d.textlength(txt, font=ft)) + 34
+            box = Image.new("RGBA", (int(w), 78), (255, 255, 255, 18))
+            m = Image.new("L", box.size, 0)
+            ImageDraw.Draw(m).rounded_rectangle([0, 0, box.size[0] - 1, 77], radius=14, fill=255)
+            img.paste(Image.new("RGB", box.size, (30, 40, 58)), (int(xx), int(y)), m)
+            grad_text(img, (int(xx) + 17, int(y) + 8), [num], fn, 34, 1.0)
+            d.text((xx + 17, y + 48), txt, font=ft, fill=(205, 212, 222))
+            xx += w + 14
+        y += 96
+    fb = font("semi", 24)
     cta = spec.get("cta", "Reserva 30 minutos  ·  nexgent.io/reunion")
     d.text((x0, y), cta, font=fb, fill=TURQ)
     save(img, out, "banner.jpg")
