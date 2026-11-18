@@ -23,9 +23,9 @@ Salidas:
   carrusel  -> 01.jpg, 02.jpg… (1080x1350) y portada en post.jpg
   dato      -> dato.jpg (1080x1350)
   linkedin  -> linkedin.jpg (1200x1200)
-  historia  -> h01.jpg, h02.jpg… (1080x1920, historias de Instagram). Usa "diapositivas" igual que el
-               carrusel (portada, texto, dato, lista, cta). Deja libres los 250 px de arriba y los 340 de
-               abajo, que tapa Instagram.
+  historia  -> h01.jpg, h02.jpg… (1080x1920, historias de Instagram a pantalla completa). Usa
+               "diapositivas" (portada, dato, texto, lista, cta). El texto queda entre y=260 e y=1580,
+               fuera de lo que tapa Instagram. La portada usa "fondo" (IA vertical 9:16) si lo hay.
 Cada salida también se guarda en miniatura (thumb-*.jpg, 360 px de ancho) para el panel.
 """
 import json, sys
@@ -357,37 +357,141 @@ def linkedin(spec, out):
     save(img, out, "linkedin.jpg")
 
 
+# ---------- historias de Instagram (1080x1920, a pantalla completa) ----------
+SW, SH, SP = 1080, 1920, 84
+SAFE_TOP, SAFE_BOT = 260, 1920 - 340   # Instagram tapa arriba (barra y perfil) y abajo (responder)
+
+
+def story_bg(spec, sl, i, full):
+    if full and spec.get("fondo") and Path(spec["fondo"]).exists():
+        img = cover(Image.open(spec["fondo"]), SW, SH)
+        return shade(img, top=0.35, bottom=0.96, start=0.2)
+    img = brand_bg(SW, SH, i + 3)
+    # aro de luz de la marca, para que cada historia tenga profundidad
+    ring = Image.new("L", (SW, SH), 0)
+    rd = ImageDraw.Draw(ring)
+    cx, cy, R = (SW * (0.85 if i % 2 else 0.15)), SH * 0.32, 520
+    rd.ellipse([cx - R, cy - R, cx + R, cy + R], outline=255, width=46)
+    ring = ring.filter(ImageFilter.GaussianBlur(38))
+    img = Image.composite(gradient(SW, SH), img, ring.point(lambda v: int(v * 0.55)))
+    # retícula de puntos muy suave
+    dots = Image.new("L", (SW, SH), 0)
+    dd = ImageDraw.Draw(dots)
+    for y in range(40, SH, 56):
+        for x in range(40, SW, 56):
+            dd.ellipse([x, y, x + 3, y + 3], fill=40)
+    img = Image.composite(Image.new("RGB", (SW, SH), (90, 110, 130)), img, dots)
+    return img
+
+
+def story_frame(img, d):
+    logo(img, SP, SAFE_TOP - 70, 210)
+    d.text((SP, SAFE_BOT - 40), "nexgent.io", font=font("medium", 30), fill=MUTED)
+
+
+def accent(img, x, y, w=120, h=8):
+    img.paste(gradient(w, h), (x, y))
+
+
 def historia(spec, out):
-    """Historias de Instagram (1080x1920): cada diapositiva se compone en 1080x1350 y se centra
-    sobre un fondo de marca vertical, así nada queda bajo la barra de arriba ni la de respuesta."""
-    W, H = 1080, 1920
+    """Historias de Instagram en vertical (1080x1920), a pantalla completa. Todo el texto queda entre
+    SAFE_TOP y SAFE_BOT para que Instagram no lo tape. Tipos: portada, dato, texto, lista, cta."""
     sls = spec.get("diapositivas") or [{"tipo": "portada", "titulo": spec.get("titulo"), "texto": spec.get("subtitulo")}]
-    n = len(sls)
-    tmp = out / "_tmp_historia"
     for i, sl in enumerate(sls, 1):
         t = sl.get("tipo", "texto")
+        img = story_bg(spec, sl, i, t == "portada")
+        d = ImageDraw.Draw(img)
+        story_frame(img, d)
+        maxw = SW - 2 * SP
         if t == "portada":
-            s = dict(spec, titulo=sl.get("titulo", spec.get("titulo")), subtitulo=sl.get("texto", spec.get("subtitulo")))
-            card = Image.open(post(s, tmp, "c.jpg"))
+            f, lines, sz = fit_text(d, sl.get("titulo") or spec.get("titulo", ""), "display", maxw, 640, 128, 64, 1.02)
+            sub = sl.get("texto") or spec.get("subtitulo")
+            fs = font("text", 46)
+            sll = wrap(d, sub, fs, maxw)[:4] if sub else []
+            y = SAFE_BOT - 110 - len(sll) * 62 - int(len(lines) * sz * 1.02)
+            et = sl.get("etiqueta") or spec.get("etiqueta")
+            if et:
+                chip(img, d, SP, y - 110, et, 34)
+            else:
+                accent(img, SP, y - 50)
+            y = draw_lines(d, (SP, y), lines, f, sz, lh=1.02) + 34
+            for l in sll:
+                d.text((SP, y), l, font=fs, fill=(226, 230, 236))
+                y += 62
+        elif t == "dato":
+            num = sl.get("numero", "")
+            size = 330
+            while size > 120 and d.textlength(num, font=font("display", size)) > maxw:
+                size -= 10
+            y = 560
+            if sl.get("kicker"):
+                d.text((SP, y - 90), sl["kicker"], font=font("semi", 38), fill=TURQ)
+            y = grad_text(img, (SP - 8, y), [num], font("display", size), size, 1.0) + 40
+            if sl.get("titulo"):
+                f, lines, sz = fit_text(d, sl["titulo"], "display", maxw, 420, 92, 52)
+                y = draw_lines(d, (SP, y), lines, f, sz) + 30
+            if sl.get("texto"):
+                ft = font("text", 46)
+                for l in wrap(d, sl["texto"], ft, maxw)[:5]:
+                    d.text((SP, y), l, font=ft, fill=(214, 218, 226))
+                    y += 62
+            if sl.get("nota"):
+                fn = font("text", 28)
+                yy = SAFE_BOT - 120
+                for l in wrap(d, sl["nota"], fn, maxw)[-2:]:
+                    d.text((SP, yy), l, font=fn, fill=MUTED)
+                    yy += 38
         elif t == "cta":
-            card = slide_cta(sl, 1080, 1350, 80, i, n)
-        else:
-            card = slide_text(sl, 1080, 1350, 80, i, n)
-        base = bg_from(spec, W, H, i) if t == "portada" else brand_bg(W, H, i + 5)
-        base = base.filter(ImageFilter.GaussianBlur(28))
-        base = Image.blend(base, Image.new("RGB", (W, H), NIGHT), 0.45)
-        m = Image.new("L", (1080, 1350), 255)
-        md = ImageDraw.Draw(m)
-        for k in range(140):
-            v = int(255 * (k / 140) ** 1.6)
-            md.line([(0, 1349 - k), (1079, 1349 - k)], fill=v)
-            if k < 55:
-                md.line([(0, k), (1079, k)], fill=int(255 * (k / 55) ** 1.4))
-        base.paste(card.convert("RGB"), (0, 285), m)
-        save(base, out, f"h{i:02d}.jpg")
-    for f in tmp.glob("*"):
-        f.unlink()
-    tmp.rmdir()
+            y = 620
+            accent(img, SP, y - 50)
+            f, lines, sz = fit_text(d, sl.get("titulo") or "¿Cuántos clientes se quedan sin respuesta en tu red?", "display", maxw, 520, 104, 56)
+            y = draw_lines(d, (SP, y), lines, f, sz) + 36
+            ft = font("text", 46)
+            for l in wrap(d, sl.get("texto") or "Te lo medimos sede por sede, sin compromiso.", ft, maxw)[:4]:
+                d.text((SP, y), l, font=ft, fill=(214, 218, 226))
+                y += 62
+            bw, bh = maxw, 150
+            by = SAFE_BOT - 150 - bh
+            g = gradient(bw, bh)
+            m = Image.new("L", (bw, bh), 0)
+            ImageDraw.Draw(m).rounded_rectangle([0, 0, bw - 1, bh - 1], radius=75, fill=255)
+            img.paste(g, (SP, by), m)
+            fb = font("bold", 50)
+            txt = sl.get("boton") or "Escríbenos por privado"
+            tw = d.textlength(txt, font=fb)
+            x0 = SP + (bw - tw - 70) / 2
+            d.text((x0, by + 44), txt, font=fb, fill=NIGHT)
+            ax, ay = x0 + tw + 30, by + bh / 2 + 2   # flecha dibujada (la tipografía no trae →)
+            d.line([(ax, ay), (ax + 38, ay)], fill=NIGHT, width=7)
+            d.polygon([(ax + 46, ay), (ax + 28, ay - 15), (ax + 28, ay + 15)], fill=NIGHT)
+        else:  # texto o lista
+            y = 560
+            if sl.get("kicker"):
+                d.text((SP, y - 80), sl["kicker"], font=font("semi", 38), fill=TURQ)
+            else:
+                accent(img, SP, y - 50)
+            if sl.get("titulo"):
+                f, lines, sz = fit_text(d, sl["titulo"], "display", maxw, 440, 96, 54)
+                y = draw_lines(d, (SP, y), lines, f, sz) + 44
+            if t == "lista":
+                fi = font("medium", 46)
+                for it in sl.get("items", [])[:5]:
+                    ll = wrap(d, it, fi, maxw - 80)
+                    dm = Image.new("L", (28, 28), 0)
+                    ImageDraw.Draw(dm).ellipse([0, 0, 27, 27], fill=255)
+                    img.paste(gradient(28, 28), (SP, y + 16), dm)
+                    for l in ll:
+                        d.text((SP + 60, y), l, font=fi, fill=WHITE)
+                        y += 62
+                    y += 30
+            if sl.get("texto"):
+                ft = font("text", 46)
+                for l in wrap(d, sl["texto"], ft, maxw)[:10]:
+                    if y > SAFE_BOT - 120:
+                        break
+                    d.text((SP, y), l, font=ft, fill=(214, 218, 226))
+                    y += 64
+        save(img, out, f"h{i:02d}.jpg")
 
 
 def main():
