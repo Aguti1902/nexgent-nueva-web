@@ -10,7 +10,7 @@ Uso:  python3 design/render.py <pieza.json> <carpeta_salida>
 
 pieza.json:
 {
-  "tipo": "blog" | "post" | "carrusel" | "dato" | "linkedin",
+  "tipo": "blog" | "post" | "carrusel" | "dato" | "linkedin" | "historia",
   "titulo": "…", "subtitulo": "…", "etiqueta": "Casos de éxito",
   "fondo": "ruta/a/imagen.jpg"            (opcional; si falta, fondo de marca),
   "diapositivas": [ {"tipo":"portada"|"texto"|"dato"|"lista"|"cta", "titulo":"…", "texto":"…",
@@ -23,6 +23,9 @@ Salidas:
   carrusel  -> 01.jpg, 02.jpg… (1080x1350) y portada en post.jpg
   dato      -> dato.jpg (1080x1350)
   linkedin  -> linkedin.jpg (1200x1200)
+  historia  -> h01.jpg, h02.jpg… (1080x1920, historias de Instagram). Usa "diapositivas" igual que el
+               carrusel (portada, texto, dato, lista, cta). Deja libres los 250 px de arriba y los 340 de
+               abajo, que tapa Instagram.
 Cada salida también se guarda en miniatura (thumb-*.jpg, 360 px de ancho) para el panel.
 """
 import json, sys
@@ -354,10 +357,43 @@ def linkedin(spec, out):
     save(img, out, "linkedin.jpg")
 
 
+def historia(spec, out):
+    """Historias de Instagram (1080x1920): cada diapositiva se compone en 1080x1350 y se centra
+    sobre un fondo de marca vertical, así nada queda bajo la barra de arriba ni la de respuesta."""
+    W, H = 1080, 1920
+    sls = spec.get("diapositivas") or [{"tipo": "portada", "titulo": spec.get("titulo"), "texto": spec.get("subtitulo")}]
+    n = len(sls)
+    tmp = out / "_tmp_historia"
+    for i, sl in enumerate(sls, 1):
+        t = sl.get("tipo", "texto")
+        if t == "portada":
+            s = dict(spec, titulo=sl.get("titulo", spec.get("titulo")), subtitulo=sl.get("texto", spec.get("subtitulo")))
+            card = Image.open(post(s, tmp, "c.jpg"))
+        elif t == "cta":
+            card = slide_cta(sl, 1080, 1350, 80, i, n)
+        else:
+            card = slide_text(sl, 1080, 1350, 80, i, n)
+        base = bg_from(spec, W, H, i) if t == "portada" else brand_bg(W, H, i + 5)
+        base = base.filter(ImageFilter.GaussianBlur(28))
+        base = Image.blend(base, Image.new("RGB", (W, H), NIGHT), 0.45)
+        m = Image.new("L", (1080, 1350), 255)
+        md = ImageDraw.Draw(m)
+        for k in range(140):
+            v = int(255 * (k / 140) ** 1.6)
+            md.line([(0, 1349 - k), (1079, 1349 - k)], fill=v)
+            if k < 55:
+                md.line([(0, k), (1079, k)], fill=int(255 * (k / 55) ** 1.4))
+        base.paste(card.convert("RGB"), (0, 285), m)
+        save(base, out, f"h{i:02d}.jpg")
+    for f in tmp.glob("*"):
+        f.unlink()
+    tmp.rmdir()
+
+
 def main():
     spec = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
     out = Path(sys.argv[2])
-    {"blog": blog, "post": post, "carrusel": carrusel, "dato": dato, "linkedin": linkedin}[spec["tipo"]](spec, out)
+    {"blog": blog, "post": post, "carrusel": carrusel, "dato": dato, "linkedin": linkedin, "historia": historia}[spec["tipo"]](spec, out)
     print("\n".join(sorted(p.name for p in out.glob("*.jpg") if not p.name.startswith("thumb-"))))
 
 

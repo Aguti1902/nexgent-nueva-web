@@ -12,7 +12,7 @@ Hacen todas las imágenes: portadas del blog, imagen para compartir (og), posts 
    - Si sale algo que no es España, o con texto inventado, o con marcas, se descarta y se repite.
 2. **Capa de marca** con `design/render.py` (nunca se escribe el texto con la IA):
    `python3 design/render.py pieza.json carpeta_salida`
-   El JSON describe la pieza (tipos: `blog`, `post`, `carrusel`, `dato`, `linkedin`; ver la cabecera de render.py).
+   El JSON describe la pieza (tipos: `blog`, `post`, `carrusel`, `dato`, `linkedin`, `historia`; ver la cabecera de render.py).
 3. **Revisión visual**: abre la imagen y comprueba que el texto se lee, que no hay cortes y que los datos coinciden con la fuente.
 
 ## Dónde va cada cosa
@@ -30,3 +30,10 @@ Después de añadir portadas: `python3 scripts/blog.py`.
 - Nada se publica en redes sin la aprobación de Alejandro: las piezas quedan en el panel como «Para revisar».
 - Presupuesto: cada fondo cuesta unos 0,5 créditos de Higgsfield. Máximo 8 fondos por turno. Si el saldo baja de 10 créditos, usa el fondo de marca sin IA (sin `fondo` en el JSON) y avisa en el panel.
 - Tipografía: Inter Tight (titulares) e Inter (texto), en `design/fonts` (licencia OFL).
+
+## Historias de Instagram
+
+- `tipo: "historia"` con `diapositivas` (igual que el carrusel: portada, texto, dato, lista, cta) da `h01.jpg`, `h02.jpg`… en 1080×1920.
+- Cada historia es una idea: 1 a 3 diapositivas por tanda. Texto grande y poco; la última, una llamada a la acción.
+- Instagram tapa los 250 px de arriba y los 340 de abajo: la plantilla ya deja ese espacio libre.
+- Se programan según el calendario de `meta/redes.calendario` del panel, nunca todas de golpe.
