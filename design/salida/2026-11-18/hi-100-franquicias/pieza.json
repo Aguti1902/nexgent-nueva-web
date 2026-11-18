@@ -1,0 +1,28 @@
+{
+ "tipo": "historia",
+ "fondo": "/home/claude/ai/5.png",
+ "etiqueta": "NexGent",
+ "diapositivas": [
+  {
+   "tipo": "portada",
+   "titulo": "La primera empresa en España con IA en más de 100 franquicias",
+   "video_fondo": "/home/claude/ai/clip.mp4"
+  },
+  {
+   "tipo": "lista",
+   "titulo": "Nexi, en cada sede",
+   "items": [
+    "Contesta llamadas y WhatsApps 24/7",
+    "Reserva en la agenda real",
+    "Confirma citas por WhatsApp",
+    "Pasa a recepción lo que hace falta"
+   ]
+  },
+  {
+   "tipo": "cta",
+   "titulo": "¿Diriges una red de franquicias?",
+   "texto": "Hablemos de un piloto en tus sedes propias.",
+   "boton": "Escríbenos por privado"
+  }
+ ]
+}

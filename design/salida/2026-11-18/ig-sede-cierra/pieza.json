@@ -1,0 +1,46 @@
+{
+ "tipo": "carrusel",
+ "fondo": "/home/claude/ai/1.png",
+ "etiqueta": "Atención 24/7",
+ "titulo": "Tu sede cierra. Tus clientes, no.",
+ "subtitulo": "Tu sede cierra por la noche. Tus clientes siguen escribiendo.",
+ "diapositivas": [
+  {
+   "tipo": "portada"
+  },
+  {
+   "tipo": "dato",
+   "numero": "168",
+   "titulo": "horas a la semana en que tus clientes llaman y escriben",
+   "nota": "Tu sede atiende unas 66. ¿Y el resto?"
+  },
+  {
+   "tipo": "texto",
+   "kicker": "Lo que no se ve",
+   "titulo": "Un WhatsApp a las 23:00 sin respuesta",
+   "texto": "Una llamada perdida en plena hora punta. Cada una puede ser una cita que se va a otro sitio."
+  },
+  {
+   "tipo": "lista",
+   "titulo": "Nexi contesta llamadas y WhatsApps 24/7",
+   "items": [
+    "Coge la cita",
+    "La cambia",
+    "La anula",
+    "La confirma"
+   ]
+  },
+  {
+   "tipo": "dato",
+   "numero": "243",
+   "titulo": "llamadas atendidas por IA en 3 semanas. 80 acabaron en cita.",
+   "nota": "Un centro de uñas · 27 oct – 16 nov 2026"
+  },
+  {
+   "tipo": "cta",
+   "titulo": "Somos la primera empresa en España que ha implantado IA en más de 100 franquicias",
+   "texto": "¿Diriges una red? Hablemos.",
+   "boton": "Reserva en nexgent.io/reunion"
+  }
+ ]
+}
