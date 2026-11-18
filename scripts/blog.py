@@ -32,7 +32,7 @@ MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto
 
 def asset_version():
     h = hashlib.md5()
-    for f in ("assets/css/style.css", "assets/css/blog.css", "assets/js/main.js", "assets/js/blog.js", "assets/js/three-scenes.js", "assets/css/empresa-3d.css", "assets/js/empresa-3d.js"):
+    for f in ("assets/css/style.css", "assets/css/blog.css", "assets/js/main.js", "assets/js/blog.js", "assets/js/three-scenes.js", "assets/css/empresa-3d.css", "assets/js/empresa-3d.js", "assets/js/e3-kit.js", "assets/js/e3-lots.js"):
         fp = ROOT / f
         if fp.exists():
             h.update(fp.read_bytes())

@@ -353,3 +353,24 @@
 }
 .e3-hero .eyebrow{white-space:nowrap}
 @media (max-width:640px){.e3-rot{min-width:0}.e3-hero .eyebrow{font-size:13px;padding:7px 14px}}
+
+/* ===== v3: hero cinematográfico ===== */
+.e3-hero{place-items:start center;padding:clamp(104px,15vh,160px) 0 0;min-height:max(100svh,760px)}
+.e3-hero .hero__title{font-size:clamp(40px,6.3vw,96px);margin-top:22px}
+.e3-hero .hero__sub{max-width:660px;margin-top:22px;font-size:clamp(17px,1.45vw,20px);color:#b4bcc6}
+.e3-hero .hero__ctas{margin-top:28px}
+.e3-hero__shade{background:linear-gradient(180deg,rgba(0,2,5,.92) 0%,rgba(0,2,5,.62) 24%,rgba(0,2,5,.18) 46%,transparent 60%,transparent 86%,#000 100%)}
+.e3-hero .btn--ghost{background:rgba(10,16,24,.55)}
+.e3-stage{cursor:grab;touch-action:pan-y}
+.e3-stage.is-drag{cursor:grabbing}
+.e3-stage__hint{color:#8fa3b8;z-index:2;pointer-events:none}
+@media (max-width:640px){
+  .e3-hero{padding-top:108px;min-height:100svh}
+  .e3-hero .hero__content{margin-top:0}
+  .e3-hero__shade{background:linear-gradient(180deg,rgba(0,2,5,.94) 0%,rgba(0,2,5,.7) 34%,rgba(0,2,5,.2) 56%,transparent 68%,transparent 84%,#000 100%)}
+}
+.e3-hero__shade{background:radial-gradient(58% 34% at 50% 37%,rgba(0,3,7,.78),rgba(0,3,7,.35) 60%,transparent 100%),linear-gradient(180deg,rgba(0,2,5,.94) 0%,rgba(0,2,5,.6) 22%,rgba(0,2,5,.1) 50%,transparent 62%,transparent 88%,#000 100%)}
+.e3-hero .hero__sub{text-shadow:0 2px 24px rgba(0,3,7,.9)}
+
+@media (max-width:640px){.e3-hero__shade{background:radial-gradient(90% 30% at 50% 34%,rgba(0,3,7,.8),rgba(0,3,7,.3) 70%,transparent 100%),linear-gradient(180deg,rgba(0,2,5,.94) 0%,rgba(0,2,5,.66) 30%,rgba(0,2,5,.12) 54%,transparent 66%,transparent 86%,#000 100%)}}
+@media (max-width:640px){.e3-feed{display:none}}
