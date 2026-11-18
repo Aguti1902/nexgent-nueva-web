@@ -143,6 +143,12 @@ def cover_html(p, eager=False):
     return f'<div class="post__img {esc(p["cover"])}"></div>'
 
 
+def seo_title(p):
+    """<title> del artículo: usa "seoTitle" si existe y añade « · NexGent» solo si cabe en 65 caracteres."""
+    t = p.get("seoTitle") or p["title"]
+    return f"{t} · NexGent" if len(t) + 10 <= 65 else t
+
+
 def page(title, description, canonical, body, jsonld=None, og_type="website", image=None):
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>\n' if jsonld else ""
     catlinks = "".join(f'<a href="/blog/categoria/{c["slug"]}">{esc(c["name"])}</a>' for c in CATS)
@@ -299,7 +305,7 @@ def build():
             strip = lambda t: re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", t))).strip()
             lds.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
                 {"@type": "Question", "name": strip(q), "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in faqs]})
-        (OUT / f"{p['slug']}.html").write_text(page(f"{p['title']} · NexGent", p["description"], f"/blog/{p['slug']}", body, lds, "article", p.get("og")), encoding="utf-8")
+        (OUT / f"{p['slug']}.html").write_text(page(seo_title(p), p["description"], f"/blog/{p['slug']}", body, lds, "article", p.get("og")), encoding="utf-8")
 
     # Portada y categorías
     def listing(cat):
