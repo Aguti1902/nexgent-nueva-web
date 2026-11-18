@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NexGent 3D · Tu empresa en 3D, con agentes de IA trabajando 24/7</title>
+<meta name="description" content="NexGent 3D muestra en 3D y en directo tu empresa (flota, almacén, tiendas, fábrica, clínicas, obras…) con un equipo de agentes de IA que trabaja 24/7. Hablas con ellos por texto y voz.">
+<link rel="canonical" href="https://nexgent.io/empresa-3d">
+<meta property="og:title" content="NexGent 3D · Tu empresa en 3D. Con IA trabajando 24/7.">
+<meta property="og:description" content="Ve tu empresa entera en 3D y en directo, con agentes de IA que trabajan 24/7 y te avisan dentro de tu horario, salvo que sea urgente.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nexgent.io/empresa-3d">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css?v=2342fe3e">
+<link rel="stylesheet" href="/assets/css/empresa-3d.css?v=2342fe3e">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Product","name":"NexGent 3D","brand":{"@type":"Organization","name":"NexGent"},"description":"Plataforma que muestra en 3D y en directo cualquier empresa, con un equipo de agentes de IA que trabaja 24/7. Se habla con los agentes por texto y voz.","url":"https://nexgent.io/empresa-3d","category":"Software de gestión empresarial con IA"}
+</script>
+</head>
+<body class="e3">
+<a class="skip" href="#main">Saltar al contenido</a>
+<div class="loader" id="loader" aria-hidden="true"><img src="/assets/img/logo-nexgent-blanco.png" alt=""><span class="loader__bar"></span></div>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<!-- NAV (el menú principal no cambia) -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="/" class="logo" aria-label="NexGent, inicio"><img class="logo__w" src="/assets/img/logo-nexgent-blanco.png" alt="NexGent" width="112" height="28"><img class="logo__d" src="/assets/img/logo-nexgent.png" alt="" width="112" height="28" aria-hidden="true"></a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="/#nosotros">Sobre nosotros</a>
+      <a href="/#caso">Caso de éxito</a>
+      <a href="/#como-trabajamos">Cómo trabajamos</a>
+      <a href="/blog">Blog</a>
+      <a href="/#contacto">Contacto</a>
+    </nav>
+    <a href="#contacto" class="btn btn--sm btn--light magnetic">Pide una demo</a>
+    <button class="nav__burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/#nosotros">Sobre nosotros</a>
+    <a href="/#caso">Caso de éxito</a>
+    <a href="/#como-trabajamos">Cómo trabajamos</a>
+    <a href="/blog">Blog</a>
+    <a href="#contacto">Pide una demo</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- 1 · HERO -->
+<section class="hero e3-hero" id="top">
+  <canvas id="e3Hero" aria-hidden="true"></canvas>
+  <div class="e3-hero__labels" id="e3Labels" aria-hidden="true"></div>
+  <div class="e3-hero__shade" aria-hidden="true"></div>
+  <div class="hero__content">
+    <p class="eyebrow reveal-up"><span class="dot"></span> Nuevo · NexGent 3D</p>
+    <h1 class="hero__title">
+      <span class="line reveal-up">Tu empresa en 3D.</span>
+      <span class="line reveal-up"><span class="grad">Con IA trabajando 24/7.</span></span>
+    </h1>
+    <p class="hero__sub reveal-up">Ve tu empresa entera en directo, de la flota al almacén o a la última tienda. Dentro trabaja un equipo de agentes de IA: les hablas por texto o por voz y te avisan dentro de tu horario, salvo que sea urgente.</p>
+    <div class="hero__ctas reveal-up">
+      <a href="#contacto" class="btn btn--grad magnetic">Pide una demo</a>
+      <a href="#funciones" class="btn btn--ghost magnetic">Qué hace</a>
+    </div>
+  </div>
+  <aside class="e3-feed reveal-up" aria-label="Actividad de los agentes (ejemplo)">
+    <p class="e3-feed__t"><span class="e3-live"></span> Agentes trabajando ahora</p>
+    <ul id="e3Feed">
+      <li><b>Rutas</b> Reordena 3 entregas por un atasco en la A-7</li>
+      <li><b>Mantenimiento</b> Camión 12: revisión de frenos en 2.000 km</li>
+      <li><b>Clientes</b> Avisa a 2 clientes del nuevo horario de entrega</li>
+    </ul>
+  </aside>
+  <div class="scroll-hint" aria-hidden="true"></div>
+</section>
+
+<!-- 2 · EL PROBLEMA -->
+<section class="e3-problem" id="problema" aria-labelledby="problemaTitle">
+  <div class="e3-problem__pin">
+    <div class="e3-problem__copy">
+      <p class="kicker">El problema</p>
+      <h2 class="h2" id="problemaTitle">Tus datos viven en diez herramientas.<br><span class="grad">Nadie ve la empresa entera.</span></h2>
+      <p class="lead">El GPS en una web, el stock en el ERP, los pedidos en el correo, las incidencias en WhatsApp y el resumen en un Excel que alguien actualiza los lunes. Para saber qué está pasando hay que preguntar, abrir pestañas y esperar.</p>
+    </div>
+    <div class="e3-problem__stage" aria-hidden="true">
+      <div class="e3-tool" style="--x:-38;--y:-30;--r:-8deg">ERP</div>
+      <div class="e3-tool" style="--x:30;--y:-36;--r:6deg">CRM</div>
+      <div class="e3-tool" style="--x:-44;--y:6;--r:4deg">Excel</div>
+      <div class="e3-tool" style="--x:40;--y:2;--r:-5deg">Correo</div>
+      <div class="e3-tool" style="--x:-22;--y:34;--r:-3deg">WhatsApp</div>
+      <div class="e3-tool" style="--x:20;--y:36;--r:7deg">GPS</div>
+      <div class="e3-tool" style="--x:-6;--y:-42;--r:3deg">Calendario</div>
+      <div class="e3-tool" style="--x:46;--y:-18;--r:-9deg">Facturación</div>
+      <div class="e3-tool" style="--x:-46;--y:-14;--r:9deg">Incidencias</div>
+      <div class="e3-tool" style="--x:2;--y:44;--r:-6deg">Turnos</div>
+      <div class="e3-core"><span class="e3-core__cube"><i></i><i></i><i></i><i></i><i></i><i></i></span><b>Una sola vista</b><small>en 3D y en directo</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · FUNCIONALIDADES -->
+<section class="e3-feat section-light" id="funciones" aria-labelledby="funcTitle">
+  <div class="container">
+    <p class="kicker kicker--dark">Funcionalidades</p>
+    <h2 class="h2 h2--dark reveal" id="funcTitle">Toda tu empresa, viva.<br>Y alguien vigilándola por ti.</h2>
+    <div class="e3-feat__grid">
+
+      <article class="e3-card spot reveal">
+        <div class="e3-viz e3-viz--scene" aria-hidden="true">
+          <div class="e3-crumbs"><span class="on">Empresa</span><i>›</i><span>Zona Sur</span><i>›</i><span>Camión 12</span></div>
+          <svg viewBox="0 0 320 170" class="e3-map">
+            <path d="M10 120 L90 60 L170 95 L250 40 L310 70" class="e3-road"/>
+            <path d="M40 30 L120 140 L210 150 L300 130" class="e3-road"/>
+            <circle cx="90" cy="60" r="6" class="e3-dot g"/><circle cx="170" cy="95" r="6" class="e3-dot g"/>
+            <circle cx="250" cy="40" r="6" class="e3-dot a"/><circle cx="120" cy="140" r="6" class="e3-dot g"/>
+            <circle cx="210" cy="150" r="6" class="e3-dot r"/><circle cx="300" cy="130" r="6" class="e3-dot g"/>
+          </svg>
+          <div class="e3-rewind"><span class="e3-rewind__lbl">Rebobinar el día</span><div class="e3-rewind__bar"><i></i></div><span class="e3-rewind__t" data-clock>06:00</span></div>
+          <span class="e3-tv">Modo TV</span>
+        </div>
+        <div class="e3-card__txt">
+          <h3>Escena viva</h3>
+          <p>Pasa de la empresa entera a una zona y de ahí a un solo camión, máquina o tienda. Cada cosa tiene su color de estado. Rebobina el día para ver qué pasó, o ponlo en modo TV en la pantalla de la oficina.</p>
+        </div>
+      </article>
+
+      <article class="e3-card spot reveal">
+        <div class="e3-viz e3-viz--agents" aria-hidden="true">
+          <ul class="e3-agents">
+            <li><span class="e3-av" style="--h:190">R</span><div><b>Agente de rutas</b><small class="e3-typing">Recalculando la ruta de la tarde</small></div><em class="g">Trabajando</em></li>
+            <li><span class="e3-av" style="--h:150">S</span><div><b>Agente de stock</b><small>Pedido de reposición preparado</small></div><em class="a">Espera tu OK</em></li>
+            <li><span class="e3-av" style="--h:220">C</span><div><b>Agente de clientes</b><small>12 consultas resueltas hoy</small></div><em class="g">Trabajando</em></li>
+          </ul>
+          <div class="e3-approve"><p><b>¿Apruebas el pedido de reposición?</b> 240 cajas para el almacén norte.</p><span class="e3-btn-ok">Aprobar</span><span class="e3-btn-no">Ver detalle</span></div>
+          <div class="e3-voice"><span class="e3-mic"></span><span class="e3-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><small>Reunión diaria · 08:45</small></div>
+        </div>
+        <div class="e3-card__txt">
+          <h3>Agentes</h3>
+          <p>Ves qué está haciendo cada agente en cada momento. Les hablas por texto o por voz, como a una persona del equipo, y cada mañana te dan una reunión diaria por voz. Para lo importante, siempre te piden aprobación.</p>
+        </div>
+      </article>
+
+      <article class="e3-card spot reveal">
+        <div class="e3-viz e3-viz--alerts" aria-hidden="true">
+          <div class="e3-day">
+            <div class="e3-day__work" title="Tu horario"><span>Tu horario · 9:00 a 18:00</span></div>
+            <i class="e3-n e3-n--held" style="--t:3"></i>
+            <i class="e3-n e3-n--held" style="--t:6.5"></i>
+            <i class="e3-n e3-n--urgent" style="--t:3.2"></i>
+            <i class="e3-n" style="--t:11"></i>
+            <i class="e3-n" style="--t:15.5"></i>
+            <i class="e3-n e3-n--held" style="--t:21"></i>
+            <div class="e3-day__axis"><span>0 h</span><span>6 h</span><span>12 h</span><span>18 h</span><span>24 h</span></div>
+          </div>
+          <div class="e3-alertcards">
+            <div class="e3-alert e3-alert--u"><b>03:12 · Urgente</b><span>Cámara de frío fuera de rango. Te llamamos.</span></div>
+            <div class="e3-alert"><b>09:00 · Resumen</b><span>3 avisos de la noche, ordenados por importancia.</span></div>
+          </div>
+          <div class="e3-chan"><span>App</span><span>WhatsApp</span><span>Llamada</span></div>
+        </div>
+        <div class="e3-card__txt">
+          <h3>Avisos inteligentes</h3>
+          <p>Los agentes respetan tu horario: lo que puede esperar te llega a primera hora, ordenado. Lo urgente sí interrumpe, a cualquier hora. Tú eliges el canal: la app, WhatsApp o una llamada.</p>
+        </div>
+      </article>
+
+      <article class="e3-card spot reveal">
+        <div class="e3-viz e3-viz--mon" aria-hidden="true">
+          <div class="e3-heat" id="e3Heat"></div>
+          <svg viewBox="0 0 300 90" class="e3-spark"><polyline points="0,62 20,58 40,60 60,55 80,57 100,52 120,56 140,54 160,58 180,22 200,55 220,52 240,50 260,48 280,44 300,40"/><circle cx="180" cy="22" r="5"/></svg>
+          <div class="e3-mon-tags"><span class="r">Anomalía · consumo +38 %</span><span class="a">Predicción · fallo probable en 48 h</span></div>
+        </div>
+        <div class="e3-card__txt">
+          <h3>Monitorización</h3>
+          <p>Los agentes vigilan cada proceso, máquina y vehículo. Detectan lo que se sale de lo normal, avisan antes de que falle algo y te enseñan mapas de calor de dónde se acumula el trabajo.</p>
+        </div>
+      </article>
+
+      <article class="e3-card spot reveal">
+        <div class="e3-viz e3-viz--sim">
+          <p class="e3-sim__q">¿Y si…</p>
+          <label class="e3-sim__ctl"><span>…añado camiones a la flota?</span><input type="range" min="0" max="6" value="2" id="e3Sim" aria-label="Camiones añadidos"><output id="e3SimOut">+2 camiones</output></label>
+          <div class="e3-sim__res">
+            <div><small>Entregas a tiempo</small><b id="e3SimA">94 %</b></div>
+            <div><small>Horas extra</small><b id="e3SimB">−22 %</b></div>
+            <div><small>Uso de la flota</small><b id="e3SimC">84 %</b></div>
+          </div>
+          <p class="e3-sim__note">Cifras de ejemplo. En tu empresa, el simulador calcula con tus datos.</p>
+        </div>
+        <div class="e3-card__txt">
+          <h3>Simulador «¿y si…?»</h3>
+          <p>Prueba una decisión antes de tomarla: abrir un turno más, cerrar una tienda, cambiar una ruta o añadir una máquina. El simulador lo calcula sobre tu empresa y te enseña el resultado en la escena.</p>
+        </div>
+      </article>
+
+      <article class="e3-card spot reveal">
+        <div class="e3-viz e3-viz--sec" aria-hidden="true">
+          <div class="e3-roles">
+            <div><b>Dirección</b><span>Toda la empresa</span></div>
+            <div><b>Jefe de zona</b><span>Solo su zona</span></div>
+            <div><b>Agentes de IA</b><span>Solo lo que se les permite</span></div>
+          </div>
+          <ul class="e3-log">
+            <li><time>10:42</time> Agente de stock propuso un pedido</li>
+            <li><time>10:44</time> Laura (Dirección) lo aprobó</li>
+            <li><time>10:44</time> Pedido enviado al proveedor</li>
+          </ul>
+          <span class="e3-eu"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3z"/></svg> Servidores en Europa</span>
+        </div>
+        <div class="e3-card__txt">
+          <h3>Seguridad</h3>
+          <p>Cada persona ve solo lo que le toca según su rol. Todo queda registrado: quién pidió qué, qué hizo cada agente y quién lo aprobó. Y los datos se quedan en servidores en Europa.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- 4 · SECTORES -->
+<section class="e3-sectors section-dark" id="sectores" aria-labelledby="sectTitle">
+  <div class="container">
+    <p class="kicker">Sectores</p>
+    <h2 class="h2 reveal" id="sectTitle">Cualquier empresa<br><span class="grad">cabe en 3D.</span></h2>
+    <div class="e3-tabs" role="tablist" aria-label="Sectores" id="e3Tabs"></div>
+    <div class="e3-sectors__body">
+      <div class="e3-stage" aria-hidden="true"><canvas id="e3Diorama"></canvas><span class="e3-stage__hint">Escena de ejemplo</span></div>
+      <div class="e3-panel" id="e3Panel" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · CONECTORES -->
+<section class="e3-conn section-dark" id="conectores" aria-labelledby="connTitle">
+  <div class="container">
+    <p class="kicker">Conectores</p>
+    <h2 class="h2 reveal" id="connTitle">Se conecta con<br><span class="grad">lo que ya usas.</span></h2>
+    <p class="lead reveal">No cambias de herramientas. NexGent 3D lee los datos de las que ya tienes y los pone en la escena.</p>
+  </div>
+  <div class="e3-marquee" aria-label="Herramientas compatibles">
+    <div class="e3-marquee__track" id="e3M1"></div>
+    <div class="e3-marquee__track e3-marquee__track--rev" id="e3M2"></div>
+  </div>
+  <div class="container"><p class="e3-conn__note reveal">¿Usas otra herramienta? Si tiene API o puede exportar datos, la estudiamos.</p></div>
+</section>
+
+<!-- 6 · CÓMO EMPEZAMOS -->
+<section class="e3-steps section-light" id="como-empezamos" aria-labelledby="stepsTitle">
+  <div class="container">
+    <p class="kicker kicker--dark">Cómo empezamos</p>
+    <h2 class="h2 h2--dark reveal" id="stepsTitle">De la demo a tu empresa<br>en tres pasos.</h2>
+    <ol class="e3-steps__list">
+      <li class="reveal"><span class="e3-steps__n">1</span><h3>Demo con tu sector</h3><p>Te enseñamos una empresa como la tuya en 3D, con sus agentes trabajando. Hablas con ellos y ves cómo te avisarían.</p></li>
+      <li class="reveal"><span class="e3-steps__n">2</span><h3>Piloto con tus datos reales</h3><p>Conectamos tus herramientas en una parte de la empresa (una zona, una nave o unas sedes) y los agentes empiezan a trabajar con tus datos.</p></li>
+      <li class="reveal"><span class="e3-steps__n">3</span><h3>Puesta en marcha</h3><p>Llevamos la escena a toda la empresa, configuramos los agentes, los roles y los avisos, y formamos a tu equipo.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 7 · PREGUNTAS FRECUENTES -->
+<section class="faq section-light" id="preguntas">
+  <div class="container container--narrow">
+    <p class="kicker kicker--dark">Preguntas frecuentes</p>
+    <h2 class="h2 h2--dark reveal">Lo que nos suelen preguntar.</h2>
+    <div class="faq__list">
+      <details><summary>¿Vigila a mis empleados?</summary><p>No. NexGent 3D monitoriza procesos, máquinas, vehículos y agentes de IA, nunca a personas.</p></details>
+      <details><summary>¿Dónde están los datos?</summary><p>En servidores en Europa. Además, cada persona solo ve lo que le permite su rol y todo lo que pasa queda registrado.</p></details>
+      <details><summary>¿Cuánto tarda en estar funcionando?</summary><p>Unas semanas, según los conectores que haga falta preparar. En la demo te decimos qué herramientas tuyas se pueden conectar desde el primer día.</p></details>
+      <details><summary>¿Los agentes pueden hacer cambios por su cuenta?</summary><p>Solo lo que tú les permitas. Para lo importante, como un pedido o un cambio de ruta, te piden aprobación antes de hacerlo.</p></details>
+      <details><summary>¿Cómo hablo con los agentes?</summary><p>Por texto o por voz, desde la propia escena. También puedes tener cada mañana una reunión diaria por voz en la que te cuentan cómo va todo.</p></details>
+      <details><summary>¿Sirve para mi sector?</summary><p>Si tu empresa tiene vehículos, naves, tiendas, máquinas, sedes u obras, se puede ver en 3D. En la demo te lo enseñamos con un sector como el tuyo.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · DEMO -->
+<section class="contact section-dark" id="contacto">
+  <div class="contact__glow" aria-hidden="true"></div>
+  <div class="contact__rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="container contact__grid">
+    <div>
+      <p class="kicker">Pide una demo</p>
+      <h2 class="h2 h2--xl" id="ctaTitle">Mira tu empresa en 3D<br><span class="grad">antes de decidir nada.</span></h2>
+      <p class="lead reveal">Cuéntanos a qué se dedica tu empresa y te enseñamos una demo de tu sector, con sus agentes trabajando.</p>
+      <ul class="contact__alt reveal">
+        <li><span>WhatsApp</span><a href="https://wa.me/34684486647">+34 684 486 647</a></li>
+        <li><span>LinkedIn</span><a href="https://www.linkedin.com/company/nexgentai">linkedin.com/company/nexgentai</a></li>
+      </ul>
+    </div>
+    <form class="form" id="leadForm" novalidate data-origen="empresa-3d">
+      <input type="hidden" name="origen" value="empresa-3d">
+      <input type="text" name="web" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <div class="form__row"><label>Nombre<input name="nombre" required autocomplete="name"></label><label>Empresa<input name="empresa" required autocomplete="organization"></label></div>
+      <div class="form__row"><label>Cargo<input name="cargo" autocomplete="organization-title"></label><label>Sector<select name="sector">
+        <option>Flota de camiones y logística</option><option>Almacén</option><option>Red de tiendas</option><option>Empresa de software</option><option>Fábrica</option><option>Clínicas</option><option>Obras y construcción</option><option>Inmobiliaria</option><option>Instalaciones de energía</option><option>Otro</option>
+      </select></label></div>
+      <label>¿Qué te gustaría ver en 3D?<textarea name="mensaje" rows="3" placeholder="Por ejemplo: nuestros 40 camiones y los dos almacenes"></textarea></label>
+      <div class="form__row"><label>Email<input name="email" type="email" required autocomplete="email"></label><label>Teléfono<input name="telefono" type="tel" autocomplete="tel"></label></div>
+      <label class="check"><input type="checkbox" required name="privacidad"><span>He leído y acepto la <a href="/legal#privacidad">política de privacidad</a>.</span></label>
+      <button class="btn btn--grad btn--block magnetic" type="submit">Pide una demo</button>
+      <p class="form__msg" id="formMsg" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div>
+        <img class="footer__logo" src="/assets/img/logo-nexgent-blanco.png" alt="NexGent" width="168" height="42">
+        <p class="footer__claim">IA que atiende a los clientes de las redes de franquicias, y NexGent 3D: tu empresa en 3D con agentes de IA trabajando 24/7.</p>
+      </div>
+      <a href="#contacto" class="btn btn--grad magnetic">Pide una demo</a>
+    </div>
+    <div class="footer__grid">
+      <div><h4>Empresa</h4><a href="/#nosotros">Sobre nosotros</a><a href="/#caso">Caso de éxito</a><a href="/#como-trabajamos">Cómo trabajamos</a><a href="/blog">Blog</a></div>
+      <div><h4>Producto</h4><a href="/#demo">Cómo funciona</a><a href="/#producto">Lo que hace Nexi</a><a href="/#sectores">Sectores</a><a href="/empresa-3d">NexGent 3D</a></div>
+      <div><h4>Contacto</h4><a href="#contacto">Pide una demo</a><a href="https://wa.me/34684486647">WhatsApp</a><a href="https://www.linkedin.com/company/nexgentai">LinkedIn</a><a href="https://www.instagram.com/nexgentai">Instagram</a></div>
+      <div><h4>Legal</h4><a href="/legal#aviso-legal">Aviso legal</a><a href="/legal#privacidad">Privacidad</a><a href="/legal#cookies">Cookies</a></div>
+    </div>
+    <div class="footer__bottom"><p>© 2026 NEXGENT AI SYSTEMS, S.L. · NIF B22534564 · Calle Julio Verne 12, 18210 Peligros (Granada)</p><p>Hecho en Granada</p></div>
+  </div>
+</footer>
+
+<script src="/assets/vendor/gsap.min.js"></script>
+<script src="/assets/vendor/ScrollTrigger.min.js"></script>
+<script src="/assets/vendor/lenis.min.js"></script>
+<script src="/assets/js/main.js?v=2342fe3e"></script>
+<script type="module" src="/assets/js/empresa-3d.js?v=2342fe3e"></script>
+</body>
+</html>

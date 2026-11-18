@@ -32,7 +32,7 @@ MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto
 
 def asset_version():
     h = hashlib.md5()
-    for f in ("assets/css/style.css", "assets/css/blog.css", "assets/js/main.js", "assets/js/blog.js", "assets/js/three-scenes.js"):
+    for f in ("assets/css/style.css", "assets/css/blog.css", "assets/js/main.js", "assets/js/blog.js", "assets/js/three-scenes.js", "assets/css/empresa-3d.css", "assets/js/empresa-3d.js"):
         fp = ROOT / f
         if fp.exists():
             h.update(fp.read_bytes())
@@ -120,7 +120,7 @@ FOOT = """<footer class="footer">
       <a href="/#contacto" class="btn btn--grad magnetic">Solicitar diagnóstico</a>
     </div>
     <div class="footer__grid">
-      <div><h4>Empresa</h4><a href="/#nosotros">Sobre nosotros</a><a href="/#caso">Caso de éxito</a><a href="/#como-trabajamos">Cómo trabajamos</a><a href="/blog">Blog</a></div>
+      <div><h4>Empresa</h4><a href="/#nosotros">Sobre nosotros</a><a href="/#caso">Caso de éxito</a><a href="/#como-trabajamos">Cómo trabajamos</a><a href="/blog">Blog</a><a href="/empresa-3d">NexGent 3D</a></div>
       <div><h4>Blog</h4>__CATLINKS__</div>
       <div><h4>Contacto</h4><a href="/#contacto">Solicitar diagnóstico</a><a href="https://wa.me/34684486647">WhatsApp</a><a href="https://www.linkedin.com/company/nexgentai">LinkedIn</a><a href="https://www.instagram.com/nexgentai">Instagram</a></div>
       <div><h4>Legal</h4><a href="/legal#aviso-legal">Aviso legal</a><a href="/legal#privacidad">Privacidad</a><a href="/legal#cookies">Cookies</a></div>
@@ -330,11 +330,11 @@ def build():
         (OUT / "categoria" / f"{c['slug']}.html").write_text(page(f"{c['name']} · Blog de NexGent", c["description"], f"/blog/categoria/{c['slug']}", listing(c["slug"])), encoding="utf-8")
 
     # Versión de estilos y scripts en las páginas de la raíz (evita cachés antiguas)
-    for f in ("index.html", "legal.html", "404.html"):
+    for f in ("index.html", "legal.html", "404.html", "empresa-3d.html"):
         fp = ROOT / f
         if fp.exists():
             t = fp.read_text(encoding="utf-8")
-            t = re.sub(r'(assets/(?:css/style\.css|js/main\.js|js/three-scenes\.js))(\?v=[0-9a-f]+)?"', lambda m: f'{m.group(1)}?v={V}"', t)
+            t = re.sub(r'(assets/(?:css/style\.css|js/main\.js|js/three-scenes\.js|css/empresa-3d\.css|js/empresa-3d\.js))(\?v=[0-9a-f]+)?"', lambda m: f'{m.group(1)}?v={V}"', t)
             fp.write_text(t, encoding="utf-8")
 
     # Home: últimos 3
