@@ -37,3 +37,10 @@ Después de añadir portadas: `python3 scripts/blog.py`.
 - Cada historia es una idea: 1 a 3 diapositivas por tanda. Texto grande y poco; la última, una llamada a la acción.
 - Instagram tapa los 250 px de arriba y los 340 de abajo: la plantilla ya deja ese espacio libre.
 - Se programan según el calendario de `meta/redes.calendario` del panel, nunca todas de golpe.
+
+## Historias animadas (vídeo)
+
+- `python3 design/video.py <pieza.json> <carpeta>` usa el mismo JSON que la historia fija y da `h01.mp4`, `h02.mp4`… (1080×1920, 30 fps, 6–7 s, con su póster `h01.jpg`).
+- Animaciones de la marca, sin gastar créditos: fondo con zoom lento y luz que late, textos que entran escalonados, números que cuentan desde 0, listas punto a punto y botón que late.
+- `video_fondo` en una diapositiva: ruta a un clip vertical (por ejemplo de Higgsfield, Kling 9:16 sin sonido, unos 6 créditos cada 5 s) para usarlo de fondo. Solo para historias especiales.
+- Por defecto las historias van en vídeo; la versión fija (render.py tipo `historia`) queda de reserva.
