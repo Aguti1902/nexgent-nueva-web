@@ -1,12 +1,86 @@
 <!--meta
-{"title": "IA para inmobiliarias: leads, visitas y WhatsApp · NexGent",
+{
+ "title": "IA para inmobiliarias: leads, visitas y WhatsApp · NexGent",
  "description": "IA para redes de inmobiliarias: Nexi atiende el WhatsApp y el teléfono de cada oficina 24/7, cualifica al interesado y agenda visitas con el agente. 230 €/mes.",
  "h1": "IA para inmobiliarias: <span class=\"grad\">cada interesado, una visita en la agenda.</span>",
  "lead": "Nexi contesta el WhatsApp y el teléfono de cada oficina de tu red mientras los agentes están enseñando pisos: responde por el inmueble, pregunta lo necesario para cualificar, agenda la visita con el agente que toca y pasa al equipo lo que necesita una persona.",
  "kicker": "Inmobiliarias y redes de agencias",
  "nav": "Inmobiliarias",
  "serviceType": "Atención por WhatsApp y teléfono con IA para inmobiliarias",
- "date": "2026-11-19", "updated": "2026-11-19", "order": 7}
+ "date": "2026-11-19",
+ "updated": "2026-11-19",
+ "order": 7,
+ "chatName": "Tu oficina · Nexi",
+ "chat": [
+  [
+   "in",
+   "Hola, me interesa el piso de la calle Mayor. ¿Se puede ver?",
+   "22:40"
+  ],
+  [
+   "out",
+   "¡Hola! Sí. ¿Te viene bien el jueves a las 18:00 o el sábado a las 11:00? ¿Buscas para comprar o alquilar?",
+   "22:40"
+  ],
+  [
+   "in",
+   "Comprar. El sábado",
+   "22:41"
+  ],
+  [
+   "card",
+   "✅ Visita agendada<br><b>Sábado · 11:00</b><br>Calle Mayor",
+   "22:41"
+  ]
+ ],
+ "escena": {
+  "kicker": "22:40 · Oficina cerrada",
+  "titulo": "El lead del portal llega a las 22:40. <span class=\"grad\">Mañana ya habrá llamado a otra agencia.</span>",
+  "texto": "Nexi atiende al momento cada lead de cada oficina, le hace las preguntas básicas y agenda la visita o la captación. El agente llega a la cita con el cliente ya cualificado.",
+  "alt": "Oficina inmobiliaria por la noche con escaparate iluminado y un móvil recibiendo un mensaje"
+ },
+ "flujo": [
+  [
+   "22:40",
+   "Llega el lead",
+   "Desde el portal o por WhatsApp."
+  ],
+  [
+   "3 segundos",
+   "Nexi responde",
+   "Y hace las preguntas básicas."
+  ],
+  [
+   "22:41",
+   "Visita agendada",
+   "En la agenda del agente."
+  ],
+  [
+   "24 h antes",
+   "Recordatorio",
+   "Menos visitas que fallan."
+  ],
+  [
+   "La visita",
+   "El agente cierra",
+   "Con el cliente ya cualificado."
+  ]
+ ],
+ "kpis": [
+  [
+   "24/7",
+   "WhatsApp y teléfono de cada sede"
+  ],
+  [
+   "3 s",
+   "en responder, de día o de noche"
+  ],
+  [
+   "230 €",
+   "al mes por sede, todo incluido"
+  ]
+ ]
+}
 -->
 <section class="section-light lnd">
   <div class="container container--narrow bxprose">

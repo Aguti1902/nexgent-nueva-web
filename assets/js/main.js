@@ -414,7 +414,8 @@
     const el = $(sel); if (!el) return; el.classList.add('sheet-in');
     gsap.fromTo(el, { scale: .9, y: 100, borderTopLeftRadius: 90, borderTopRightRadius: 90 }, { scale: 1, y: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'top 15%', scrub: true } });
   });
-  ['.faq'].forEach(sel => {
+  const isMobile = matchMedia('(max-width: 900px)').matches;
+  if (!isMobile) ['.faq'].forEach(sel => {
     const el = $(sel); if (!el) return; el.classList.add('sheet-out');
     gsap.fromTo(el, { scale: 1, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }, { scale: .9, borderBottomLeftRadius: 90, borderBottomRightRadius: 90, ease: 'none', scrollTrigger: { trigger: el, start: 'bottom 95%', end: 'bottom 5%', scrub: true } });
   });
@@ -430,9 +431,9 @@
     });
     wrapWords(title);
     const tl = gsap.timeline({ scrollTrigger: { trigger: ctc, start: 'top 45%', once: true } });
-    tl.from(title.querySelectorAll('.wd'), { rotateX: -95, y: 70, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: .07 })
-      .from('.contact .form', { y: 160, z: -300, rotateX: 28, scale: .88, opacity: 0, duration: 1.4, ease: 'expo.out', transformPerspective: 1200 }, '-=.9')
-      .from('.contact .form > *', { y: 24, opacity: 0, duration: .8, ease: 'power3.out', stagger: .05 }, '-=1');
+    tl.from(title.querySelectorAll('.wd'), { rotateX: -95, y: 70, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: .07 });
+    // formulario: en móvil, sin animación; en ordenador, una entrada suave
+    if (!isMobile) tl.from('.contact .form', { y: 40, opacity: 0, duration: .9, ease: 'power3.out', clearProps: 'all' }, '-=.7');
   }
 
   // nav colour (created last so pin spacing is accounted for) over light sections

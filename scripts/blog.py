@@ -199,7 +199,7 @@ def seo_title(p):
     return f"{t} · NexGent" if len(t) + 10 <= 65 else t
 
 
-def page(title, description, canonical, body, jsonld=None, og_type="website", image=None):
+def page(title, description, canonical, body, jsonld=None, og_type="website", image=None, main_cls="bx", extra_css=""):
     if isinstance(jsonld, list):
         ld = "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>\n' for x in jsonld)
     else:
@@ -232,12 +232,12 @@ def page(title, description, canonical, body, jsonld=None, og_type="website", im
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/style.css?v={V}">
 <link rel="stylesheet" href="/assets/css/blog.css?v={V}">
-{ld}</head>
+{extra_css}{ld}</head>
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
 <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 {NAV}
-<main id="main" class="bx">
+<main id="main" class="{main_cls}">
 {body}
 </main>
 {FOOT.replace("__CATLINKS__", catlinks).replace("__LANDFOOT__", landfoot()).replace("__V__", V)}
@@ -282,6 +282,85 @@ def filters(active, posts):
         items.append(f'<a class="bxfilter{" is-on" if on else ""}" href="/blog/categoria/{c["slug"]}" data-cat="{c["slug"]}"{" aria-current=\"page\"" if on else ""}>{esc(c["name"])} <b>{n(c["slug"])}</b></a>')
     return '<nav class="bxfilters" aria-label="Categorías del blog">' + "".join(items) + "</nav>"
 
+
+DEF_CHAT = [["in", "Hola, ¿tenéis hueco el sábado por la mañana?", "23:47"],
+            ["out", "¡Hola! Sí: el sábado tengo hueco a las 10:00, 11:00 o 12:30. ¿Cuál te va mejor?", "23:47"],
+            ["in", "A las 11 perfecto", "23:48"],
+            ["card", "✅ Cita confirmada<br><b>Sábado · 11:00</b>", "23:48"]]
+DEF_FLOW = [["23:47", "La clienta escribe", "El centro cerró hace horas."],
+            ["3 segundos", "Nexi responde", "Con los huecos reales de la agenda."],
+            ["23:48", "Cita agendada", "Directa en la agenda del centro."],
+            ["24 h antes", "Recordatorio", "Confirma o cambia con un toque."],
+            ["El día", "Llega a su cita", "Una venta que no se ha perdido."]]
+
+
+def landing_body(l):
+    chat = l.get("chat") or DEF_CHAT
+    msgs = []
+    for i, (kind, txt, t) in enumerate(chat):
+        if kind == "card":
+            msgs.append(f'<div class="msg msg--out" style="--i:{i}"><span class="msg__card">{txt}</span><time>{esc(t)}</time></div>')
+        elif kind == "sys":
+            msgs.append(f'<div class="msg msg--sys" style="--i:{i}">{esc(txt)}</div>')
+        else:
+            msgs.append(f'<div class="msg msg--{"in" if kind == "in" else "out"}" style="--i:{i}">{esc(txt)}<time>{esc(t)}</time></div>')
+    kpis = l.get("kpis") or [["24/7", "WhatsApp y teléfono de cada sede"], ["3 s", "en responder, de día o de noche"], ["71 %", "de citas confirmadas por WhatsApp"]]
+    kp = "".join(f"<div><b>{esc(a)}</b><span>{esc(b)}</span></div>" for a, b in kpis)
+    chip_a = l.get("chipA") or ["Respuesta en 3 s", "con el centro cerrado"]
+    chip_b = l.get("chipB") or ["Cita confirmada", "directa en la agenda"]
+    sc = l.get("escena") or {}
+    img = f"/assets/img/landings/{l['slug']}.jpg"
+    band = ""
+    if (ROOT / img.lstrip("/")).exists():
+        band = f"""<section class="lband" aria-label="{esc(sc.get('kicker', 'Fuera de horario'))}">
+  <img src="{img}" alt="{esc(sc.get('alt', ''))}" loading="eager" fetchpriority="low" decoding="async" width="1536" height="1024">
+  <div class="container"><div class="lband__in">
+    <p class="kicker">{esc(sc.get('kicker', 'Fuera de horario'))}</p>
+    <h2>{sc.get('titulo', 'Tu centro cierra. <span class="grad">Tus clientes, no.</span>')}</h2>
+    <p>{esc(sc.get('texto', 'La mayoría de los mensajes llegan cuando nadie puede contestarlos: a la hora de comer, por la noche y el domingo. Nexi los atiende todos, en cada sede de la red.'))}</p>
+  </div></div>
+</section>
+"""
+    flow = l.get("flujo") or DEF_FLOW
+    fl = "".join(f'<li><span class="lflow__t">{esc(a)}</span><h3>{esc(b)}</h3><p>{esc(c)}</p></li>' for a, b, c in flow)
+    flow_html = f"""<section class="lflow" aria-label="Cómo trabaja Nexi">
+  <div class="container">
+    <p class="kicker">Así trabaja Nexi</p>
+    <h2 class="h2">De un mensaje a una cita.<br><span class="grad">Sin que nadie toque nada.</span></h2>
+    <ol class="lflow__list">{fl}</ol>
+  </div>
+</section>
+"""
+    body = l["body"]
+    cut = body.find("</section>")
+    first, rest = (body[:cut + 10], body[cut + 10:]) if cut >= 0 else ("", body)
+    return f"""<header class="lhero">
+  <div class="lhero__bg" aria-hidden="true"></div><div class="lhero__grid" aria-hidden="true"></div>
+  <div class="container lhero__in">
+    <div>
+      <nav class="bxcrumbs" aria-label="Migas de pan"><a href="/">Inicio</a><span aria-hidden="true">/</span><span>{esc(l['nav'])}</span></nav>
+      <p class="kicker">{esc(l.get('kicker', 'Nexi · IA por WhatsApp y voz'))}</p>
+      <h1>{l['h1']}</h1>
+      <p class="lhero__lead">{esc(l.get('lead', l['description']))}</p>
+      <div class="hero__ctas"><a href="/reunion" class="btn btn--grad magnetic">Reservar una reunión</a><a href="tel:+34684486647" class="btn btn--ghost magnetic">Llamar al 684 486 647</a></div>
+      <div class="lhero__kpis">{kp}</div>
+    </div>
+    <div class="lphone" aria-hidden="true">
+      <div class="lchip lchip--a"><i>⚡</i><div><b>{esc(chip_a[0])}</b>{esc(chip_a[1])}</div></div>
+      <div class="phone">
+        <div class="phone__notch"></div>
+        <div class="phone__status"><span>23:47</span><span class="phone__icons">●●● ▮</span></div>
+        <div class="wa__head"><div class="wa__avatar">N</div><div><strong>{esc(l.get('chatName', 'Tu centro · Nexi'))}</strong><small>en línea</small></div></div>
+        <div class="wa__body">{"".join(msgs)}</div>
+        <div class="wa__input"><span>Mensaje</span><i></i></div>
+      </div>
+      <div class="phone-shadow"></div>
+      <div class="lchip lchip--b"><i>✓</i><div><b>{esc(chip_b[0])}</b>{esc(chip_b[1])}</div></div>
+    </div>
+  </div>
+</header>
+{first}
+{band}{flow_html}{rest}"""
 
 def build():
     posts = load()
@@ -421,18 +500,11 @@ def build():
         if faqs:
             lds.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
                 {"@type": "Question", "name": strip(q), "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in faqs]})
-        body = f"""<header class="bxah">
-  <div class="bxah__bg" aria-hidden="true"></div>
-  <div class="container bxah__in">
-    <nav class="bxcrumbs" aria-label="Migas de pan"><a href="/">Inicio</a><span aria-hidden="true">/</span><span>{esc(l['nav'])}</span></nav>
-    <p class="kicker">{esc(l.get('kicker', 'Nexi · IA por WhatsApp y voz'))}</p>
-    <h1 class="bxah__title">{l['h1']}</h1>
-    <p class="bxah__lead">{esc(l.get('lead', l['description']))}</p>
-    <div class="hero__ctas"><a href="/reunion" class="btn btn--grad magnetic">Reservar una reunión</a><a href="tel:+34684486647" class="btn btn--ghost magnetic">Llamar al 684 486 647</a></div>
-  </div>
-</header>
-{l['body']}"""
-        (ROOT / f"{l['slug']}.html").write_text(page(l["title"], l["description"], f"/{l['slug']}", body, lds), encoding="utf-8")
+        body = landing_body(l)
+        img = f"/assets/img/landings/{l['slug']}.jpg"
+        (ROOT / f"{l['slug']}.html").write_text(page(l["title"], l["description"], f"/{l['slug']}", body, lds,
+            image=img if (ROOT / img.lstrip("/")).exists() else None, main_cls="bx bx--lnd",
+            extra_css=f'<link rel="stylesheet" href="/assets/css/landing.css?v={V}">\n'), encoding="utf-8")
 
     # Pie de las páginas estáticas: columna «Soluciones»
     for f in ("index.html", "legal.html", "404.html", "empresa-3d.html"):

@@ -1,12 +1,86 @@
 <!--meta
-{"title": "IA para peluquerías: citas por WhatsApp y teléfono · NexGent",
+{
+ "title": "IA para peluquerías: citas por WhatsApp y teléfono · NexGent",
  "description": "IA para cadenas de peluquería: Nexi coge el WhatsApp y el teléfono de cada salón 24/7, da citas con el estilista y las recuerda. 230 €/mes por salón y piloto.",
  "h1": "IA para peluquerías: <span class=\"grad\">las tijeras no paran por el teléfono.</span>",
  "lead": "Nexi contesta el WhatsApp y el teléfono de cada salón de tu red mientras el equipo corta, tiñe y peina: da citas con el servicio y el estilista adecuados, las cambia, las recuerda y vuelve a llenar los huecos que deja una cancelación.",
  "kicker": "Peluquerías y barberías",
  "nav": "Peluquerías",
  "serviceType": "Atención por WhatsApp y teléfono con IA para peluquerías",
- "date": "2026-11-19", "updated": "2026-11-19", "order": 4}
+ "date": "2026-11-19",
+ "updated": "2026-11-19",
+ "order": 4,
+ "chatName": "Tu salón · Nexi",
+ "chat": [
+  [
+   "in",
+   "Hola, ¿mañana tenéis hueco para corte y color con Marta?",
+   "22:15"
+  ],
+  [
+   "out",
+   "¡Hola! Marta tiene libre mañana a las 16:30. Corte y color son unas 2 h. ¿Te la reservo?",
+   "22:15"
+  ],
+  [
+   "in",
+   "Sí, perfecto",
+   "22:16"
+  ],
+  [
+   "card",
+   "✅ Cita confirmada<br><b>Mañana · 16:30</b><br>Corte y color con Marta",
+   "22:16"
+  ]
+ ],
+ "escena": {
+  "kicker": "22:15 · Salón cerrado",
+  "titulo": "Las tijeras en la mano. <span class=\"grad\">El teléfono, para Nexi.</span>",
+  "texto": "En un salón quien coge el teléfono está cortando o tiñendo. Nexi atiende cada llamada y cada WhatsApp, reserva por servicio, duración y estilista, y deja al equipo con la clienta del sillón.",
+  "alt": "Salón de peluquería cerrado por la noche con un móvil encendido en recepción"
+ },
+ "flujo": [
+  [
+   "22:15",
+   "La clienta escribe",
+   "Quiere corte y color con su estilista."
+  ],
+  [
+   "3 segundos",
+   "Nexi responde",
+   "Con la agenda de cada estilista."
+  ],
+  [
+   "22:16",
+   "Cita agendada",
+   "Con el tiempo justo del servicio."
+  ],
+  [
+   "24 h antes",
+   "Recordatorio",
+   "Confirma o cambia con un toque."
+  ],
+  [
+   "Mañana",
+   "Llega al salón",
+   "Sin huecos vacíos en la agenda."
+  ]
+ ],
+ "kpis": [
+  [
+   "24/7",
+   "WhatsApp y teléfono de cada sede"
+  ],
+  [
+   "3 s",
+   "en responder, de día o de noche"
+  ],
+  [
+   "230 €",
+   "al mes por sede, todo incluido"
+  ]
+ ]
+}
 -->
 <section class="section-light lnd">
   <div class="container container--narrow bxprose">
