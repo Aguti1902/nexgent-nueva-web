@@ -6,7 +6,7 @@
 
   /* Menú: claro cuando pasa por encima de una zona clara */
   const nav = $('.nav');
-  const lights = $$('.bxlist, .bxread, .bxrel');
+  const lights = $$('.bxlist, .bxread, .bxrel, .section-light');
   const navTone = () => {
     if (!nav) return;
     const y = 30;

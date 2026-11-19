@@ -230,3 +230,13 @@
   .bxprose .bxkey{padding:22px 20px 18px}
   .bxprose ol.bxsteps>li{padding-left:50px}
 }
+/* Landings de sector */
+.lnd{padding:110px 0}
+.lnd .bxprose{margin-inline:auto}
+.lnd .bxprose>p:first-of-type::first-letter{float:none;font-size:inherit;line-height:inherit;font-weight:inherit;margin:0;background:none;color:inherit;-webkit-background-clip:border-box;background-clip:border-box}
+.lnd--case .lead{max-width:760px}
+.lnd__stats{grid-template-columns:repeat(4,1fr)}
+.lnd__note{margin-top:28px;font-size:14px;color:#86868b;max-width:760px}
+.lnd__note a,.bxcta p a{color:#a1c8ff;text-decoration:underline;text-underline-offset:3px}
+.bxah .kicker{margin-top:6px}
+@media (max-width:900px){.lnd{padding:80px 0}.lnd__stats{grid-template-columns:1fr 1fr}}

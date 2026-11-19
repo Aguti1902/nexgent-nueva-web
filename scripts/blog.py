@@ -20,8 +20,17 @@ Genera:
 - sitemap.xml                 añade las URLs del blog y conserva el resto
 - blog/feed.xml               RSS
 Los artículos con "draft": true no se publican.
+Campos opcionales del artículo: "seoTitle" (title ≤ 60) y "seoDescription" (meta description 140–160;
+si no está, se usa "description", que también es la entradilla visible), "updated" (AAAA-MM-DD, lastmod).
+
+Landings de sector (equipo SEO, Atril): content/landings/<slug>.html con el mismo bloque <!--meta-->:
+{"title": "...(title 50-60)", "description": "...(140-160)", "h1": "...", "lead": "...", "nav": "texto del pie",
+ "date": "AAAA-MM-DD", "updated": "AAAA-MM-DD", "order": 1, "draft": false}
+Se publican en /<slug> (archivo <slug>.html en la raíz), entran en el sitemap y en la columna «Soluciones» del pie
+de todas las páginas (también index.html, legal.html y 404.html, entre <!-- landings:foot --> y <!-- /landings:foot -->).
+Las preguntas en <details class="bxq"> generan FAQPage.
 """
-import html, json, re, sys, datetime, hashlib
+import html, json, re, sys, datetime, hashlib, subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -42,6 +51,36 @@ def asset_version():
 V = asset_version()
 
 CATS = json.loads((SRC / "categories.json").read_text(encoding="utf-8"))
+LSRC = ROOT / "content" / "landings"
+
+
+def load_landings():
+    out = []
+    for f in sorted(LSRC.glob("*.html")) if LSRC.exists() else []:
+        raw = f.read_text(encoding="utf-8")
+        m = re.match(r"\s*<!--meta\s*(\{.*?\})\s*-->\s*(.*)\Z", raw, re.S)
+        if not m:
+            sys.exit(f"landings/{f.name}: falta el bloque <!--meta {{...}} -->")
+        meta = json.loads(m.group(1))
+        meta["slug"], meta["body"] = f.stem, m.group(2).strip()
+        for k in ("title", "description", "h1", "nav", "date"):
+            if not meta.get(k):
+                sys.exit(f"landings/{f.name}: falta '{k}'")
+        if not meta.get("draft"):
+            out.append(meta)
+    out.sort(key=lambda x: (x.get("order", 99), x["slug"]))
+    return out
+
+
+LANDINGS = load_landings()
+
+
+def git_date(path):
+    try:
+        d = subprocess.run(["git", "log", "-1", "--format=%cs", "--", path], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+        return d or None
+    except Exception:
+        return None
 CAT = {c["slug"]: c for c in CATS}
 
 
@@ -122,6 +161,7 @@ FOOT = """<footer class="footer">
     <div class="footer__grid">
       <div><h4>Empresa</h4><a href="/#nosotros">Sobre nosotros</a><a href="/#caso">Caso de éxito</a><a href="/#como-trabajamos">Cómo trabajamos</a><a href="/blog">Blog</a></div>
       <div><h4>Blog</h4>__CATLINKS__</div>
+      __LANDFOOT__
       <div><h4>Contacto</h4><a href="/#contacto">Solicitar diagnóstico</a><a href="https://wa.me/34684486647">WhatsApp</a><a href="https://www.linkedin.com/company/nexgentai">LinkedIn</a><a href="https://www.instagram.com/nexgentai">Instagram</a></div>
       <div><h4>Legal</h4><a href="/legal#aviso-legal">Aviso legal</a><a href="/legal#privacidad">Privacidad</a><a href="/legal#cookies">Cookies</a></div>
     </div>
@@ -143,6 +183,16 @@ def cover_html(p, eager=False):
     return f'<div class="post__img {esc(p["cover"])}"></div>'
 
 
+def landfoot():
+    if not LANDINGS:
+        return ""
+    return "<div><h4>Soluciones</h4>" + "".join(f'<a href="/{l["slug"]}">{esc(l["nav"])}</a>' for l in LANDINGS) + "</div>"
+
+
+def seo_desc(p):
+    return p.get("seoDescription") or p["description"]
+
+
 def seo_title(p):
     """<title> del artículo: usa "seoTitle" si existe y añade « · NexGent» solo si cabe en 65 caracteres."""
     t = p.get("seoTitle") or p["title"]
@@ -150,7 +200,10 @@ def seo_title(p):
 
 
 def page(title, description, canonical, body, jsonld=None, og_type="website", image=None):
-    ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>\n' if jsonld else ""
+    if isinstance(jsonld, list):
+        ld = "".join(f'<script type="application/ld+json">{json.dumps(x, ensure_ascii=False)}</script>\n' for x in jsonld)
+    else:
+        ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>\n' if jsonld else ""
     catlinks = "".join(f'<a href="/blog/categoria/{c["slug"]}">{esc(c["name"])}</a>' for c in CATS)
     return f"""<!DOCTYPE html>
 <html lang="es">
@@ -187,7 +240,7 @@ def page(title, description, canonical, body, jsonld=None, og_type="website", im
 <main id="main" class="bx">
 {body}
 </main>
-{FOOT.replace("__CATLINKS__", catlinks).replace("__V__", V)}
+{FOOT.replace("__CATLINKS__", catlinks).replace("__LANDFOOT__", landfoot()).replace("__V__", V)}
 </body>
 </html>
 """
@@ -305,7 +358,7 @@ def build():
             strip = lambda t: re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", t))).strip()
             lds.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
                 {"@type": "Question", "name": strip(q), "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in faqs]})
-        (OUT / f"{p['slug']}.html").write_text(page(seo_title(p), p["description"], f"/blog/{p['slug']}", body, lds, "article", p.get("og")), encoding="utf-8")
+        (OUT / f"{p['slug']}.html").write_text(page(seo_title(p), seo_desc(p), f"/blog/{p['slug']}", body, lds, "article", p.get("og")), encoding="utf-8")
 
     # Portada y categorías
     def listing(cat):
@@ -331,9 +384,9 @@ def build():
         all_cards = '<template id="bxall">' + "".join(card(p) for p in posts) + "</template>" if cat is None else ""
         return head + f'<section class="bxlist"><div class="container">{featured(first)}{grid}<p class="bxempty" hidden>No hay artículos en esta categoría todavía.</p>{all_cards}</div></section>'
 
-    (ROOT / "blog.html").write_text(page("Blog · NexGent", "Casos de éxito, franquicias, WhatsApp e IA de voz: ideas para que ninguna sede de tu red deje a un cliente sin respuesta.", "/blog", listing(None), {"@context": "https://schema.org", "@type": "Blog", "name": "Blog de NexGent", "url": f"{SITE}/blog", "inLanguage": "es-ES"}), encoding="utf-8")
+    (ROOT / "blog.html").write_text(page("Blog de NexGent: IA, WhatsApp y voz para franquicias", "Casos de éxito, franquicias, WhatsApp e IA de voz: ideas con datos reales para que ninguna sede de tu red de franquicias deje a un cliente sin respuesta.", "/blog", listing(None), {"@context": "https://schema.org", "@type": "Blog", "name": "Blog de NexGent", "url": f"{SITE}/blog", "inLanguage": "es-ES"}), encoding="utf-8")
     for c in CATS:
-        (OUT / "categoria" / f"{c['slug']}.html").write_text(page(f"{c['name']} · Blog de NexGent", c["description"], f"/blog/categoria/{c['slug']}", listing(c["slug"])), encoding="utf-8")
+        (OUT / "categoria" / f"{c['slug']}.html").write_text(page(c.get("seoTitle") or f"{c['name']} · Blog de NexGent", c["description"], f"/blog/categoria/{c['slug']}", listing(c["slug"])), encoding="utf-8")
 
     # Versión de estilos y scripts en las páginas de la raíz (evita cachés antiguas)
     for f in ("index.html", "legal.html", "404.html"):
@@ -351,12 +404,59 @@ def build():
         s = re.sub(r"<!-- blog:latest -->.*?<!-- /blog:latest -->", lambda m: f"<!-- blog:latest -->{latest}<!-- /blog:latest -->", s, flags=re.S)
         idx.write_text(s, encoding="utf-8")
 
-    # Sitemap: conserva las URLs que no son del blog
+    # Landings de sector: /<slug>
+    known = {f"{l['slug']}.html" for l in LANDINGS}
+    for l in LANDINGS:
+        url = f"{SITE}/{l['slug']}"
+        faqs = re.findall(r'<details class="bxq"><summary>(.*?)</summary>(.*?)</details>', l["body"], re.S)
+        strip = lambda t: re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", t))).strip()
+        lds = [{"@context": "https://schema.org", "@type": "Service", "name": l["h1"] if "<" not in l["h1"] else strip(l["h1"]),
+                "serviceType": l.get("serviceType", "Atención al cliente con IA por WhatsApp y teléfono"), "description": l["description"],
+                "url": url, "areaServed": {"@type": "Country", "name": "España"}, "inLanguage": "es-ES",
+                "provider": {"@type": "Organization", "name": "NEXGENT AI SYSTEMS, S.L.", "alternateName": "NexGent", "url": SITE, "telephone": "+34684486647"},
+                "offers": {"@type": "Offer", "price": "230", "priceCurrency": "EUR", "description": "Pack mensual por sede: 2.000 mensajes de WhatsApp y 500 minutos de llamada"}},
+               {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+                   {"@type": "ListItem", "position": 1, "name": "Inicio", "item": f"{SITE}/"},
+                   {"@type": "ListItem", "position": 2, "name": l["nav"], "item": url}]}]
+        if faqs:
+            lds.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+                {"@type": "Question", "name": strip(q), "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in faqs]})
+        body = f"""<header class="bxah">
+  <div class="bxah__bg" aria-hidden="true"></div>
+  <div class="container bxah__in">
+    <nav class="bxcrumbs" aria-label="Migas de pan"><a href="/">Inicio</a><span aria-hidden="true">/</span><span>{esc(l['nav'])}</span></nav>
+    <p class="kicker">{esc(l.get('kicker', 'Nexi · IA por WhatsApp y voz'))}</p>
+    <h1 class="bxah__title">{l['h1']}</h1>
+    <p class="bxah__lead">{esc(l.get('lead', l['description']))}</p>
+    <div class="hero__ctas"><a href="/reunion" class="btn btn--grad magnetic">Reservar una reunión</a><a href="tel:+34684486647" class="btn btn--ghost magnetic">Llamar al 684 486 647</a></div>
+  </div>
+</header>
+{l['body']}"""
+        (ROOT / f"{l['slug']}.html").write_text(page(l["title"], l["description"], f"/{l['slug']}", body, lds), encoding="utf-8")
+
+    # Pie de las páginas estáticas: columna «Soluciones»
+    for f in ("index.html", "legal.html", "404.html"):
+        fp = ROOT / f
+        if fp.exists():
+            t = fp.read_text(encoding="utf-8")
+            if "<!-- landings:foot -->" in t:
+                t = re.sub(r"<!-- landings:foot -->.*?<!-- /landings:foot -->", lambda m: f"<!-- landings:foot -->{landfoot()}<!-- /landings:foot -->", t, flags=re.S)
+                fp.write_text(t, encoding="utf-8")
+
+    # Sitemap: conserva las URLs que no son del blog ni landings, y pone lastmod a todo
     sm = ROOT / "sitemap.xml"
     old = re.findall(r"<loc>(.*?)</loc>", sm.read_text(encoding="utf-8")) if sm.exists() else []
-    other = [u for u in old if "/blog" not in u]
-    urls = [(u, None) for u in other] + [(f"{SITE}/blog", posts[0]["date"] if posts else None)]
-    urls += [(f"{SITE}/blog/categoria/{c['slug']}", None) for c in CATS]
+    lurls = {f"{SITE}/{l['slug']}" for l in LANDINGS}
+    other = [u for u in old if "/blog" not in u and u not in lurls]
+    def file_for(u):
+        path = u[len(SITE):].strip("/") or "index"
+        return path + ".html"
+    urls = [(u, git_date(file_for(u))) for u in other]
+    urls += [(f"{SITE}/{l['slug']}", l.get("updated", l["date"])) for l in LANDINGS]
+    urls += [(f"{SITE}/blog", max(p.get("updated", p["date"]) for p in posts) if posts else None)]
+    for c in CATS:
+        ds = [p.get("updated", p["date"]) for p in posts if p["category"] == c["slug"]]
+        urls.append((f"{SITE}/blog/categoria/{c['slug']}", max(ds) if ds else git_date("content/blog/categories.json")))
     urls += [(f"{SITE}/blog/{p['slug']}", p.get("updated", p["date"])) for p in posts]
     sm.write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
                   "".join(f"<url><loc>{u}</loc>{f'<lastmod>{d}</lastmod>' if d else ''}</url>\n" for u, d in urls) + "</urlset>\n", encoding="utf-8")
@@ -369,7 +469,7 @@ def build():
 
     # Índice para los agentes del panel
     (OUT / "posts.json").write_text(json.dumps([{k: p[k] for k in ("slug", "title", "description", "category", "date", "minutes")} for p in posts], ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"{len(posts)} artículos publicados en {len(CATS)} categorías")
+    print(f"{len(posts)} artículos publicados en {len(CATS)} categorías · {len(LANDINGS)} landings")
 
 
 if __name__ == "__main__":
