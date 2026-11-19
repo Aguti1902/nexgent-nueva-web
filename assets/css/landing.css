@@ -90,3 +90,65 @@
  .lband__in{padding-bottom:64px}
 }
 @media (prefers-reduced-motion:reduce){.lphone .msg,.lchip{animation:none;opacity:1}}
+
+/* ---------- Efectos v2 ---------- */
+.lnd-js .lphone .msg{animation:none;opacity:1}
+.lnd-js .lphone .msg.lpend{display:none}
+.lnd-js .lphone .msg.lshow{display:block;animation:lmsg .45s var(--ease) both}
+.lty{display:flex!important;gap:4px;padding:12px 14px!important;width:max-content}
+.lty i{width:7px;height:7px;border-radius:50%;background:#8696a0;animation:lty 1s infinite}
+.lty i:nth-child(2){animation-delay:.15s}.lty i:nth-child(3){animation-delay:.3s}
+@keyframes lty{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-3px)}}
+.lphone .phone{transition:transform .5s var(--ease)}
+.lchip{transition:translate .5s var(--ease)}
+.lw{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.lw>span{display:inline-block}
+.grad .lw>span,.lhero h1 .grad .lw>span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lnd-js .lhero h1 .grad{background:none}
+
+/* frase grande */
+.lstate{padding:18vh 0 14vh;background:#000}
+.lstate__t{max-width:1100px;font-family:var(--display);font-weight:700;font-size:clamp(34px,5.4vw,76px);line-height:1.06;letter-spacing:-.04em;margin:0;text-wrap:balance}
+.lnd-js .lstate__t .lsw{opacity:.13}
+.lstate__t .grad .lsw{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lnd-js .lstate__t .grad{background:none}
+
+/* problema: titular fijo a la izquierda */
+@media (min-width:981px){
+ .lnd--split .bxprose{display:grid;grid-template-columns:.85fr 1.15fr;column-gap:80px;max-width:1180px!important}
+ .lnd--split .bxprose>h2{grid-column:1;grid-row:1/span 20;position:sticky;top:120px;align-self:start;margin:0;font-size:clamp(34px,3.4vw,48px);line-height:1.05;letter-spacing:-.04em}
+ .lnd--split .bxprose>*:not(h2){grid-column:2}
+}
+.lnd--split .bxprose>p{font-size:19px;line-height:1.7}
+.lnd--split .bxprose>p:first-of-type{color:#e5e5ea;font-size:22px;line-height:1.55}
+
+/* toda la red */
+.lsedes{padding:120px 0;text-align:center;position:relative;overflow:hidden}
+.lsedes::before{content:"";position:absolute;left:50%;top:55%;width:900px;height:500px;translate:-50% -50%;background:radial-gradient(closest-side,rgba(59,130,246,.22),transparent);pointer-events:none}
+.lsedes .h2{margin-top:12px}
+.lsedes__grid{position:relative;display:grid;grid-template-columns:repeat(24,1fr);gap:7px;width:min(760px,100%);margin:48px auto 0}
+.lsedes__grid i{aspect-ratio:1;border-radius:4px;background:rgba(255,255,255,.07);transition:background .4s,box-shadow .4s,transform .4s var(--ease)}
+.lsedes__grid i.on{background:linear-gradient(135deg,#b8eef2,#3b82f6);box-shadow:0 0 12px rgba(79,170,230,.55);transform:scale(1.08)}
+.lsedes__cap{margin:34px 0 0;color:#a1a1a6;font-size:17px}
+.lsedes__n{font-family:var(--display);font-size:44px;letter-spacing:-.03em;margin-right:8px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;vertical-align:-4px}
+html:not(.lnd-js) .lsedes__grid i{background:linear-gradient(135deg,#b8eef2,#3b82f6)}
+
+/* flujo con línea */
+.lflow{position:relative}
+.lflow__line{height:2px;margin:56px 0 -36px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.lflow__line i{display:block;height:100%;background:var(--grad);transform-origin:0 50%}
+.lflow__list li{transition:border-color .5s,background .5s,box-shadow .5s,transform .5s var(--ease)}
+.lflow__list li.on{border-color:rgba(111,202,216,.45);background:linear-gradient(180deg,rgba(111,202,216,.12),rgba(59,130,246,.04));box-shadow:0 30px 60px -30px rgba(59,130,246,.55);transform:translateY(-6px)}
+.lflow__list li::after{content:"";position:absolute;top:-25px;left:22px;width:12px;height:12px;border-radius:50%;background:#1c1c1e;border:2px solid rgba(255,255,255,.2);transition:background .4s,border-color .4s,box-shadow .4s}
+.lflow__list li.on::after{background:#6fcad8;border-color:#b8eef2;box-shadow:0 0 14px #6fcad8}
+
+/* cinta de palabras */
+.lmq{padding:30px 0 10px}
+.lmq .marquee span{background:rgba(255,255,255,.05);color:#d2d2d7;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+
+@media (max-width:980px){
+ .lflow__line,.lflow__list li::after{display:none}
+ .lsedes__grid{grid-template-columns:repeat(16,1fr);gap:5px}
+ .lsedes__grid i:nth-child(n+161){display:none}
+ .lstate{padding:12vh 0 10vh}
+}

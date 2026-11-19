@@ -327,11 +327,28 @@ def landing_body(l):
   <div class="container">
     <p class="kicker">Así trabaja Nexi</p>
     <h2 class="h2">De un mensaje a una cita.<br><span class="grad">Sin que nadie toque nada.</span></h2>
+    <div class="lflow__line" aria-hidden="true"><i></i></div>
     <ol class="lflow__list">{fl}</ol>
   </div>
 </section>
 """
-    body = l["body"]
+    frase = l.get("frase") or 'Una sede atiende unas 66 horas a la semana. <span class="grad">Sus clientes escriben y llaman las 168.</span>'
+    state = f'<section class="lstate" aria-label="El problema en una frase"><div class="container"><p class="lstate__t">{frase}</p></div></section>\n'
+    dots = "<i></i>" * 240
+    sedes = f"""<section class="lsedes" aria-label="Toda la red a la vez">
+  <div class="container">
+    <p class="kicker">{esc(l.get('sedesKicker', 'Toda la red · A la vez'))}</p>
+    <h2 class="h2">{l.get('sedesTitulo', 'Cada punto, una sede.<br><span class="grad">Todas atendidas a la vez.</span>')}</h2>
+    <div class="lsedes__grid" aria-hidden="true">{dots}</div>
+    <p class="lsedes__cap"><b class="lsedes__n">+100</b> franquicias con la IA de NexGent implantada</p>
+  </div>
+</section>
+"""
+    words = l.get("marquee") or ["WhatsApp 24/7", "Llamadas con voz IA", "Citas en la agenda", "Recordatorios", "Cambios y anulaciones", "Panel de la central", "API oficial de WhatsApp", "Cada sede con su número"]
+    track = "".join(f"<span>{esc(w)}</span>" for w in words) * 2
+    mq = f'<section class="lmq" aria-hidden="true"><div class="marquee"><div class="marquee__track">{track}</div></div></section>\n'
+    body = l["body"].replace("section-light", "section-dk")
+    body = body.replace('<section class="section-dk lnd">', '<section class="section-dk lnd lnd--split">', 1)
     cut = body.find("</section>")
     first, rest = (body[:cut + 10], body[cut + 10:]) if cut >= 0 else ("", body)
     return f"""<header class="lhero">
@@ -360,7 +377,8 @@ def landing_body(l):
   </div>
 </header>
 {first}
-{band}{flow_html}{rest}"""
+{state}{band}{sedes}{flow_html}{mq}{rest}
+<script defer src="/assets/js/landing.js?v={V}"></script>"""
 
 def build():
     posts = load()
