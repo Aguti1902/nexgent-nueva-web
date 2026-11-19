@@ -19,7 +19,7 @@
 
 <h2>1. Antes de empezar: el diagnóstico</h2>
 <p>Primero medimos cómo atienden hoy las sedes: cuántos mensajes y llamadas reciben, a qué horas, cuánto tardan en contestar y cuántos contactos se quedan sin respuesta. Esos números son la foto de partida con la que se comparará el piloto.</p>
-<p>También vemos qué programa usa la red para las citas y la caja. Nexi incluye agenda, fichas de clientes, caja, cobros y facturación, y un panel para la central con todas las sedes. Si la red ya trabaja con otro programa, se estudia caso a caso: se pasan sus datos a Nexi o se conecta Nexi con ese programa.</p>
+<p>También vemos qué programa usa la red para las citas y la caja. Nexi incluye agenda, fichas de clientes, caja, cobros y facturación, y un panel para la central con todas las sedes. Si la red ya trabaja con otro programa y no quiere cambiarlo, conectamos la IA a ese programa: las citas siguen apareciendo donde el equipo ya las mira y nadie tiene que aprender una herramienta nueva para el piloto.</p>
 
 <h2>2. Elegimos las sedes</h2>
 <p>Entre 3 y 5 sedes propias de la red, con volumen suficiente para que los resultados digan algo. Mejor si son distintas entre sí: una grande y una mediana, una en una gran ciudad y otra en una ciudad más pequeña. Así el resultado sirve para toda la red y no solo para el mejor centro.</p>
@@ -76,15 +76,54 @@
 <li><strong>Desplegar todo de golpe tras el piloto.</strong> Las oleadas permiten corregir sobre la marcha.</li>
 </ul>
 
-<p><strong>Para seguir leyendo:</strong> qué exigirle a una <a href="/blog/recepcionista-virtual-ia-franquicias">recepcionista virtual con IA</a>, <a href="/blog/cliente-escribe-fuera-de-horario">qué pasa con los mensajes fuera de horario</a> y el pack y el piloto explicados en <a href="/ia-para-franquicias">IA para franquicias</a>. Para redes de clínicas, cómo sería en <a href="/clinicas-dentales">IA para clínicas dentales</a>.</p>
+<h2>Qué tiene que preparar la red</h2>
+<p>Un piloto sale bien o mal muchas veces por cosas que no tienen nada que ver con la tecnología. Antes del arranque, conviene tener listo esto:</p>
+<ul>
+<li><strong>Una persona responsable en la central.</strong> Alguien que pueda decidir sobre tono, normas y excepciones sin tener que convocar una reunión cada vez. Suele ser la persona de operaciones o de expansión.</li>
+<li><strong>Un responsable en cada sede del piloto.</strong> La encargada o el encargado del centro, que sabe qué preguntan los clientes de verdad y avisará si algo no encaja.</li>
+<li><strong>La carta de servicios al día.</strong> Servicios, duraciones, precios y qué servicios necesitan una valoración previa. Si cada sede tiene su carta, la de cada una.</li>
+<li><strong>Las normas de la casa por escrito.</strong> Cuánto margen hay para cancelar, qué se hace con un retraso, qué se cobra por no presentarse, cuándo se acepta a un cliente sin cita.</li>
+<li><strong>Acceso a la línea de teléfono de cada sede.</strong> Para desviar las llamadas a la centralita IA hay que poder configurar el desvío con el operador; el número no cambia.</li>
+<li><strong>La cuenta de empresa en Meta.</strong> WhatsApp funciona por la <a href="/blog/api-oficial-whatsapp-business">API oficial de WhatsApp Business</a>, que pide una cuenta de empresa verificada y plantillas aprobadas para los recordatorios. Lo gestionamos nosotros con la red.</li>
+</ul>
+
+<h2>Qué se revisa cada semana</h2>
+<p>Treinta días dan para mucho si se revisan con método. Así repartimos el trabajo durante el piloto:</p>
+<table>
+<thead><tr><th>Semana</th><th>En qué nos fijamos</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Que todo funcione: desvíos, WhatsApp, citas guardadas en la agenda correcta. Revisamos muchas conversaciones una a una y corregimos respuestas.</td></tr>
+<tr><td>2</td><td>Tono y casos raros: preguntas que la IA no sabía responder, transferencias a recepción que sobraban o que faltaban.</td></tr>
+<tr><td>3</td><td>Números: llamadas resueltas sin una persona, llamadas que acaban en cita, confirmaciones tras el recordatorio, comparados con la foto de partida.</td></tr>
+<tr><td>4</td><td>Decisión: resultados frente a los criterios por escrito, opinión del equipo de las sedes y plan de oleadas si se sigue.</td></tr>
+</tbody>
+</table>
+<p>La central no tiene que esperar al día 30 para saber cómo va: el panel muestra los datos de cada sede día a día desde el primero.</p>
+
+<h2>Cómo estimar el impacto antes de empezar</h2>
+<p>No hace falta inventarse un retorno. Con los datos del diagnóstico, cada red puede hacer su propia cuenta para una sede:</p>
+<ol>
+<li><strong>Contactos que se pierden al mes:</strong> llamadas sin coger más mensajes sin contestar a tiempo.</li>
+<li><strong>Cuántos se recuperarían:</strong> esos contactos por el porcentaje de llamadas que acaban en cita (en nuestro caso real, 1 de cada 3).</li>
+<li><strong>Lo que vale cada cita:</strong> el ticket medio de la sede.</li>
+<li><strong>Lo que vale un hueco liberado a tiempo:</strong> las cancelaciones con antelación que se pueden volver a ocupar gracias al recordatorio.</li>
+</ol>
+<p>Esa cuenta, frente a los 230 € al mes por sede del pack, es la que decide si merece la pena. Y el piloto sirve justo para cambiar las suposiciones por datos de tus propias sedes.</p>
+
+<h2>Cuánto consume una sede durante el piloto</h2>
+<p>El pack incluye <strong>2.000 mensajes de WhatsApp y 500 minutos de llamada al mes por 230 € por sede</strong>. Como referencia, en el centro de nuestro <a href="/blog/caso-llamadas-ia-243-llamadas-21-dias">caso de las 243 llamadas</a> se hablaron 285 minutos en 21 días, unos 400 al mes a ese ritmo: dentro del pack con margen. Durante el piloto se ve el consumo real de cada sede, y con ese dato se ajusta el despliegue antes de firmar el contrato de red.</p>
+
+<p><strong>Para seguir leyendo:</strong> qué exigirle a una <a href="/blog/recepcionista-virtual-ia-franquicias">recepcionista virtual con IA</a>, <a href="/blog/cliente-escribe-fuera-de-horario">qué pasa con los mensajes fuera de horario</a> y el pack y el piloto explicados en <a href="/ia-para-franquicias">IA para franquicias</a>. Para redes de clínicas, cómo sería en <a href="/clinicas-dentales">IA para clínicas dentales</a>; para cadenas de salones, en <a href="/peluquerias">IA para peluquerías</a>.</p>
 
 <h2>Preguntas frecuentes</h2>
 <div class="bxfaq">
 <details class="bxq"><summary>¿Por qué el piloto es de pago?</summary><div><p>Porque así las dos partes se comprometen. La red elige bien las sedes y revisa los resultados, y nosotros trabajamos para que salga bien. El coste de la implantación se descuenta de la primera factura si la red sigue adelante.</p></div></details>
-<details class="bxq"><summary>¿Tenemos que cambiar de programa de citas?</summary><div><p>Depende. Nexi incluye agenda, fichas, caja y facturación. Si la red ya usa otro programa, se estudia caso a caso si es mejor pasar los datos a Nexi o conectar Nexi con ese programa.</p></div></details>
+<details class="bxq"><summary>¿Tenemos que cambiar de programa de citas?</summary><div><p>No hace falta. Nexi incluye agenda, fichas, caja y facturación, pero si la red ya trabaja con otro programa y no quiere cambiarlo, conectamos la IA a ese programa.</p></div></details>
 <details class="bxq"><summary>¿Las sedes cambian de número de teléfono o de WhatsApp?</summary><div><p>No. Las llamadas se desvían a la centralita IA desde el número de siempre, y WhatsApp funciona a través de la API oficial.</p></div></details>
 <details class="bxq"><summary>¿Qué pasa si el piloto no cumple los criterios?</summary><div><p>Que lo sabes en 30 días, con datos, y decides sin haber tocado el resto de la red.</p></div></details>
 <details class="bxq"><summary>¿Se puede hacer el piloto en sedes franquiciadas?</summary><div><p>Recomendamos sedes propias, porque la central decide y ve todo sin depender de nadie. Si la red no tiene sedes propias, se buscan franquiciados que quieran participar.</p></div></details>
+<details class="bxq"><summary>¿Qué tiene que preparar la red antes del piloto?</summary><div><p>Una persona responsable en la central y otra en cada sede, la carta de servicios con duraciones y precios, las normas de cancelación y retrasos por escrito y acceso a la línea de teléfono de cada sede para configurar el desvío. La cuenta de WhatsApp Business la gestionamos con la red.</p></div></details>
+<details class="bxq"><summary>¿Cuántos minutos y mensajes gasta una sede en el piloto?</summary><div><p>Depende de su volumen. El pack incluye 2.000 mensajes de WhatsApp y 500 minutos de llamada al mes. En nuestro caso real, un centro habló 285 minutos en 21 días, unos 400 al mes a ese ritmo.</p></div></details>
 </div>
 
 <p class="bxsrc">Referencias: datos del panel de NexGent de un centro de una red de uñas con más de 230 sedes (recordatorios del 18 de octubre al 16 de noviembre de 2026; llamadas del 27 de octubre al 16 de noviembre de 2026).</p>
