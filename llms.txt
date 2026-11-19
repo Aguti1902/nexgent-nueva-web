@@ -1,8 +1,25 @@
 # NexGent
 
-> NEXGENT AI SYSTEMS, S.L. (Granada, España) desarrolla Nexi, un sistema de inteligencia artificial que atiende a los clientes de redes de franquicias por WhatsApp (API oficial de WhatsApp Business) y por teléfono con voz: responde 24/7, agenda, cambia y cancela citas y envía recordatorios.
+> NEXGENT AI SYSTEMS, S.L. (Granada, España) desarrolla Nexi, un sistema de inteligencia artificial que atiende a los clientes de cada sede de una red de franquicias por WhatsApp (API oficial de WhatsApp Business) y por teléfono con voz, 24/7: responde, agenda, cambia y cancela citas, envía recordatorios y pasa a una persona lo que lo necesita. La central ve toda la red en un panel.
 
 - Clientes: franquiciadores (centrales de redes de franquicias), no sedes sueltas.
-- Sectores: estética y belleza, inmobiliarias, clínicas y salud, talleres y automoción.
-- Modelo: proyectos a medida. Diagnóstico de atención, piloto de pago de 30 días en 3 a 5 sedes propias y despliegue por oleadas.
-- Contacto: https://nexgent.io/#contacto · WhatsApp +34 684 486 647 · https://www.linkedin.com/company/nexgentai
+- Sectores: estética y belleza, centros de uñas, peluquerías, clínicas y salud, fisioterapia, gimnasios, ópticas, inmobiliarias, talleres.
+- Precio: pack de 230 € al mes por sede con 2.000 mensajes de WhatsApp y 500 minutos de llamada.
+- Modelo: diagnóstico de atención, piloto de pago de 30 días en 3 a 5 sedes propias con criterios de éxito por escrito y despliegue por oleadas.
+- Caso real (un centro de una red líder de más de 230 centros en España): 243 llamadas atendidas por la IA en 21 días, 85 % resueltas sin recepción, 1 de cada 3 acaba en cita; el 71 % de las clientas confirma su cita por WhatsApp.
+- Contacto: teléfono y WhatsApp +34 684 486 647 · reunión: https://nexgent.io/reunion · https://www.linkedin.com/company/nexgentai
+
+## Páginas
+
+- [Inicio](https://nexgent.io/): qué es Nexi, cómo trabajamos, caso de éxito y preguntas frecuentes.
+- [IA para franquicias](https://nexgent.io/ia-para-franquicias): cómo atiende Nexi a toda una red, pack, piloto y preguntas frecuentes.
+- [Blog](https://nexgent.io/blog): casos de éxito, franquicias, WhatsApp e IA, voz e IA, atención al cliente y guías.
+
+## Artículos
+
+- [Caso: 243 llamadas atendidas por IA en 21 días](https://nexgent.io/blog/caso-llamadas-ia-243-llamadas-21-dias)
+- [Caso: el 71 % confirma su cita por WhatsApp](https://nexgent.io/blog/caso-recordatorios-whatsapp-71-confirmadas)
+- [Recepcionista virtual con IA en una red de franquicias: qué exigirle](https://nexgent.io/blog/recepcionista-virtual-ia-franquicias)
+- [Cómo es un piloto de IA en una red de franquicias](https://nexgent.io/blog/piloto-ia-red-de-franquicias)
+- [El cliente que escribe a las 23:47 y nadie le contesta](https://nexgent.io/blog/cliente-escribe-fuera-de-horario)
+- [API oficial de WhatsApp Business: qué es y por qué importa](https://nexgent.io/blog/api-oficial-whatsapp-business)
