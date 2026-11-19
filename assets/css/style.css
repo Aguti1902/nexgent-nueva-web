@@ -90,10 +90,10 @@ p{margin:0}
 @keyframes pulse{50%{opacity:.35}}
 .hero__title{margin-top:28px;font-size:clamp(42px,7vw,108px);line-height:.98;font-weight:800;letter-spacing:-.045em}
 .hero__title .line{display:block}
-.rotator{display:block;height:1.08em;overflow:hidden;margin-top:.04em}
+.rotator{display:block;height:1.24em;overflow:hidden;margin-top:-.04em;margin-bottom:-.12em}
 .rotator__track{display:flex;flex-direction:column;animation:rotate 10s var(--ease) infinite}
-.rotator__track span{display:block;white-space:nowrap;height:1.08em;line-height:1.08em;padding-bottom:.02em}
-@keyframes rotate{0%,18%{transform:translateY(0)}25%,43%{transform:translateY(-1.08em)}50%,68%{transform:translateY(-2.16em)}75%,93%{transform:translateY(-3.24em)}100%{transform:translateY(-4.32em)}}
+.rotator__track span{display:block;white-space:nowrap;height:1.24em;line-height:1.24em}
+@keyframes rotate{0%,18%{transform:translateY(0)}25%,43%{transform:translateY(-1.24em)}50%,68%{transform:translateY(-2.48em)}75%,93%{transform:translateY(-3.72em)}100%{transform:translateY(-4.96em)}}
 .hero__sub{margin:28px auto 0;max-width:620px;font-size:clamp(18px,1.7vw,22px);color:#a1a1a6}
 .hero__ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
 .hero__trust{margin-top:18px;font-size:13px;color:#86868b}
@@ -768,3 +768,4 @@ input[type=range]::-moz-range-thumb{width:26px;height:26px;border:0;border-radiu
 .prose figure.shot{margin:32px 0;padding:0}
 .prose figure.shot img{width:100%;height:auto;display:block;border-radius:14px;border:1px solid rgba(0,0,0,.08);box-shadow:0 18px 40px -24px rgba(11,11,20,.35);background:#f7f8fa}
 .prose figure.shot figcaption{margin-top:10px;font-size:14px;line-height:1.5;color:#6b6b78}
+.wd.grad,.grad .wd{padding-bottom:.2em;margin-bottom:-.2em}

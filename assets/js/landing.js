@@ -80,7 +80,7 @@
       } else if (n.nodeType === 1 && n.tagName !== 'BR') wrap(n);
     });
     wrap(h1);
-    G.from($$('.lw > span', h1), { yPercent: 110, rotate: 4, duration: 1.1, ease: 'expo.out', stagger: .045, delay: .15 });
+    G.from($$('.lw > span', h1), { yPercent: 110, rotate: 4, duration: 1.1, ease: 'expo.out', stagger: .045, delay: .15, onComplete: () => $$('.lw', h1).forEach(w => w.classList.add('done')) });
   }
   G.from('.lhero .bxcrumbs, .lhero .kicker, .lhero__lead, .lhero .hero__ctas, .lhero__kpis > div', { y: 26, opacity: 0, duration: 1, ease: 'expo.out', stagger: .07, delay: .45 });
   G.from('.lphone', { y: 80, opacity: 0, rotateX: 12, duration: 1.4, ease: 'expo.out', delay: .3 });

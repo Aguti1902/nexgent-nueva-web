@@ -88,8 +88,9 @@
 @keyframes lty{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-3px)}}
 .lphone .phone{transition:transform .5s var(--ease)}
 .lchip{transition:translate .5s var(--ease)}
-.lw{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
-.lw>span{display:inline-block}
+.lw{display:inline-block;overflow:hidden;vertical-align:top;padding:.12em .06em .24em;margin:-.12em -.06em -.24em}
+.lw.done{overflow:visible}
+.lw>span{display:inline-block;padding:.12em .06em .24em;margin:-.12em -.06em -.24em}
 .grad .lw>span,.lhero h1 .grad .lw>span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lnd-js .lhero h1 .grad{background:none}
 
