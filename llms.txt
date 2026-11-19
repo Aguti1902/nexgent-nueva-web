@@ -7,25 +7,25 @@
 - Precio: pack de 230 € al mes por sede con 2.000 mensajes de WhatsApp y 500 minutos de llamada.
 - Modelo: diagnóstico de atención, piloto de pago de 30 días en 3 a 5 sedes propias con criterios de éxito por escrito y despliegue por oleadas.
 - Caso real (un centro de una red líder de más de 230 centros en España): 243 llamadas atendidas por la IA en 21 días, 85 % resueltas sin recepción, 1 de cada 3 acaba en cita; el 71 % de las clientas confirma su cita por WhatsApp.
-- Contacto: teléfono y WhatsApp +34 684 486 647 · reunión: https://nexgent.io/reunion · https://www.linkedin.com/company/nexgentai
+- Contacto: teléfono y WhatsApp +34 684 486 647 · reunión: https://www.nexgent.io/reunion · https://www.linkedin.com/company/nexgentai
 
 ## Páginas
 
-- [Inicio](https://nexgent.io/): qué es Nexi, cómo trabajamos, caso de éxito y preguntas frecuentes.
-- [IA para franquicias](https://nexgent.io/ia-para-franquicias): cómo atiende Nexi a toda una red, pack, piloto y preguntas frecuentes.
-- [IA para centros de estética](https://nexgent.io/centros-de-estetica): WhatsApp, llamadas y recordatorios para cadenas de estética y uñas, con el caso real.
-- [IA para clínicas dentales](https://nexgent.io/clinicas-dentales): teléfono, WhatsApp y recordatorios para redes de clínicas dentales; urgencias y temas clínicos pasan al equipo.
-- [IA para peluquerías](https://nexgent.io/peluquerias): WhatsApp, llamadas y recordatorios para cadenas de peluquería y barbería, con cita por servicio, duración y estilista.
-- [IA para gimnasios](https://nexgent.io/gimnasios): WhatsApp y llamadas para cadenas de gimnasios: cuotas, horarios, sesiones de prueba y reservas de clases; bajas y cobros pasan al equipo.
-- [NexGent 3D](https://nexgent.io/empresa-3d): plataforma que muestra cualquier empresa en 3D y en directo, con un equipo de agentes de IA que trabaja 24/7 y con los que se habla por texto y voz.
-- [Blog](https://nexgent.io/blog): casos de éxito, franquicias, WhatsApp e IA, voz e IA, atención al cliente y guías.
+- [Inicio](https://www.nexgent.io/): qué es Nexi, cómo trabajamos, caso de éxito y preguntas frecuentes.
+- [IA para franquicias](https://www.nexgent.io/ia-para-franquicias): cómo atiende Nexi a toda una red, pack, piloto y preguntas frecuentes.
+- [IA para centros de estética](https://www.nexgent.io/centros-de-estetica): WhatsApp, llamadas y recordatorios para cadenas de estética y uñas, con el caso real.
+- [IA para clínicas dentales](https://www.nexgent.io/clinicas-dentales): teléfono, WhatsApp y recordatorios para redes de clínicas dentales; urgencias y temas clínicos pasan al equipo.
+- [IA para peluquerías](https://www.nexgent.io/peluquerias): WhatsApp, llamadas y recordatorios para cadenas de peluquería y barbería, con cita por servicio, duración y estilista.
+- [IA para gimnasios](https://www.nexgent.io/gimnasios): WhatsApp y llamadas para cadenas de gimnasios: cuotas, horarios, sesiones de prueba y reservas de clases; bajas y cobros pasan al equipo.
+- [NexGent 3D](https://www.nexgent.io/empresa-3d): plataforma que muestra cualquier empresa en 3D y en directo, con un equipo de agentes de IA que trabaja 24/7 y con los que se habla por texto y voz.
+- [Blog](https://www.nexgent.io/blog): casos de éxito, franquicias, WhatsApp e IA, voz e IA, atención al cliente y guías.
 
 ## Artículos
 
-- [Caso Hello Nails: cómo funciona Nexi en una red de más de 230 centros](https://nexgent.io/blog/caso-hello-nails-ia-red-de-franquicias)
-- [Caso: 243 llamadas atendidas por IA en 21 días](https://nexgent.io/blog/caso-llamadas-ia-243-llamadas-21-dias)
-- [Caso: el 71 % confirma su cita por WhatsApp](https://nexgent.io/blog/caso-recordatorios-whatsapp-71-confirmadas)
-- [Recepcionista virtual con IA en una red de franquicias: qué exigirle](https://nexgent.io/blog/recepcionista-virtual-ia-franquicias)
-- [Cómo es un piloto de IA en una red de franquicias](https://nexgent.io/blog/piloto-ia-red-de-franquicias): qué prepara la red, qué se revisa cada semana y cómo estimar el impacto.
-- [El cliente que escribe a las 23:47 y nadie le contesta](https://nexgent.io/blog/cliente-escribe-fuera-de-horario)
-- [API oficial de WhatsApp Business: qué es y por qué importa](https://nexgent.io/blog/api-oficial-whatsapp-business)
+- [Caso Hello Nails: cómo funciona Nexi en una red de más de 230 centros](https://www.nexgent.io/blog/caso-hello-nails-ia-red-de-franquicias)
+- [Caso: 243 llamadas atendidas por IA en 21 días](https://www.nexgent.io/blog/caso-llamadas-ia-243-llamadas-21-dias)
+- [Caso: el 71 % confirma su cita por WhatsApp](https://www.nexgent.io/blog/caso-recordatorios-whatsapp-71-confirmadas)
+- [Recepcionista virtual con IA en una red de franquicias: qué exigirle](https://www.nexgent.io/blog/recepcionista-virtual-ia-franquicias)
+- [Cómo es un piloto de IA en una red de franquicias](https://www.nexgent.io/blog/piloto-ia-red-de-franquicias): qué prepara la red, qué se revisa cada semana y cómo estimar el impacto.
+- [El cliente que escribe a las 23:47 y nadie le contesta](https://www.nexgent.io/blog/cliente-escribe-fuera-de-horario)
+- [API oficial de WhatsApp Business: qué es y por qué importa](https://www.nexgent.io/blog/api-oficial-whatsapp-business)

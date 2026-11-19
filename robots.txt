@@ -3,4 +3,4 @@ Allow: /
 Disallow: /consultores
 Disallow: /design/
 
-Sitemap: https://nexgent.io/sitemap.xml
+Sitemap: https://www.nexgent.io/sitemap.xml

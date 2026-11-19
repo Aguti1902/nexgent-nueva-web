@@ -36,7 +36,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "content" / "blog"
 OUT = ROOT / "blog"
-SITE = "https://nexgent.io"
+SITE = "https://www.nexgent.io"
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 
 def asset_version():
