@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de llamadas perdidas: cuánto pierde cada sede</title>
+<meta name="description" content="Calcula cuántas citas pierde tu red por las llamadas sin coger, sede por sede y en euros al mes. Gratis, con tus datos y la referencia de un caso real.">
+<link rel="canonical" href="https://www.nexgent.io/calculadora-llamadas-perdidas">
+<meta property="og:title" content="Calculadora de llamadas perdidas: cuánto pierde cada sede">
+<meta property="og:description" content="Calcula cuántas citas pierde tu red por las llamadas sin coger, sede por sede y en euros al mes. Gratis, con tus datos y la referencia de un caso real.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.nexgent.io/calculadora-llamadas-perdidas">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://www.nexgent.io/assets/img/og-nexgent.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.nexgent.io/assets/img/og-nexgent.jpg">
+<meta name="theme-color" content="#000000">
+<link rel="alternate" type="application/rss+xml" title="Blog de NexGent" href="/blog/feed.xml">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css?v=5475565e">
+<link rel="stylesheet" href="/assets/css/blog.css?v=5475565e">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Calculadora de llamadas perdidas por sede", "description": "Calcula cuántas citas pierde tu red por las llamadas sin coger, sede por sede y en euros al mes. Gratis, con tus datos y la referencia de un caso real.", "url": "https://www.nexgent.io/calculadora-llamadas-perdidas", "inLanguage": "es-ES", "publisher": {"@type": "Organization", "name": "NexGent", "url": "https://www.nexgent.io"}, "applicationCategory": "BusinessApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.nexgent.io/"}, {"@type": "ListItem", "position": 2, "name": "Calculadora de llamadas perdidas", "item": "https://www.nexgent.io/calculadora-llamadas-perdidas"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿Se guardan los datos que pongo en la calculadora?", "acceptedAnswer": {"@type": "Answer", "text": "No. El cálculo se hace en tu navegador y no se envía ni se guarda nada."}}, {"@type": "Question", "name": "¿Cómo sé qué porcentaje de llamadas no se coge en mis sedes?", "acceptedAnswer": {"@type": "Answer", "text": "Con el registro de llamadas perdidas de la centralita, del operador o del móvil de la sede. Una semana normal en dos o tres sedes basta para una primera estimación; en el diagnóstico lo medimos sede por sede."}}, {"@type": "Question", "name": "¿Todas las llamadas sin coger son clientes perdidos?", "acceptedAnswer": {"@type": "Answer", "text": "No. Algunas personas vuelven a llamar o escriben por WhatsApp. Por eso el resultado es un orden de magnitud: sirve para decidir si merece la pena medirlo con datos reales."}}, {"@type": "Question", "name": "¿De dónde sale que 1 de cada 3 llamadas acaba en cita?", "acceptedAnswer": {"@type": "Answer", "text": "De un caso real: en un centro de una red líder de centros de uñas con más de 230 centros, la IA de Nexi atendió 243 llamadas en 21 días y 1 de cada 3 terminó en una cita reservada. Puedes cambiar ese porcentaje por el tuyo."}}, {"@type": "Question", "name": "¿Cuánto cuesta que una IA atienda las llamadas de cada sede?", "acceptedAnswer": {"@type": "Answer", "text": "En NexGent, 230 € al mes por sede con 2.000 mensajes de WhatsApp y 500 minutos de llamada. Se empieza con un piloto de pago de 30 días en 3 a 5 sedes propias."}}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a href="/" class="logo" aria-label="NexGent, inicio"><img class="logo__w" src="/assets/img/logo-nexgent-blanco.png" alt="NexGent" width="112" height="28"><img class="logo__d" src="/assets/img/logo-nexgent.png" alt="" width="112" height="28" aria-hidden="true"></a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="/#nosotros">Sobre nosotros</a>
+      <a href="/blog/categoria/casos-de-exito">Casos de éxito</a>
+      <a href="/#como-trabajamos">Cómo trabajamos</a>
+      <a href="/blog">Blog</a>
+      <a href="/#contacto">Contacto</a>
+    </nav>
+    <a href="/#contacto" class="btn btn--sm btn--light magnetic">Solicitar diagnóstico</a>
+    <button class="nav__burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/#nosotros">Sobre nosotros</a>
+    <a href="/blog/categoria/casos-de-exito">Casos de éxito</a>
+    <a href="/#como-trabajamos">Cómo trabajamos</a>
+    <a href="/blog">Blog</a>
+    <a href="/#contacto">Contacto</a>
+  </div>
+</header>
+<main id="main" class="bx">
+<header class="bxah">
+  <div class="bxah__bg" aria-hidden="true"></div>
+  <div class="container bxah__in">
+    <nav class="bxcrumbs" aria-label="Migas de pan"><a href="/">Inicio</a><span aria-hidden="true">/</span><a href="/ia-para-franquicias">IA para franquicias</a></nav>
+    <h1 class="bxah__title">Calculadora de llamadas perdidas por sede</h1>
+    <p class="bxah__lead">Cuántas llamadas se quedan sin coger en tu red, cuántas citas se pierden con ellas y cuánto dinero suponen al mes. Pon tus datos: el cálculo se hace en tu navegador y no se guarda nada.</p>
+  </div>
+</header>
+<section class="bxread">
+  <div class="container bxread__grid">
+    <article class="bxprose" id="articulo">
+
+<div class="bxcalc" id="calc">
+  <form class="bxcalc__in" onsubmit="return false" aria-label="Datos de tu red">
+    <label><span>Sedes de la red</span><input type="number" id="c-sedes" min="1" max="5000" step="1" value="10" inputmode="numeric"></label>
+    <label><span>Llamadas al día por sede</span><input type="number" id="c-llam" min="0" max="1000" step="1" value="12" inputmode="numeric"><small>Referencia: en el centro del caso real, 243 llamadas en 21 días (unas 12 al día).</small></label>
+    <label><span>Días abiertos al mes</span><input type="number" id="c-dias" min="1" max="31" step="1" value="26" inputmode="numeric"><small>26 si abrís de lunes a sábado.</small></label>
+    <label><span>% de llamadas que nadie coge</span><input type="number" id="c-perd" min="0" max="100" step="1" value="20" inputmode="numeric"><small>Tu estimación. Míralo en el registro de llamadas perdidas de la centralita o del móvil de la sede.</small></label>
+    <label><span>% de llamadas que acabarían en cita</span><input type="number" id="c-cita" min="0" max="100" step="1" value="33" inputmode="numeric"><small>Referencia: en el caso real, 1 de cada 3 llamadas atendidas por la IA acabó en cita.</small></label>
+    <label><span>Ingreso medio por cita (€)</span><input type="number" id="c-ticket" min="0" max="10000" step="1" value="30" inputmode="numeric"><small>Ejemplo: cámbialo por el ticket medio de tu red.</small></label>
+  </form>
+  <div class="bxcalc__out" aria-live="polite">
+    <div><b id="o-llam">0</b><span>llamadas sin coger al mes en la red</span></div>
+    <div><b id="o-citas">0</b><span>citas que se pueden perder al mes</span></div>
+    <div class="bxcalc__big"><b id="o-eur">0 €</b><span>al mes en citas en juego en toda la red</span></div>
+    <div><b id="o-sede">0 €</b><span>al mes por sede</span></div>
+    <p class="bxcalc__note" id="o-pack"></p>
+  </div>
+</div>
+
+<p>Esta calculadora da un orden de magnitud, no una cifra exacta. No todas las llamadas sin coger son clientas perdidas: algunas vuelven a llamar o escriben por WhatsApp. Pero tampoco aparecen en ningún informe de ventas, y por eso casi ninguna red sabe cuánto le cuestan.</p>
+
+<h2>Cómo se calcula</h2>
+<p>El cálculo es sencillo y lo puedes repetir con una hoja de cálculo:</p>
+<ul>
+<li><strong>Llamadas sin coger al mes</strong> = sedes × llamadas al día × días abiertos × % que nadie coge.</li>
+<li><strong>Citas que se pueden perder</strong> = llamadas sin coger × % que acabaría en cita.</li>
+<li><strong>Dinero en juego</strong> = citas perdidas × ingreso medio por cita.</li>
+</ul>
+<p>El dato más difícil es el porcentaje de llamadas que nadie coge. La mayoría de centralitas y operadores guardan un registro de llamadas perdidas; si la sede usa un móvil, también lo tiene. Basta con mirar una semana normal en dos o tres sedes para tener una estimación razonable.</p>
+
+<h2>De dónde salen las referencias</h2>
+<p>Los valores que aparecen al abrir la calculadora son un punto de partida, no datos de tu red:</p>
+<ul>
+<li><strong>12 llamadas al día por sede</strong> sale del caso real: en un centro de una red líder de centros de uñas con más de 230 centros, la voz IA de Nexi atendió 243 llamadas en 21 días.</li>
+<li><strong>33 % de llamadas que acaban en cita</strong> sale del mismo caso: 1 de cada 3 llamadas atendidas por la IA terminó en una cita reservada en la agenda del centro, y el 85 % se resolvió sin pasar por recepción.</li>
+<li><strong>El porcentaje sin coger y el ingreso por cita</strong> son ejemplos: cámbialos por los tuyos.</li>
+</ul>
+<p>Todo el detalle del caso, con lo que pasó en cada llamada, está en <a href="/blog/caso-llamadas-ia-243-llamadas-21-dias">243 llamadas atendidas por IA en 21 días</a>. Es un solo centro y un periodo corto: sirve de referencia, no de promesa.</p>
+
+<h2>Por qué se pierden llamadas en una red</h2>
+<p>En casi todas las sedes pasa lo mismo: quien coge el teléfono es la misma persona que atiende a la clienta que tiene delante. Si está con una clienta, cobrando o en cabina, el teléfono suena y nadie lo coge. Fuera de horario, directamente no hay nadie. Y la clienta que llama para pedir cita suele probar en otro sitio en lugar de esperar.</p>
+<p>En una red el problema se multiplica por el número de sedes, pero también se puede medir y resolver de forma común. Lo contamos con más detalle en <a href="/blog/recepcionista-virtual-ia-franquicias">qué exigir a una recepcionista virtual con IA</a> y, para los mensajes fuera de horario, en <a href="/blog/cliente-escribe-fuera-de-horario">el cliente que escribe a las 23:47</a>.</p>
+
+<h2>Qué hacer con el resultado</h2>
+<p>Si la cifra es pequeña, no hace falta cambiar nada. Si no lo es, el siguiente paso es comprobarlo con datos reales y no con estimaciones:</p>
+<ol>
+<li><strong>Medir</strong> en un diagnóstico las llamadas y los mensajes que reciben tus sedes y cuántos se quedan sin respuesta.</li>
+<li><strong>Probar</strong> con un piloto de pago de 30 días en 3 a 5 sedes propias, con los criterios de éxito acordados por escrito antes de empezar.</li>
+<li><strong>Decidir</strong> con los números del panel, sede por sede: llamadas resueltas sin una persona, citas reservadas y llamadas pasadas al equipo.</li>
+</ol>
+<p>Explicamos el proceso en <a href="/blog/piloto-ia-red-de-franquicias">cómo es un piloto de IA en una red de franquicias</a> y cómo trabaja Nexi en toda la red en <a href="/ia-para-franquicias">IA para franquicias</a>. Si tu red es de estética, salud o fitness, lo tienes aplicado a tu sector en <a href="/centros-de-estetica">centros de estética</a>, <a href="/clinicas-dentales">clínicas dentales</a>, <a href="/fisioterapia">fisioterapia</a>, <a href="/peluquerias">peluquerías</a>, <a href="/gimnasios">gimnasios</a> e <a href="/inmobiliarias">inmobiliarias</a>.</p>
+
+<h2>Cuánto cuesta atender todas las llamadas</h2>
+<p>Nexi atiende las llamadas y el WhatsApp de cada sede 24/7: responde, reserva, cambia y anula citas en la agenda de la sede y pasa a una persona lo que lo necesita. El precio es un pack fijo de <strong>230 € al mes por sede con 2.000 mensajes de WhatsApp y 500 minutos de llamada</strong>. La calculadora te dice cuántas citas al mes necesitaría recuperar cada sede para cubrirlo con tu ingreso medio por cita.</p>
+<p>¿Quieres hacer el cálculo con los datos reales de tus sedes? <a href="/reunion">Reserva una reunión</a> o llama al 684 486 647.</p>
+
+<h2>Preguntas frecuentes</h2>
+<div class="bxfaq">
+<details class="bxq"><summary>¿Se guardan los datos que pongo en la calculadora?</summary><div><p>No. El cálculo se hace en tu navegador y no se envía ni se guarda nada.</p></div></details>
+<details class="bxq"><summary>¿Cómo sé qué porcentaje de llamadas no se coge en mis sedes?</summary><div><p>Con el registro de llamadas perdidas de la centralita, del operador o del móvil de la sede. Una semana normal en dos o tres sedes basta para una primera estimación; en el diagnóstico lo medimos sede por sede.</p></div></details>
+<details class="bxq"><summary>¿Todas las llamadas sin coger son clientes perdidos?</summary><div><p>No. Algunas personas vuelven a llamar o escriben por WhatsApp. Por eso el resultado es un orden de magnitud: sirve para decidir si merece la pena medirlo con datos reales.</p></div></details>
+<details class="bxq"><summary>¿De dónde sale que 1 de cada 3 llamadas acaba en cita?</summary><div><p>De un caso real: en un centro de una red líder de centros de uñas con más de 230 centros, la IA de Nexi atendió 243 llamadas en 21 días y 1 de cada 3 terminó en una cita reservada. Puedes cambiar ese porcentaje por el tuyo.</p></div></details>
+<details class="bxq"><summary>¿Cuánto cuesta que una IA atienda las llamadas de cada sede?</summary><div><p>En NexGent, 230 € al mes por sede con 2.000 mensajes de WhatsApp y 500 minutos de llamada. Se empieza con un piloto de pago de 30 días en 3 a 5 sedes propias.</p></div></details>
+</div>
+
+<p class="bxsrc">Fuentes de las referencias: panel de NexGent de un centro de la red (llamadas con IA del 27 de octubre al 16 de noviembre de 2026).</p>
+    </article>
+    <aside class="bxside" aria-label="En esta página">
+      <div class="bxtoc"><p class="bxtoc__t">En esta página</p><ol id="bxtoc"></ol></div>
+      <div class="bxmini"><p><b>¿Quieres los datos reales de tus sedes?</b>Los medimos en el diagnóstico de atención.</p><a href="/reunion" class="btn btn--grad btn--sm">Reservar reunión</a></div>
+    </aside>
+  </div>
+</section>
+<section class="bxcta">
+  <div class="bxcta__rings" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="container bxcta__in">
+    <p class="kicker">Diagnóstico de atención</p>
+    <h2>¿Cuántas llamadas se quedan <span class="grad">sin coger en tu red?</span></h2>
+    <p>Medimos las llamadas y los mensajes que reciben tus sedes y cuántos se pierden. Con esos números decides si un piloto tiene sentido. O llámanos al 684 486 647.</p>
+    <a href="/reunion" class="btn btn--grad magnetic">Reservar reunión</a>
+  </div>
+</section>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var n=function(id){var v=parseFloat($(id).value);return isFinite(v)&&v>0?v:0};
+  var fmt=function(x){return String(Math.round(x)).replace(/\B(?=(\d{3})+(?!\d))/g,'.')};
+  function calc(){
+    var sedes=n('c-sedes'),llam=n('c-llam'),dias=n('c-dias'),perd=Math.min(n('c-perd'),100)/100,cita=Math.min(n('c-cita'),100)/100,t=n('c-ticket');
+    var lp=sedes*llam*dias*perd,cp=lp*cita,eur=cp*t,sede=sedes?eur/sedes:0;
+    $('o-llam').textContent=fmt(lp);$('o-citas').textContent=fmt(cp);
+    $('o-eur').textContent=fmt(eur)+' €';$('o-sede').textContent=fmt(sede)+' €';
+    $('o-pack').textContent=t?('Con un ingreso medio de '+fmt(t)+' € por cita, cada sede cubre el pack de 230 € al mes recuperando '+fmt(Math.ceil(230/t))+' citas al mes.'):'Pon tu ingreso medio por cita para compararlo con el pack de 230 € al mes por sede.';
+  }
+  ['c-sedes','c-llam','c-dias','c-perd','c-cita','c-ticket'].forEach(function(id){$(id).addEventListener('input',calc)});
+  calc();
+})();
+</script>
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div>
+        <img class="footer__logo" src="/assets/img/logo-nexgent-blanco.png" alt="NexGent" width="168" height="42">
+        <p class="footer__claim">IA que atiende a los clientes de las redes de franquicias. Por WhatsApp y por teléfono, en todas las sedes.</p>
+      </div>
+      <a href="/#contacto" class="btn btn--grad magnetic">Solicitar diagnóstico</a>
+    </div>
+    <div class="footer__grid">
+      <div><h4>Empresa</h4><a href="/#nosotros">Sobre nosotros</a><a href="/#caso">Caso de éxito</a><a href="/#como-trabajamos">Cómo trabajamos</a><a href="/blog">Blog</a><a href="/empresa-3d">NexGent 3D</a></div>
+      <div><h4>Blog</h4><a href="/blog/categoria/casos-de-exito">Casos de éxito</a><a href="/blog/categoria/franquicias">Franquicias</a><a href="/blog/categoria/whatsapp-e-ia">WhatsApp e IA</a><a href="/blog/categoria/voz-ia">Voz e IA telefónica</a><a href="/blog/categoria/atencion-al-cliente">Atención al cliente</a><a href="/blog/categoria/guias">Guías y datos</a></div>
+      <div><h4>Soluciones</h4><a href="/ia-para-franquicias">IA para franquicias</a><a href="/centros-de-estetica">Centros de estética</a><a href="/clinicas-dentales">Clínicas dentales</a><a href="/peluquerias">Peluquerías</a><a href="/gimnasios">Gimnasios</a><a href="/fisioterapia">Fisioterapia</a><a href="/inmobiliarias">Inmobiliarias</a></div>
+      <div><h4>Contacto</h4><a href="/#contacto">Solicitar diagnóstico</a><a href="https://wa.me/34684486647">WhatsApp</a><a href="https://www.linkedin.com/company/nexgentai">LinkedIn</a><a href="https://www.instagram.com/nexgentai">Instagram</a></div>
+      <div><h4>Legal</h4><a href="/legal#aviso-legal">Aviso legal</a><a href="/legal#privacidad">Privacidad</a><a href="/legal#cookies">Cookies</a></div>
+    </div>
+    <div class="footer__bottom"><p>© 2026 NEXGENT AI SYSTEMS, S.L. · NIF B22534564 · Calle Julio Verne 12, 18210 Peligros (Granada)</p><p>Hecho en Granada</p></div>
+  </div>
+</footer>
+<script src="/assets/vendor/gsap.min.js"></script>
+<script src="/assets/vendor/ScrollTrigger.min.js"></script>
+<script src="/assets/vendor/lenis.min.js"></script>
+<script src="/assets/js/main.js?v=5475565e"></script>
+<script src="/assets/js/blog.js?v=5475565e"></script>
+</body>
+</html>

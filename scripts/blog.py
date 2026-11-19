@@ -29,6 +29,12 @@ Landings de sector (equipo SEO, Atril): content/landings/<slug>.html con el mism
 Se publican en /<slug> (archivo <slug>.html en la raíz), entran en el sitemap y en la columna «Soluciones» del pie
 de todas las páginas (también index.html, legal.html y 404.html, entre <!-- landings:foot --> y <!-- /landings:foot -->).
 Las preguntas en <details class="bxq"> generan FAQPage.
+
+Páginas sueltas (herramientas, p. ej. la calculadora): content/paginas/<slug>.html con el bloque <!--meta-->:
+{"title": "...(50-60)", "description": "...(140-160)", "h1": "...", "nav": "nombre en migas", "date": "AAAA-MM-DD",
+ "updated": "AAAA-MM-DD", "type": "WebApplication|WebPage", "draft": false}
+Se publican en /<slug> con la cabecera y el pie del blog; el cuerpo es HTML completo de <main> (puede llevar <script>).
+Entran en el sitemap y generan WebPage/WebApplication + BreadcrumbList (+ FAQPage si hay <details class="bxq">).
 """
 import html, json, re, sys, datetime, hashlib, subprocess
 from pathlib import Path
@@ -73,6 +79,27 @@ def load_landings():
 
 
 LANDINGS = load_landings()
+PSRC = ROOT / "content" / "paginas"
+
+
+def load_paginas():
+    out = []
+    for f in sorted(PSRC.glob("*.html")) if PSRC.exists() else []:
+        raw = f.read_text(encoding="utf-8")
+        m = re.match(r"\s*<!--meta\s*(\{.*?\})\s*-->\s*(.*)\Z", raw, re.S)
+        if not m:
+            sys.exit(f"paginas/{f.name}: falta el bloque <!--meta {{...}} -->")
+        meta = json.loads(m.group(1))
+        meta["slug"], meta["body"] = f.stem, m.group(2).strip()
+        for k in ("title", "description", "h1", "nav", "date"):
+            if not meta.get(k):
+                sys.exit(f"paginas/{f.name}: falta '{k}'")
+        if not meta.get("draft"):
+            out.append(meta)
+    return out
+
+
+PAGINAS = load_paginas()
 
 
 def git_date(path):
@@ -523,6 +550,24 @@ def build():
             image=img if (ROOT / img.lstrip("/")).exists() else None, main_cls="bx bx--lnd",
             extra_css=f'<link rel="stylesheet" href="/assets/css/landing.css?v={V}">\n'), encoding="utf-8")
 
+    # Páginas sueltas: /<slug>
+    for pg in PAGINAS:
+        url = f"{SITE}/{pg['slug']}"
+        strip = lambda t: re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", t))).strip()
+        main = {"@context": "https://schema.org", "@type": pg.get("type", "WebPage"), "name": pg["h1"], "description": pg["description"],
+                "url": url, "inLanguage": "es-ES", "publisher": {"@type": "Organization", "name": "NexGent", "url": SITE}}
+        if main["@type"] == "WebApplication":
+            main.update({"applicationCategory": "BusinessApplication", "operatingSystem": "Web",
+                         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}})
+        lds = [main, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Inicio", "item": f"{SITE}/"},
+            {"@type": "ListItem", "position": 2, "name": pg["nav"], "item": url}]}]
+        faqs = re.findall(r'<details class="bxq"><summary>(.*?)</summary>(.*?)</details>', pg["body"], re.S)
+        if faqs:
+            lds.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+                {"@type": "Question", "name": strip(q), "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in faqs]})
+        (ROOT / f"{pg['slug']}.html").write_text(page(pg["title"], pg["description"], f"/{pg['slug']}", pg["body"], lds), encoding="utf-8")
+
     # Pie de las páginas estáticas: columna «Soluciones»
     for f in ("index.html", "legal.html", "404.html", "empresa-3d.html"):
         fp = ROOT / f
@@ -535,13 +580,14 @@ def build():
     # Sitemap: conserva las URLs que no son del blog ni landings, y pone lastmod a todo
     sm = ROOT / "sitemap.xml"
     old = re.findall(r"<loc>(.*?)</loc>", sm.read_text(encoding="utf-8")) if sm.exists() else []
-    lurls = {f"{SITE}/{l['slug']}" for l in LANDINGS}
+    lurls = {f"{SITE}/{l['slug']}" for l in LANDINGS} | {f"{SITE}/{p['slug']}" for p in PAGINAS}
     other = [u for u in old if "/blog" not in u and u not in lurls]
     def file_for(u):
         path = u[len(SITE):].strip("/") or "index"
         return path + ".html"
     urls = [(u, git_date(file_for(u))) for u in other]
     urls += [(f"{SITE}/{l['slug']}", l.get("updated", l["date"])) for l in LANDINGS]
+    urls += [(f"{SITE}/{p['slug']}", p.get("updated", p["date"])) for p in PAGINAS]
     urls += [(f"{SITE}/blog", max(p.get("updated", p["date"]) for p in posts) if posts else None)]
     for c in CATS:
         ds = [p.get("updated", p["date"]) for p in posts if p["category"] == c["slug"]]

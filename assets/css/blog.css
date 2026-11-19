@@ -242,3 +242,18 @@
 .lnd__stats .stat{min-width:0}.lnd__stats .stat__l{display:block;overflow-wrap:break-word;hyphens:auto}
 @media (max-width:900px){.lnd{padding:80px 0}.lnd__stats{grid-template-columns:1fr 1fr}}
 @media (max-width:480px){.lnd__stats{gap:10px}.lnd__stats .stat{padding:16px 14px}.lnd__stats .stat__l{font-size:13px}}
+/* Calculadora (páginas sueltas, content/paginas) */
+.bxprose .bxcalc{margin:0 0 40px;display:grid;grid-template-columns:1.1fr 1fr;gap:0;border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 1px 0 var(--line-d),0 30px 80px -40px rgba(59,130,246,.35)}
+.bxprose .bxcalc__in{padding:28px;display:grid;gap:18px}
+.bxprose .bxcalc__in label{display:grid;gap:6px;font-size:15px;font-weight:600;color:var(--ink)}
+.bxprose .bxcalc__in input{height:48px;padding:0 16px;border-radius:14px;border:1px solid rgba(0,0,0,.14);background:var(--light);font:600 18px var(--text);color:var(--ink);width:100%}
+.bxprose .bxcalc__in input:focus{outline:2px solid var(--b);outline-offset:1px;background:#fff}
+.bxprose .bxcalc__in small{font-size:13px;font-weight:400;color:var(--mute);line-height:1.4}
+.bxprose .bxcalc__out{padding:28px;background:#000;color:#f5f5f7;display:grid;gap:14px;align-content:start;position:relative;overflow:hidden}
+.bxprose .bxcalc__out::before{content:"";position:absolute;right:-60px;bottom:-80px;width:240px;height:240px;border-radius:50%;background:#3b82f6;filter:blur(70px);opacity:.45}
+.bxprose .bxcalc__out>div{position:relative;display:grid;gap:2px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.bxprose .bxcalc__out b{font:700 30px/1.15 var(--display);color:#fff}
+.bxprose .bxcalc__out .bxcalc__big b{font-size:42px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:4px}
+.bxprose .bxcalc__out span{font-size:14px;color:#a1a1a6}
+.bxprose .bxcalc__note{position:relative;margin:4px 0 0;font-size:14px;line-height:1.5;color:#d2d2d7}
+@media (max-width:760px){.bxprose .bxcalc{grid-template-columns:1fr}.bxprose .bxcalc__in,.bxprose .bxcalc__out{padding:22px}}
