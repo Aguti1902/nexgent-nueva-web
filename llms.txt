@@ -16,6 +16,7 @@
 - [IA para centros de estética](https://nexgent.io/centros-de-estetica): WhatsApp, llamadas y recordatorios para cadenas de estética y uñas, con el caso real.
 - [IA para clínicas dentales](https://nexgent.io/clinicas-dentales): teléfono, WhatsApp y recordatorios para redes de clínicas dentales; urgencias y temas clínicos pasan al equipo.
 - [IA para peluquerías](https://nexgent.io/peluquerias): WhatsApp, llamadas y recordatorios para cadenas de peluquería y barbería, con cita por servicio, duración y estilista.
+- [IA para gimnasios](https://nexgent.io/gimnasios): WhatsApp y llamadas para cadenas de gimnasios: cuotas, horarios, sesiones de prueba y reservas de clases; bajas y cobros pasan al equipo.
 - [NexGent 3D](https://nexgent.io/empresa-3d): plataforma que muestra cualquier empresa en 3D y en directo, con un equipo de agentes de IA que trabaja 24/7 y con los que se habla por texto y voz.
 - [Blog](https://nexgent.io/blog): casos de éxito, franquicias, WhatsApp e IA, voz e IA, atención al cliente y guías.
 
