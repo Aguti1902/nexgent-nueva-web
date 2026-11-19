@@ -1,0 +1,78 @@
+<!--meta
+{"title": "Caso Hello Nails: cómo funciona Nexi en una red de más de 230 centros", "seoTitle": "Caso Hello Nails: IA en una red de más de 230 centros", "description": "Cómo implantamos Nexi en Hello Nails: CRM propio, WhatsApp con IA, voz IA, monedero y panel de consumo. Las piezas, los datos de un centro y lo aprendido.", "category": "casos-de-exito", "date": "2026-11-19", "author": "Equipo NexGent", "cover": "pi2", "keywords": ["caso de éxito IA en franquicias", "Hello Nails", "IA para redes de franquicias", "WhatsApp y voz IA", "Nexi"], "seoDescription": "Caso Hello Nails: cómo implantamos Nexi en una red de más de 230 centros, con CRM propio, WhatsApp, voz IA y monedero. Piezas, datos reales y lecciones."}
+-->
+<p>Hello Nails es una red de centros de uñas con más de 230 centros en España y una expansión a Latinoamérica en marcha. Nexi ya atiende a sus clientas por WhatsApp y por teléfono: avisa de las citas, recoge las confirmaciones, contesta mensajes y coge llamadas. Ya hemos contado por separado <a href="/blog/caso-recordatorios-whatsapp-71-confirmadas">los resultados de los recordatorios</a> y <a href="/blog/caso-llamadas-ia-243-llamadas-21-dias">los de las llamadas con IA</a>. Este artículo cuenta el proyecto entero: qué piezas hubo que construir, cómo encajan y qué aprendimos por el camino.</p>
+
+<div class="bxkey">
+<p>En 30 segundos</p>
+<ul>
+<li>Para que la IA reserve de verdad, primero construimos desde cero el <strong>CRM con la agenda de cada centro y las fichas de clientas</strong>.</li>
+<li>Encima van cuatro capas: <strong>recordatorios por WhatsApp, IA conversacional en WhatsApp, voz IA en el teléfono</strong> y un <strong>panel de consumo con monedero</strong> por sede.</li>
+<li>En un centro, el 71 % de las citas avisadas por WhatsApp se confirmó y la voz IA resolvió el 85 % de las llamadas sin pasar por recepción.</li>
+<li>La lección principal: en una red, la IA no es un chatbot; es un servicio por sede que la central puede medir y el franquiciado puede pagar por uso.</li>
+</ul>
+</div>
+
+<h2>El reto: cientos de centros, las mismas preguntas</h2>
+<p>En una red de centros de uñas, la mayoría de los contactos de las clientas son iguales en todas las sedes: pedir cita, cambiarla, anularla, preguntar un horario o un precio. Llegan por dos canales, WhatsApp y teléfono, y casi siempre en el peor momento: cuando la persona de recepción está cobrando o atendiendo a alguien en el mostrador.</p>
+<p>Multiplicado por más de 230 centros, el problema deja de ser de un franquiciado y pasa a ser de la red. Cada mensaje sin contestar y cada llamada sin coger es una cita que puede acabar en otro centro, y nadie lo ve en ningún informe. La central quería tres cosas: que se atendiera a todas las clientas, que el trabajo de recepción bajara y poder ver qué pasa en cada sede con los mismos criterios.</p>
+
+<h2>Las piezas que construimos</h2>
+<p>Nexi no es una sola herramienta, sino varias piezas que comparten la misma agenda y los mismos datos. Este es el orden en que encajan:</p>
+<ol class="bxsteps">
+<li><strong>CRM construido desde cero</strong>La agenda de cada centro y las fichas de clientas. Es la base de todo: la IA consulta aquí los huecos libres, guarda las citas y da de alta a las clientas nuevas.</li>
+<li><strong>Recordatorios por WhatsApp</strong>Antes de cada cita sale un aviso desde la <a href="/blog/api-oficial-whatsapp-business">API oficial de WhatsApp Business</a>, con botones para confirmar o cancelar. Si la clienta cancela, el hueco queda libre al momento.</li>
+<li><strong>IA conversacional en WhatsApp</strong>Si la clienta escribe otra cosa (cambiar la hora, preguntar un precio, avisar de que llega tarde), la IA entiende el mensaje y responde, o pasa la conversación a recepción.</li>
+<li><strong>Voz IA en el teléfono</strong>El centro mantiene su número de siempre y desvía las llamadas a la centralita IA. La IA avisa de que es una IA, consulta la agenda, reserva, cambia o anula, y transfiere a una persona lo que lo necesita.</li>
+<li><strong>Cita doble y casos del sector</strong>La agenda tenía que resolver bien situaciones propias de un centro de uñas, como la cita doble, para que la IA no reservara nada que el centro no pudiera atender.</li>
+<li><strong>Monedero y panel de consumo</strong>Cada sede tiene un pack mensual y un monedero prepago para lo que use de más. En el panel ve los mensajes y minutos gastados, lo que le queda y cuándo toca recargar.</li>
+</ol>
+
+<h2>Un ejemplo concreto</h2>
+<p>Así es una conversación habitual cuando la clienta no se limita a pulsar un botón y la IA tiene que mirar la agenda:</p>
+<div class="bxex">
+<small>Ejemplo orientativo</small>
+<span>Hola, Marta. Te recordamos tu cita de manicura mañana, viernes, a las 18:00. ¿Nos confirmas que vienes?</span>
+<span class="me">Mañana no llego, ¿puede ser el sábado por la mañana?</span>
+<span>Claro. El sábado tengo libre a las 10:30 y a las 12:00. ¿Cuál te viene mejor?</span>
+<span class="me">A las 10:30</span>
+<span>Hecho: tu cita queda el sábado a las 10:30. El hueco de mañana ya está libre para otra clienta.</span>
+</div>
+<p>Detrás de esos cinco mensajes hay tres cosas que sin el CRM no serían posibles: la IA sabe qué cita tiene la clienta, ve los huecos reales del sábado y libera el de mañana en el momento. Si la clienta hubiera escrito una queja, la conversación habría pasado a recepción.</p>
+
+<h2>Los resultados de un centro de la red</h2>
+<p>Estos son los datos de un solo centro, tal y como salen del panel de NexGent. Los recordatorios cubren del 18 de octubre al 16 de noviembre de 2026; las llamadas con IA, del 27 de octubre al 16 de noviembre de 2026.</p>
+<div class="bxstats">
+<div><b>1.479</b><span>citas avisadas por WhatsApp</span></div>
+<div><b>71 %</b><span>confirmaron respondiendo al aviso</span></div>
+<div><b>123</b><span>huecos liberados con antelación</span></div>
+<div><b>243</b><span>llamadas atendidas por la voz IA</span></div>
+<div><b>80</b><span>citas reservadas por teléfono</span></div>
+<div><b>85 %</b><span>llamadas resueltas sin recepción</span></div>
+</div>
+<p>En WhatsApp, Nexi gestionó 2.837 mensajes en el mes, 1.290 de ellos respuestas automáticas a clientas. Al teléfono, solo 36 de las 243 llamadas pasaron a una persona, y la duración media fue de 1 minuto y 10 segundos.</p>
+
+<h2>Lo que aprendimos</h2>
+<h3>Sin agenda real, no hay IA útil</h3>
+<p>Una IA que solo toma nota no ahorra trabajo: lo aplaza. Lo que hace que los números funcionen es que la IA reserve en la agenda del centro en el momento. Por eso el proyecto empezó por el CRM y no por el chat.</p>
+<h3>Empezar por un centro y medirlo todo</h3>
+<p>Antes de hablar de toda la red, el sistema tiene que funcionar en un centro con clientas reales. Ahí aparecen los casos que ninguna demo enseña, como la cita doble, y ahí se ajusta qué resuelve la IA y qué pasa a una persona.</p>
+<h3>El consumo tiene que estar a la vista</h3>
+<p>En una red, quien paga cada sede es el franquiciado. Si no ve lo que gasta, desconfía. El panel de consumo y el monedero hacen que cada sede sepa en todo momento cuántos mensajes y minutos lleva y cuánto le queda.</p>
+
+<h2>Qué significa para una red de 50 o más sedes</h2>
+<p>Para la central de una red, Nexi no es un gasto en tecnología: es un servicio por sede. Cada sede tiene un pack de 2.000 mensajes de WhatsApp y 500 minutos de llamada al mes por 230 €, y un monedero para lo que use de más. La red ofrece a sus franquiciados un servicio que les ayuda a vender más y, a la vez, suma un ingreso recurrente por cada sede activa.</p>
+<p>La forma de comprobarlo es la misma que seguimos siempre: un piloto de pago de 30 a 60 días en 2 a 5 sedes propias, con los criterios de éxito acordados por escrito antes de empezar. Lo explicamos paso a paso en <a href="/blog/piloto-ia-red-de-franquicias">cómo es un piloto de IA en una red de franquicias</a>.</p>
+
+<h2>¿Y en tu red?</h2>
+<p>Lo primero es saber cuántos mensajes y llamadas se quedan hoy sin respuesta en tus sedes y cuánto tiempo dedica recepción a confirmar citas. Lo medimos en el diagnóstico de atención y, si los números tienen sentido, lo comprobamos con un piloto. <a href="/#contacto">Pide tu diagnóstico</a>.</p>
+<p>Para seguir leyendo: cómo funciona Nexi en toda la red en <a href="/ia-para-franquicias">IA para franquicias</a> y, para cadenas de belleza, <a href="/centros-de-estetica">IA para centros de estética</a>.</p>
+
+<h2>Preguntas frecuentes</h2>
+<div class="bxfaq">
+<details class="bxq"><summary>¿Hace falta cambiar el programa de citas de la red?</summary><div><p>Depende de cada red. En Hello Nails construimos el CRM desde cero. En otras redes, Nexi se conecta con el sistema de citas, CRM o ERP que ya usan. Se decide en el diagnóstico.</p></div></details>
+<details class="bxq"><summary>¿Quién paga el servicio, la central o el franquiciado?</summary><div><p>Cada sede tiene su pack mensual y su monedero prepago, y paga lo que usa. La central ve el consumo de toda la red en el panel.</p></div></details>
+<details class="bxq"><summary>¿Cómo se empieza?</summary><div><p>Con un diagnóstico y, después, un piloto de pago de 30 a 60 días en 2 a 5 sedes propias, con criterios de éxito por escrito. Si se cumplen, se despliega por oleadas.</p></div></details>
+</div>
+
+<p class="bxsrc">Fuente: panel de NexGent de un centro de Hello Nails. Recordatorios del 18 de octubre al 16 de noviembre de 2026; llamadas con IA del 27 de octubre al 16 de noviembre de 2026 (21 días). La red tiene más de 230 centros en España.</p>
