@@ -15,6 +15,7 @@
 - [IA para franquicias](https://nexgent.io/ia-para-franquicias): cómo atiende Nexi a toda una red, pack, piloto y preguntas frecuentes.
 - [IA para centros de estética](https://nexgent.io/centros-de-estetica): WhatsApp, llamadas y recordatorios para cadenas de estética y uñas, con el caso real.
 - [IA para clínicas dentales](https://nexgent.io/clinicas-dentales): teléfono, WhatsApp y recordatorios para redes de clínicas dentales; urgencias y temas clínicos pasan al equipo.
+- [NexGent 3D](https://nexgent.io/empresa-3d): plataforma que muestra cualquier empresa en 3D y en directo, con un equipo de agentes de IA que trabaja 24/7 y con los que se habla por texto y voz.
 - [Blog](https://nexgent.io/blog): casos de éxito, franquicias, WhatsApp e IA, voz e IA, atención al cliente y guías.
 
 ## Artículos
