@@ -347,8 +347,7 @@ def landing_body(l):
     words = l.get("marquee") or ["WhatsApp 24/7", "Llamadas con voz IA", "Citas en la agenda", "Recordatorios", "Cambios y anulaciones", "Panel de la central", "API oficial de WhatsApp", "Cada sede con su número"]
     track = "".join(f"<span>{esc(w)}</span>" for w in words) * 2
     mq = f'<section class="lmq" aria-hidden="true"><div class="marquee"><div class="marquee__track">{track}</div></div></section>\n'
-    body = l["body"].replace("section-light", "section-dk")
-    body = body.replace('<section class="section-dk lnd">', '<section class="section-dk lnd lnd--split">', 1)
+    body = l["body"].replace('<section class="section-light lnd">', '<section class="section-light lnd lnd--split">', 1)
     cut = body.find("</section>")
     first, rest = (body[:cut + 10], body[cut + 10:]) if cut >= 0 else ("", body)
     return f"""<header class="lhero">

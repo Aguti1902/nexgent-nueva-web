@@ -58,6 +58,14 @@
     hero.addEventListener('pointerleave', () => { phone.style.transform = ''; $$('.lchip').forEach(c => c.style.translate = ''); });
   }
 
+  /* ---------- Secciones claras: esquinas redondeadas donde empiezan y acaban ---------- */
+  const main = $('.bx--lnd');
+  const isLight = el => el && el.classList && el.classList.contains('section-light');
+  $$('.section-light', main).forEach(sec => {
+    if (!isLight(sec.previousElementSibling)) sec.classList.add('lt-top');
+    if (!isLight(sec.nextElementSibling)) sec.classList.add('lt-bot');
+  });
+
   if (!G || !ST || reduce) { $$('.lrv').forEach(e => e.classList.add('in')); return; }
   G.registerPlugin(ST);
 
@@ -142,6 +150,12 @@
   /* ---------- Llamada final: el titular entra palabra a palabra ---------- */
   const cta = $('.bxcta h2');
   if (cta) G.from(cta, { y: 60, opacity: 0, scale: .96, duration: 1.3, ease: 'expo.out', scrollTrigger: { trigger: cta, start: 'top 85%', once: true } });
+
+  /* ---------- Las secciones claras suben como una hoja (solo ordenador) ---------- */
+  if (!mobile) $$('.section-light.lt-top', main).forEach(sec => {
+    sec.classList.add('lsheet');
+    G.fromTo(sec, { scale: .93, y: 60 }, { scale: 1, y: 0, ease: 'none', scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top 25%', scrub: true } });
+  });
 
   addEventListener('load', () => ST.refresh());
 })();
