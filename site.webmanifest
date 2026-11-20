@@ -1,0 +1,15 @@
+{
+  "name": "NexGent · IA para redes de franquicias",
+  "short_name": "NexGent",
+  "description": "Nexi atiende las llamadas y el WhatsApp de cada sede de una red de franquicias 24/7.",
+  "lang": "es-ES",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {"src": "/assets/img/favicon.png", "sizes": "256x256", "type": "image/png"},
+    {"src": "/assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png"}
+  ]
+}

@@ -109,6 +109,9 @@ def git_date(path):
     except Exception:
         return None
 CAT = {c["slug"]: c for c in CATS}
+# Regla del cliente (19/11): su nombre y sus cifras no se usan para vender. Estos artículos no salen en
+# «Sigue leyendo» ni en la home (siguen en /blog y en su categoría). La home tampoco muestra casos de éxito.
+NO_PROMO = {"caso-hello-nails-ia-red-de-franquicias"}
 
 
 def esc(s):
@@ -180,17 +183,17 @@ FOOT = """<footer class="footer">
   <div class="container">
     <div class="footer__top">
       <div>
-        <img class="footer__logo" src="/assets/img/logo-nexgent-blanco.png" alt="NexGent" width="168" height="42">
+        <img class="footer__logo" src="/assets/img/logo-nexgent-blanco.png" alt="NexGent" width="168" height="42" loading="lazy" decoding="async">
         <p class="footer__claim">IA que atiende a los clientes de las redes de franquicias. Por WhatsApp y por teléfono, en todas las sedes.</p>
       </div>
       <a href="/#contacto" class="btn btn--grad magnetic">Solicitar diagnóstico</a>
     </div>
     <div class="footer__grid">
-      <div><h4>Empresa</h4><a href="/#nosotros">Sobre nosotros</a><a href="/#caso">Caso de éxito</a><a href="/#como-trabajamos">Cómo trabajamos</a><a href="/blog">Blog</a><a href="/empresa-3d">NexGent 3D</a></div>
-      <div><h4>Blog</h4>__CATLINKS__</div>
+      <div><p class="footer__h">Empresa</p><a href="/#nosotros">Sobre nosotros</a><a href="/#caso">Por qué NexGent</a><a href="/#como-trabajamos">Cómo trabajamos</a><a href="/blog">Blog</a><a href="/empresa-3d">NexGent 3D</a></div>
+      <div><p class="footer__h">Blog</p>__CATLINKS__</div>
       __LANDFOOT__
-      <div><h4>Contacto</h4><a href="/#contacto">Solicitar diagnóstico</a><a href="https://wa.me/34684486647">WhatsApp</a><a href="https://www.linkedin.com/company/nexgentai">LinkedIn</a><a href="https://www.instagram.com/nexgentai">Instagram</a></div>
-      <div><h4>Legal</h4><a href="/legal#aviso-legal">Aviso legal</a><a href="/legal#privacidad">Privacidad</a><a href="/legal#cookies">Cookies</a></div>
+      <div><p class="footer__h">Contacto</p><a href="/#contacto">Solicitar diagnóstico</a><a href="https://wa.me/34684486647">WhatsApp</a><a href="https://www.linkedin.com/company/nexgentai">LinkedIn</a><a href="https://www.instagram.com/nexgentai">Instagram</a></div>
+      <div><p class="footer__h">Legal</p><a href="/legal#aviso-legal">Aviso legal</a><a href="/legal#privacidad">Privacidad</a><a href="/legal#cookies">Cookies</a></div>
     </div>
     <div class="footer__bottom"><p>© 2026 NEXGENT AI SYSTEMS, S.L. · NIF B22534564 · Calle Julio Verne 12, 18210 Peligros (Granada)</p><p>Hecho en Granada</p></div>
   </div>
@@ -213,7 +216,7 @@ def cover_html(p, eager=False):
 def landfoot():
     if not LANDINGS:
         return ""
-    return "<div><h4>Soluciones</h4>" + "".join(f'<a href="/{l["slug"]}">{esc(l["nav"])}</a>' for l in LANDINGS) + "</div>"
+    return '<div><p class="footer__h">Soluciones</p>' + "".join(f'<a href="/{l["slug"]}">{esc(l["nav"])}</a>' for l in LANDINGS) + "</div>"
 
 
 def seo_desc(p):
@@ -254,6 +257,7 @@ def page(title, description, canonical, body, jsonld=None, og_type="website", im
 <link rel="alternate" type="application/rss+xml" title="Blog de NexGent" href="/blog/feed.xml">
 <link rel="icon" type="image/png" href="/assets/img/favicon.png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
@@ -331,7 +335,7 @@ def landing_body(l):
             msgs.append(f'<div class="msg msg--sys" style="--i:{i}">{esc(txt)}</div>')
         else:
             msgs.append(f'<div class="msg msg--{"in" if kind == "in" else "out"}" style="--i:{i}">{esc(txt)}<time>{esc(t)}</time></div>')
-    kpis = l.get("kpis") or [["24/7", "WhatsApp y teléfono de cada sede"], ["3 s", "en responder, de día o de noche"], ["71 %", "de citas confirmadas por WhatsApp"]]
+    kpis = l.get("kpis") or [["24/7", "WhatsApp y teléfono de cada sede"], ["3 s", "en responder, de día o de noche"], ["230 €", "al mes por sede, todo incluido"]]
     kp = "".join(f"<div><b>{esc(a)}</b><span>{esc(b)}</span></div>" for a, b in kpis)
     chip_a = l.get("chipA") or ["Respuesta en 3 s", "con el centro cerrado"]
     chip_b = l.get("chipB") or ["Cita confirmada", "directa en la agenda"]
@@ -340,7 +344,7 @@ def landing_body(l):
     band = ""
     if (ROOT / img.lstrip("/")).exists():
         band = f"""<section class="lband" aria-label="{esc(sc.get('kicker', 'Fuera de horario'))}">
-  <img src="{img}" alt="{esc(sc.get('alt', ''))}" loading="eager" fetchpriority="low" decoding="async" width="1536" height="1024">
+  <img src="{img}" alt="{esc(sc.get('alt', ''))}" loading="lazy" decoding="async" width="1536" height="1024">
   <div class="container"><div class="lband__in">
     <p class="kicker">{esc(sc.get('kicker', 'Fuera de horario'))}</p>
     <h2>{sc.get('titulo', 'Tu centro cierra. <span class="grad">Tus clientes, no.</span>')}</h2>
@@ -421,9 +425,10 @@ def build():
     # Artículos
     for p in posts:
         c = CAT[p["category"]]
-        related = [q for q in posts if q["slug"] != p["slug"] and q["category"] == p["category"]][:3]
+        pool = [q for q in posts if q["slug"] != p["slug"] and q["slug"] not in NO_PROMO]
+        related = [q for q in pool if q["category"] == p["category"]][:3]
         if len(related) < 3:
-            related += [q for q in posts if q["slug"] != p["slug"] and q not in related][: 3 - len(related)]
+            related += [q for q in pool if q not in related][: 3 - len(related)]
         ld = {"@context": "https://schema.org", "@type": "BlogPosting", "headline": p["title"], "description": p["description"],
               "datePublished": p["date"], "dateModified": p.get("updated", p["date"]), "inLanguage": "es-ES",
               "author": {"@type": "Organization" if p["author"].startswith("Equipo") else "Person", "name": p["author"]},
@@ -444,7 +449,7 @@ def build():
     <h1 class="bxah__title">{esc(p['title'])}</h1>
     <p class="bxah__lead">{esc(p['description'])}</p>
     <div class="bxah__meta">
-      <span class="bxauthor"><img src="/assets/img/favicon.png" alt="" width="40" height="40"><span><b>{esc(p['author'])}</b><small><time datetime="{p['date']}">{fecha(p['date'])}</time> · {p['minutes']} min de lectura</small></span></span>
+      <span class="bxauthor"><img src="/assets/img/favicon.png" alt="" width="40" height="40" loading="lazy"><span><b>{esc(p['author'])}</b><small><time datetime="{p['date']}">{fecha(p['date'])}</time> · {p['minutes']} min de lectura</small></span></span>
       <span class="bxshare" data-url="{share_url}" data-title="{esc(p['title'])}">
         <a class="bxshare__b" href="https://www.linkedin.com/sharing/share-offsite/?url={share_url}" target="_blank" rel="noopener" aria-label="Compartir en LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.86-3.06-1.87 0-2.15 1.46-2.15 2.96V21H9z"/></svg></a>
         <a class="bxshare__b" href="https://wa.me/?text={html.escape(p['title'], quote=True)}%20{share_url}" target="_blank" rel="noopener" aria-label="Compartir por WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg></a>
@@ -474,7 +479,7 @@ def build():
     <a href="/#contacto" class="btn btn--grad magnetic">Solicitar diagnóstico</a>
   </div>
 </section>
-{"<section class='bxrel'><div class='container'><div class='bxrel__head'><h2>Sigue leyendo</h2><a href='/blog'>Ver todo el blog →</a></div><div class='bxgrid'>" + "".join(card(q) for q in related) + "</div></div></section>" if related else ""}"""
+{'<section class="bxrel"><div class="container"><div class="bxrel__head"><h2>Sigue leyendo</h2><a href="/blog">Ver todo el blog →</a></div><div class="bxgrid">' + "".join(card(q) for q in related) + "</div></div></section>" if related else ""}"""
         lds = [ld, crumbs]
         faqs = re.findall(r'<details class="bxq"><summary>(.*?)</summary>(.*?)</details>', p["body"], re.S)
         if faqs:
@@ -522,7 +527,7 @@ def build():
     # Home: últimos 3
     idx = ROOT / "index.html"
     s = idx.read_text(encoding="utf-8")
-    latest = "".join(f'<a class="post spot reveal" href="/blog/{p["slug"]}">{cover_html(p)}<span class="chip chip--dark">{esc(CAT[p["category"]]["name"])}</span><h3>{esc(p["title"])}</h3></a>' for p in posts[:3])
+    latest = "".join(f'<a class="post spot reveal" href="/blog/{p["slug"]}">{cover_html(p)}<span class="chip chip--dark">{esc(CAT[p["category"]]["name"])}</span><h3>{esc(p["title"])}</h3></a>' for p in [q for q in posts if q["category"] != "casos-de-exito" and q["slug"] not in NO_PROMO][:3])
     if "<!-- blog:latest -->" in s:
         s = re.sub(r"<!-- blog:latest -->.*?<!-- /blog:latest -->", lambda m: f"<!-- blog:latest -->{latest}<!-- /blog:latest -->", s, flags=re.S)
         idx.write_text(s, encoding="utf-8")
@@ -545,7 +550,7 @@ def build():
             lds.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
                 {"@type": "Question", "name": strip(q), "acceptedAnswer": {"@type": "Answer", "text": strip(a)}} for q, a in faqs]})
         body = landing_body(l)
-        img = f"/assets/img/landings/{l['slug']}.jpg"
+        img = f"/assets/img/landings/{l['slug']}-og.jpg"  # 1200×630 para redes
         (ROOT / f"{l['slug']}.html").write_text(page(l["title"], l["description"], f"/{l['slug']}", body, lds,
             image=img if (ROOT / img.lstrip("/")).exists() else None, main_cls="bx bx--lnd",
             extra_css=f'<link rel="stylesheet" href="/assets/css/landing.css?v={V}">\n'), encoding="utf-8")
