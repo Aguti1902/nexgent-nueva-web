@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css?v=2ad75042">
+<link rel="stylesheet" href="/assets/css/style.css?v=aa59017b">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Organization","name":"NEXGENT AI SYSTEMS, S.L.","alternateName":"NexGent","url":"https://www.nexgent.io","taxID":"B22534564","address":{"@type":"PostalAddress","streetAddress":"Calle Julio Verne 12","postalCode":"18210","addressLocality":"Peligros","addressRegion":"Granada","addressCountry":"ES"},"logo":"https://www.nexgent.io/assets/img/logo-nexgent.png","telephone":"+34684486647","contactPoint":{"@type":"ContactPoint","telephone":"+34684486647","contactType":"sales","areaServed":"ES","availableLanguage":"es"},"description":"NexGent desarrolla Nexi, una IA que atiende por WhatsApp y por teléfono a los clientes de cada sede de una red de franquicias, 24/7.","knowsAbout":["IA para franquicias","recepcionista virtual con IA","agente de voz IA","API de WhatsApp Business","recordatorios de citas por WhatsApp"],"sameAs":["https://www.linkedin.com/company/nexgentai","https://www.instagram.com/nexgentai"]}
 </script>
@@ -388,13 +388,13 @@
     <p class="kicker kicker--dark">Calcula lo que pierde tu red</p>
     <h2 class="h2 h2--dark reveal">Cada mensaje sin respuesta<br>es una cita que no llega.</h2>
     <div class="calc__box reveal">
-      <form class="calc__inputs" id="calcForm" onsubmit="return false">
-        <label>Sedes de la red <output id="o_sedes">120</output><input type="range" id="sedes" min="5" max="500" step="5" value="120"></label>
-        <label>Contactos al mes por sede <output id="o_contactos">600</output><input type="range" id="contactos" min="50" max="3000" step="50" value="600"></label>
-        <label>% que hoy se queda sin respuesta <output id="o_perdidos">15 %</output><input type="range" id="perdidos" min="1" max="50" step="1" value="15"></label>
-        <label>% de esos contactos que acabaría en cita <output id="o_conv">40 %</output><input type="range" id="conv" min="5" max="90" step="5" value="40"></label>
-        <label>Ticket medio (€) <output id="o_ticket">35 €</output><input type="range" id="ticket" min="10" max="300" step="5" value="35"></label>
-      </form>
+      <div class="calc__inputs" id="calcForm" role="group" aria-label="Datos de tu red">
+        <div class="calc__field"><label for="sedes">Sedes de la red</label> <output id="o_sedes" for="sedes">120</output><input type="range" id="sedes" min="5" max="500" step="5" value="120"></div>
+        <div class="calc__field"><label for="contactos">Contactos al mes por sede</label> <output id="o_contactos" for="contactos">600</output><input type="range" id="contactos" min="50" max="3000" step="50" value="600"></div>
+        <div class="calc__field"><label for="perdidos">% que hoy se queda sin respuesta</label> <output id="o_perdidos" for="perdidos">15 %</output><input type="range" id="perdidos" min="1" max="50" step="1" value="15"></div>
+        <div class="calc__field"><label for="conv">% de esos contactos que acabaría en cita</label> <output id="o_conv" for="conv">40 %</output><input type="range" id="conv" min="5" max="90" step="5" value="40"></div>
+        <div class="calc__field"><label for="ticket">Ticket medio (€)</label> <output id="o_ticket" for="ticket">35 €</output><input type="range" id="ticket" min="10" max="300" step="5" value="35"></div>
+      </div>
       <div class="calc__out">
         <small>Ventas que tu red podría recuperar</small>
         <div class="calc__big"><span id="r_mes">0 €</span><em>al mes</em></div>
@@ -505,7 +505,7 @@
 <script src="/assets/vendor/gsap.min.js"></script>
 <script src="/assets/vendor/ScrollTrigger.min.js"></script>
 <script src="/assets/vendor/lenis.min.js"></script>
-<script src="/assets/js/main.js?v=2ad75042"></script>
-<script type="module" src="/assets/js/three-scenes.js?v=2ad75042"></script>
+<script src="/assets/js/main.js?v=aa59017b"></script>
+<script type="module" src="/assets/js/three-scenes.js?v=aa59017b"></script>
 </body>
 </html>
