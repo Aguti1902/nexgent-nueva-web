@@ -342,9 +342,13 @@ def landing_body(l):
     sc = l.get("escena") or {}
     img = f"/assets/img/landings/{l['slug']}.jpg"
     band = ""
+    # Versiones WebP (768 y 1536 px) para que el móvil no descargue la foto grande; el JPG queda de reserva
+    w768, w1536 = img[:-4] + "-768.webp", img[:-4] + "-1536.webp"
+    srcset = (f' srcset="{w768} 768w, {w1536} 1536w" sizes="100vw"'
+              if (ROOT / w768.lstrip("/")).exists() and (ROOT / w1536.lstrip("/")).exists() else "")
     if (ROOT / img.lstrip("/")).exists():
         band = f"""<section class="lband" aria-label="{esc(sc.get('kicker', 'Fuera de horario'))}">
-  <img src="{img}" alt="{esc(sc.get('alt', ''))}" loading="lazy" decoding="async" width="1536" height="1024">
+  <img src="{img}"{srcset} alt="{esc(sc.get('alt', ''))}" loading="lazy" decoding="async" width="1536" height="1024">
   <div class="container"><div class="lband__in">
     <p class="kicker">{esc(sc.get('kicker', 'Fuera de horario'))}</p>
     <h2>{sc.get('titulo', 'Tu centro cierra. <span class="grad">Tus clientes, no.</span>')}</h2>
@@ -514,7 +518,13 @@ def build():
 
     (ROOT / "blog.html").write_text(page("Blog de NexGent: IA, WhatsApp y voz para franquicias", "Casos de éxito, franquicias, WhatsApp e IA de voz: ideas con datos reales para que ninguna sede de tu red de franquicias deje a un cliente sin respuesta.", "/blog", listing(None), {"@context": "https://schema.org", "@type": "Blog", "name": "Blog de NexGent", "url": f"{SITE}/blog", "inLanguage": "es-ES"}), encoding="utf-8")
     for c in CATS:
-        (OUT / "categoria" / f"{c['slug']}.html").write_text(page(c.get("seoTitle") or f"{c['name']} · Blog de NexGent", c["description"], f"/blog/categoria/{c['slug']}", listing(c["slug"])), encoding="utf-8")
+        (OUT / "categoria" / f"{c['slug']}.html").write_text(page(c.get("seoTitle") or f"{c['name']} · Blog de NexGent", c["description"], f"/blog/categoria/{c['slug']}", listing(c["slug"]),
+            [{"@context": "https://schema.org", "@type": "CollectionPage", "name": c.get("seoTitle") or f"{c['name']} · Blog de NexGent",
+              "description": c["description"], "url": f"{SITE}/blog/categoria/{c['slug']}", "inLanguage": "es-ES",
+              "isPartOf": {"@type": "Blog", "name": "Blog de NexGent", "url": f"{SITE}/blog"}},
+             {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+              {"@type": "ListItem", "position": 1, "name": "Blog", "item": f"{SITE}/blog"},
+              {"@type": "ListItem", "position": 2, "name": c["name"], "item": f"{SITE}/blog/categoria/{c['slug']}"}]}]), encoding="utf-8")
 
     # Versión de estilos y scripts en las páginas de la raíz (evita cachés antiguas)
     for f in ("index.html", "legal.html", "404.html", "empresa-3d.html"):
