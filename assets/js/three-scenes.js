@@ -30,6 +30,12 @@ function fibSphere(n, r = 1) {
   }
   return a;
 }
+// Sin GPU (render por software): mismas escenas, menos fotogramas para no bloquear el hilo principal
+function softGL(renderer) {
+  try { const gl = renderer.getContext(), ext = gl.getExtension('WEBGL_debug_renderer_info');
+    return /swiftshader|llvmpipe|softpipe|software/i.test(ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER)); }
+  catch (e) { return false; }
+}
 function visible(el, cb) {
   const io = new IntersectionObserver(([e]) => cb(e.isIntersecting), { rootMargin: '100px' });
   io.observe(el);
@@ -42,6 +48,7 @@ function visible(el, cb) {
   try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' }); }
   catch (e) { return; }
   renderer.setPixelRatio(DPR);
+  const minDt = softGL(renderer) ? 100 : 0; let last = 0;
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(40, 1, .1, 100);
   camera.position.set(0, 0, 7.2);
@@ -129,7 +136,9 @@ function visible(el, cb) {
   visible(canvas, v => { const was = on; on = v; if (on && !was) loop(); });
   function loop() {
     if (!on) return;
-    const t = (performance.now() - t0) / 1000;
+    const now = performance.now();
+    if (minDt && !reduce && now - last < minDt) { requestAnimationFrame(loop); return; } last = now;
+    const t = (now - t0) / 1000;
     uniforms.uTime.value = reduce ? 4 : t;
     const sp = Math.min(1, Math.max(0, scrollY / (innerHeight * .9)));
     uniforms.uScroll.value += (sp - uniforms.uScroll.value) * .12;
@@ -151,6 +160,7 @@ const LAND = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   let renderer;
   try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch (e) { return; }
   renderer.setPixelRatio(DPR);
+  const minDt = softGL(renderer) ? 100 : 0; let last = 0;
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, 1, .1, 100); camera.position.set(0, 0, 6.4);
   const tilt = new THREE.Group(), spin = new THREE.Group(); tilt.add(spin); scene.add(tilt);
@@ -252,7 +262,9 @@ const LAND = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   visible(canvas, v => { const was = on; on = v; if (on && !was) loop(); });
   function loop() {
     if (!on) return;
-    const t = (performance.now() - t0) / 1000; uT.value = t;
+    const now = performance.now();
+    if (minDt && !reduce && now - last < minDt) { requestAnimationFrame(loop); return; } last = now;
+    const t = (now - t0) / 1000; uT.value = t;
     if (drag === null) { velY *= .94; offY += velY; offY *= .985; }
     spin.rotation.y = baseY + (reduce ? 0 : Math.sin(t * .15) * .35) + offY;
     const cycle = 6.5;
