@@ -1,0 +1,94 @@
+<!--meta
+{"title": "Cuánto cuesta un bot de WhatsApp para empresas (y qué incluye el precio)", "seoTitle": "Cuánto cuesta un bot de WhatsApp para empresas", "description": "Qué pagas por un bot de WhatsApp: lo que cobra Meta por mensaje, lo que cobra el proveedor y la puesta en marcha, y cómo calcularlo por sede en una red.", "category": "guias", "date": "2026-11-20", "author": "Equipo NexGent", "cover": "pi6", "keywords": ["cuánto cuesta un bot de WhatsApp", "precio bot WhatsApp empresas", "precio API WhatsApp Business", "coste chatbot WhatsApp", "bot de WhatsApp para franquicias"]}
+-->
+<p>«¿Cuánto cuesta un bot de WhatsApp?» es una de las primeras preguntas que se hace la central de una red cuando se plantea atender a sus clientes con IA. La respuesta corta es que depende: el precio suma tres cosas distintas que suelen presentarse mezcladas.</p>
+<p>Esta guía separa esas tres partes y propone cómo calcular el coste sede por sede, que es como lo mira una red de franquicias.</p>
+
+<div class="bxkey">
+<p>En 30 segundos</p>
+<ul>
+<li>El precio tiene <strong>tres capas</strong>: lo que cobra Meta por mensaje, lo que cobra el proveedor del bot y la puesta en marcha.</li>
+<li>Desde el 1 de julio de 2025 Meta <strong>cobra por mensaje de plantilla</strong>; las respuestas dentro de las 24 horas siguientes al mensaje del cliente son gratis.</li>
+<li>En una red, la cifra que importa es el <strong>coste por sede y al mes</strong>, con el consumo medido en cada sede.</li>
+<li>Antes de firmar, pide que el proveedor diga por escrito <strong>qué incluye y qué pasa con lo que se consume de más</strong>.</li>
+</ul>
+</div>
+
+<h2>Las tres capas del precio de un bot de WhatsApp</h2>
+<p>Cuando un proveedor da una cifra, conviene preguntar a cuál de estas capas corresponde:</p>
+<ol>
+<li><strong>Los mensajes de WhatsApp.</strong> Las empresas que usan la API oficial de WhatsApp Business pagan a Meta según los mensajes que envían. Esta parte la cobra Meta directamente o la repercute el proveedor.</li>
+<li><strong>La plataforma o el bot.</strong> El software que entiende lo que escribe el cliente, responde, consulta la agenda y deja todo registrado. Es lo que cobra el proveedor, normalmente cada mes.</li>
+<li><strong>La puesta en marcha.</strong> Conectar el bot con la agenda o el CRM, dar de alta los números, preparar y aprobar las plantillas y ajustar las respuestas a cada tipo de servicio.</li>
+</ol>
+<p>Sin separarlas, un presupuesto puede parecer barato solo porque no incluye los mensajes de Meta.</p>
+
+<h2>Lo que cobra Meta: precio por mensaje</h2>
+<p>Si el bot funciona sobre la <a href="/blog/api-oficial-whatsapp-business">API oficial de WhatsApp Business</a> (la vía autorizada para empresas), Meta aplica su propia tarifa. Según su <a href="https://developers.facebook.com/docs/whatsapp/pricing" target="_blank" rel="noopener">página oficial de precios</a>, estas son las reglas que más afectan a la factura:</p>
+<ul>
+<li><strong>Se cobra por mensaje</strong> desde el 1 de julio de 2025. Antes se cobraba por conversación.</li>
+<li>Los mensajes que la empresa inicia van con <strong>plantillas aprobadas</strong>, de tres categorías: marketing, utilidad (por ejemplo, un recordatorio de cita) y autenticación (códigos de acceso).</li>
+<li><strong>Las plantillas de marketing se cobran siempre.</strong></li>
+<li>Cuando el cliente escribe, se abre una <strong>ventana de atención de 24 horas</strong>. Dentro de ella, las respuestas normales son gratis y las plantillas de utilidad también.</li>
+<li>Las <strong>plantillas de utilidad enviadas fuera de esa ventana se cobran</strong>.</li>
+<li>La tarifa depende del <strong>prefijo del país del destinatario</strong>, de la categoría y de un <strong>descuento por volumen</strong> en utilidad y autenticación que se calcula cada mes.</li>
+</ul>
+<p>Las cantidades exactas por país están en las tablas de Meta y cambian con el tiempo: consúltalas allí.</p>
+
+<h2>Lo que cobra el proveedor del bot</h2>
+<p>Aquí no hay una tarifa común. Los modelos más habituales son:</p>
+<ul>
+<li><strong>Por usuario</strong>: encaja mal en una red, porque los usuarios crecen con cada sede.</li>
+<li><strong>Por conversación o mensaje</strong>: justo, pero difícil de presupuestar sin conocer el volumen.</li>
+<li><strong>Por sede con volumen incluido</strong>: precio fijo por local, con mensajes (y minutos, si hay voz) dentro y una regla clara para el extra.</li>
+</ul>
+<p>Sea cual sea el modelo, lo que más cambia el precio es lo que hace el bot. No cuesta lo mismo uno que responde preguntas frecuentes que uno que <strong>reserva, cambia y anula citas en la agenda real</strong> de cada sede, envía recordatorios y pasa a una persona lo que no puede resolver.</p>
+
+<h2>La puesta en marcha: el coste que no sale en la tarifa</h2>
+<p>En una red de cincuenta o más sedes, la puesta en marcha es un proyecto: hay que conectar el bot con la agenda o el CRM que ya usa la red, decidir si cada sede tiene su número o hay uno central, preparar plantillas para que Meta las apruebe y definir qué casos pasan a una persona.</p>
+<p>Migrar la agenda de todas las sedes es lo que más encarece y retrasa un despliegue, así que conviene evitarlo.</p>
+
+<h2>Ejemplo: qué mensajes se pagan en una cita</h2>
+<p>Para ver cómo se reparte el coste, sigamos una cita normal en una sede, aplicando las reglas de Meta descritas arriba:</p>
+<ol>
+<li>La clienta escribe por WhatsApp para pedir hora. Se abre la ventana de 24 horas.</li>
+<li>El bot le ofrece huecos, ella elige y el bot confirma la cita. Todo ocurre dentro de la ventana: <strong>Meta no cobra esos mensajes</strong>.</li>
+<li>La cita es dentro de cinco días. El día antes, el bot le envía un recordatorio con una plantilla de utilidad. La ventana ya se cerró: <strong>ese recordatorio sí se cobra</strong>.</li>
+<li>La clienta contesta «confirmo» o pide cambiar la hora. Se abre una ventana nueva y la conversación que sigue vuelve a ser gratis.</li>
+</ol>
+<p>En un negocio de citas, el gasto en Meta lo marcan sobre todo los <strong>recordatorios</strong> y las <strong>campañas de marketing</strong>, no las conversaciones que empieza el cliente.</p>
+<p>Por eso responder al momento los mensajes que llegan fuera de horario no tiene coste de Meta, y es cuando más clientes se pierden. Lo contamos en <a href="/blog/cliente-escribe-fuera-de-horario">el cliente que escribe a las 23:47 y nadie le contesta</a>.</p>
+
+<h2>Cómo calcularlo en una red de franquicias</h2>
+<p>A la central no le sirve una cifra global: necesita el coste de cada sede y quién lo paga. Una forma ordenada:</p>
+<ol>
+<li><strong>Volumen por sede</strong>: mensajes recibidos, citas al mes y, si también se atiende el teléfono, llamadas. Las sedes grandes y las pequeñas no consumen igual.</li>
+<li><strong>Coste por sede y mes</strong>: tarifa del proveedor más mensajes de Meta (si no van incluidos), con el consumo extra aparte.</li>
+<li><strong>Quién paga</strong>: la central, el franquiciado o un reparto.</li>
+<li><strong>Qué se mide</strong>: citas reservadas por el bot, confirmaciones y huecos liberados con tiempo para volver a llenarlos, sede por sede.</li>
+</ol>
+<p>Como referencia, en NexGent el pack de Nexi cuesta <strong>230 € al mes por sede</strong> e incluye <strong>2.000 mensajes de WhatsApp y 500 minutos de llamada</strong>; lo que se usa de más se paga con un monedero prepago. Con un precio por sede, el coste de la red es fácil de calcular (sedes × tarifa) y cada franquiciado sabe lo que le corresponde. Más detalle en la página de <a href="/ia-para-franquicias">IA para redes de franquicias</a>.</p>
+
+<h2>Preguntas para hacer antes de firmar</h2>
+<ul>
+<li>¿El precio incluye los mensajes que cobra Meta o van aparte?</li>
+<li>¿Qué pasa cuando una sede supera el volumen incluido y cómo se avisa?</li>
+<li>¿Usa la API oficial de WhatsApp Business?</li>
+<li>¿Reserva en la agenda real de la sede o solo toma nota?</li>
+<li>¿Hay coste de puesta en marcha y obliga a cambiar de programa de reservas?</li>
+<li>¿La central ve los datos de cada sede en un panel?</li>
+<li>¿Se puede probar antes de desplegar en toda la red?</li>
+</ul>
+
+<h2>La forma más segura de saber cuánto le costará a tu red</h2>
+<p>El consumo real solo se conoce midiendo. Por eso proponemos empezar con un <a href="/blog/piloto-ia-red-de-franquicias">piloto de pago de 30 a 60 días en 2 a 5 sedes propias</a>, con los criterios de éxito acordados por escrito. Al acabar, la central tiene el consumo de cada sede y calcula el coste de la red con datos.</p>
+<p>Si quieres hacer ese cálculo para tu red, <a href="/#contacto">pide un diagnóstico</a> y lo vemos con tus sedes.</p>
+
+<h2>Preguntas frecuentes</h2>
+<div class="bxfaq">
+<details class="bxq"><summary>¿Cuánto cobra Meta por cada mensaje de WhatsApp?</summary><div><p>Depende del país del destinatario, de la categoría de la plantilla (marketing, utilidad o autenticación) y del volumen mensual. Las tarifas vigentes están en la página oficial de precios de WhatsApp Business de Meta.</p></div></details>
+<details class="bxq"><summary>¿Responder a un cliente por WhatsApp tiene coste?</summary><div><p>No, si se responde dentro de las 24 horas siguientes a su último mensaje. En esa ventana, las respuestas normales y las plantillas de utilidad son gratis según las reglas de Meta.</p></div></details>
+<details class="bxq"><summary>¿Los recordatorios de citas se pagan?</summary><div><p>Sí, cuando se envían fuera de la ventana de 24 horas, que es lo habitual porque se mandan días después de reservar. Son plantillas de utilidad y Meta las cobra por mensaje.</p></div></details>
+</div>
+
+<p class="bxsrc">Fuentes: reglas de cobro por mensaje, ventana de atención de 24 horas, categorías de plantillas y tramos por volumen, <a href="https://developers.facebook.com/docs/whatsapp/pricing" target="_blank" rel="noopener">Pricing on the WhatsApp Business Platform (Meta)</a>, consultada el 20 de noviembre de 2026. Precio del pack: tarifa de NexGent vigente en noviembre de 2026.</p>
