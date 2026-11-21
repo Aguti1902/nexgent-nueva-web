@@ -23,8 +23,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/style.css?v=5df0f874">
-<link rel="stylesheet" href="/assets/css/empresa-3d.css?v=5df0f874">
+<link rel="stylesheet" href="/assets/css/style.css?v=35a91331">
+<link rel="stylesheet" href="/assets/css/empresa-3d.css?v=35a91331">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Product","name":"NexGent 3D","brand":{"@type":"Organization","name":"NexGent"},"description":"Plataforma que muestra en 3D y en directo cualquier empresa, con un equipo de agentes de IA que trabaja 24/7. Se habla con los agentes por texto y voz.","url":"https://www.nexgent.io/empresa-3d","category":"Software de gestión empresarial con IA"}
 </script>
@@ -135,9 +135,9 @@
       <p class="kicker">Habla con tu empresa</p>
       <h2 class="h2 reveal" id="talkTitle">Pregunta lo que quieras.<br><span class="grad">Te responde quien lo sabe.</span></h2>
       <p class="lead reveal">Escribe o habla como lo harías con tu equipo. El agente que lleva ese tema te contesta con los datos de ahora mismo, y te lo enseña en la escena.</p>
-      <div class="e3-asks" id="e3Asks" aria-label="Preguntas de ejemplo"></div>
+      <div class="e3-asks" id="e3Asks" role="group" aria-label="Preguntas de ejemplo"></div>
     </div>
-    <div class="e3-chat" aria-label="Conversación de ejemplo">
+    <div class="e3-chat" role="group" aria-label="Conversación de ejemplo">
       <div class="e3-chat__head"><span class="e3-live"></span><b>Tu empresa</b><small>12 agentes conectados</small><span class="e3-chat__tag">Ejemplo</span></div>
       <div class="e3-chat__body" id="e3ChatBody"></div>
       <div class="e3-chat__input"><span>Pregunta algo a tu empresa…</span><button type="button" class="e3-chat__mic" id="e3Mic" aria-label="Hablar por voz (demostración)"><span class="e3-wave"><i></i><i></i><i></i><i></i><i></i></span></button></div>
@@ -226,7 +226,7 @@
       <article class="e3-card spot reveal">
         <div class="e3-viz e3-viz--sim">
           <div class="e3-sim__tabs" id="e3SimTabs" role="tablist" aria-label="Escenarios"></div>
-          <label class="e3-sim__ctl"><span id="e3SimQ">¿Y si abro los sábados por la tarde?</span><input type="range" min="0" max="4" value="2" id="e3Sim" aria-label="Cantidad"><output id="e3SimOut"></output></label>
+          <div class="e3-sim__ctl"><span id="e3SimQ">¿Y si abro los sábados por la tarde?</span><input type="range" min="0" max="4" value="2" id="e3Sim" aria-labelledby="e3SimQ"><output id="e3SimOut" for="e3Sim"></output></div>
           <div class="e3-sim__res" id="e3SimRes"></div>
           <p class="e3-sim__note">Cifras de ejemplo. En tu empresa, el simulador calcula con tus datos.</p>
         </div>
@@ -281,7 +281,7 @@
     <h2 class="h2 reveal" id="connTitle">Se conecta con<br><span class="grad">lo que ya usas.</span></h2>
     <p class="lead reveal">No cambias de herramientas. NexGent 3D lee los datos de las que ya tienes y los pone en la escena.</p>
   </div>
-  <div class="e3-marquee" aria-label="Herramientas compatibles">
+  <div class="e3-marquee" role="group" aria-label="Herramientas compatibles">
     <div class="e3-marquee__track" id="e3M1"></div>
     <div class="e3-marquee__track e3-marquee__track--rev" id="e3M2"></div>
   </div>
@@ -372,7 +372,7 @@
 <script src="/assets/vendor/gsap.min.js"></script>
 <script src="/assets/vendor/ScrollTrigger.min.js"></script>
 <script src="/assets/vendor/lenis.min.js"></script>
-<script src="/assets/js/main.js?v=5df0f874"></script>
-<script type="module" src="/assets/js/empresa-3d.js?v=5df0f874"></script>
+<script src="/assets/js/main.js?v=35a91331"></script>
+<script type="module" src="/assets/js/empresa-3d.js?v=35a91331"></script>
 </body>
 </html>
