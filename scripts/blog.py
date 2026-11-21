@@ -393,7 +393,7 @@ def landing_body(l):
       <p class="kicker">{esc(l.get('kicker', 'Nexi · IA por WhatsApp y voz'))}</p>
       <h1>{l['h1']}</h1>
       <p class="lhero__lead">{esc(l.get('lead', l['description']))}</p>
-      <div class="hero__ctas"><a href="/reunion" class="btn btn--grad magnetic">Reservar una reunión</a><a href="tel:+34684486647" class="btn btn--ghost magnetic">Llamar al 684 486 647</a></div>
+      <div class="hero__ctas"><a href="/reunion" class="btn btn--grad magnetic">Reservar una reunión</a><a href="tel:+34684486647" class="btn btn--ghost magnetic">Llamar al 684&nbsp;486&nbsp;647</a></div>
       <div class="lhero__kpis">{kp}</div>
     </div>
     <div class="lphone" aria-hidden="true">
@@ -430,6 +430,9 @@ def build():
     for p in posts:
         c = CAT[p["category"]]
         pool = [q for q in posts if q["slug"] != p["slug"] and q["slug"] not in NO_PROMO]
+        if p["category"] != "casos-de-exito":
+            # Regla del cliente: fuera de los casos, sin tarjetas con cifras del cliente
+            pool = [q for q in pool if q["category"] != "casos-de-exito"]
         related = [q for q in pool if q["category"] == p["category"]][:3]
         if len(related) < 3:
             related += [q for q in pool if q not in related][: 3 - len(related)]

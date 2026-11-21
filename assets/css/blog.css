@@ -149,7 +149,7 @@
 
 /* ---- responsive ---- */
 @media (max-width:1000px){
-  .bxread__grid{grid-template-columns:1fr;gap:40px}
+  .bxread__grid{grid-template-columns:minmax(0,1fr);gap:40px}
   .bxside{position:static;order:-1}
   .bxtoc{display:none}
   .bxmini{display:none}

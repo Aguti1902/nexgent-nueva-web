@@ -53,7 +53,7 @@
   "description": "Los clientes escriben fuera de horario. En una red de cien sedes, esos mensajes sin respuesta son una fuga silenciosa de citas. Cómo medirla sede por sede y cómo cerrarla.",
   "category": "atencion-al-cliente",
   "date": "2026-11-14",
-  "minutes": 9
+  "minutes": 10
  },
  {
   "slug": "api-oficial-whatsapp-business",

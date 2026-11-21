@@ -1,5 +1,5 @@
 <!--meta
-{"title": "Cómo es un piloto de IA en una red de franquicias", "description": "Un piloto de pago de 30 días en 3 a 5 sedes propias, con el éxito acordado por escrito. Así se prueba la IA en una red de franquicias antes de desplegarla, paso a paso.", "category": "franquicias", "date": "2026-11-14", "updated": "2026-11-19", "author": "Equipo NexGent", "cover": "pi3", "keywords": ["piloto IA franquicias", "IA para redes de franquicias", "despliegue por oleadas", "implantar IA en franquicias"], "seoDescription": "Cómo es un piloto de IA en una red de franquicias: 30 días en 3 a 5 sedes propias, criterios de éxito por escrito, qué se mide y cómo se decide."}
+{"title": "Cómo es un piloto de IA en una red de franquicias", "description": "Un piloto de pago de 30 días en 3 a 5 sedes propias, con el éxito acordado por escrito. Así se prueba la IA en una red de franquicias antes de desplegarla, paso a paso.", "category": "franquicias", "date": "2026-11-14", "updated": "2026-11-21", "author": "Equipo NexGent", "cover": "pi3", "keywords": ["piloto IA franquicias", "IA para redes de franquicias", "despliegue por oleadas", "implantar IA en franquicias"], "seoDescription": "Cómo es un piloto de IA en una red de franquicias: 30 días en 3 a 5 sedes propias, criterios de éxito por escrito, qué se mide y cómo se decide."}
 -->
 <p>Nadie debería desplegar una tecnología nueva en toda su red de golpe. Un cambio que sale mal en cien sedes a la vez se convierte en cien franquiciados enfadados y en una central que no vuelve a querer oír hablar del tema. Por eso trabajamos con pilotos de pago, en pocas sedes, con poco tiempo y con reglas claras desde el primer día.</p>
 
@@ -28,14 +28,14 @@
 <h2>3. Acordamos el éxito por escrito</h2>
 <p>Antes de empezar fijamos qué tiene que pasar para seguir. Así nadie discute al final si ha funcionado: o se cumple o no se cumple. Estos son los criterios que proponemos por defecto, y que cada red puede ajustar:</p>
 <table>
-<thead><tr><th>Criterio</th><th>Objetivo</th><th>Referencia real</th></tr></thead>
+<thead><tr><th scope="col">Criterio</th><th scope="col">Objetivo</th><th scope="col">Cómo se mide</th></tr></thead>
 <tbody>
-<tr><td>Llamadas resueltas sin una persona</td><td>Más del 70 %</td><td>85 % en un centro de una red de uñas</td></tr>
-<tr><td>Llamadas que acaban en cita</td><td>Más del 25 %</td><td>33 % en el mismo centro</td></tr>
-<tr><td>Citas confirmadas tras el recordatorio</td><td>A acordar con la red</td><td>71 % en el mismo centro</td></tr>
+<tr><td>Llamadas resueltas sin una persona</td><td>Más del 70 %</td><td>Llamadas que la IA cierra sin pasar a recepción, en el panel</td></tr>
+<tr><td>Llamadas que acaban en cita</td><td>Más del 25 %</td><td>Citas creadas en la agenda real desde la llamada</td></tr>
+<tr><td>Citas confirmadas tras el recordatorio</td><td>A acordar con la red</td><td>Respuestas de confirmación al recordatorio de WhatsApp</td></tr>
 </tbody>
 </table>
-<p>Las referencias salen de nuestros casos de éxito: <a href="/blog/caso-llamadas-ia-243-llamadas-21-dias">243 llamadas atendidas por IA en 21 días</a> y <a href="/blog/caso-recordatorios-whatsapp-71-confirmadas">1.479 citas avisadas por WhatsApp en un mes</a>.</p>
+<p>Los objetivos son un punto de partida: cada red los sube o los baja según cómo atiende hoy. Lo importante es que estén escritos antes del primer día y que se midan igual en todas las sedes del piloto.</p>
 
 <h2>4. Ponemos Nexi en marcha</h2>
 <p>Damos de alta las sedes del piloto (o conectamos su programa), conectamos WhatsApp a través de la API oficial y desviamos las llamadas a la centralita IA, manteniendo el número de siempre de cada sede. Configuramos con la red:</p>
@@ -55,7 +55,7 @@
 
 <h2>El calendario de un vistazo</h2>
 <table>
-<thead><tr><th>Momento</th><th>Qué pasa</th></tr></thead>
+<thead><tr><th scope="col">Momento</th><th scope="col">Qué pasa</th></tr></thead>
 <tbody>
 <tr><td>Antes del piloto</td><td>Diagnóstico de atención, elección de sedes y criterios de éxito por escrito</td></tr>
 <tr><td>Arranque</td><td>Alta o conexión de las sedes, WhatsApp oficial, desvío de llamadas y configuración</td></tr>
@@ -90,7 +90,7 @@
 <h2>Qué se revisa cada semana</h2>
 <p>Treinta días dan para mucho si se revisan con método. Así repartimos el trabajo durante el piloto:</p>
 <table>
-<thead><tr><th>Semana</th><th>En qué nos fijamos</th></tr></thead>
+<thead><tr><th scope="col">Semana</th><th scope="col">En qué nos fijamos</th></tr></thead>
 <tbody>
 <tr><td>1</td><td>Que todo funcione: desvíos, WhatsApp, citas guardadas en la agenda correcta. Revisamos muchas conversaciones una a una y corregimos respuestas.</td></tr>
 <tr><td>2</td><td>Tono y casos raros: preguntas que la IA no sabía responder, transferencias a recepción que sobraban o que faltaban.</td></tr>
@@ -104,14 +104,14 @@
 <p>No hace falta inventarse un retorno. Con los datos del diagnóstico, cada red puede hacer su propia cuenta para una sede:</p>
 <ol>
 <li><strong>Contactos que se pierden al mes:</strong> llamadas sin coger más mensajes sin contestar a tiempo.</li>
-<li><strong>Cuántos se recuperarían:</strong> esos contactos por el porcentaje de llamadas que acaban en cita (en nuestro caso real, 1 de cada 3).</li>
+<li><strong>Cuántos se recuperarían:</strong> esos contactos por el porcentaje de llamadas que acaban en cita (usa el que acordéis como objetivo, por ejemplo el 25 % de la tabla).</li>
 <li><strong>Lo que vale cada cita:</strong> el ticket medio de la sede.</li>
 <li><strong>Lo que vale un hueco liberado a tiempo:</strong> las cancelaciones con antelación que se pueden volver a ocupar gracias al recordatorio.</li>
 </ol>
 <p>Esa cuenta, frente a los 230 € al mes por sede del pack, es la que decide si merece la pena. Y el piloto sirve justo para cambiar las suposiciones por datos de tus propias sedes.</p>
 
 <h2>Cuánto consume una sede durante el piloto</h2>
-<p>El pack incluye <strong>2.000 mensajes de WhatsApp y 500 minutos de llamada al mes por 230 € por sede</strong>. Como referencia, en el centro de nuestro <a href="/blog/caso-llamadas-ia-243-llamadas-21-dias">caso de las 243 llamadas</a> se hablaron 285 minutos en 21 días, unos 400 al mes a ese ritmo: dentro del pack con margen. Durante el piloto se ve el consumo real de cada sede, y con ese dato se ajusta el despliegue antes de firmar el contrato de red.</p>
+<p>El pack incluye <strong>2.000 mensajes de WhatsApp y 500 minutos de llamada al mes por 230 € por sede</strong>. Para hacerte una idea antes de empezar, multiplica las llamadas que recibe una sede al mes por lo que dura una llamada de cita (suele ser poco más de un minuto). Durante el piloto se ve el consumo real de cada sede, y con ese dato se ajusta el despliegue antes de firmar el contrato de red.</p>
 
 <p><strong>Para seguir leyendo:</strong> qué exigirle a una <a href="/blog/recepcionista-virtual-ia-franquicias">recepcionista virtual con IA</a>, <a href="/blog/cliente-escribe-fuera-de-horario">qué pasa con los mensajes fuera de horario</a> y el pack y el piloto explicados en <a href="/ia-para-franquicias">IA para franquicias</a>. Para redes de clínicas, cómo sería en <a href="/clinicas-dentales">IA para clínicas dentales</a>; para cadenas de salones, en <a href="/peluquerias">IA para peluquerías</a>; y para cadenas de fitness, en <a href="/gimnasios">IA para gimnasios</a>; y para redes de fisioterapia, en <a href="/fisioterapia">IA para fisioterapia</a>.</p>
 
@@ -123,7 +123,6 @@
 <details class="bxq"><summary>¿Qué pasa si el piloto no cumple los criterios?</summary><div><p>Que lo sabes en 30 días, con datos, y decides sin haber tocado el resto de la red.</p></div></details>
 <details class="bxq"><summary>¿Se puede hacer el piloto en sedes franquiciadas?</summary><div><p>Recomendamos sedes propias, porque la central decide y ve todo sin depender de nadie. Si la red no tiene sedes propias, se buscan franquiciados que quieran participar.</p></div></details>
 <details class="bxq"><summary>¿Qué tiene que preparar la red antes del piloto?</summary><div><p>Una persona responsable en la central y otra en cada sede, la carta de servicios con duraciones y precios, las normas de cancelación y retrasos por escrito y acceso a la línea de teléfono de cada sede para configurar el desvío. La cuenta de WhatsApp Business la gestionamos con la red.</p></div></details>
-<details class="bxq"><summary>¿Cuántos minutos y mensajes gasta una sede en el piloto?</summary><div><p>Depende de su volumen. El pack incluye 2.000 mensajes de WhatsApp y 500 minutos de llamada al mes. En nuestro caso real, un centro habló 285 minutos en 21 días, unos 400 al mes a ese ritmo.</p></div></details>
+<details class="bxq"><summary>¿Cuántos minutos y mensajes gasta una sede en el piloto?</summary><div><p>Depende de su volumen. El pack incluye 2.000 mensajes de WhatsApp y 500 minutos de llamada al mes. Durante el piloto se mide el consumo real de cada sede y se ajusta antes de ampliar a la red.</p></div></details>
 </div>
 
-<p class="bxsrc">Referencias: datos del panel de NexGent de un centro de una red de uñas con más de 230 sedes (recordatorios del 18 de octubre al 16 de noviembre de 2026; llamadas del 27 de octubre al 16 de noviembre de 2026).</p>
