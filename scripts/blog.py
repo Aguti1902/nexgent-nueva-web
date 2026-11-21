@@ -168,7 +168,7 @@ NAV = """<header class="nav" id="nav">
       <a href="/#contacto">Contacto</a>
     </nav>
     <a href="/#contacto" class="btn btn--sm btn--light magnetic">Solicitar diagnóstico</a>
-    <button class="nav__burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+    <button type="button" class="nav__burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <a href="/#nosotros">Sobre nosotros</a>
