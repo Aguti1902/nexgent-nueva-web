@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>NexGent × Grupo Frutas Antonio · Acceso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--grad:linear-gradient(100deg,#b8eef2 0%,#6fcad8 40%,#3b82f6 100%);--display:"Inter Tight",-apple-system,BlinkMacSystemFont,system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#05050a;color:#f5f5f7;font-family:Inter,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{display:flex;align-items:center;justify-content:center;min-height:100svh;padding:24px;overflow:hidden;position:relative}
+.glow{position:fixed;inset:auto;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(79,179,207,.22),rgba(59,130,246,.08) 45%,transparent 70%);top:-380px;left:50%;transform:translateX(-50%);pointer-events:none;filter:blur(10px)}
+.glow.b{top:auto;bottom:-520px;opacity:.6}
+.card{position:relative;width:100%;max-width:420px;padding:40px 32px 32px;border-radius:28px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 30px 120px -30px rgba(0,0,0,.8)}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:34px;flex-wrap:wrap}
+.brand img{height:26px;width:auto}
+.brand .x{color:#6e6e73;font-size:18px}
+.brand .cli{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:-.02em}
+.brand .cli span{color:#8e8e93;font-weight:600}
+h1{font-family:var(--display);font-weight:800;font-size:34px;line-height:1.05;letter-spacing:-.04em;margin:0 0 10px}
+.g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.06em}
+p{color:#a1a1a6;font-size:15px;line-height:1.5;margin:0 0 28px}
+label{display:block;font-size:13px;color:#8e8e93;margin-bottom:8px;font-weight:500}
+.field{position:relative}
+input{width:100%;height:54px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.35);color:#fff;font:500 17px Inter,system-ui,sans-serif;padding:0 52px 0 18px;outline:none;transition:border-color .2s,box-shadow .2s;letter-spacing:.02em}
+input:focus{border-color:#6fcad8;box-shadow:0 0 0 4px rgba(111,202,216,.15)}
+.eye{position:absolute;right:8px;top:7px;width:40px;height:40px;border:0;background:none;color:#8e8e93;cursor:pointer;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.eye:hover{color:#fff}
+button.go{margin-top:16px;width:100%;height:54px;border:0;border-radius:999px;background:var(--grad);color:#05050a;font:700 16px var(--display);letter-spacing:-.01em;cursor:pointer;box-shadow:0 10px 40px -10px rgba(79,179,207,.7);transition:transform .15s,filter .15s}
+button.go:hover{filter:brightness(1.05)}
+button.go:active{transform:scale(.985)}
+.err{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;background:rgba(255,69,58,.1);border:1px solid rgba(255,69,58,.3);color:#ff8a80;font-size:14px}
+.err.on{display:block}
+.foot{margin-top:26px;font-size:12px;color:#6e6e73;text-align:center;line-height:1.5}
+@media (max-width:420px){.card{padding:32px 22px 24px;border-radius:24px}h1{font-size:29px}}
+</style>
+</head>
+<body>
+<div class="glow"></div><div class="glow b"></div>
+<main class="card">
+  <div class="brand">
+    <img src="/img/nexgent-logo.png" alt="NexGent">
+    <span class="x">×</span>
+    <span class="cli"><span>Grupo </span>Frutas Antonio</span>
+  </div>
+  <h1>Propuesta <span class="g">privada</span></h1>
+  <p>Este documento es confidencial y está preparado solo para Grupo Frutas Antonio. Introduce la contraseña que te hemos enviado.</p>
+  <form method="post" action="/login" autocomplete="off">
+    <label for="pw">Contraseña</label>
+    <div class="field">
+      <input id="pw" name="password" type="password" required autofocus autocapitalize="off" autocorrect="off" spellcheck="false">
+      <button type="button" class="eye" aria-label="Mostrar contraseña" onclick="var i=document.getElementById('pw');i.type=i.type==='password'?'text':'password'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <button class="go" type="submit">Entrar a la propuesta</button>
+    <div class="err" id="err">Contraseña incorrecta. Revísala e inténtalo de nuevo.</div>
+  </form>
+  <div class="foot">NexGent AI Systems · Barcelona</div>
+</main>
+<script>if(/[?&]e=1/.test(location.search))document.getElementById('err').classList.add('on');</script>
+</body>
+</html>

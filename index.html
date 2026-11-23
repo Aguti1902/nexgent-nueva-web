@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta NexGent para Grupo Frutas Antonio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: dark;
+  --black: #000; --ink: #1d1d1f; --ink-2: #424245; --mute: #86868b; --light: #f5f5f7;
+  --line: rgba(255,255,255,.12); --line-d: rgba(0,0,0,.08);
+  --v: #82cbd6; --c: #3b82f6;
+  --grad: linear-gradient(100deg,#b8eef2 0%,#6fcad8 40%,#3b82f6 100%);
+  --r: 28px; --ease: cubic-bezier(.22,1,.36,1);
+  --surface: #0f0f11; --surface-2: #17171a;
+  --ok: #4ade80; --warn: #f5b14c; --sub: #c4b5fd; --fruit: #f5a524;
+  --wa-bg: #0b141a; --wa-in: #202c33; --wa-out: #005c4b;
+  --display: "Inter Tight",-apple-system,BlinkMacSystemFont,"SF Pro Display",system-ui,sans-serif;
+  --text: "Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--black); color: var(--light); font-family: var(--text); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+h1, h2, h3 { font-family: var(--display); margin: 0; letter-spacing: -0.03em; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: var(--v); }
+:focus-visible { outline: 2px solid var(--v); outline-offset: 3px; border-radius: 8px; }
+.wrap { width: min(1180px, 100% - 40px); margin-inline: auto; }
+.grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.eyebrow { font-size: 15px; font-weight: 600; color: var(--mute); }
+section { padding: 110px 0; }
+h2 { font-size: clamp(34px, 5.4vw, 68px); line-height: 1.02; font-weight: 800; letter-spacing: -0.045em; margin-top: 12px; }
+.lead { color: #a1a1a6; font-size: 19px; max-width: 62ch; margin-top: 18px; }
+.light { background: var(--light); color: var(--ink); }
+.light .lead { color: var(--ink-2); }
+.small { font-size: 13px; color: var(--mute); }
+.disc { font-size: 12.5px; color: var(--mute); margin-top: 14px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 0 26px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.08); font-weight: 600; font-size: 15px; text-decoration: none; color: var(--light); transition: transform .3s var(--ease); }
+.btn.main { background: var(--grad); color: #05050a; border-color: transparent; box-shadow: 0 10px 40px -10px rgba(79,179,207,.7); }
+.btn:hover { transform: translateY(-2px); }
+.btn.sm { min-height: 42px; padding: 0 18px; font-size: 14px; }
+.btn:disabled { opacity: .45; cursor: default; transform: none; }
+@media (max-width: 640px) {
+  section { padding: 68px 0; }
+  .wrap { width: calc(100% - 32px); }
+  .lead { font-size: 17px; }
+}
+
+/* barra */
+.nav { position: fixed; inset: 0 0 auto; z-index: 50; background: rgba(0,0,0,.72); backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px); border-bottom: 1px solid rgba(255,255,255,.06); }
+.nav .wrap { display: flex; align-items: center; gap: 22px; height: 60px; }
+.nav img { height: 20px; width: auto; }
+.nav .x { color: var(--mute); margin-left: -8px; }
+.nav .cli { font-family: var(--display); font-weight: 700; white-space: nowrap; margin-left: -10px; }
+.nav .links { display: flex; gap: 26px; margin-left: auto; font-size: 14px; }
+.nav .links a { color: #d2d2d7; text-decoration: none; }
+.nav .wbtn { background: var(--light); color: #000; border-radius: 999px; padding: 0 16px; height: 36px; display: inline-flex; align-items: center; font-weight: 600; font-size: 14px; text-decoration: none; white-space: nowrap; }
+@media (max-width: 960px) { .nav .links { display: none; } .nav .wbtn { margin-left: auto; } }
+@media (max-width: 460px) { .nav .cli .g { display: none; } .nav .wrap { gap: 14px; } .nav img { height: 17px; } }
+
+/* hero con foto */
+.hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; padding: 120px 0 70px; overflow: hidden; }
+.hero .bg { position: absolute; inset: 0; }
+.hero .bg img { width: 100%; height: 100%; object-fit: cover; }
+.hero .bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.35) 35%, rgba(0,0,0,.85) 75%, #000 100%), radial-gradient(900px 500px at 20% 90%, rgba(59,130,246,.25), transparent 70%); }
+.hero .wrap { position: relative; }
+.tagpill { display: inline-flex; align-items: center; gap: 9px; border: 1px solid rgba(255,255,255,.2); background: rgba(0,0,0,.35); backdrop-filter: blur(10px); border-radius: 999px; padding: 7px 15px; font-size: 13.5px; color: #e5e5ea; }
+.tagpill i { width: 7px; height: 7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 10px var(--c); flex: none; }
+.hero h1 { font-size: clamp(44px, 7.6vw, 100px); line-height: .96; font-weight: 800; letter-spacing: -0.05em; margin-top: 22px; max-width: 13ch; }
+.rot { display: inline-block; transition: opacity .35s, transform .35s var(--ease), filter .35s; }
+.rot.out { opacity: 0; transform: translateY(14px); filter: blur(6px); }
+.hero .lead { color: #d2d2d7; }
+.acts { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+.trust { margin-top: 16px; font-size: 13px; color: #a1a1a6; }
+@media (max-width: 640px) {
+  .hero { min-height: 92svh; padding: 100px 0 44px; }
+  .acts .btn { flex: 1 1 100%; }
+}
+
+/* frase */
+.statement { position: relative; height: 220vh; padding: 0; }
+.statement .stick { position: sticky; top: 0; height: 100vh; height: 100svh; display: flex; align-items: center; padding-top: 60px; }
+.statement p { font-family: var(--display); font-weight: 800; font-size: clamp(40px, min(6vw, 10.5vh), 104px); line-height: 1.04; letter-spacing: -0.045em; margin: 0; }
+.statement .sw { color: #2c2c2e; transition: color .35s ease; }
+.statement .sw.on { color: var(--light); }
+.statement .sw.gw { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: #2c2c2e; transition: -webkit-text-fill-color .35s ease; padding-bottom: .06em; }
+.statement .sw.gw.on { -webkit-text-fill-color: transparent; }
+@media (max-width: 640px) { .statement { height: 200vh; } .statement p { font-size: clamp(34px, 10.4vw, 54px); line-height: 1.06; } }
+@media (prefers-reduced-motion: reduce) { .statement { height: auto; padding: 90px 0; } .statement .stick { position: static; height: auto; } .statement .sw { color: var(--light); } .statement .sw.gw { -webkit-text-fill-color: transparent; } }
+
+/* demo */
+.tabs { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); margin-top: 28px; width: max-content; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { border: 0; background: transparent; border-radius: 999px; padding: 10px 18px; font-size: 14px; font-weight: 500; color: #d2d2d7; white-space: nowrap; flex: none; }
+.tab[aria-selected="true"] { background: var(--light); color: #000; }
+.stage { display: grid; grid-template-columns: 360px 1fr; gap: 20px 34px; margin-top: 24px; align-items: start; }
+.ctrlrow { grid-column: 1 / -1; }
+.side { display: grid; gap: 14px; min-width: 0; }
+.ctrl { display: flex; gap: 8px; flex-wrap: wrap; }
+@media (max-width: 900px) {
+  .stage { grid-template-columns: 1fr; gap: 16px; }
+  .device { order: 1; } .side { order: 2; }
+  .ctrl { flex-wrap: nowrap; } .ctrl .btn { flex: 1; padding: 0 10px; font-size: 13.5px; }
+}
+.phone { width: 100%; max-width: 360px; height: 600px; margin-inline: auto; border-radius: 46px; background: #050505; border: 1px solid #2c2c30; padding: 10px; box-shadow: 0 40px 120px -30px rgba(59,130,246,.4); }
+.screen { height: 100%; border-radius: 37px; overflow: hidden; display: flex; flex-direction: column; background: var(--wa-bg); }
+@media (max-width: 640px) { .phone { height: 500px; border-radius: 38px; padding: 8px; } .screen { border-radius: 31px; } }
+.wa-top { display: flex; justify-content: space-between; padding: 12px 22px 0; font-size: 12px; font-weight: 600; background: #1f2c34; }
+.wa-head { display: flex; align-items: center; gap: 10px; padding: 8px 14px 10px; background: #1f2c34; }
+.wa-av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 13px; background: var(--grad); color: #05050a; flex: none; }
+.wa-head b { font-size: 14.5px; display: block; line-height: 1.2; } .wa-head small { font-size: 11.5px; color: #8696a0; }
+.wa-body { flex: 1; overflow-y: auto; padding: 12px 10px; display: flex; flex-direction: column; gap: 6px; background-image: radial-gradient(rgba(255,255,255,.025) 1px, transparent 1px); background-size: 14px 14px; scroll-behavior: smooth; }
+.hint { margin: auto; text-align: center; color: #8696a0; font-size: 13px; padding: 20px; }
+.msg { max-width: 86%; padding: 7px 10px 18px; border-radius: 10px; font-size: 13.5px; line-height: 1.4; position: relative; white-space: pre-line; animation: pop .35s var(--ease); flex: none; }
+@keyframes pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.msg .h { position: absolute; right: 8px; bottom: 3px; font-size: 10.5px; color: rgba(255,255,255,.55); }
+.msg.in { align-self: flex-start; background: var(--wa-in); border-top-left-radius: 2px; }
+.msg.out { align-self: flex-end; background: var(--wa-out); border-top-right-radius: 2px; }
+.msg.out .h::after { content: " ✓✓"; color: #53bdeb; }
+.msg .who { display: block; font-size: 11px; font-weight: 600; color: var(--v); margin-bottom: 2px; }
+.typing { align-self: flex-start; background: var(--wa-in); border-radius: 10px; padding: 10px 12px; display: flex; gap: 4px; flex: none; }
+.typing i { width: 6px; height: 6px; border-radius: 50%; background: #8696a0; animation: blink 1s infinite; }
+.typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes blink { 50% { opacity: .3; } }
+.sheet { background: #fbfaf6; color: #222; border-radius: 4px; padding: 9px 10px; font-size: 12px; line-height: 1.35; margin-bottom: 4px; white-space: normal; }
+.sheet .sh { display: flex; justify-content: space-between; font-weight: 700; border-bottom: 1px solid #ccc; padding-bottom: 4px; margin-bottom: 4px; font-size: 11px; }
+.sheet .r { display: flex; justify-content: space-between; gap: 8px; border-bottom: 1px dotted #ddd; padding: 2px 0; font-family: "Courier New", monospace; }
+.att { display: flex; gap: 8px; align-items: center; background: rgba(0,0,0,.25); border-radius: 8px; padding: 8px; margin-bottom: 4px; font-size: 12.5px; white-space: normal; }
+.att i { font-style: normal; font-size: 10px; font-weight: 700; background: #e5484d; color: #fff; border-radius: 4px; padding: 3px 5px; }
+.wa-foot { padding: 8px 10px 14px; }
+.wa-foot span { display: block; background: #2a3942; border-radius: 20px; padding: 9px 14px; font-size: 13px; color: #8696a0; }
+
+/* llamada */
+.callscreen { background: linear-gradient(180deg, #0c1418, #050607 70%); padding: 26px 16px 14px; }
+.callscreen .who2 { text-align: center; }
+.callscreen .cav { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 20px; background: #2a2a2e; }
+.callscreen h3 { font-size: 19px; margin-top: 10px; } .callscreen .clk { font-size: 13px; color: var(--mute); font-variant-numeric: tabular-nums; }
+.callscreen canvas { width: 100%; height: 80px; display: block; margin: 8px 0; }
+.ctrans { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; scroll-behavior: smooth; }
+.cl { font-size: 13.5px; line-height: 1.45; padding: 8px 11px; border-radius: 14px; background: rgba(255,255,255,.06); animation: pop .35s var(--ease); flex: none; }
+.cl b { display: block; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 1px; }
+.cl.nexi b { color: var(--v); } .cl.cli b { color: #fff; }
+.cl.sys { background: transparent; border: 1px dashed rgba(255,255,255,.18); color: var(--mute); font-size: 12px; }
+.callscreen .end { width: 52px; height: 52px; border-radius: 50%; background: #e5484d; display: grid; place-items: center; margin: 10px auto 0; font-size: 18px; flex: none; }
+
+/* panel de sistema */
+.sys { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; }
+.sys-h { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.sys-h b { font-family: var(--display); font-size: 17px; display: block; }
+.sys-h small { display: block; color: var(--mute); font-size: 12.5px; }
+.state { font-size: 12px; font-weight: 600; border-radius: 999px; padding: 4px 10px; border: 1px solid var(--line); color: var(--mute); white-space: nowrap; flex: none; }
+.state.live { color: var(--warn); border-color: rgba(245,177,76,.5); }
+.state.done { color: var(--ok); border-color: rgba(74,222,128,.5); }
+.rows .rw { display: grid; grid-template-columns: 1fr auto; gap: 2px 14px; padding: 12px 18px; border-top: 1px solid var(--line); font-size: 14.5px; animation: pop .35s var(--ease); }
+.rows .rw:first-child { border-top: 0; }
+.rw small { color: var(--mute); font-size: 12.5px; }
+.rw .q { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.rw .q small { display: block; font-weight: 400; }
+.rw .tg { grid-column: 1 / -1; justify-self: start; margin-top: 4px; }
+@media (min-width: 901px) { .rows .rw { grid-template-columns: 1fr auto 110px; align-items: start; } .rw .tg { grid-column: 2; grid-row: 1; margin-top: 2px; } .rw .q { grid-column: 3; } }
+.tg { font-size: 11.5px; font-weight: 600; border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+.tg.chk { color: #93c5fd; background: rgba(59,130,246,.14); }
+.tg.ok { color: var(--ok); background: rgba(74,222,128,.1); }
+.tg.ask { color: var(--warn); background: rgba(245,177,76,.12); }
+.tg.sub { color: var(--sub); background: rgba(167,139,250,.14); }
+.tg.doc { color: var(--v); background: rgba(130,203,214,.12); }
+.tg.pend { color: var(--fruit); background: rgba(245,165,36,.12); }
+.empty { padding: 22px 18px; color: var(--mute); font-size: 14px; }
+.toasts { display: grid; gap: 8px; }
+.toast { display: flex; gap: 10px; align-items: flex-start; background: var(--surface-2); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; font-size: 14px; animation: pop .4s var(--ease); }
+.toast i { font-style: normal; font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--v); white-space: nowrap; padding-top: 3px; }
+@media (max-width: 640px) { .toast { flex-direction: column; gap: 2px; } }
+
+/* comercial */
+.brief { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; margin-top: 24px; }
+@media (max-width: 900px) { .brief { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 22px; }
+.card h3 { font-size: 19px; }
+.cust { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; padding: 13px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
+.cust:first-of-type { border-top: 0; }
+.cust .d { color: #ff8d86; font-weight: 700; font-variant-numeric: tabular-nums; } .cust .d.up { color: var(--ok); }
+.cust p { grid-column: 1 / -1; color: #a1a1a6; font-size: 14px; }
+.spark { grid-column: 1 / -1; display: flex; gap: 3px; align-items: flex-end; height: 36px; }
+.spark i { flex: 1; background: rgba(255,255,255,.16); border-radius: 3px; }
+.spark i.l { background: #ff8d86; } .spark i.u { background: var(--v); }
+.offer { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 11px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
+.offer:first-of-type { border-top: 0; }
+.offer small { color: #a1a1a6; grid-column: 1 / -1; font-size: 13.5px; }
+
+/* franja de fotos */
+.strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.ph { position: relative; border-radius: var(--r); overflow: hidden; aspect-ratio: 4 / 5; background: #111; }
+.ph img { width: 100%; height: 100%; object-fit: cover; }
+.ph::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,.85)); }
+.ph > div { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 1; }
+.ph .k { font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--v); }
+.ph h3 { font-size: 22px; margin-top: 4px; color: #fff; }
+.ph p { font-size: 14px; color: #d2d2d7; margin-top: 4px; }
+@media (max-width: 900px) {
+  .strip { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: none; }
+  .strip::-webkit-scrollbar { display: none; }
+  .ph { scroll-snap-align: start; }
+}
+
+
+/* números */
+.pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
+.pillar { background: #fff; border: 1px solid var(--line-d); border-radius: var(--r); padding: 26px; }
+.pillar .k { font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #0e7c8b; }
+.pillar h3 { font-size: clamp(24px, 2.6vw, 30px); margin-top: 8px; letter-spacing: -0.03em; }
+.pillar ul { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 10px; }
+.pillar li { display: flex; gap: 10px; font-size: 15.5px; color: var(--ink-2); }
+.pillar li::before { content: "✓"; color: #0e7c8b; font-weight: 700; flex: none; }
+@media (max-width: 860px) { .pillars { grid-template-columns: 1fr; } }
+.calc { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; margin-top: 14px; align-items: start; }
+@media (max-width: 960px) { .calc { grid-template-columns: 1fr; } }
+.cin { background: #fff; border: 1px solid var(--line-d); border-radius: var(--r); padding: 26px; display: grid; gap: 20px; }
+.cin h3 { font-size: 21px; }
+.cin .grp { font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--mute); margin-top: 4px; }
+.fld { display: grid; gap: 8px; }
+.fld .top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.fld label { font-size: 15px; font-weight: 600; }
+.fld output { font-family: var(--display); font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fld small { font-size: 12.5px; color: var(--mute); }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 30px; background: transparent; }
+input[type=range]::-webkit-slider-runnable-track { height: 6px; border-radius: 99px; background: linear-gradient(90deg, #6fcad8 var(--p, 50%), #e5e5ea var(--p, 50%)); }
+input[type=range]::-moz-range-track { height: 6px; border-radius: 99px; background: #e5e5ea; }
+input[type=range]::-moz-range-progress { height: 6px; border-radius: 99px; background: #6fcad8; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 2px solid #0e7c8b; margin-top: -10px; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 2px solid #0e7c8b; }
+.seg2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.seg2 button { border: 1px solid var(--line-d); background: var(--light); border-radius: 14px; padding: 10px 6px; font-size: 14px; font-weight: 600; color: var(--ink); }
+.seg2 button small { display: block; font-weight: 400; font-size: 11.5px; color: var(--mute); }
+.seg2 button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.seg2 button[aria-pressed="true"] small { color: #c7c7cc; }
+.cout { background: #0b0b0d; color: var(--light); border-radius: var(--r); padding: 26px; position: sticky; top: 80px; box-shadow: 0 40px 100px -40px rgba(59,130,246,.5); }
+@media (max-width: 960px) { .cout { position: static; } }
+.cout .big { font-family: var(--display); font-weight: 800; font-size: clamp(44px, 6vw, 72px); letter-spacing: -0.05em; line-height: 1; margin-top: 8px; font-variant-numeric: tabular-nums; }
+.cout .lbl { font-size: 13px; color: #a1a1a6; }
+.cout .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+.cout .box { border: 1px solid var(--line); border-radius: 18px; padding: 14px; }
+.cout .box b { display: block; font-family: var(--display); font-size: 24px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.cout .box span { font-size: 12.5px; color: #a1a1a6; display: block; margin-top: 2px; }
+.cout .bar { height: 12px; border-radius: 99px; overflow: hidden; display: flex; margin-top: 20px; background: #1c1c1f; }
+.cout .bar i { display: block; height: 100%; transition: width .3s; }
+.cout .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px; color: #a1a1a6; margin-top: 8px; }
+.cout .legend span::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: var(--c1); }
+.cout .formula { font-size: 12.5px; color: #86868b; margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; line-height: 1.5; }
+.refs { margin-top: 14px; font-size: 12.5px; color: var(--mute); line-height: 1.6; }
+.refs a { color: #0e7c8b; }
+
+.langs2 { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+.langs2 button { border: 1px solid var(--line); background: rgba(255,255,255,.05); border-radius: 999px; padding: 7px 14px; font-size: 13.5px; color: #d2d2d7; }
+.langs2 button[aria-pressed="true"] { border-color: var(--v); color: var(--v); background: rgba(111,202,216,.1); }
+.ml { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 36px; }
+.mlc { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.mlc .lh { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--mute); }
+.mlc .lh b { color: #fff; font-family: var(--display); font-size: 16px; }
+.mlc .bub { background: var(--wa-out); border-radius: 12px 12px 2px 12px; padding: 10px 12px; font-size: 14px; line-height: 1.45; }
+.mlc .bub[dir=rtl] { border-radius: 12px 12px 12px 2px; text-align: right; }
+.mlc .who3 { font-size: 12px; color: #a1a1a6; }
+@media (max-width: 900px) { .ml { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 82%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 6px; } .ml::-webkit-scrollbar { display: none; } .mlc { scroll-snap-align: start; } }
+.dk.marq { border-color: var(--line); }
+.dk .track span::after { color: var(--v); }
+.dk .fact, .dk .num-c { background: var(--surface); border-color: var(--line); }
+.dk .fact span, .dk .num-c span { color: #a1a1a6; }
+.dk .num-c b { color: var(--light); } .dk .num-c b em { color: var(--v); }
+.dk .ticks span { background: transparent; border-color: var(--line); color: #d2d2d7; }
+.dk .lead { color: #a1a1a6; }
+.vid { margin-top: 36px; border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); background: #000; box-shadow: 0 40px 140px -40px rgba(59,130,246,.5); aspect-ratio: 16 / 9; }
+.vid video { width: 100%; height: 100%; display: block; }
+/* áreas */
+.areas { display: grid; grid-template-columns: 300px 1fr; gap: 24px; margin-top: 40px; align-items: start; }
+.alist { display: grid; gap: 4px; }
+.abtn { text-align: left; border: 1px solid transparent; background: transparent; border-radius: 14px; padding: 11px 14px; font-size: 15.5px; font-weight: 600; color: var(--ink-2); display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+.abtn span { font-size: 12px; font-weight: 600; color: var(--mute); }
+.abtn[aria-selected="true"] { background: #fff; border-color: var(--line-d); color: var(--ink); box-shadow: 0 6px 20px -12px rgba(0,0,0,.25); }
+.apanel { background: #fff; border: 1px solid var(--line-d); border-radius: var(--r); padding: 30px; min-height: 420px; }
+.apanel .k { font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #0e7c8b; }
+.apanel h3 { font-size: clamp(26px, 3vw, 36px); margin-top: 8px; letter-spacing: -0.035em; }
+.apanel > p { color: var(--ink-2); font-size: 16.5px; margin-top: 10px; max-width: 60ch; }
+.apanel ul { list-style: none; padding: 0; margin: 22px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.apanel li { background: var(--light); border-radius: 16px; padding: 14px 16px; font-size: 15px; color: var(--ink); }
+.apanel li b { display: block; font-family: var(--display); font-size: 16px; margin-bottom: 2px; }
+.apanel .ex { margin-top: 18px; border-left: 3px solid #6fcad8; padding: 4px 0 4px 14px; font-size: 15px; color: var(--ink-2); }
+.apanel .ex b { color: var(--ink); }
+@media (max-width: 900px) {
+  .areas { grid-template-columns: 1fr; gap: 14px; }
+  .alist { display: flex; overflow-x: auto; gap: 6px; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+  .alist::-webkit-scrollbar { display: none; }
+  .abtn { flex: none; border: 1px solid var(--line-d); background: #fff; border-radius: 999px; padding: 9px 15px; font-size: 14px; white-space: nowrap; }
+  .abtn span { display: none; }
+  .abtn[aria-selected="true"] { background: var(--ink); color: #fff; }
+  .apanel { padding: 22px; min-height: 0; }
+  .apanel ul { grid-template-columns: 1fr; }
+}
+
+/* dos caminos */
+.ways { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 40px; }
+.way { border-radius: var(--r); overflow: hidden; border: 1px solid var(--line); background: var(--surface); display: flex; flex-direction: column; }
+.way .top { padding: 28px 28px 0; }
+.way .tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #05050a; background: var(--light); border-radius: 999px; padding: 4px 12px; }
+.way.b .tag { background: var(--grad); }
+.way h3 { font-size: clamp(26px, 3vw, 34px); margin-top: 14px; letter-spacing: -0.035em; }
+.way > .top > p { color: #a1a1a6; font-size: 16px; margin-top: 10px; }
+.way ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
+.way li { display: flex; gap: 10px; font-size: 15px; color: #d2d2d7; }
+.way li::before { content: "✓"; color: var(--v); font-weight: 700; flex: none; }
+.way li.minus::before { content: "–"; color: var(--mute); }
+.way .bottom { margin-top: auto; padding: 22px 28px 28px; }
+.way .best { border-top: 1px solid var(--line); padding-top: 16px; font-size: 14.5px; color: #a1a1a6; }
+.way .best b { color: #fff; }
+.way.b { border-color: rgba(111,202,216,.5); background: radial-gradient(600px 300px at 80% 0%, rgba(59,130,246,.18), transparent 70%), var(--surface); }
+.mock { margin: 22px 28px 0; border: 1px solid var(--line); border-radius: 18px; background: #0a0a0c; padding: 14px; font-size: 13px; }
+.mock .mh { display: flex; gap: 6px; margin-bottom: 10px; } .mock .mh i { width: 8px; height: 8px; border-radius: 50%; background: #2c2c30; }
+.flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.flow span { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+.flow span.n { border-color: rgba(111,202,216,.6); color: var(--v); font-weight: 600; }
+.flow em { font-style: normal; color: var(--mute); }
+.mods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.mods span { border: 1px solid var(--line); border-radius: 10px; padding: 8px; text-align: center; font-size: 12.5px; }
+.mods span.ai { grid-column: 1 / -1; border-color: rgba(111,202,216,.6); background: rgba(111,202,216,.08); color: var(--v); font-weight: 600; }
+.ways-note { margin-top: 18px; font-size: 15px; color: #a1a1a6; max-width: 70ch; }
+@media (max-width: 900px) { .ways { grid-template-columns: 1fr; } .way .top { padding: 22px 22px 0; } .mock { margin: 18px 22px 0; } .way .bottom { padding: 18px 22px 22px; } }
+
+/* dirección */
+.dgrid2 { display: grid; grid-template-columns: 1.2fr 1fr; gap: 14px; margin-top: 40px; align-items: start; }
+@media (max-width: 900px) { .dgrid2 { grid-template-columns: 1fr; } }
+.panel { background: #0b0b0d; border: 1px solid var(--line); border-radius: 26px; padding: 18px; box-shadow: 0 40px 120px -40px rgba(59,130,246,.45); }
+.dtop { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.dtop b { font-family: var(--display); font-size: 17px; }
+.kpis { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+.kpi { background: #131316; border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
+.kpi small { color: var(--mute); font-size: 12.5px; } .kpi b { display: block; font-family: var(--display); font-size: 30px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.chart { background: #131316; border: 1px solid var(--line); border-radius: 16px; padding: 14px; margin-top: 10px; }
+.chart svg { width: 100%; height: 130px; display: block; }
+.blbl { display: flex; font-size: 10.5px; color: var(--mute); margin-top: 4px; } .blbl span { flex: 1; text-align: center; }
+.ask { background: var(--surface); border: 1px solid var(--line); border-radius: 26px; padding: 20px; display: grid; gap: 10px; }
+.ask .q1 { justify-self: end; background: #2a2a2e; border-radius: 18px 18px 4px 18px; padding: 10px 14px; font-size: 15px; max-width: 90%; }
+.ask .a1 { background: rgba(111,202,216,.08); border: 1px solid rgba(111,202,216,.25); border-radius: 18px 18px 18px 4px; padding: 12px 14px; font-size: 15px; color: #e5e5ea; max-width: 95%; }
+.ask .a1 b { color: #fff; }
+.ask .lbl { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--v); }
+
+/* marquesina y datos */
+.marq { padding: 40px 0; overflow: hidden; border-block: 1px solid var(--line-d); }
+.track { display: flex; gap: 40px; width: max-content; animation: marq 40s linear infinite; font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3.2vw, 40px); letter-spacing: -0.03em; white-space: nowrap; }
+.track span { display: inline-flex; align-items: center; gap: 40px; }
+.track span::after { content: "·"; color: #0e7c8b; }
+@keyframes marq { to { transform: translateX(-50%); } }
+.factsx { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; margin-top: 40px; align-items: stretch; }
+.factsx .photo { border-radius: var(--r); overflow: hidden; min-height: 340px; position: relative; }
+.factsx .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fact { background: #fff; border: 1px solid var(--line-d); border-radius: 24px; padding: 22px; }
+.fact b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(30px, 3.4vw, 44px); letter-spacing: -0.045em; line-height: 1; }
+.fact span { display: block; margin-top: 8px; color: var(--ink-2); font-size: 14.5px; }
+.src { font-size: 12.5px; color: var(--mute); margin-top: 16px; }
+@media (max-width: 900px) { .factsx { grid-template-columns: 1fr; } .factsx .photo { min-height: 220px; } }
+@media (max-width: 420px) { .facts { grid-template-columns: 1fr; } }
+
+/* piloto */
+.phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 40px; }
+.phx { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 24px; }
+.phx .num { font-family: var(--display); font-weight: 800; font-size: 40px; letter-spacing: -0.05em; color: #3a3a3e; line-height: 1; }
+.phx h3 { font-size: 21px; margin-top: 12px; } .phx .when { font-size: 13.5px; color: var(--v); margin-top: 3px; }
+.phx ul { margin: 14px 0 0; padding-left: 18px; font-size: 15px; color: #c7c7cc; display: grid; gap: 6px; }
+.phx.hl { border-color: rgba(111,202,216,.5); background: radial-gradient(400px 200px at 50% 0%, rgba(111,202,216,.16), transparent 70%), var(--surface); }
+.phx.hl .num { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@media (max-width: 980px) { .phases { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .phases { grid-template-columns: 1fr; } }
+.crit { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 14px; }
+.crit .card b { font-family: var(--display); font-size: 18px; display: block; }
+.crit .card span { font-size: 14.5px; color: #a1a1a6; display: block; margin-top: 5px; }
+@media (max-width: 900px) { .crit { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .crit { grid-template-columns: 1fr; } }
+.safe { margin-top: 14px; display: flex; gap: 16px; align-items: flex-start; }
+.safe .ic { width: 46px; height: 46px; border-radius: 16px; display: grid; place-items: center; background: rgba(111,202,216,.12); color: var(--v); font-family: var(--display); font-weight: 800; flex: none; }
+.safe p { font-size: 15.5px; color: #c7c7cc; }
+
+/* por qué */
+.nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 40px; }
+.num-c { background: #fff; border: 1px solid var(--line-d); border-radius: var(--r); padding: 28px; }
+.num-c b { display: block; font-family: var(--display); font-weight: 800; font-size: clamp(56px, 7vw, 88px); letter-spacing: -0.05em; line-height: 1; color: var(--ink); }
+.num-c b em { font-style: normal; color: #0e7c8b; }
+.num-c span { display: block; color: var(--ink-2); margin-top: 12px; font-size: 15.5px; }
+@media (max-width: 800px) { .nums { grid-template-columns: 1fr; } }
+.ticks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.ticks span { background: #fff; border: 1px solid var(--line-d); border-radius: 999px; padding: 8px 14px; font-size: 14px; color: var(--ink-2); }
+
+/* cierre */
+.final { position: relative; overflow: hidden; text-align: center; padding: 140px 0 120px; }
+.final .bg { position: absolute; inset: 0; }
+.final .bg img { width: 100%; height: 100%; object-fit: cover; }
+.final .bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, #000 0%, rgba(0,0,0,.7) 40%, rgba(0,0,0,.85) 100%); }
+.final .wrap { position: relative; }
+.final h2 { max-width: 20ch; margin-inline: auto; }
+.final .lead { margin-inline: auto; color: #d2d2d7; }
+.final .acts { justify-content: center; }
+.final .contact { margin-top: 16px; font-size: 14px; color: #a1a1a6; }
+@media (max-width: 640px) { .final { padding: 90px 0 80px; } }
+footer { border-top: 1px solid var(--line); padding: 28px 0 44px; font-size: 13px; color: var(--mute); }
+footer .wrap { display: flex; gap: 14px 24px; justify-content: space-between; flex-wrap: wrap; align-items: center; }
+footer img { height: 18px; width: auto; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap">
+  <img alt="NexGent" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAACoCAYAAAA/8FyBAAAWfmNhQlgAABZ+anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFlhqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOjhjZTFmOTVhLWU1YjktNDBlNy1hMjgyLTBlNDJmYjQzNmY5MQAAAAOTanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuGp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNoM3gHJ71djv1e9SMVR6VbUQAAAGxjYm9yo2lkYzpmb3JtYXRpaW1hZ2UvcG5namluc3RhbmNlSUR4LHhtcDppaWQ6NzA5MWZmZTktMWUxMy00YzNmLWI4NTUtMzc2NjEyM2M4OTBmbHJlbGF0aW9uc2hpcGhwYXJlbnRPZgAAAeJqdW1iAAAAQWp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuYWN0aW9ucy52MgAAAAAYYzJzaEe57ShcG4n5algKBoV/GFoAAAGZY2JvcqJnYWN0aW9uc4KiZmFjdGlvbmtjMnBhLm9wZW5lZGpwYXJhbWV0ZXJzoWtpbmdyZWRpZW50c4GiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYIOeFC1hyOQX+dd4KH6ztYKrisnFTLFp6J+LaxEy8pJgfpGZhY3Rpb254HWNvbS5hbnRocm9waWMuY2xhdWRlLnByb3ZpZGVkanBhcmFtZXRlcnOheB9jb20uYW50aHJvcGljLm9yaWdpbi1jb25maWRlbmNlZ3Vua25vd25rZGVzY3JpcHRpb254ZkNsYXVkZSBwcm92aWRlZCB0aGlzIGZpbGUgYXQgdGhlIHJlcXVlc3Qgb2YgYSB1c2VyIGFuZCBtYXkgaGF2ZSBjcmVhdGVkIG9yIG1vZGlmaWVkIHRoZSBmaWxlIGNvbnRlbnRzLm1zb2Z0d2FyZUFnZW50oWRuYW1lZkNsYXVkZXJhbGxBY3Rpb25zSW5jbHVkZWT1AAAAyGp1bWIAAABAanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5oYXNoLmRhdGEAAAAAGGMyc2gDB+fXSl5hqQLiWcHGuI4IAAAAgGNib3KlY2FsZ2ZzaGEyNTZjcGFkTQAAAAAAAAAAAAAAAABkaGFzaFggiRVSUVKj26DDRXUgfcQRgbml+hZOKOw2QSoH/4GUR8RkbmFtZW5qdW1iZiBtYW5pZmVzdGpleGNsdXNpb25zgaJlc3RhcnQYIWZsZW5ndGgZFooAAAI+anVtYgAAACdqdW1kYzJjbAARABCAAACqADibcQNjMnBhLmNsYWltLnYyAAAAAg9jYm9ypWNhbGdmc2hhMjU2aXNpZ25hdHVyZXhNc2VsZiNqdW1iZj0vYzJwYS91cm46YzJwYTo4Y2UxZjk1YS1lNWI5LTQwZTctYTI4Mi0wZTQyZmI0MzZmOTEvYzJwYS5zaWduYXR1cmVqaW5zdGFuY2VJRHgseG1wOmlpZDoyZTVkZjZmNi1hMTNmLTQzMTEtYjQ4My1hM2Q0MWVjZjQ1NjhyY3JlYXRlZF9hc3NlcnRpb25zg6JjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg54ULWHI5Bf513gofrO1gquKycVMsWnon4trETLykmB+iY3VybHgqc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5hY3Rpb25zLnYyZGhhc2hYIN6rptDj57L1rIZny7mL4Q1So8bTeR01xz6uRiE6WUfAomN1cmx4KXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaGFzaC5kYXRhZGhhc2hYIKHpQJ84vzt0dxW5I0jJF4g50ZUSo4gEJs9tSP0soLRVdGNsYWltX2dlbmVyYXRvcl9pbmZvo2RuYW1lb0FudGhyb3BpYyBGaWxlc2d2ZXJzaW9uZTEuMC4wa3NwZWNWZXJzaW9uZTIuNC4wAAAQOGp1bWIAAAAoanVtZGMyY3MAEQAQgAAAqgA4m3EDYzJwYS5zaWduYXR1cmUAAAAQCGNib3LShFkCEqIBJhghWQIKMIICBjCCAY2gAwIBAgIUQOWgCu7COdC+uIP6BkIFPWdVEwAwCgYIKoZIzj0EAwMwSTEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxLjAsBgNVBAMTJUFudGhyb3BpYyBDb250ZW50IENyZWRlbnRpYWxzIFJvb3QgQ0EwHhcNMjYwODA3MTg0MzU2WhcNMjgwODA2MTk0MzU2WjBEMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEpMCcGA1UEAxMgQW50aHJvcGljIENsYXVkZSBDb250ZW50IFNpZ25pbmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASYegpry1AYBRTVNL1CpTlbROnY3dey+UrsF9C3phYrATN3ZHf93Mo8RQN0KOUuOn19P4oWNFWe5n2/She9N7eTo1gwVjAOBgNVHQ8BAf8EBAMCB4AwFQYDVR0lBA4wDAYKKwYBBAGD6F4CATAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFM5R4gSBTmRbI/jjxM+aPpzB11zCMAoGCCqGSM49BAMDA2cAMGQCMDFzHRSeAXrSy1WOzkbhPZ6Km2wGTmZ/2gK18k8BQGXyqz88Rdrz6CTX9flAnYNVxgIwcF9c3fVhqmJKpi+UhasNUMko69cyX6STPfta3Q8EjyzDjzoyrol46FP6VFHhvUcJoWNwYWRZDZ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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">
+  <span class="x">×</span>
+  <span class="cli"><span class="g">Grupo </span>Frutas Antonio</span>
+  <div class="links"><a href="#video">Vídeo</a><a href="#demo">Demo</a><a href="#numeros">Números</a><a href="#areas">Qué puede hacer</a><a href="#caminos">Cómo lo hacemos</a><a href="#piloto">Piloto</a></div>
+  <a class="wbtn" href="#contacto">Hablemos</a>
+</div></nav>
+
+<header class="hero">
+  <div class="bg"><img src="img/hero.jpg" srcset="img/hero-s.jpg 720w, img/hero.jpg 1400w" sizes="100vw" alt="Almacén mayorista de fruta y verdura con palés de naranjas, limones, aguacates y pimientos" fetchpriority="high"></div>
+  <div class="wrap">
+    <span class="tagpill"><i></i>Propuesta para Grupo Frutas Antonio</span>
+    <h1>Una IA hecha solo para Frutas Antonio. <span class="grad rot" id="rot">Por WhatsApp.</span></h1>
+    <p class="lead">Atiende a vuestros compradores a cualquier hora, por WhatsApp y por teléfono. Coge los pedidos, arregla los problemas de palés y stock, y avisa a tiempo de lo que hay que vender antes de que se tire. Menos merma y comerciales vendiendo.</p>
+    <div class="acts">
+      <a class="btn main" href="#video">▶ Ver el vídeo</a>
+      <a class="btn" href="#numeros">Calcula vuestro ahorro</a>
+    </div>
+    <p class="trust">Empezamos con un piloto de pago de 30 días en una sola línea de venta. Seguís solo si funciona.</p>
+  </div>
+</header>
+
+<section class="statement" id="stmt"><div class="stick"><div class="wrap">
+  <p id="stmtp">No os vendemos tecnología. Os vendemos <b>menos fruta a la basura</b> y <b>comerciales que venden</b> en vez de teclear pedidos y arreglar problemas de palés. Y los números para comprobarlo.</p>
+</div></div></section>
+
+<section id="video" style="padding:40px 0 30px"><div class="wrap">
+  <div class="eyebrow">En dos minutos y medio</div>
+  <h2>Lo que NexGent puede hacer<br><span class="grad">por Grupo Frutas Antonio.</span></h2>
+  <div class="vid"><video controls playsinline preload="metadata" poster="video/poster.jpg" src="video/nexgent-frutas-antonio.mp4"></video></div>
+</div></section>
+
+<!-- DEMO -->
+<section id="demo" style="padding-top:70px"><div class="wrap">
+  <div class="eyebrow">Demo · ejemplos con datos ficticios</div>
+  <h2>Así trabaja con<br><span class="grad">vuestros compradores.</span></h2>
+  <p class="lead">Elige un ejemplo y pulsa «Reproducir». A un lado, lo que ve el cliente. Al otro, lo que entra en vuestro sistema sin que nadie lo teclee.</p>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-t="wa">Pedido de palés</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="inc">Problema con un palé</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="call">Llamada con voz 🔊</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="exp">Exportación en su idioma</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="com">El día del comercial</button>
+  </div>
+
+  <div class="langs2" id="langs2" hidden><span class="small">Idioma del importador:</span><button type="button" data-l="exp" aria-pressed="true">Francés · Lyon</button><button type="button" data-l="exp_it" aria-pressed="false">Italiano · Milán</button><button type="button" data-l="exp_en" aria-pressed="false">Inglés · Londres</button></div>
+  <div class="stage" id="stage">
+    <div class="ctrlrow"><div class="ctrl"><button class="btn sm main" id="play">▶ Reproducir</button><button class="btn sm" id="step">Paso a paso</button><button class="btn sm" id="reset">Reiniciar</button></div></div>
+    <div class="device"><div class="phone"><div class="screen" id="screen"></div></div></div>
+    <div class="side">
+      <div class="sys">
+        <div class="sys-h"><div><b id="sTitle"></b><small id="sSub"></small></div><span class="state" id="sState">Esperando</span></div>
+        <div class="rows" id="sRows"><div class="empty">Todavía no ha entrado nada.</div></div>
+      </div>
+      <div class="toasts" id="sToasts"></div>
+      <p class="disc" style="margin-top:0">Clientes, productos, stock y precios inventados para el ejemplo. En el piloto, Nexi trabaja con vuestro catálogo, vuestros clientes y vuestra tarifa real.</p>
+    </div>
+  </div>
+
+  <div id="comView" hidden>
+    <div class="brief">
+      <div class="card">
+        <h3>Buenos días, Marta. Esto es lo de hoy</h3>
+        <p class="small" style="margin:6px 0 8px">Clientes que compran menos kilos que su media de las últimas 8 semanas</p>
+        <div class="cust"><b>Cadena Fresc i Bo</b><span class="d">−34 %</span>
+          <div class="spark"><i style="height:88%"></i><i style="height:92%"></i><i style="height:85%"></i><i style="height:90%"></i><i style="height:84%"></i><i class="l" style="height:62%"></i><i class="l" style="height:55%"></i><i class="l" style="height:50%"></i></div>
+          <p>Ha dejado de pedir cítricos hace tres semanas. Puede que los compre a otro mayorista. Llamada sugerida hoy, con precio por volumen.</p></div>
+        <div class="cust"><b>Fruites Puig</b><span class="d">−18 %</span>
+          <div class="spark"><i style="height:70%"></i><i style="height:74%"></i><i style="height:72%"></i><i style="height:76%"></i><i style="height:70%"></i><i style="height:66%"></i><i class="l" style="height:58%"></i><i class="l" style="height:54%"></i></div>
+          <p>Bajada parecida en otras fruterías del mismo barrio. Seguimiento normal, sin urgencia.</p></div>
+        <div class="cust"><b>Supermercats Vallès</b><span class="d up">+21 %</span>
+          <div class="spark"><i class="u" style="height:48%"></i><i class="u" style="height:50%"></i><i class="u" style="height:55%"></i><i class="u" style="height:54%"></i><i class="u" style="height:60%"></i><i class="u" style="height:62%"></i><i class="u" style="height:66%"></i><i class="u" style="height:72%"></i></div>
+          <p>Tres semanas subiendo limón. Buen momento para ofrecer exóticos de Faszina para su sección premium.</p></div>
+      </div>
+      <div class="card">
+        <h3>Stock a rotar hoy</h3>
+        <p class="small" style="margin:6px 0 8px">Lo que hay que sacar hoy y a quién le encaja, según lo que compra cada uno</p>
+        <div class="offer"><b>Fresón · 6 palés</b><span class="tg pend">12 clientes</span><small>Entrada alta esta semana. Cadenas y fruterías que lo compran cada semana.</small></div>
+        <div class="offer"><b>Mango Palmer · 3 palés</b><span class="tg pend">8 clientes</span><small>Maduración avanzada: para venta en 1 o 2 días.</small></div>
+        <div class="offer"><b>Calabacín · 4 palés</b><span class="tg pend">15 clientes</span><small>Compradores de verdura con salida diaria.</small></div>
+        <div style="margin-top:14px;background:var(--wa-bg);border-radius:16px;padding:14px;display:flex">
+          <div class="msg out" style="max-width:100%;animation:none"><span class="who">Mensaje preparado para 12 clientes</span>Buenos días 👋 Hoy tenemos fresón con muy buena salida y precio especial por palé completo. Si te interesa para mañana, dímelo por aquí antes de las 12:00.<span class="h">07:40</span></div>
+        </div>
+        <p class="small" style="margin-top:10px">La comercial lo revisa y decide si se envía. Nada sale sin su visto bueno.</p>
+      </div>
+    </div>
+    <p class="disc">Ejemplo con clientes, cifras y stock inventados.</p>
+  </div>
+  <div style="margin-top:80px">
+    <div class="eyebrow">Exportación y proveedores</div>
+    <h2>En el idioma de cada cliente.<br><span class="grad">Y de cada proveedor.</span></h2>
+    <p class="lead">Exportáis a Francia, Italia, Reino Unido y más países, y trabajáis con proveedores de fuera. Nexi atiende a cada uno en su idioma, a cualquier hora, y vuestro equipo lo ve todo en castellano. Este es el mismo mensaje de confirmación en nueve idiomas.</p>
+    <div class="ml"><div class="mlc"><div class="lh"><b>Français</b><span>Importador · Francia</span></div><div class="bub">Commande confirmée : 2 palettes de haricots plats, départ mardi. Je vous envoie la fiche technique et le certificat GlobalG.A.P.</div></div><div class="mlc"><div class="lh"><b>Italiano</b><span>Importador · Italia</span></div><div class="bub">Ordine confermato: 2 pallet di fagiolini piatti, partenza martedì. Le invio la scheda tecnica e il certificato GlobalG.A.P.</div></div><div class="mlc"><div class="lh"><b>English</b><span>Importador · Reino Unido</span></div><div class="bub">Order confirmed: 2 pallets of flat beans, leaving on Tuesday. I’m sending you the spec sheet, the GlobalG.A.P. certificate and the customs paperwork.</div></div><div class="mlc"><div class="lh"><b>Deutsch</b><span>Importador · Alemania</span></div><div class="bub">Bestellung bestätigt: 2 Paletten flache Bohnen, Abfahrt am Dienstag. Ich schicke Ihnen das Produktdatenblatt und das GlobalG.A.P.-Zertifikat.</div></div><div class="mlc"><div class="lh"><b>Nederlands</b><span>Importador · Países Bajos</span></div><div class="bub">Bestelling bevestigd: 2 pallets platte bonen, vertrek op dinsdag. Ik stuur u de productspecificatie en het GlobalG.A.P.-certificaat.</div></div><div class="mlc"><div class="lh"><b>Português</b><span>Importador · Portugal</span></div><div class="bub">Encomenda confirmada: 2 paletes de feijão-verde largo, saída na terça-feira. Envio-lhe a ficha técnica e o certificado GlobalG.A.P.</div></div><div class="mlc"><div class="lh"><b>Polski</b><span>Importador · Polonia</span></div><div class="bub">Zamówienie potwierdzone: 2 palety fasoli płaskiej, wyjazd we wtorek. Przesyłam specyfikację produktu i certyfikat GlobalG.A.P.</div></div><div class="mlc"><div class="lh"><b>العربية</b><span>Proveedor · Marruecos</span></div><div class="bub" dir=rtl lang=ar>تم تأكيد الطلب: منصتان من الفاصوليا المسطحة، الانطلاق يوم الثلاثاء. سأرسل لك المواصفات التقنية والشهادة.</div></div><div class="mlc"><div class="lh"><b>Català</b><span>Cliente · Cataluña</span></div><div class="bub">Comanda confirmada: 2 palets de mongeta plana, sortida dimarts. T’envio la fitxa tècnica i el certificat GlobalG.A.P.</div></div></div>
+    <p class="disc">Los mensajes llegan traducidos al castellano a vuestro panel. Los precios y las condiciones de cada operación los confirma siempre vuestro comercial.</p>
+  </div>
+</div></section>
+
+<!-- FOTOS -->
+<section style="padding-top:20px"><div class="wrap">
+  <div class="strip">
+    <div class="ph"><img src="img/campo-s.jpg" alt="Campos y invernaderos al atardecer" loading="lazy"><div><div class="k">Campo</div><h3>Saber qué viene</h3><p>Previsión de cosecha de vuestras fincas cruzada con lo que van a pedir los clientes.</p></div></div>
+    <div class="ph"><img src="img/movil-s.jpg" alt="Comprador con el móvil en un almacén de fruta" loading="lazy"><div><div class="k">Venta</div><h3>Pedir como siempre</h3><p>El comprador escribe o llama como hoy. La diferencia es que siempre le contestan al momento.</p></div></div>
+    <div class="ph"><img src="img/muelle-s.jpg" alt="Camión cargando palés de fruta en un muelle al amanecer" loading="lazy"><div><div class="k">Logística</div><h3>Cargar sin llamadas</h3><p>Órdenes de carga, muelles, avisos de salida e incidencias con foto, todo en el mismo sitio.</p></div></div>
+  </div>
+</div></section>
+
+<!-- NÚMEROS -->
+<section class="light" id="numeros"><div class="wrap">
+  <div class="eyebrow">Lo que se nota en la cuenta</div>
+  <h2>Menos fruta a la basura.<br>Más horas vendiendo.</h2>
+  <p class="lead">Dos fuentes de ahorro que se pueden medir desde el primer mes. Mueve los valores con vuestros datos y mira lo que sale.</p>
+  <div class="pillars">
+    <div class="pillar"><div class="k">1 · Merma</div><h3>Vender antes de que se pase</h3>
+      <ul><li>Cada mañana, el stock que hay que sacar hoy y a qué clientes ofrecérselo</li><li>Previsión de lo que va a pedir cada cliente, para comprar más ajustado</li><li>Avisos de producto que madura antes de lo previsto</li><li>Sustituciones de calibre u origen en vez de pedidos perdidos</li></ul></div>
+    <div class="pillar"><div class="k">2 · Tiempo del equipo</div><h3>Vender en vez de arreglar</h3>
+      <ul><li>Los pedidos entran solos, sin teclear hojas ni audios</li><li>Palés que faltan, calibres cambiados y stock que no cuadra se resuelven sin llamadas</li><li>El comercial solo interviene para aprobar precios y descuentos</li><li>Cada mañana sabe a quién llamar y qué ofrecer</li></ul></div>
+  </div>
+
+  <div class="calc">
+    <div class="cin">
+      <h3>Calculadora de ahorro</h3>
+      <div class="grp">Merma</div>
+      <div class="fld"><div class="top"><label for="kg">Kilos vendidos al año</label><output id="okg"></output></div>
+        <input type="range" id="kg" min="5" max="60" step="1" value="29"><small>Vuestra web habla de más de 29 millones de kilos al año.</small></div>
+      <div class="fld"><div class="top"><label for="mer">Qué parte se tira o se malvende</label><output id="omer"></output></div>
+        <input type="range" id="mer" min="0.5" max="10" step="0.1" value="3.0"><small>Referencia: en la distribución española, la fruta y verdura que sobra es en torno al 3,2 % de las ventas.</small></div>
+      <div class="fld"><div class="top"><label for="val">Valor medio de un kilo perdido</label><output id="oval"></output></div>
+        <input type="range" id="val" min="0.3" max="3" step="0.05" value="1.00"><small>A precio de coste. Valor de ejemplo: poned el vuestro.</small></div>
+      <div class="fld"><label>Cuánto puede bajar la merma con IA</label>
+        <div class="seg2" id="red"><button type="button" data-v="10" aria-pressed="false">10 %<small>Prudente</small></button><button type="button" data-v="15" aria-pressed="true">15 %<small>Base</small></button><button type="button" data-v="20" aria-pressed="false">20 %<small>Ambicioso</small></button></div>
+        <small>En supermercados con IA de previsión se han medido bajadas de entre el 10 % y el 18 %. En un mayorista hay que comprobarlo en el piloto.</small></div>
+      <div class="grp">Tiempo del equipo</div>
+      <div class="fld"><div class="top"><label for="ppl">Comerciales y personas que pasan pedidos</label><output id="oppl"></output></div>
+        <input type="range" id="ppl" min="1" max="40" step="1" value="10"></div>
+      <div class="fld"><div class="top"><label for="hrs">Horas al día tecleando pedidos y arreglando problemas</label><output id="ohrs"></output></div>
+        <input type="range" id="hrs" min="0.5" max="6" step="0.5" value="2"><small>Por persona. Valor de ejemplo.</small></div>
+      <div class="fld"><div class="top"><label for="sav">Parte de ese tiempo que se ahorra</label><output id="osav"></output></div>
+        <input type="range" id="sav" min="10" max="80" step="5" value="50"></div>
+      <div class="fld"><div class="top"><label for="eur">Coste de una hora de trabajo</label><output id="oeur"></output></div>
+        <input type="range" id="eur" min="12" max="60" step="1" value="25"><small>Coste para la empresa. Valor de ejemplo.</small></div>
+    </div>
+    <div class="cout" aria-live="polite">
+      <div class="lbl">Ahorro estimado al año</div>
+      <div class="big grad" id="rTot">0 €</div>
+      <div class="lbl" style="margin-top:6px" id="rMes"></div>
+      <div class="bar"><i id="b1" style="background:#6fcad8"></i><i id="b2" style="background:#3b82f6"></i></div>
+      <div class="legend"><span style="--c1:#6fcad8">Merma</span><span style="--c1:#3b82f6">Tiempo del equipo</span></div>
+      <div class="row2">
+        <div class="box"><b id="rKg">0</b><span>kilos que dejan de tirarse al año</span></div>
+        <div class="box"><b id="rMer">0 €</b><span>ahorro en merma al año</span></div>
+        <div class="box"><b id="rH">0</b><span>horas liberadas al año</span></div>
+        <div class="box"><b id="rT">0 €</b><span>valor de esas horas al año</span></div>
+      </div>
+      <p class="formula">Merma: kilos × % que se pierde × valor del kilo × bajada con IA. Tiempo: personas × horas al día × % ahorrado × 250 días × coste por hora. Es una estimación con vuestros valores: en el piloto medimos los números reales.</p>
+    </div>
+  </div>
+  <p class="refs">Referencias: el sobrante de fruta y verdura en la distribución en España es del 3,2 % de las ventas (estudio de Nielsen para Checkpoint Systems, citado por <a href="https://www.alimarket.es/alimentacion/noticia/285589/frutas-y-hortalizas-son-los-alimentos-que-mas-se-desperdician">Alimarket</a>). Dos supermercados que usaron IA para sus pedidos redujeron el desperdicio un 14,8 % de media por tienda (<a href="https://pacificcoastcollaborative.org/wp-content/uploads/2022/12/PCFWC-Case-Study_AI_Final.pdf">Pacific Coast Collaborative, 2022</a>); la cadena Cub, un 18 % en frutas y verduras (<a href="https://www.techbrew.com/stories/2022/10/03/how-one-grocery-chain-used-ai-to-reduce-produce-shrink-by-18">Tech Brew</a>); McKinsey habla de bajadas de más del 10 % en mermas (<a href="https://www.mckinsey.com/industries/retail/our-insights/the-secret-to-smarter-fresh-food-replenishment-machine-learning">McKinsey</a>). Son datos de supermercados, no de mayoristas.</p>
+</div></section>
+
+<!-- ÁREAS -->
+<section class="light" id="areas"><div class="wrap">
+  <div class="eyebrow">Todo lo que puede hacer la IA</div>
+  <h2>No es un chatbot.<br>Es una IA para todo el grupo.</h2>
+  <p class="lead">Empezamos por los pedidos, que es donde más se nota. Pero la misma IA puede trabajar en cada parte de la empresa, del campo a la factura. Elige un área.</p>
+  <div class="areas">
+    <div class="alist" id="alist" role="tablist"></div>
+    <div class="apanel" id="apanel"></div>
+  </div>
+</div></section>
+
+<!-- DOS CAMINOS -->
+<section id="caminos"><div class="wrap">
+  <div class="eyebrow">Cómo lo hacemos</div>
+  <h2>Dos maneras de hacerlo.<br><span class="grad">Las dos, a vuestra medida.</span></h2>
+  <p class="lead">En los dos casos hacemos un desarrollo dedicado solo a Frutas Antonio: vuestro catálogo, vuestros clientes, vuestras tarifas y vuestra forma de trabajar. La diferencia es dónde vive la información.</p>
+  <div class="ways">
+    <div class="way">
+      <div class="top"><span class="tag">Opción A</span><h3>Nos conectamos a lo que ya usáis</h3>
+        <p>La IA trabaja encima de vuestro programa de pedidos, facturación o CRM actual. Lee de él y escribe en él.</p>
+        <ul><li>Arranque más rápido</li><li>El equipo no cambia de programa</li><li>Ideal si vuestro sistema actual os funciona bien</li><li class="minus">Lo que puede hacer la IA depende de lo que permita vuestro programa</li></ul></div>
+      <div class="mock"><div class="mh"><i></i><i></i><i></i></div><div class="flow"><span>WhatsApp y teléfono</span><em>→</em><span class="n">IA NexGent</span><em>→</em><span>Vuestro programa actual</span></div></div>
+      <div class="bottom"><p class="best"><b>Mejor si</b> estáis contentos con vuestro programa y queréis resultados cuanto antes.</p></div>
+    </div>
+    <div class="way b">
+      <div class="top"><span class="tag">Opción B</span><h3>Vuestro propio sistema, con la IA dentro</h3>
+        <p>Construimos un CRM y sistema de pedidos propio para Frutas Antonio, con la IA integrada de forma nativa desde el primer día.</p>
+        <ul><li>Clientes, catálogo, tarifas, pedidos, comerciales y panel de dirección en un solo sitio</li><li>La IA ve todo y puede hacer mucho más</li><li>Las empresas que compréis entran en el mismo sistema</li><li>Es vuestro y crece con el grupo</li><li class="minus">Más tiempo de implantación y pasar los datos del sistema actual</li></ul></div>
+      <div class="mock"><div class="mh"><i></i><i></i><i></i></div><div class="mods"><span class="ai">IA NexGent, dentro del sistema</span><span>Clientes</span><span>Catálogo</span><span>Tarifas</span><span>Pedidos</span><span>Comerciales</span><span>Dirección</span></div></div>
+      <div class="bottom"><p class="best"><b>Mejor si</b> vuestro programa se os queda corto o queréis unificar todas las empresas del grupo.</p></div>
+    </div>
+  </div>
+  <p class="ways-note">Lo decidimos juntos después de ver vuestro programa. Se puede empezar por la opción A y pasar a la B más adelante, sin perder nada de lo hecho en el piloto.</p>
+</div></section>
+
+<!-- DIRECCIÓN -->
+<section style="padding-top:20px"><div class="wrap">
+  <div class="eyebrow">Para dirección</div>
+  <h2>Todo el grupo en una pantalla.<br><span class="grad">Y en una pregunta.</span></h2>
+  <div class="dgrid2">
+    <div class="panel">
+      <div class="dtop"><b>Pedidos de hoy · todo el grupo</b><span class="small">Datos ilustrativos</span></div>
+      <div class="kpis">
+        <div class="kpi"><small>Pedidos recibidos</small><b>214</b></div>
+        <div class="kpi"><small>Entrados sin teclear</small><b>163</b></div>
+        <div class="kpi"><small>Fuera de horario</small><b>58</b></div>
+        <div class="kpi"><small>Llamadas atendidas</small><b>97</b></div>
+      </div>
+      <div class="chart"><div class="small">Pedidos por hora</div>
+        <svg viewBox="0 0 600 130" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="ga" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#6fcad8" stop-opacity=".45"/><stop offset="1" stop-color="#6fcad8" stop-opacity="0"/></linearGradient><linearGradient id="gl" x1="0" x2="1"><stop offset="0" stop-color="#b8eef2"/><stop offset=".4" stop-color="#6fcad8"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs>
+          <path d="M0 115 C40 105 60 35 100 25 S160 55 200 70 S260 95 300 88 S360 55 400 75 S470 110 520 95 S580 45 600 52 L600 130 L0 130Z" fill="url(#ga)"/>
+          <path d="M0 115 C40 105 60 35 100 25 S160 55 200 70 S260 95 300 88 S360 55 400 75 S470 110 520 95 S580 45 600 52" fill="none" stroke="url(#gl)" stroke-width="3"/>
+        </svg>
+        <div class="blbl"><span>02h</span><span>05h</span><span>08h</span><span>11h</span><span>14h</span><span>17h</span><span>20h</span><span>23h</span></div>
+      </div>
+    </div>
+    <div class="ask">
+      <span class="lbl">Pregúntale a tus datos</span>
+      <div class="q1">¿Cuántos kilos de aguacate hemos vendido a cadenas esta semana y cómo vamos frente a la pasada?</div>
+      <div class="a1">Esta semana: <b>18.400 kg</b> a cadenas, un <b>12 % más</b> que la pasada. Supermercats Vallès explica casi todo el aumento. Fresc i Bo no ha pedido aguacate desde el día 9.</div>
+      <div class="q1">Prepárame el informe de cierre de hoy para el comité.</div>
+      <div class="a1">Hecho. Te lo he dejado en el panel y te lo mando por correo a las 19:00, como cada día.</div>
+      <p class="small">Ejemplo con cifras inventadas.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- MARQUESINA -->
+<div class="marq dk" aria-label="Marcas del grupo"><div class="track" id="track"><span>Frutas Antonio</span><span>Faszina Selected</span><span>Coloma Fruits</span><span>La Monos</span><span>Vivelafruta</span><span>Fruitadona</span><span>Frutas Andrés</span></div></div>
+
+<!-- DATOS -->
+<section class="dk" style="padding-top:80px"><div class="wrap">
+  <div class="eyebrow">Lo que sabemos de vosotros</div>
+  <h2>Un grupo que produce,<br>distribuye y está creciendo.</h2>
+  <div class="factsx">
+    <div class="photo"><img src="img/campo.jpg" srcset="img/campo-s.jpg 720w, img/campo.jpg 1400w" sizes="(max-width: 900px) 100vw, 600px" alt="Campos e invernaderos al atardecer" loading="lazy"></div>
+    <div class="facts">
+      <div class="fact"><b>+1.000 ha</b><span>en producción en fincas propias de Almería, Murcia y Marruecos</span></div>
+      <div class="fact"><b>+29 M kg</b><span>de fruta y verdura al año, con flota propia</span></div>
+      <div class="fact"><b>15 paradas</b><span>en Mercabarna y un almacén logístico de 10.000 m²</span></div>
+      <div class="fact"><b>6 sellos</b><span>IFS, BRCGS, GlobalG.A.P., GRASP, Eco y CCPAE</span></div>
+    </div>
+  </div>
+  <p class="src">Fuente: frutasantonio.com, consultada el 23 de noviembre de 2026. Frutas Andrés forma parte del grupo desde el 1 de noviembre de 2026. Si algo no está al día, lo corregimos en la reunión.</p>
+</div></section>
+
+<!-- PILOTO -->
+<section id="piloto"><div class="wrap">
+  <div class="eyebrow">Cómo empezamos</div>
+  <h2>Sin saltos al vacío.<br><span class="grad">Paso a paso.</span></h2>
+  <div class="phases">
+    <div class="phx"><div class="num">00</div><h3>Conocernos</h3><div class="when">1–2 semanas</div>
+      <ul><li>Ver vuestro programa y cómo entran hoy los pedidos</li><li>Elegir el camino: conectar o sistema propio</li><li>Elegir la línea de venta del piloto</li><li>Acordar por escrito qué es un éxito</li></ul></div>
+    <div class="phx hl"><div class="num">01</div><h3>Piloto de 30 días</h3><div class="when">Una línea de venta</div>
+      <ul><li>Por ejemplo, una parada de Mercabarna o la cartera de un comercial</li><li>Pedidos por WhatsApp y teléfono, con stock y precio del día</li><li>Asistente del comercial</li><li>Informe semanal</li></ul></div>
+    <div class="phx"><div class="num">02</div><h3>Ampliar</h3><div class="when">Si el piloto cumple</div>
+      <ul><li>Resto de paradas y comerciales</li><li>Exportación en varios idiomas</li><li>Calidad, logística y compras</li></ul></div>
+    <div class="phx"><div class="num">03</div><h3>Todo el grupo</h3><div class="when">Por fases</div>
+      <ul><li>Campo, administración y dirección</li><li>Empresas que se incorporen</li><li>Nuevas funciones según vuestras prioridades</li></ul></div>
+  </div>
+  <h3 style="margin-top:50px;font-size:24px">Qué mediremos en el piloto</h3>
+  <p class="small" style="margin-top:6px">Los objetivos concretos se fijan con vuestros datos de partida. No prometemos cifras antes de medir.</p>
+  <div class="crit">
+    <div class="card"><b>Pedidos que entran solos</b><span>Qué parte llega al sistema sin que nadie la teclee.</span></div>
+    <div class="card"><b>Horas ahorradas</b><span>Tiempo de pasar pedidos a mano, antes y después.</span></div>
+    <div class="card"><b>Pedidos fuera de horario</b><span>Los que entran de madrugada y en festivos, atendidos al momento.</span></div>
+    <div class="card"><b>Kilos recuperados</b><span>Clientes que compraban menos y vuelven tras el aviso al comercial.</span></div>
+  </div>
+  <div class="card safe"><div class="ic">✓</div><p><b style="color:#fff">Sin riesgo para la operación.</b> Hasta que todo esté conectado, Nexi deja cada pedido ordenado en una bandeja y la persona que hoy los pasa lo valida con un clic. Los precios salen siempre de vuestra tarifa: la IA no negocia por su cuenta.</p></div>
+</div></section>
+
+<!-- POR QUÉ -->
+<section class="dk"><div class="wrap">
+  <div class="eyebrow">Por qué NexGent</div>
+  <h2>Ya atendemos WhatsApp y llamadas en una red de más de 230 centros.</h2>
+  <div class="nums">
+    <div class="num-c"><b>85<em>%</em></b><span>de las llamadas resueltas sin pasar a una persona en un centro de esa red: 243 llamadas en 21 días, en otoño de 2026.</span></div>
+    <div class="num-c"><b>71<em>%</em></b><span>de los recordatorios por WhatsApp confirmados por el cliente en ese mismo centro.</span></div>
+    <div class="num-c"><b>24<em>/7</em></b><span>WhatsApp y teléfono, también de madrugada, en fin de semana y en festivos.</span></div>
+  </div>
+  <p class="lead" style="font-size:16px">Es otro sector (citas en vez de pedidos), pero la base es la misma: entender al cliente por texto, audio y voz, y dejarlo hecho en el sistema.</p>
+  <div class="ticks"><span>API oficial de WhatsApp de Meta</span><span>Vuestro número de siempre</span><span>Si no sabe algo, pasa a una persona</span><span>Datos según el RGPD</span><span>Desarrollo a medida</span></div>
+</div></section>
+
+<section class="final" id="contacto">
+  <div class="bg"><img src="img/muelle.jpg" srcset="img/muelle-s.jpg 720w, img/muelle.jpg 1400w" sizes="100vw" alt="" loading="lazy"></div>
+  <div class="wrap">
+    <div class="eyebrow">Siguiente paso</div>
+    <h2>Una reunión de 45 minutos <span class="grad">para ver vuestros pedidos.</span></h2>
+    <p class="lead">Con dirección comercial y con quien pasa hoy los pedidos. Salimos con el camino elegido, la línea de venta del piloto, el precio cerrado y una fecha de inicio.</p>
+    <div class="acts"><a class="btn main" href="mailto:info@nexgent.io?subject=Piloto%20Nexi%20-%20Frutas%20Antonio">Escribir a NexGent</a><a class="btn" href="https://nexgent.io">nexgent.io</a></div>
+    <p class="contact">info@nexgent.io</p>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <img alt="NexGent" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAACoCAYAAAA/8FyBAAAWfmNhQlgAABZ+anVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAFlhqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOjhjZTFmOTVhLWU1YjktNDBlNy1hMjgyLTBlNDJmYjQzNmY5MQAAAAOTanVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAuGp1bWIAAABEanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5pbmdyZWRpZW50LnYzAAAAABhjMnNoM3gHJ71djv1e9SMVR6VbUQAAAGxjYm9yo2lkYzpmb3JtYXRpaW1hZ2UvcG5namluc3RhbmNlSUR4LHhtcDppaWQ6NzA5MWZmZTktMWUxMy00YzNmLWI4NTUtMzc2NjEyM2M4OTBmbHJlbGF0aW9uc2hpcGhwYXJlbnRPZgAAAeJqdW1iAAAAQWp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuYWN0aW9ucy52MgAAAAAYYzJzaEe57ShcG4n5algKBoV/GFoAAAGZY2JvcqJnYWN0aW9uc4KiZmFjdGlvbmtjMnBhLm9wZW5lZGpwYXJhbWV0ZXJzoWtpbmdyZWRpZW50c4GiY3VybHgtc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5pbmdyZWRpZW50LnYzZGhhc2hYIOeFC1hyOQX+dd4KH6ztYKrisnFTLFp6J+LaxEy8pJgfpGZhY3Rpb254HWNvbS5hbnRocm9waWMuY2xhdWRlLnByb3ZpZGVkanBhcmFtZXRlcnOheB9jb20uYW50aHJvcGljLm9yaWdpbi1jb25maWRlbmNlZ3Vua25vd25rZGVzY3JpcHRpb254ZkNsYXVkZSBwcm92aWRlZCB0aGlzIGZpbGUgYXQgdGhlIHJlcXVlc3Qgb2YgYSB1c2VyIGFuZCBtYXkgaGF2ZSBjcmVhdGVkIG9yIG1vZGlmaWVkIHRoZSBmaWxlIGNvbnRlbnRzLm1zb2Z0d2FyZUFnZW50oWRuYW1lZkNsYXVkZXJhbGxBY3Rpb25zSW5jbHVkZWT1AAAAyGp1bWIAAABAanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5oYXNoLmRhdGEAAAAAGGMyc2gDB+fXSl5hqQLiWcHGuI4IAAAAgGNib3KlY2FsZ2ZzaGEyNTZjcGFkTQAAAAAAAAAAAAAAAABkaGFzaFggiRVSUVKj26DDRXUgfcQRgbml+hZOKOw2QSoH/4GUR8RkbmFtZW5qdW1iZiBtYW5pZmVzdGpleGNsdXNpb25zgaJlc3RhcnQYIWZsZW5ndGgZFooAAAI+anVtYgAAACdqdW1kYzJjbAARABCAAACqADibcQNjMnBhLmNsYWltLnYyAAAAAg9jYm9ypWNhbGdmc2hhMjU2aXNpZ25hdHVyZXhNc2VsZiNqdW1iZj0vYzJwYS91cm46YzJwYTo4Y2UxZjk1YS1lNWI5LTQwZTctYTI4Mi0wZTQyZmI0MzZmOTEvYzJwYS5zaWduYXR1cmVqaW5zdGFuY2VJRHgseG1wOmlpZDoyZTVkZjZmNi1hMTNmLTQzMTEtYjQ4My1hM2Q0MWVjZjQ1NjhyY3JlYXRlZF9hc3NlcnRpb25zg6JjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg54ULWHI5Bf513gofrO1gquKycVMsWnon4trETLykmB+iY3VybHgqc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5hY3Rpb25zLnYyZGhhc2hYIN6rptDj57L1rIZny7mL4Q1So8bTeR01xz6uRiE6WUfAomN1cmx4KXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaGFzaC5kYXRhZGhhc2hYIKHpQJ84vzt0dxW5I0jJF4g50ZUSo4gEJs9tSP0soLRVdGNsYWltX2dlbmVyYXRvcl9pbmZvo2RuYW1lb0FudGhyb3BpYyBGaWxlc2d2ZXJzaW9uZTEuMC4wa3NwZWNWZXJzaW9uZTIuNC4wAAAQOGp1bWIAAAAoanVtZGMyY3MAEQAQgAAAqgA4m3EDYzJwYS5zaWduYXR1cmUAAAAQCGNib3LShFkCEqIBJhghWQIKMIICBjCCAY2gAwIBAgIUQOWgCu7COdC+uIP6BkIFPWdVEwAwCgYIKoZIzj0EAwMwSTEXMBUGA1UEChMOQW50aHJvcGljLCBQQkMxLjAsBgNVBAMTJUFudGhyb3BpYyBDb250ZW50IENyZWRlbnRpYWxzIFJvb3QgQ0EwHhcNMjYwODA3MTg0MzU2WhcNMjgwODA2MTk0MzU2WjBEMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEpMCcGA1UEAxMgQW50aHJvcGljIENsYXVkZSBDb250ZW50IFNpZ25pbmcwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAASYegpry1AYBRTVNL1CpTlbROnY3dey+UrsF9C3phYrATN3ZHf93Mo8RQN0KOUuOn19P4oWNFWe5n2/She9N7eTo1gwVjAOBgNVHQ8BAf8EBAMCB4AwFQYDVR0lBA4wDAYKKwYBBAGD6F4CATAMBgNVHRMBAf8EAjAAMB8GA1UdIwQYMBaAFM5R4gSBTmRbI/jjxM+aPpzB11zCMAoGCCqGSM49BAMDA2cAMGQCMDFzHRSeAXrSy1WOzkbhPZ6Km2wGTmZ/2gK18k8BQGXyqz88Rdrz6CTX9flAnYNVxgIwcF9c3fVhqmJKpi+UhasNUMko69cyX6STPfta3Q8EjyzDjzoyrol46FP6VFHhvUcJoWNwYWRZDZ4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA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">
+  <span>NEXGENT AI SYSTEMS, S.L. · NIF B22534564 · Calle Julio Verne 12, 18210 Peligros (Granada)</span>
+  <span>Borrador confidencial para Grupo Frutas Antonio · Noviembre de 2026</span>
+</div></footer>
+
+<script>window.__CALL_AT__=[0.0, 0.5, 5.22, 7.94, 18.98, 23.14, 36.02, 37.46, 49.86, 51.65];window.__CALL_END__=51.7;</script>
+<script>
+(function () {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = s => document.querySelector(s);
+
+  /* titular */
+  const words = ['Por WhatsApp.', 'Por teléfono.', 'A las 4:30.', 'En francés.', 'En italiano.', 'En inglés.', 'En alemán.', 'En árabe.', 'Por palés.'];
+  let wi = 0; const rot = $('#rot');
+  if (!reduce) setInterval(() => { rot.classList.add('out'); setTimeout(() => { wi = (wi + 1) % words.length; rot.textContent = words[wi]; rot.classList.remove('out'); }, 350); }, 2400);
+
+
+  /* frase que se ilumina con el scroll, como en nexgent.io */
+  (function () {
+    const p = document.getElementById('stmtp'), sec = document.getElementById('stmt'); if (!p) return;
+    const parts = []; p.childNodes.forEach(n => { const grad = n.nodeName === 'B'; n.textContent.split(/\s+/).filter(Boolean).forEach(w => parts.push([w, grad])); });
+    p.innerHTML = parts.map(([w, g]) => `<span class="sw${g ? ' gw' : ''}">${w}</span>`).join(' ');
+    const ws = [...p.querySelectorAll('.sw')];
+    if (reduce) { ws.forEach(w => w.classList.add('on')); return; }
+    let last = -1, ticking = false;
+    const update = () => { ticking = false; const r = sec.getBoundingClientRect(); const span = sec.offsetHeight - innerHeight; const prog = Math.min(1, Math.max(0, (-r.top + innerHeight * .35) / (span + innerHeight * .1)));
+      const n = Math.round(prog * ws.length); if (n === last) return; last = n; ws.forEach((w, i) => w.classList.toggle('on', i < n)); };
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true }); addEventListener('resize', update); update();
+  })();
+  /* marquesina */
+  const tr = $('#track'); tr.innerHTML += tr.innerHTML;
+
+
+  /* calculadora */
+  const fmtN = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  const fmtE = n => fmtN(n) + ' €';
+  let red = 15;
+  function calc() {
+    const kg = +$('#kg').value * 1e6, mer = +$('#mer').value, val = +$('#val').value, ppl = +$('#ppl').value, hrs = +$('#hrs').value, sav = +$('#sav').value, eur = +$('#eur').value;
+    $('#okg').textContent = $('#kg').value + ' M kg'; $('#omer').textContent = mer.toFixed(1).replace('.', ',') + ' %'; $('#oval').textContent = val.toFixed(2).replace('.', ',') + ' €/kg';
+    $('#oppl').textContent = ppl; $('#ohrs').textContent = String(hrs).replace('.', ',') + ' h'; $('#osav').textContent = sav + ' %'; $('#oeur').textContent = eur + ' €/h';
+    const kgSaved = kg * mer / 100 * red / 100, eMer = kgSaved * val;
+    const hSaved = ppl * hrs * sav / 100 * 250, eT = hSaved * eur, tot = eMer + eT;
+    $('#rTot').textContent = fmtE(tot); $('#rMes').textContent = 'Unos ' + fmtE(tot / 12) + ' al mes';
+    $('#rKg').textContent = fmtN(kgSaved); $('#rMer').textContent = fmtE(eMer); $('#rH').textContent = fmtN(hSaved); $('#rT').textContent = fmtE(eT);
+    $('#b1').style.width = (tot ? eMer / tot * 100 : 0) + '%'; $('#b2').style.width = (tot ? eT / tot * 100 : 0) + '%';
+    document.querySelectorAll('.cin input[type=range]').forEach(r => r.style.setProperty('--p', ((r.value - r.min) / (r.max - r.min) * 100) + '%'));
+  }
+  document.querySelectorAll('.cin input[type=range]').forEach(r => r.addEventListener('input', calc));
+  $('#red').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; red = +b.dataset.v; $('#red').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); calc(); });
+  calc();
+
+  /* ---------- áreas ---------- */
+  const AREAS = [
+    { n: 'Ventas y pedidos', k: 'Empezamos aquí', h: 'Ningún pedido sin coger', p: 'La IA atiende a compradores, cadenas, fruterías y otros mayoristas por WhatsApp, teléfono y correo, a cualquier hora.',
+      li: [['Pedidos en cualquier formato', 'Foto de la hoja, Excel, audio, texto o llamada.'], ['Stock y calibres al momento', 'Si algo falta, propone otro calibre u origen.'], ['Precio del día', 'Siempre de vuestra tarifa, por cliente si la tenéis.'], ['«Lo de siempre»', 'Repite pedidos habituales y avisa si alguien se olvida de pedir.']],
+      ex: '<b>Ejemplo:</b> a las 04:31 una cadena manda su hoja de pedido. A las 04:35 está en el sistema, con muelle y hora de carga.' },
+    { n: 'Problemas de palés y stock', k: 'Piloto', h: 'Arreglar sin llamadas', p: 'Lo que hoy se come horas de comerciales y almacén: palés que faltan o sobran, calibres cambiados y stock que no cuadra.',
+      li: [['Palés que faltan o sobran', 'Cruza el pedido con la orden de carga y propone la solución al cliente.'], ['Stock que no cuadra', 'Pide un recuento rápido al almacén por WhatsApp y corrige el sistema.'], ['Calibres y cambios', 'Ofrece cambio, reposición o descuento; el descuento lo aprueba el comercial.'], ['Reclamaciones a proveedores', 'Si un palé llega mal de origen, prepara la reclamación con foto y lote.']],
+      ex: '<b>Ejemplo:</b> «El cuarto palé de naranja se quedó en el muelle 2. Te lo mando en la ruta de las 11:00.»' },
+    { n: 'Comerciales', k: 'Piloto', h: 'Más tiempo para vender', p: 'Un asistente para cada comercial que prepara el día, apunta lo que pasa y detecta oportunidades.',
+      li: [['Resumen de cada mañana', 'Quién compra menos, a quién llamar y qué ofrecerle.'], ['Notas por audio', 'El comercial habla al salir de una visita y queda todo apuntado.'], ['Venta cruzada', 'Sugiere exóticos de Faszina u otras marcas del grupo a quien encaja.'], ['Seguimiento', 'Recuerda ofertas pendientes y promesas a clientes.']],
+      ex: '<b>Ejemplo:</b> «Fresc i Bo lleva tres semanas sin cítricos. Llámale hoy con precio por volumen.»' },
+    { n: 'Precios y stock', k: 'Fase 2', h: 'Que no se tire nada', p: 'Cruza el stock que hay que sacar con lo que compra cada cliente, y vigila los márgenes.',
+      li: [['Stock a rotar', 'Cada mañana, qué hay que sacar hoy y a quién le encaja.'], ['Ofertas por tipo de cliente', 'Mensajes preparados para que el comercial los apruebe.'], ['Alertas de margen', 'Avisa si un precio de venta queda por debajo del de compra.'], ['Roturas de stock', 'Avisa antes de quedarse sin un producto que se vende cada día.']],
+      ex: '<b>Ejemplo:</b> «6 palés de fresón con salida alta esta semana: mensaje listo para 12 clientes.»' },
+    { n: 'Campo y compras', k: 'Fase 2', h: 'Del campo al pedido', p: 'Conecta lo que producen vuestras fincas de Almería, Murcia y Marruecos con lo que van a pedir los clientes.',
+      li: [['Previsión de demanda', 'Qué va a pedir cada cliente cada día, a partir de su historial.'], ['Cosecha frente a pedidos', 'Cruza la previsión de las fincas con la demanda prevista.'], ['Compras a terceros', 'Propone qué comprar fuera y prepara los pedidos a proveedores.'], ['Partes de campo', 'Encargados y agricultores informan por WhatsApp o con un audio.']],
+      ex: '<b>Ejemplo:</b> «La semana que viene faltarán unos 40 palés de judía perona respecto a lo previsto. ¿Preparo compra a terceros?»' },
+    { n: 'Almacén y logística', k: 'Fase 2', h: 'Cargar sin llamadas', p: 'Del pedido confirmado al camión en marcha, con los avisos que hoy se hacen por teléfono.',
+      li: [['Órdenes de carga', 'Muelle, hora y palés de cada pedido, listos para el almacén.'], ['Avisos al cliente', 'Salida del camión y hora prevista de llegada.'], ['Incidencias con foto', 'El cliente manda la foto y la incidencia llega ordenada a quien la resuelve.'], ['Documentos de transporte', 'Borradores de albaranes y documentos de envío.']],
+      ex: '<b>Ejemplo:</b> «🚚 Tu pedido ha salido de Mercabarna. Llegada prevista: 08:10.»' },
+    { n: 'Calidad y certificados', k: 'Fase 2', h: 'Siempre la versión buena', p: 'Toda la documentación de calidad a mano, para clientes, auditores y vuestro equipo.',
+      li: [['Fichas técnicas al momento', 'El cliente las pide por WhatsApp y le llega la versión vigente.'], ['Trazabilidad', '«¿De qué finca y lote viene este palé?» respondido en segundos.'], ['Auditorías', 'Listas de comprobación y registros preparados para IFS, BRCGS y GlobalG.A.P.'], ['Reclamaciones', 'Con foto, lote y seguimiento hasta que se cierran.']],
+      ex: '<b>Ejemplo:</b> un importador pide el certificado GlobalG.A.P. y lo recibe en el mismo minuto.' },
+    { n: 'Exportación', k: 'Fase 2', h: 'Francia, Italia, Reino Unido…', p: 'Atiende a importadores de Francia, Italia, Reino Unido y otros países en su idioma, y prepara la documentación de cada operación.',
+      li: [['Atención en su idioma', 'Francés, italiano, inglés y los que necesitéis, a cualquier hora.'], ['Ofertas y correos', 'Preparados en el idioma del cliente; el precio lo confirma vuestro comercial.'], ['Documentación', 'Borradores de proformas, listas de carga y papeles de aduana para Reino Unido.'], ['Seguimiento de envíos', 'Avisos al cliente en cada paso del envío.']],
+      ex: '<b>Ejemplo:</b> un comprador de Lyon pide judía perona en francés y recibe ficha, certificado y oferta preparada.' },
+    { n: 'Administración y cobros', k: 'Más adelante', h: 'Menos papeles', p: 'Quita trabajo repetitivo a administración y mejora los cobros sin estropear la relación con el cliente.',
+      li: [['Facturas de proveedores', 'Se leen solas y se preparan para contabilizar.'], ['Recordatorios de cobro', 'Amables, por WhatsApp, con el enlace a la factura.'], ['Consultas de clientes', '«Mándame el albarán del martes» sin llamar a la oficina.'], ['Cuadre de cobros', 'Ayuda a casar cobros con facturas.']],
+      ex: '<b>Ejemplo:</b> «Hola, Joan. Te recuerdo la factura 1.234, que venció el viernes. Aquí la tienes.»' },
+    { n: 'Dirección', k: 'Más adelante', h: 'Saber qué pasa, sin pedir informes', p: 'Un panel en directo con todo el grupo y una IA a la que preguntar lo que necesitéis.',
+      li: [['Panel en directo', 'Pedidos, kilos, canales y clientes de todo el grupo.'], ['Pregúntale a tus datos', 'Preguntas normales, respuestas con cifras.'], ['Informe diario', 'Cada tarde, el cierre del día en el correo.'], ['Alertas', 'Avisa de lo raro: un cliente grande que no pide, una caída de ventas.']],
+      ex: '<b>Ejemplo:</b> «¿Cuántos kilos de aguacate hemos vendido a cadenas esta semana?»' },
+    { n: 'Todo el grupo', k: 'Más adelante', h: 'Un sistema que crece con vosotros', p: 'Cada empresa que se une al grupo entra en el mismo sistema, con la IA ya funcionando.',
+      li: [['Nuevas empresas', 'Frutas Andrés y las que vengan, con sus clientes y su catálogo.'], ['Vivelafruta', 'Pedidos recurrentes de empresas y oficinas, renovaciones y cambios.'], ['Marketing para clientes', 'Catálogo semanal personalizado y novedades de Faszina.'], ['Asistente interno', 'El equipo pregunta procedimientos y datos por WhatsApp.']],
+      ex: '<b>Ejemplo:</b> los clientes de Frutas Andrés piden por el mismo WhatsApp y entran en el mismo panel.' }
+  ];
+  const alist = $('#alist'), apanel = $('#apanel');
+  alist.innerHTML = AREAS.map((a, i) => `<button class="abtn" role="tab" aria-selected="${i === 0}" data-i="${i}">${a.n}<span>${a.k}</span></button>`).join('');
+  function showArea(i) {
+    const a = AREAS[i];
+    apanel.innerHTML = `<div class="k">${a.k}</div><h3>${a.h}</h3><p>${a.p}</p><ul>${a.li.map(l => `<li><b>${l[0]}</b>${l[1]}</li>`).join('')}</ul><p class="ex">${a.ex}</p>`;
+    alist.querySelectorAll('.abtn').forEach(b => b.setAttribute('aria-selected', +b.dataset.i === i));
+  }
+  alist.addEventListener('click', e => { const b = e.target.closest('.abtn'); if (b) { showArea(+b.dataset.i); if (innerWidth < 900) b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }); } });
+  showArea(0);
+
+  /* ---------- demo ---------- */
+  const SC = {
+    wa: { kind: 'chat', head: ['Frutas Antonio · Pedidos', 'Atiende Nexi · Supermercats Vallès'], time: '04:31', title: 'Pedido nº 48213', sub: 'Supermercats Vallès · entrega mañana · WhatsApp',
+      steps: [
+        { m: 'in', sheet: 1, t: 'Buenos días, esto para mañana. Carga temprano porfa 🙏', h: '04:31' },
+        { typing: 1 },
+        { m: 'out', t: 'Buenos días, Joan 👋 Leo 5 líneas para mañana. Lo compruebo con el stock de hoy.', h: '04:31', st: ['live', 'Comprobando stock'],
+          rows: [['Naranja Valencia', 'cal. 4', '4 palés', '', 'chk'], ['Limón Primofiori', '', '2 palés', '', 'chk'], ['Aguacate Hass', 'cal. 18', '120 cajas', '', 'chk'], ['Judía perona', 'fincas propias', '60 cajas', '', 'chk'], ['Pimiento California rojo', '', '1 palé', '', 'chk']] },
+        { m: 'out', t: 'Todo disponible menos el aguacate Hass cal. 18: te puedo asegurar 80 cajas. ¿Completo con 40 de cal. 20 o lo dejo en 80?', h: '04:32', st: ['live', 'Por aclarar'],
+          rows: [['Naranja Valencia', 'cal. 4', '4 palés', '', 'ok'], ['Limón Primofiori', '', '2 palés', '', 'ok'], ['Aguacate Hass', 'cal. 18 · solo hay 80 cajas', '120 cajas', '', 'ask'], ['Judía perona', 'fincas propias', '60 cajas', '', 'ok'], ['Pimiento California rojo', '', '1 palé', '', 'ok']] },
+        { m: 'in', t: 'completa con cal 20', h: '04:34' },
+        { typing: 1 },
+        { m: 'out', t: 'Hecho ✅ Pedido confirmado: 7 palés y 220 cajas, a precios de hoy (te los paso en el resumen). Carga en el muelle 4 a las 06:30.', h: '04:35', st: ['done', 'En el sistema'],
+          rows: [['Naranja Valencia', 'cal. 4', '4 palés', '0,78 €/kg', 'ok'], ['Limón Primofiori', '', '2 palés', '1,05 €/kg', 'ok'], ['Aguacate Hass', 'cal. 18', '80 cajas', '18,40 €/cj', 'ok'], ['Aguacate Hass', 'cal. 20 · completa el cal. 18', '40 cajas', '17,20 €/cj', 'sub'], ['Judía perona', 'fincas propias', '60 cajas', '1,90 €/kg', 'ok'], ['Pimiento California rojo', '', '1 palé', '1,35 €/kg', 'ok']],
+          toast: ['Comercial', 'Supermercats Vallès lleva tres semanas subiendo limón. Proponer precio por volumen.'] },
+        { m: 'out', t: '🚚 Tu pedido ha salido de Mercabarna. Llegada prevista a vuestra plataforma: 08:10.', h: '06:52', st: ['done', 'En ruta'], toast: ['Logística', 'Pedido 48213 cargado en el muelle 4 y en ruta desde las 06:52.'] }
+      ] },
+    inc: { kind: 'chat', head: ['Frutas Antonio · Incidencias', 'Atiende Nexi · Supermercats Vallès'], time: '08:41', title: 'Incidencia nº 1077', sub: 'Supermercats Vallès · pedido 48213 · WhatsApp',
+      steps: [
+        { m: 'in', t: 'Buenas. Nos han llegado 3 palés de naranja y pedimos 4. Y un palé de limón viene de calibre 3, no de 4 😤', h: '08:41' },
+        { typing: 1 },
+        { m: 'out', t: 'Lo siento, Joan. Lo miro ahora mismo con la orden de carga del pedido 48213.', h: '08:41', st: ['live', 'Revisando'],
+          rows: [['Naranja Valencia cal. 4', 'pedido 48213', '1 palé falta', '', 'chk'], ['Limón Primofiori', 'llegó cal. 3 en vez de cal. 4', '1 palé', '', 'chk']] },
+        { m: 'out', t: 'Ya lo tengo: el cuarto palé de naranja se quedó en el muelle 2. Te lo mando en la ruta de las 11:00, llega sobre las 12:30. ¿Te va bien?', h: '08:42',
+          rows: [['Naranja Valencia cal. 4', 'se quedó en el muelle 2', '1 palé', 'ruta 11:00', 'ok'], ['Limón Primofiori', 'llegó cal. 3 en vez de cal. 4', '1 palé', '', 'ask']] },
+        { m: 'in', t: 'Sí, perfecto', h: '08:43' },
+        { m: 'out', t: 'Hecho ✅ Del limón: te lo cambiamos en la misma ruta o te lo quedas con descuento. El descuento te lo confirma Marta ahora. ¿Qué prefieres?', h: '08:43' },
+        { m: 'in', t: 'Me lo quedo con descuento', h: '08:44', st: ['done', 'Resuelta'],
+          rows: [['Naranja Valencia cal. 4', 'se quedó en el muelle 2', '1 palé', 'ruta 11:00', 'ok'], ['Limón Primofiori', 'cal. 3 · se lo queda el cliente', '1 palé', 'descuento', 'pend']],
+          toast: ['Almacén', 'Cargar el palé de naranja del pedido 48213 que está en el muelle 2 en la ruta de las 11:00.'] },
+        { sys: 1, toast: ['Comercial', 'Marta: incidencia resuelta sin llamadas. Solo falta que apruebes el descuento del palé de limón.'] }
+      ] },
+    call: { kind: 'call', who: ['FP', 'Fruites Puig', 'Mayorista de fruterías'], title: 'Pedido nº 48214', sub: 'Fruites Puig · recogida en parada · teléfono',
+      steps: [
+        { s: 1, t: 'Llamada a la línea de pedidos de Mercabarna a las 05:12. Contesta Nexi.' },
+        { w: 'nexi', t: '¡Buenos días, Jordi! Frutas Antonio, te atiende Nexi. Dime, ¿qué te pongo hoy?' },
+        { w: 'cli', t: 'Buenas. Oye, ¿qué tenéis de mango y a cómo va?' },
+        { w: 'nexi', t: 'Pues mira, hoy tenemos Kent de Perú, del ocho y del nueve, a nueve ochenta la caja de cuatro kilos... y Palmer de Brasil, que está a ocho noventa. ¿Cuál te pongo?' },
+        { w: 'cli', t: 'Ponme cincuenta cajas de Kent del ocho. Y de kiwi, lo mismo que el martes.', st: ['live', 'Entrando'], rows: [['Mango Kent', 'Perú · cal. 8', '50 cajas', '9,80 €/cj', 'chk'], ['Kiwi Hayward', 'igual que el martes', '40 cajas', '', 'chk']] },
+        { w: 'nexi', t: 'Vale. El martes te llevaste cuarenta cajas de Hayward, así que te pongo lo mismo. Y del Kent del ocho, ojo, que solo me quedan treinta y cinco... ¿Te completo con quince del nueve? Es la misma fruta, un pelín más pequeña.', rows: [['Mango Kent', 'Perú · cal. 8 · solo quedan 35', '50 cajas', '9,80 €/cj', 'ask'], ['Kiwi Hayward', 'igual que el martes', '40 cajas', '', 'ok']] },
+        { w: 'cli', t: 'Sí, sí, perfecto.' },
+        { w: 'nexi', t: 'Genial. Pues te queda así: treinta y cinco de Kent del ocho, quince del nueve y cuarenta de kiwi. Lo tienes listo en la parada a partir de las seis, y ahora te mando el resumen por WhatsApp. ¡Que vaya bien el día, Jordi!', st: ['done', 'En el sistema'], rows: [['Mango Kent', 'Perú · cal. 8', '35 cajas', '9,80 €/cj', 'ok'], ['Mango Kent', 'Perú · cal. 9 · completa el cal. 8', '15 cajas', '9,80 €/cj', 'sub'], ['Kiwi Hayward', 'igual que el martes', '40 cajas', '', 'ok']] },
+        { w: 'cli', t: 'Igualmente, gracias.' },
+        { s: 1, t: 'Llamada de 52 segundos. Resumen enviado por WhatsApp.', toast: ['Compras', 'Mango Kent cal. 8 agotado tras este pedido. Revisar la entrada de mañana.'] }
+      ] },
+    exp: { kind: 'chat', head: ['Frutas Antonio · Export', 'Atiende Nexi · Primeurs du Rhône'], time: '10:14', title: 'Oportunidad de exportación nº 311', sub: 'Primeurs du Rhône (Lyon) · WhatsApp en francés',
+      steps: [
+        { m: 'in', t: 'Bonjour, nous cherchons du haricot plat pour les 8 prochaines semaines, 2 palettes par semaine. Vous avez la certification GlobalG.A.P. ?', h: '10:14' },
+        { typing: 1 },
+        { m: 'out', t: 'Bonjour Claire ! Oui : notre haricot plat (judía perona) vient de nos fermes au Maroc. Je vous envoie la fiche technique et le certificat.', h: '10:14', st: ['live', 'Preparando oferta'],
+          rows: [['Judía perona', '2 palés por semana · 8 semanas', '16 palés', '', 'ok']] },
+        { m: 'out', att: ['Fiche technique · haricot plat.pdf', 'Certificat GlobalG.A.P..pdf'], h: '10:14',
+          rows: [['Judía perona', '2 palés por semana · 8 semanas', '16 palés', '', 'ok'], ['Ficha técnica y certificado', 'GlobalG.A.P. · versión vigente', '2 PDF', '', 'doc']] },
+        { m: 'out', t: 'Pour 2 palettes par semaine pendant 8 semaines, notre commercial export vous confirme le prix aujourd’hui avant 12h.', h: '10:15', st: ['live', 'Falta precio'],
+          rows: [['Judía perona', '2 palés por semana · 8 semanas', '16 palés', '', 'ok'], ['Ficha técnica y certificado', 'GlobalG.A.P. · versión vigente', '2 PDF', '', 'doc'], ['Precio de la oferta', 'lo confirma el comercial', 'antes de 12:00', '', 'pend']] },
+        { m: 'in', t: 'Parfait, merci beaucoup.', h: '10:16', toast: ['Comercial export', 'Primeurs du Rhône pide 2 palés por semana durante 8 semanas. Oferta en francés preparada: falta tu precio.'] }
+      ] },
+    exp_it: { kind: 'chat', head: ['Frutas Antonio · Export', 'Atiende Nexi · Importador de Milán'], time: '09:52', title: 'Oportunidad de exportación nº 312', sub: 'Importador de Milán · WhatsApp en italiano',
+      steps: [
+        { m: 'in', t: 'Buongiorno, cerchiamo fagiolini piatti per le prossime 8 settimane, 2 pallet a settimana. Avete la certificazione GlobalG.A.P.?', h: '09:52' },
+        { typing: 1 },
+        { m: 'out', t: 'Buongiorno Marco! Sì: i nostri fagiolini piatti (judía perona) arrivano dalle nostre aziende agricole in Marocco. Le invio la scheda tecnica e il certificato.', h: '09:52', st: ['live', 'Preparando oferta'],
+          rows: [['Judía perona', '2 palés por semana · 8 semanas · Italia', '16 palés', '', 'ok']] },
+        { m: 'out', att: ['Scheda tecnica · fagiolino piatto.pdf', 'Certificato GlobalG.A.P..pdf'], h: '09:52',
+          rows: [['Judía perona', '2 palés por semana · 8 semanas · Italia', '16 palés', '', 'ok'], ['Ficha técnica y certificado', 'en italiano · versión vigente', '2 PDF', '', 'doc']] },
+        { m: 'out', t: 'Per 2 pallet a settimana per 8 settimane, il nostro commerciale export le conferma il prezzo oggi entro le 12.', h: '09:53', st: ['live', 'Falta precio'],
+          rows: [['Judía perona', '2 palés por semana · 8 semanas · Italia', '16 palés', '', 'ok'], ['Ficha técnica y certificado', 'en italiano · versión vigente', '2 PDF', '', 'doc'], ['Precio de la oferta', 'lo confirma el comercial', 'antes de 12:00', '', 'pend']] },
+        { m: 'in', t: 'Perfetto, grazie mille.', h: '09:54', toast: ['Comercial export', 'Importador de Milán: 2 palés por semana durante 8 semanas. Oferta en italiano preparada: falta tu precio.'] }
+      ] },
+    exp_en: { kind: 'chat', head: ['Frutas Antonio · Export', 'Atiende Nexi · Importador de Londres'], time: '11:05', title: 'Oportunidad de exportación nº 313', sub: 'Importador de Londres · WhatsApp en inglés',
+      steps: [
+        { m: 'in', t: 'Hi, we’re looking for flat beans for the next 8 weeks, 2 pallets a week, delivered to London. Are you GlobalG.A.P. certified?', h: '11:05' },
+        { typing: 1 },
+        { m: 'out', t: 'Hi James! Yes: our flat beans (judía perona) come from our own farms in Morocco. I’m sending you the spec sheet and the certificate.', h: '11:05', st: ['live', 'Preparando oferta'],
+          rows: [['Judía perona', '2 palés por semana · 8 semanas · Reino Unido', '16 palés', '', 'ok']] },
+        { m: 'out', att: ['Spec sheet · flat beans.pdf', 'GlobalG.A.P. certificate.pdf'], h: '11:05',
+          rows: [['Judía perona', '2 palés por semana · 8 semanas · Reino Unido', '16 palés', '', 'ok'], ['Ficha técnica y certificado', 'en inglés · versión vigente', '2 PDF', '', 'doc']] },
+        { m: 'out', t: 'For 2 pallets a week over 8 weeks, our export team will confirm the price today before 12:00. We’ll also prepare the customs paperwork for every shipment.', h: '11:06', st: ['live', 'Falta precio'],
+          rows: [['Judía perona', '2 palés por semana · 8 semanas · Reino Unido', '16 palés', '', 'ok'], ['Ficha técnica y certificado', 'en inglés · versión vigente', '2 PDF', '', 'doc'], ['Documentación de aduana', 'borrador para cada envío', '8 envíos', '', 'pend'], ['Precio de la oferta', 'lo confirma el comercial', 'antes de 12:00', '', 'pend']] },
+        { m: 'in', t: 'Perfect, thanks.', h: '11:07', toast: ['Comercial export', 'Importador de Londres: 2 palés por semana durante 8 semanas. Oferta en inglés y borradores de aduana preparados: falta tu precio.'] }
+      ] }
+  };
+  const TAG = { chk: 'Comprobando', ok: 'Confirmado', ask: 'Por aclarar', sub: 'Sustituido', doc: 'Enviado', pend: 'Pendiente' };
+  const screen = $('#screen'), sRows = $('#sRows'), sState = $('#sState'), sToasts = $('#sToasts');
+  const bPlay = $('#play'), bStep = $('#step'), bReset = $('#reset');
+  let cur = 'wa', idx = 0, timer = null, body = null, clkT = null, secs = 0;
+  let amp = .06, target = .06, who = 'nexi', ph = 0, raf = null, cv = null, ctx = null;
+
+  function rows(L) {
+    sRows.innerHTML = L ? L.map(r => `<div class="rw"><div>${r[0]}${r[1] ? `<br><small>${r[1]}</small>` : ''}</div><div class="q">${r[2]}${r[3] ? `<small>${r[3]}</small>` : ''}</div><span class="tg ${r[4]}">${TAG[r[4]]}</span></div>`).join('') : '<div class="empty">Todavía no ha entrado nada.</div>';
+  }
+  function state(s) { sState.className = 'state ' + s[0]; sState.textContent = s[1]; }
+
+  function draw() {
+    if (!ctx) return;
+    const w = cv.width, h = cv.height; ctx.clearRect(0, 0, w, h);
+    amp += (target - amp) * .08; ph += .07;
+    const cols = who === 'nexi' ? ['#b8eef2', '#6fcad8', '#3b82f6'] : ['#ffffff', '#d2d2d7', '#86868b'];
+    for (let k = 0; k < 3; k++) {
+      ctx.beginPath(); ctx.lineWidth = k === 1 ? 4 : 2.5; ctx.strokeStyle = cols[k]; ctx.globalAlpha = k === 1 ? 1 : .55;
+      for (let x = 0; x <= w; x += 6) { const env = Math.sin(Math.PI * x / w); const y = h / 2 + Math.sin(x / (60 + k * 20) + ph * (1 + k * .3)) * h * .42 * amp * env * (1 - k * .18); x ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+    raf = (timer && !reduce && !(audio && !audio.paused)) ? requestAnimationFrame(draw) : null;
+  }
+
+  function build() {
+    if (typeof stopAudio === 'function') stopAudio();
+    clearTimeout(timer); timer = null; clearInterval(clkT); clkT = null; secs = 0; idx = 0; target = amp = .06;
+    const sc = SC[cur];
+    $('#sTitle').textContent = sc.title; $('#sSub').textContent = sc.sub; state(['', 'Esperando']); rows(null); sToasts.innerHTML = '';
+    if (sc.kind === 'chat') {
+      screen.className = 'screen';
+      screen.innerHTML = `<div class="wa-top"><span>${sc.time}</span><span>●●● 5G</span></div><div class="wa-head"><div class="wa-av">FA</div><div><b>${sc.head[0]}</b><small>${sc.head[1]}</small></div></div><div class="wa-body" id="body"><p class="hint">Pulsa «Reproducir» para ver la conversación.</p></div><div class="wa-foot"><span>Mensaje</span></div>`;
+      ctx = null;
+    } else {
+      screen.className = 'screen callscreen';
+      screen.innerHTML = `<div class="who2"><div class="cav">${sc.who[0]}</div><h3>${sc.who[1]}</h3><div class="clk" id="clk">${sc.who[2]} · pulsa Reproducir y sube el volumen 🔊</div></div><canvas id="cv" width="680" height="160"></canvas><div class="ctrans" id="body"></div><div class="end">✆</div>`;
+      cv = $('#cv'); ctx = cv.getContext('2d'); draw();
+    }
+    body = $('#body');
+    bPlay.disabled = bStep.disabled = false; bPlay.textContent = '▶ Reproducir';
+  }
+
+  function showStep() {
+    const sc = SC[cur], s = sc.steps[idx]; if (!s) return false;
+    const hint = body.querySelector('.hint'); if (hint) hint.remove();
+    const ty = body.querySelector('.typing'); if (ty) ty.remove();
+    if (sc.kind === 'chat') {
+      if (s.typing) { const t = document.createElement('div'); t.className = 'typing'; t.innerHTML = '<i></i><i></i><i></i>'; body.appendChild(t); }
+      else if (s.sys) { }
+      else {
+        const d = document.createElement('div'); d.className = 'msg ' + s.m;
+        let inner = s.m === 'out' ? '<span class="who">Nexi</span>' : '';
+        if (s.sheet) inner += '<div class="sheet"><div class="sh"><span>SUPERMERCATS VALLÈS · PEDIDO</span><span>Mié</span></div><div class="r"><span>Naranja Valencia cal.4</span><span>4 palés</span></div><div class="r"><span>Limón Primofiori</span><span>2 palés</span></div><div class="r"><span>Aguacate Hass cal.18</span><span>120 cj</span></div><div class="r"><span>Judía perona</span><span>60 cj</span></div><div class="r"><span>Pimiento Calif. rojo</span><span>1 palé</span></div></div>';
+        if (s.att) inner += s.att.map(a => `<div class="att"><i>PDF</i>${a}</div>`).join(''); else inner += s.t;
+        d.innerHTML = inner + `<span class="h">${s.h}</span>`; body.appendChild(d);
+      }
+    } else {
+      const d = document.createElement('div');
+      if (s.s) { d.className = 'cl sys'; d.textContent = s.t; target = .06; }
+      else { d.className = 'cl ' + s.w; d.innerHTML = `<b>${s.w === 'nexi' ? 'Nexi' : 'Cliente'}</b>${s.t}`; who = s.w; target = 1; }
+      body.appendChild(d);
+      if (!clkT) clkT = setInterval(() => { secs++; const c = $('#clk'); if (c) c.textContent = 'En llamada · ' + String(Math.floor(secs / 60)).padStart(2, '0') + ':' + String(secs % 60).padStart(2, '0'); }, 1000);
+    }
+    if (s.rows) rows(s.rows);
+    if (s.st) state(s.st);
+    if (s.toast) { const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = `<i>${s.toast[0]}</i><span>${s.toast[1]}</span>`; sToasts.appendChild(t); }
+    body.scrollTop = body.scrollHeight;
+    idx++;
+    if (idx >= sc.steps.length) {
+      bPlay.disabled = bStep.disabled = true; bPlay.textContent = '▶ Reproducir';
+      if (sc.kind === 'call') { clearInterval(clkT); clkT = null; const c = $('#clk'); if (c) c.textContent = 'Llamada finalizada · 00:52'; target = .06; }
+    }
+    return true;
+  }
+
+  /* audio de la llamada (ElevenLabs) */
+  const CALL_AT = window.__CALL_AT__ || null;   // segundo en que empieza cada paso de la llamada
+  const CALL_END = window.__CALL_END__ || 0;
+  let audio = null, aRaf = null;
+  function audioTick() {
+    if (!audio) return;
+    const t = audio.currentTime;
+    while (idx < CALL_AT.length && CALL_AT[idx] <= t) showStep();
+    const sc = SC.call; const last = sc.steps[idx - 1];
+    target = (!audio.paused && last && last.w) ? 1 : .06;
+    const c = $('#clk'); if (c && !audio.paused) c.textContent = 'En llamada · 00:' + String(Math.floor(t)).padStart(2, '0');
+    if (!audio.paused) aRaf = requestAnimationFrame(audioTick);
+  }
+  function stopAudio() { if (audio) { audio.pause(); audio.currentTime = 0; } cancelAnimationFrame(aRaf); }
+  function playCallAudio() {
+    if (!audio) { audio = new Audio('audio/llamada.mp3'); audio.preload = 'auto';
+      audio.addEventListener('ended', () => { while (showStep()); bPlay.textContent = '▶ Reproducir'; target = .06; const c = $('#clk'); if (c) c.textContent = 'Llamada finalizada · 00:' + String(Math.round(CALL_END)).padStart(2, '0'); }); }
+    if (!audio.paused) { audio.pause(); bPlay.textContent = '▶ Seguir'; return; }
+    audio.play().then(() => {
+      bPlay.textContent = '❚❚ Pausa'; timer = 1;
+      const loop = () => { audioTick(); draw(); if (!audio.paused) requestAnimationFrame(loop); else timer = null; };
+      loop();
+    }).catch(() => { audio = null; playText(); });
+  }
+
+  function play() {
+    if (SC[cur].kind === 'call' && CALL_AT && !reduce) return playCallAudio();
+    playText();
+  }
+  function playText() {
+    if (reduce) { while (showStep()); return; }
+    if (timer) { clearTimeout(timer); timer = null; bPlay.textContent = '▶ Seguir'; return; }
+    bPlay.textContent = '❚❚ Pausa';
+    const next = () => {
+      if (!showStep()) { timer = null; return; }
+      const s = SC[cur].steps[idx - 1];
+      if (idx >= SC[cur].steps.length) { timer = null; return; }
+      const wait = s.typing ? 1000 : Math.min(4200, 1000 + (s.t || '').length * 26);
+      timer = setTimeout(() => { if (SC[cur].kind === 'call') target = .15; timer = setTimeout(next, 350); }, wait);
+      if (SC[cur].kind === 'call' && !raf) draw();
+    };
+    next();
+  }
+  bPlay.addEventListener('click', play);
+  bStep.addEventListener('click', () => { if (timer) { clearTimeout(timer); timer = null; bPlay.textContent = '▶ Seguir'; } showStep(); if (ctx) { amp = target; draw(); } });
+  bReset.addEventListener('click', build);
+
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', x === t));
+    const com = t.dataset.t === 'com';
+    $('#stage').hidden = com; $('#comView').hidden = !com; $('#langs2').hidden = t.dataset.t !== 'exp';
+    if (!com) { cur = t.dataset.t === 'exp' ? ($('#langs2 [aria-pressed=true]').dataset.l) : t.dataset.t; build(); } else { clearTimeout(timer); timer = null; }
+  }));
+  $('#langs2').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $('#langs2').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); cur = b.dataset.l; build(); });
+  build();
+})();
+</script>
+</body>
+</html>
