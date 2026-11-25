@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /consultores
 Disallow: /design/
+Disallow: /propuestas/
 
 Sitemap: https://www.nexgent.io/sitemap.xml

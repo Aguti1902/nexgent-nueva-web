@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<!-- NG:gtag -->
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}(function(){var c=null;try{c=localStorage.getItem("ng_consent_v1")}catch(e){}gtag("consent","default",{analytics_storage:c==="granted"?"granted":"denied",ad_storage:"denied",ad_user_data:"denied",ad_personalization:"denied",wait_for_update:500});})();gtag("js",new Date());dataLayer.push({"gtm.start":new Date().getTime(),event:"gtm.js"});</script>
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-KZVCRNLD"></script>
+<script defer src="/assets/js/consent.js?v=1"></script>
+<!-- /NG:gtag -->
+<title>NexGent × F+ · Propuesta de colaboración</title>
+<meta name="description" content="Propuesta de NexGent para el ecosistema F+: inteligencia artificial a medida para las centrales y franquiciados de F+.">
+<meta property="og:title" content="NexGent × F+ · Propuesta de colaboración">
+<meta property="og:description" content="Inteligencia artificial a medida para todo el ecosistema F+.">
+<link rel="icon" href="/assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&family=Inter:wght@400;600&display=swap">
+<style>
+html,body{margin:0;height:100%;background:#0B0C0A;overflow:hidden;font-family:Inter,Arial,sans-serif}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#deck{position:relative;width:1920px;height:1080px;transform-origin:center center;flex:none}
+#deck>section{position:absolute;inset:0;width:1920px;height:1080px;visibility:hidden;opacity:0;transition:opacity .45s ease}
+#deck>section.on{visibility:visible;opacity:1}
+#deck>section:not(.on) *{animation:none!important}
+.nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center;background:rgba(20,22,18,.82);backdrop-filter:blur(8px);border:1px solid #2C322B;border-radius:999px;padding:8px 10px;z-index:9;color:#B9C6C2;font-size:14px}
+.nav button,.nav a{background:transparent;border:0;color:#F3F4F0;font:600 14px Inter,Arial,sans-serif;cursor:pointer;padding:8px 14px;border-radius:999px;text-decoration:none}
+.nav button:hover,.nav a:hover{background:#2C322B}
+.nav .count{min-width:56px;text-align:center}
+.bar{position:fixed;top:0;left:0;height:3px;background:#82CBD4;z-index:9;transition:width .3s}
+:root{--dark:#121410;--dark2:#1B1F1A;--light:#F3F4F0;--card:#FBFBF8;--teal:#82CBD4;--teal-d:#2E7F89;--red:#EA0734;--mute-d:#B9C6C2;--mute-l:#4D544C;--line-d:#2C322B;--line-l:#DCDFD8}
+section{padding:128px;font-family:'Inter',Arial,sans-serif;font-size:28px;line-height:1.4;box-sizing:border-box;display:flex;flex-direction:column}
+section h1,section h2,section h3{font-family:'Plus Jakarta Sans',Verdana,sans-serif;margin:0;letter-spacing:-0.02em}
+section p{margin:0}
+.dark{background:radial-gradient(ellipse at 85% 0%,#1E3A3D 0%,#121410 55%);color:var(--light)}
+.light{background:var(--light);color:var(--dark)}
+.accent{background:var(--teal);color:var(--dark)}
+.eyebrow{font-size:24px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);margin-bottom:28px}
+.light .eyebrow{color:var(--teal-d)}
+.accent .eyebrow{color:var(--dark)}
+h2.title{font-size:72px;line-height:1.08;font-weight:700;max-width:1500px}
+.dark .body{color:var(--mute-d)}
+.light .body{color:var(--mute-l)}
+.body{font-size:32px;line-height:1.45}
+.hl{color:var(--teal)}
+.light .hl{color:var(--teal-d)}
+.red{color:var(--red)}
+.foot{position:absolute;left:128px;bottom:64px;width:1664px;display:flex;justify-content:space-between;align-items:center;font-size:24px}
+.dark .foot{color:#7E8B86}
+.light .foot{color:#7A8078}
+.foot img{height:36px;width:auto}
+.has-foot{padding:128px 128px 160px}
+.grow{flex:1}
+/* cover */
+.cover-logos{display:flex;align-items:center;gap:40px;margin-bottom:96px}
+.cover-logos .x{font-family:'Plus Jakarta Sans',sans-serif;font-size:56px;color:#7E8B86;font-weight:400}
+.cover h1{font-size:120px;line-height:1.0;font-weight:800;max-width:1500px}
+.cover .sub{font-size:36px;color:var(--mute-d);margin-top:40px;max-width:1200px;line-height:1.4}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:64px}
+.stat{background:var(--dark2);border:1px solid var(--line-d);border-radius:20px;padding:40px 36px}
+.stat .n{font-family:'Plus Jakarta Sans',sans-serif;font-size:88px;font-weight:700;color:var(--teal);line-height:1}
+.stat .l{font-size:26px;color:var(--mute-d);margin-top:20px;line-height:1.35}
+/* cards */
+.cards{display:grid;gap:24px;margin-top:64px}
+.c3{grid-template-columns:repeat(3,1fr)}
+.c4{grid-template-columns:repeat(4,1fr)}
+.card{border-radius:20px;padding:40px 36px}
+.dark .card{background:var(--dark2);border:1px solid var(--line-d)}
+.light .card{background:var(--card);border:1px solid var(--line-l)}
+.card h3{font-size:34px;font-weight:700;line-height:1.2;margin-bottom:16px}
+.card .t{font-size:26px;line-height:1.45}
+.dark .card .t{color:var(--mute-d)}
+.light .card .t{color:var(--mute-l)}
+.card .k{font-size:24px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:20px;color:var(--teal)}
+.light .card .k{color:var(--teal-d)}
+.card.hi{background:var(--dark);color:var(--light);border:none}
+.card.hi .t{color:var(--mute-d)}
+.card.hi .k{color:var(--teal)}
+.card.redline{border-top:6px solid var(--red)}
+.step .num{font-family:'Plus Jakarta Sans',sans-serif;font-size:96px;font-weight:700;line-height:1;color:var(--teal);margin-bottom:24px}
+.light .step .num{color:var(--teal-d)}
+/* split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center;flex:1}
+.big{font-family:'Plus Jakarta Sans',sans-serif;font-size:200px;font-weight:800;line-height:0.95;color:var(--teal)}
+.week{display:grid;grid-template-columns:repeat(24,1fr);gap:5px}
+.week span{display:block;height:26px;border-radius:4px;background:#2A302A}
+.week span.on{background:var(--teal)}
+.legend{display:flex;gap:40px;margin-top:28px;font-size:24px;color:var(--mute-d)}
+.legend b{display:inline-block;width:22px;height:22px;border-radius:4px;vertical-align:-3px;margin-right:10px}
+/* table */
+table.num{border-collapse:collapse;width:100%;font-size:30px;margin-top:48px}
+table.num td{padding:22px 0;border-bottom:1px solid var(--line-l)}
+table.num td.v{text-align:right;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700}
+table.num tr.tot td{border-bottom:none;font-size:40px;color:var(--teal-d);padding-top:32px}
+.note{font-size:24px;margin-top:24px}
+.light .note{color:#6B7169}
+.dark .note{color:#8C9A95}
+/* proposal list */
+.terms{display:flex;flex-direction:column;gap:16px;margin-top:44px}
+.term{display:flex;gap:40px;align-items:flex-start;background:var(--dark2);border:1px solid var(--line-d);border-radius:20px;padding:22px 40px}
+.term .k{font-family:'Plus Jakarta Sans',sans-serif;font-size:56px;font-weight:700;color:var(--teal);min-width:300px;line-height:1.05}
+.term h3{font-size:34px;font-weight:700;margin-bottom:8px}
+.term .t{font-size:26px;color:var(--mute-d)}
+/* statement */
+.statement h2{font-size:84px;line-height:1.08;font-weight:800;max-width:1560px}
+.reasons{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:72px}
+.reasons div{border-top:3px solid var(--dark);padding-top:24px;font-size:28px;line-height:1.4}
+.reasons b{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;margin-bottom:10px}
+.chips{display:flex;gap:16px;flex-wrap:wrap;margin-top:56px}
+.chip{background:var(--dark2);border:1px solid var(--line-d);border-radius:999px;padding:14px 28px;font-size:26px;color:var(--light)}
+.chip.t{background:var(--teal);color:var(--dark);border:none;font-weight:600}
+/* motion */
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+.cards>div,.stats>div,.terms>div,.reasons>div{animation:rise .6s ease-out both}
+.cards>div:nth-child(2),.stats>div:nth-child(2),.terms>div:nth-child(2),.reasons>div:nth-child(2){animation-delay:.12s}
+.cards>div:nth-child(3),.stats>div:nth-child(3),.terms>div:nth-child(3),.reasons>div:nth-child(3){animation-delay:.24s}
+.cards>div:nth-child(4),.stats>div:nth-child(4),.terms>div:nth-child(4),.reasons>div:nth-child(4){animation-delay:.36s}
+
+</style></head><body>
+<div class="bar" id="bar"></div>
+<div id="stage"><div id="deck">
+<section id="cover" class="dark cover has-foot" data-transition="fade">
+<div class="cover-logos"><img src="/assets/img/logo-nexgent-blanco.png" alt="NexGent" style="width:320px;height:80px;object-fit:contain"><span class="x">×</span><img src="/propuestas/fplus/fplus.png" alt="F+" style="width:110px;height:81px;object-fit:contain"></div>
+<p class="eyebrow">Propuesta de colaboración · Noviembre 2026</p>
+<h1>Inteligencia artificial a medida para todo el ecosistema <span class="red">F+</span>.</h1>
+<p class="sub">Cómo NexGent puede llevar la IA a las centrales y a los franquiciados de F+, y cómo crecemos juntos.</p>
+<div class="foot"><span>NexGent AI Systems S.L.</span><span>nexgent.io</span></div>
+
+</section>
+
+<section id="ecosistema" class="dark has-foot">
+<p class="eyebrow">El ecosistema F+</p>
+<h2 class="title">Una plataforma que reúne marcas, emprendedores y proveedores.</h2>
+<div class="stats">
+<div class="stat"><p class="n">185</p><p class="l">centrales de franquicia en los próximos meses</p></div>
+<div class="stat"><p class="n">400</p><p class="l">marcas previstas en dos años</p></div>
+<div class="stat"><p class="n">2.812</p><p class="l">establecimientos, unos 15 por marca</p></div>
+<div class="stat"><p class="n">33</p><p class="l">sectores de actividad</p></div>
+</div>
+<div class="grow"></div>
+<p class="body">Tres divisiones, <b style="color:#F3F4F0">F+ Marcas</b>, <b style="color:#F3F4F0">F+ Emprendedores</b> y <b style="color:#F3F4F0">F+ Servicios</b>, que ya cubren expansión, captación y proveedores. La pieza que falta es la inteligencia artificial.</p>
+<div class="foot"><img src="/assets/img/logo-nexgent-blanco.png" alt="NexGent"><span>2</span></div>
+
+</section>
+
+<section id="problema" class="dark has-foot">
+<p class="eyebrow">El reto de cualquier red</p>
+<h2 class="title">Una sede atiende <span class="hl">66 horas</span> a la semana. Sus clientes escriben las <span class="hl">168</span>.</h2>
+<div class="grow"></div>
+<svg aria-label="Semana de 168 horas: la sede abre 66 horas (lunes a sábado de 10:00 a 21:00) y está cerrada 102" width="1452" height="410" viewBox="0 0 1452 410"><rect x="60" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="118" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="176" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="234" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="292" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="350" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="408" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="466" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="524" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="582" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="640" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="698" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="756" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="814" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="872" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="930" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="988" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1046" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1104" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1162" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1220" y="0" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1278" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1336" y="0" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1394" y="0" width="50" height="42" rx="6" fill="#2A302A"/><text x="18" y="30" font-family="Inter,Arial" font-size="24" fill="#8C9A95">L</text><rect x="60" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="118" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="176" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="234" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="292" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="350" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="408" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="466" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="524" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="582" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="640" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="698" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="756" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="814" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="872" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="930" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="988" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1046" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1104" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1162" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1220" y="52" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1278" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1336" y="52" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1394" y="52" width="50" height="42" rx="6" fill="#2A302A"/><text x="18" y="82" font-family="Inter,Arial" font-size="24" fill="#8C9A95">M</text><rect x="60" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="118" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="176" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="234" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="292" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="350" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="408" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="466" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="524" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="582" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="640" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="698" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="756" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="814" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="872" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="930" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="988" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1046" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1104" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1162" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1220" y="104" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1278" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1336" y="104" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1394" y="104" width="50" height="42" rx="6" fill="#2A302A"/><text x="18" y="134" font-family="Inter,Arial" font-size="24" fill="#8C9A95">X</text><rect x="60" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="118" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="176" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="234" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="292" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="350" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="408" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="466" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="524" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="582" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="640" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="698" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="756" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="814" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="872" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="930" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="988" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1046" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1104" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1162" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1220" y="156" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1278" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1336" y="156" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1394" y="156" width="50" height="42" rx="6" fill="#2A302A"/><text x="18" y="186" font-family="Inter,Arial" font-size="24" fill="#8C9A95">J</text><rect x="60" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="118" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="176" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="234" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="292" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="350" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="408" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="466" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="524" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="582" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="640" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="698" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="756" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="814" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="872" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="930" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="988" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1046" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1104" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1162" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1220" y="208" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1278" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1336" y="208" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1394" y="208" width="50" height="42" rx="6" fill="#2A302A"/><text x="18" y="238" font-family="Inter,Arial" font-size="24" fill="#8C9A95">V</text><rect x="60" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="118" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="176" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="234" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="292" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="350" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="408" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="466" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="524" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="582" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="640" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="698" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="756" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="814" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="872" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="930" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="988" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1046" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1104" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1162" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1220" y="260" width="50" height="42" rx="6" fill="#82CBD4"/><rect x="1278" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1336" y="260" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1394" y="260" width="50" height="42" rx="6" fill="#2A302A"/><text x="18" y="290" font-family="Inter,Arial" font-size="24" fill="#8C9A95">S</text><rect x="60" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="118" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="176" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="234" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="292" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="350" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="408" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="466" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="524" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="582" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="640" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="698" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="756" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="814" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="872" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="930" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="988" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1046" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1104" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1162" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1220" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1278" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1336" y="312" width="50" height="42" rx="6" fill="#2A302A"/><rect x="1394" y="312" width="50" height="42" rx="6" fill="#2A302A"/><text x="18" y="342" font-family="Inter,Arial" font-size="24" fill="#8C9A95">D</text><text x="60" y="400" font-family="Inter,Arial" font-size="22" fill="#8C9A95">00:00</text><text x="408" y="400" font-family="Inter,Arial" font-size="22" fill="#8C9A95">06:00</text><text x="756" y="400" font-family="Inter,Arial" font-size="22" fill="#8C9A95">12:00</text><text x="1104" y="400" font-family="Inter,Arial" font-size="22" fill="#8C9A95">18:00</text></svg>
+<div class="legend"><span><b style="background:#82CBD4"></b>Sede abierta (10:00–21:00, lunes a sábado)</span><span><b style="background:#2A302A"></b>Nadie responde: el 61 % de la semana</span></div>
+<div class="foot"><img src="/assets/img/logo-nexgent-blanco.png" alt="NexGent"><span>3</span></div>
+
+</section>
+<section id="soluciones" class="light has-foot">
+<p class="eyebrow">Qué hace NexGent</p>
+<h2 class="title">Cada red necesita algo distinto. Lo diseñamos a medida.</h2>
+<div class="cards c4">
+<div class="card"><p class="k">Atención</p><h3>Voz y WhatsApp 24/7</h3><p class="t">Una IA que atiende a los clientes de cada sede, a cualquier hora, con el tono de la marca.</p></div>
+<div class="card"><p class="k">Agenda</p><h3>Citas y recordatorios</h3><p class="t">Reserva, cambia y confirma citas y reactiva a clientes que no vuelven.</p></div>
+<div class="card"><p class="k">Expansión</p><h3>Leads y franquiciados</h3><p class="t">Responde y cualifica a cada interesado en el momento, también para la captación de franquiciados.</p></div>
+<div class="card hi"><p class="k">Central</p><h3>Toda la red de un vistazo</h3><p class="t">Un panel con lo que pasa en cada sede, para decidir con datos.</p></div>
+</div>
+<div class="grow"></div>
+<p class="body">Son ejemplos: partimos de cómo trabaja cada central y automatizamos lo que más tiempo y ventas le cuesta. <b style="color:#121410">Nuestro modelo lleva meses funcionando en producción.</b></p>
+<div class="foot"><img src="/assets/img/logo-nexgent.png" alt="NexGent"><span>4</span></div>
+</section>
+
+<section id="gana" class="dark has-foot">
+<p class="eyebrow">Por qué encaja en F+</p>
+<h2 class="title">Gana F+. Gana la central. Gana el franquiciado.</h2>
+<div class="cards c3">
+<div class="card redline"><p class="k" style="color:#EA0734">F+</p><h3>El primer ecosistema que lleva la IA a toda su red</h3><p class="t">Un salto de nivel y de calidad para las marcas que ya están y un argumento muy potente para atraer a nuevas.</p></div>
+<div class="card"><p class="k">La central</p><h3>Tecnología común y margen propio</h3><p class="t">Ofrece la IA a sus franquiciados como servicio de la red y gana un margen en cada sede.</p></div>
+<div class="card"><p class="k">El franquiciado</p><h3>Más ventas con el mismo equipo</h3><p class="t">Ningún cliente sin respuesta, menos tiempo al teléfono y más tiempo para atender.</p></div>
+</div>
+<div class="grow"></div>
+<div class="foot"><img src="/assets/img/logo-nexgent-blanco.png" alt="NexGent"><span>5</span></div>
+</section>
+
+<section id="metodo" class="light has-foot">
+<p class="eyebrow">Cómo trabajamos con cada marca</p>
+<h2 class="title">Tres pasos. Sin riesgo para la central.</h2>
+<div class="cards c3">
+<div class="card step"><p class="num">01</p><h3>Diagnóstico con la central</h3><p class="t">20 minutos para entender cómo atiende la red y dónde se pierden clientes y horas.</p></div>
+<div class="card step"><p class="num">02</p><h3>Piloto en 3–5 sedes</h3><p class="t">30 días con objetivos firmados antes de empezar. La central ve los resultados en su panel.</p></div>
+<div class="card step hi"><p class="num" style="color:#82CBD4">03</p><h3>Despliegue en la red</h3><p class="t">Si funciona, la central firma y lo extendemos a sus sedes al ritmo que quiera.</p></div>
+</div>
+<div class="grow"></div>
+<p class="body">F+ presenta la marca. <b style="color:#121410">NexGent se encarga de todo lo demás</b>: reunión, propuesta, piloto, implantación y soporte.</p>
+<div class="foot"><img src="/assets/img/logo-nexgent.png" alt="NexGent"><span>6</span></div>
+</section>
+
+<section id="modelo" class="light has-foot">
+<p class="eyebrow">Modelo económico para las marcas</p>
+<h2 class="title">Una cuota por sede. Sin sorpresas.</h2>
+<div class="cards c3">
+<div class="card"><p class="k">Pack de IA</p><h3>230 € al mes por sede</h3><p class="t">Precio para la central: 2.000 mensajes de WhatsApp y 500 minutos de llamadas por sede.</p></div>
+<div class="card"><p class="k">Piloto</p><h3>1.500 € de implantación</h3><p class="t">30 días en 3–5 sedes propias. Se descuenta si la red firma.</p></div>
+<div class="card hi"><p class="k">Margen de la central</p><h3>Unos 30–35 € por sede</h3><p class="t">La central lo ofrece a sus franquiciados a 260–265 € al mes y se queda la diferencia.</p></div>
+</div>
+<div class="grow"></div>
+<p class="note">Precios sin IVA. Las soluciones a medida que van más allá del pack se presupuestan aparte.</p>
+<div class="foot"><img src="/assets/img/logo-nexgent.png" alt="NexGent"><span>7</span></div>
+</section>
+
+<section id="potencial" class="dark has-foot">
+<p class="eyebrow">El potencial para F+</p>
+<h2 class="title">Si solo el 10 % de las marcas F+ lo implanta…</h2>
+<div class="split">
+<div><p class="big" style="font-size:140px">74.520 €</p><p class="body" style="margin-top:24px">al año para F+ en comisiones, con 185 marcas en la plataforma.</p></div>
+<table class="num" style="color:#F3F4F0">
+<tr><td style="border-color:#2C322B;color:#B9C6C2">Marcas que lo implantan (10 % de 185)</td><td class="v" style="border-color:#2C322B">18</td></tr>
+<tr><td style="border-color:#2C322B;color:#B9C6C2">Sedes (15 de media por marca)</td><td class="v" style="border-color:#2C322B">270</td></tr>
+<tr><td style="border-color:#2C322B;color:#B9C6C2">Facturación al año (230 €/sede/mes)</td><td class="v" style="border-color:#2C322B">745.200 €</td></tr>
+<tr><td style="border-color:#2C322B;color:#B9C6C2">Con 400 marcas, mismo 10 %</td><td class="v" style="border-color:#2C322B">165.600 €/año</td></tr>
+</table>
+</div>
+<p class="note">Estimación orientativa con la comisión del 10 % sobre lo facturado. No incluye pilotos ni desarrollos a medida.</p>
+<div class="foot"><img src="/assets/img/logo-nexgent-blanco.png" alt="NexGent"><span>8</span></div>
+
+</section>
+
+<section id="propuesta" class="dark has-foot">
+<p class="eyebrow">Nuestra propuesta</p>
+<h2 class="title">Ganar juntos desde el primer día.</h2>
+<div class="terms">
+<div class="term"><p class="k">0 €</p><div><h3>Sin membresía inicial</h3><p class="t">F+ cobra por resultados, no por adelantado.</p></div></div>
+<div class="term"><p class="k">50 €/mes</p><div><h3>Fondo de Marketing F+</h3><p class="t">La misma aportación que el resto de proveedores.</p></div></div>
+<div class="term"><p class="k">10 %</p><div><h3>Comisión por cada operación cerrada y facturada</h3><p class="t">El mismo programa que ofrecemos a las consultoras que colaboran con nosotros.</p></div></div>
+<div class="term" style="border-color:#82CBD4"><p class="k">1</p><div><h3>Único proveedor de IA dentro de F+</h3><p class="t">Exclusividad en la categoría de inteligencia artificial.</p></div></div>
+</div>
+<div class="foot"><img src="/assets/img/logo-nexgent-blanco.png" alt="NexGent"><span>9</span></div>
+</section>
+
+<section id="exclusividad" class="accent statement has-foot">
+<p class="eyebrow">Por qué en exclusiva</p>
+<h2>Un único socio de IA para todo el ecosistema F+.</h2>
+<div class="reasons">
+<div><b>Una metodología</b>La misma forma de trabajar en todas las marcas.</div>
+<div><b>Conocimiento total</b>Conocemos a fondo cada sistema que implantamos.</div>
+<div><b>Sin límites</b>Cualquier desarrollo con IA que necesite una marca.</div>
+<div><b>Para años</b>Una relación duradera, no un proveedor más.</div>
+</div>
+<div class="grow"></div>
+<div class="foot" style="color:#121410"><img src="/assets/img/logo-nexgent.png" alt="NexGent"><span>10</span></div>
+</section>
+
+<section id="pasos" class="dark has-foot">
+<div class="cover-logos" style="margin-bottom:72px"><img src="/assets/img/logo-nexgent-blanco.png" alt="NexGent" style="width:256px;height:64px;object-fit:contain"><span class="x">×</span><img src="/propuestas/fplus/fplus.png" alt="F+" style="width:88px;height:65px;object-fit:contain"></div>
+<p class="eyebrow">Siguientes pasos</p>
+<h2 class="title">Hablemos y elijamos las primeras marcas.</h2>
+<div class="cards c3" style="margin-top:56px">
+<div class="card step"><p class="num">01</p><h3>Llamada</h3><p class="t">Repasamos la propuesta y cerramos condiciones.</p></div>
+<div class="card step"><p class="num">02</p><h3>Contrato</h3><p class="t">Revisamos juntos el borrador de F+.</p></div>
+<div class="card step"><p class="num">03</p><h3>Primeras marcas</h3><p class="t">F+ nos presenta 3 centrales para empezar.</p></div>
+</div>
+<div class="chips"><span class="chip t">Alejandro Gutiérrez · Cofundador</span><span class="chip">alejandro@nexgent.io</span><span class="chip">684 486 647</span><span class="chip">nexgent.io</span></div>
+</section>
+
+
+</div></div>
+<div class="nav"><button id="prev" aria-label="Anterior">←</button><span class="count" id="count">1 / 11</span><button id="next" aria-label="Siguiente">→</button><a href="/propuestas/fplus/NexGent-Fplus-Propuesta.pdf" download>Descargar PDF</a><a href="https://www.nexgent.io/reunion" target="_blank" rel="noopener">Agendar llamada</a></div>
+<script>
+(function(){var S=[].slice.call(document.querySelectorAll('#deck>section')),i=0,deck=document.getElementById('deck');
+function fit(){var s=Math.min(innerWidth/1920,innerHeight/1080);deck.style.transform='scale('+s+')';}
+function go(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(e,k){e.classList.toggle('on',k===i)});document.getElementById('count').textContent=(i+1)+' / '+S.length;document.getElementById('bar').style.width=((i+1)/S.length*100)+'%';history.replaceState(null,'','#'+(i+1));}
+addEventListener('resize',fit);fit();
+addEventListener('keydown',function(e){if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();go(i+1)}if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>-1){e.preventDefault();go(i-1)}if(e.key==='Home')go(0);if(e.key==='End')go(S.length-1)});
+document.getElementById('next').onclick=function(){go(i+1)};document.getElementById('prev').onclick=function(){go(i-1)};
+document.getElementById('stage').addEventListener('click',function(e){if(e.target.closest('a'))return;go(e.clientX>innerWidth/3?i+1:i-1)});
+var x0=null;addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(dx<0?i+1:i-1);x0=null});
+go((parseInt(location.hash.slice(1))||1)-1);})();
+</script>
+</body></html>
