@@ -347,7 +347,7 @@ def landing_blocks(html_in, lead=False, start=1):
             return f'<div class="lblk lblk--text"><div class="lblk__h"></div><div class="lblk__b lprose">{chunk.strip()}</div></div>' if chunk.strip() else ""
         title, c = m.group(1).strip(), m.group(2).strip()
         n[0] += 1
-        head = f'<span class="lblk__n">{n[0]:02d}</span><h2>{title}</h2>'
+        head = f'<span class="lblk__n" aria-hidden="true"></span><h2>{title}</h2>'
         if 'class="bxfaq"' in c:
             pre, faq = c.split('<div class="bxfaq">', 1)
             head += '<p class="lblk__sub">¿Te queda alguna duda? La resolvemos en una llamada de 30 minutos.</p><a class="lblk__cta" href="/reunion">Reservar una reunión <i aria-hidden="true">→</i></a>'
