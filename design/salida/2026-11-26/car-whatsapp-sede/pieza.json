@@ -1,0 +1,8 @@
+{"tipo":"carrusel","etiqueta":"WhatsApp e IA","diapositivas":[
+{"tipo":"portada","titulo":"Tu red va a atender por WhatsApp.","texto":"¿Un número para todas las sedes o uno por sede?"},
+{"tipo":"texto","titulo":"Número central","texto":"Una sola puerta de entrada a la marca. Rápido de montar, pero el cliente pierde «su» sede."},
+{"tipo":"texto","titulo":"Número por sede","texto":"El cliente escribe a donde siempre. Cada sede ve lo suyo y su consumo queda separado."},
+{"tipo":"texto","titulo":"Mixto","texto":"El número de la marca, para información y campañas. El de cada sede, para citas y avisos."},
+{"tipo":"texto","titulo":"Lo que dice Meta","texto":"El límite de mensajería es de la cartera de empresa, no de cada número. Lo comparten todas las sedes.","nota":"Fuente: documentación de Meta, citada en el blog de nexgent.io."},
+{"tipo":"lista","titulo":"Antes del primer número, la central decide:","items":["De quién es el número","Quién contesta","Quién ve qué datos","Cómo se reparte el coste"]},
+{"tipo":"cta","titulo":"Somos la primera empresa en España que ha implantado IA en más de 100 franquicias.","texto":"¿Diriges una red de franquicias? Escríbenos por privado.","boton":"nexgent.io/reunion"}]}
