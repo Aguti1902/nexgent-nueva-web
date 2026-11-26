@@ -330,6 +330,51 @@ DEF_FLOW = [["23:47", "La clienta escribe", "El centro cerró hace horas."],
             ["El día", "Llega a su cita", "Una venta que no se ha perdido."]]
 
 
+def _lp(t, extra=""):
+    return f'<div class="lprose{extra}">{t.strip()}</div>' if t and t.strip() else ""
+
+
+_PROSE = re.compile(r'<section class="section-light lnd">\s*<div class="container container--narrow bxprose">(.*?)</div>\s*</section>', re.S)
+
+
+def landing_blocks(html_in, lead=False, start=1):
+    """Pasa los bloques de texto de una landing (h2 + párrafos, h3, listas, FAQ) a bloques diseñados a dos columnas."""
+    n = [start - 1]
+
+    def block(chunk):
+        m = re.match(r"\s*<h2[^>]*>(.*?)</h2>(.*)", chunk, re.S)
+        if not m:
+            return f'<div class="lblk lblk--text"><div class="lblk__h"></div><div class="lblk__b lprose">{chunk.strip()}</div></div>' if chunk.strip() else ""
+        title, c = m.group(1).strip(), m.group(2).strip()
+        n[0] += 1
+        head = f'<span class="lblk__n">{n[0]:02d}</span><h2>{title}</h2>'
+        if 'class="bxfaq"' in c:
+            pre, faq = c.split('<div class="bxfaq">', 1)
+            head += '<p class="lblk__sub">¿Te queda alguna duda? La resolvemos en una llamada de 30 minutos.</p><a class="lblk__cta" href="/reunion">Reservar una reunión <i aria-hidden="true">→</i></a>'
+            return f'<div class="lblk lblk--faq"><header class="lblk__h">{head}</header><div class="lblk__b">{_lp(pre)}<div class="bxfaq lfaq">{faq.strip()}</div></div>'
+        if re.search(r"<h3[ >]", c):
+            parts = re.split(r"(?=<h3[ >])", c)
+            pre, cards = parts[0].strip(), []
+            for i, part in enumerate(parts[1:], 1):
+                h = re.match(r"<h3[^>]*>(.*?)</h3>(.*)", part, re.S)
+                cards.append(f'<article class="lcard"><span class="lcard__n">{i}</span><h3>{h.group(1).strip()}</h3>{h.group(2).strip()}</article>')
+            return f'<div class="lblk lblk--cards"><header class="lblk__h">{head}</header><div class="lblk__b">{_lp(pre)}<div class="lcards">{"".join(cards)}</div></div></div>'
+        u = re.search(r"<ul[^>]*>(.*?)</ul>", c, re.S)
+        if u:
+            pre, post = c[:u.start()].strip(), c[u.end():].strip()
+            lis = "".join(f"<li>{x.strip()}</li>" for x in re.findall(r"<li[^>]*>(.*?)</li>", u.group(1), re.S))
+            return (f'<div class="lblk lblk--checks"><header class="lblk__h">{head}</header><div class="lblk__b">'
+                    f'{_lp(pre)}<ul class="lchecks">{lis}</ul>{_lp(post, " lprose--note")}</div></div>')
+        return f'<div class="lblk lblk--text{" lblk--lead" if lead else ""}"><header class="lblk__h">{head}</header><div class="lblk__b lprose">{c}</div></div>'
+
+    def section(m):
+        blocks = "".join(block(ch) for ch in re.split(r"(?=<h2[ >])", m.group(1)))
+        return f'<section class="section-light lnd lnd--blocks{" lnd--lead" if lead else ""}">\n  <div class="container">{blocks}</div>\n</section>'
+
+    out = _PROSE.sub(section, html_in)
+    return out, n[0] + 1
+
+
 def landing_body(l):
     chat = l.get("chat") or DEF_CHAT
     msgs = []
@@ -367,8 +412,8 @@ def landing_body(l):
   <div class="container">
     <p class="kicker">Así trabaja Nexi</p>
     <h2 class="h2">De un mensaje a una cita.<br><span class="grad">Sin que nadie toque nada.</span></h2>
-    <div class="lflow__line" aria-hidden="true"><i></i></div>
-    <ol class="lflow__list">{fl}</ol>
+    <div class="lflow__rail"><div class="lflow__line" aria-hidden="true"><i></i></div>
+    <ol class="lflow__list">{fl}</ol></div>
   </div>
 </section>
 """
@@ -387,15 +432,17 @@ def landing_body(l):
     words = l.get("marquee") or ["WhatsApp 24/7", "Llamadas con voz IA", "Citas en la agenda", "Recordatorios", "Cambios y anulaciones", "Panel de la central", "API oficial de WhatsApp", "Cada sede con su número"]
     track = "".join(f"<span>{esc(w)}</span>" for w in words) * 2
     mq = f'<section class="lmq" aria-hidden="true"><div class="marquee"><div class="marquee__track">{track}</div></div></section>\n'
-    body = l["body"].replace('<section class="section-light lnd">', '<section class="section-light lnd lnd--split">', 1)
+    body = l["body"]
     cut = body.find("</section>")
     first, rest = (body[:cut + 10], body[cut + 10:]) if cut >= 0 else ("", body)
+    first, nxt = landing_blocks(first, lead=True)
+    rest, _ = landing_blocks(rest, start=nxt)
     return f"""<header class="lhero">
   <div class="lhero__bg" aria-hidden="true"></div><div class="lhero__grid" aria-hidden="true"></div>
   <div class="container lhero__in">
     <div>
       <nav class="bxcrumbs" aria-label="Migas de pan"><a href="/">Inicio</a><span aria-hidden="true">/</span><span>{esc(l['nav'])}</span></nav>
-      <p class="kicker">{esc(l.get('kicker', 'Nexi · IA por WhatsApp y voz'))}</p>
+      <p class="eyebrow lhero__eb"><span class="dot"></span>{esc(l.get('kicker', 'Nexi · IA por WhatsApp y voz'))}</p>
       <h1>{l['h1']}</h1>
       <p class="lhero__lead">{esc(l.get('lead', l['description']))}</p>
       <div class="hero__ctas"><a href="/reunion" class="btn btn--grad magnetic">Reservar una reunión</a><a href="tel:+34684486647" class="btn btn--ghost magnetic">Llamar al 684&nbsp;486&nbsp;647</a></div>

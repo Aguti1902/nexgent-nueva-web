@@ -2,52 +2,43 @@
 (() => {
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
-  if (!$('.bx--lnd')) return;
+  const main = $('.bx--lnd'); if (!main) return;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const mobile = matchMedia('(max-width: 900px)').matches;
+  const mobile = matchMedia('(max-width: 980px)').matches;
   const hover = matchMedia('(hover:hover)').matches;
   const G = window.gsap, ST = window.ScrollTrigger;
   document.documentElement.classList.add('lnd-js');
 
-  /* ---------- Conversación del móvil: escribiendo… y mensajes uno a uno ---------- */
+  /* ---------- Conversación del móvil: escribiendo… y mensajes uno a uno, en bucle ---------- */
   const body = $('.lphone .wa__body');
   if (body) {
     const msgs = $$('.msg', body);
     const typing = document.createElement('div');
     typing.className = 'msg msg--in lty'; typing.innerHTML = '<i></i><i></i><i></i>';
-    msgs.forEach(m => m.classList.add('lpend'));
     const show = m => { m.classList.remove('lpend'); m.classList.add('lshow'); };
     if (reduce) msgs.forEach(show);
     else {
-      let t = 700;
-      msgs.forEach((m, i) => {
-        const out = m.classList.contains('msg--out') || m.classList.contains('msg--sys');
-        if (out) {
-          setTimeout(() => { body.insertBefore(typing, m); typing.classList.add('lshow'); }, t);
-          t += 1100;
-          setTimeout(() => { typing.remove(); show(m); }, t);
-        } else setTimeout(() => show(m), t);
-        t += 900;
-      });
-      // al terminar, vuelve a empezar cada 14 s si la cabecera sigue a la vista
-      const total = t + 3500;
-      setInterval(() => {
-        const r = body.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+      let timers = [];
+      const later = (fn, t) => timers.push(setTimeout(fn, t));
+      const play = first => {
+        timers.forEach(clearTimeout); timers = []; typing.remove();
         msgs.forEach(m => { m.classList.add('lpend'); m.classList.remove('lshow'); });
-        let k = 400;
+        let t = first ? 700 : 400;
         msgs.forEach(m => {
           const out = m.classList.contains('msg--out') || m.classList.contains('msg--sys');
-          if (out) { setTimeout(() => { body.insertBefore(typing, m); typing.classList.add('lshow'); }, k); k += 1100; setTimeout(() => { typing.remove(); show(m); }, k); }
-          else setTimeout(() => show(m), k);
-          k += 900;
+          if (out) { later(() => { body.insertBefore(typing, m); typing.classList.add('lshow'); }, t); t += 1100; later(() => { typing.remove(); show(m); }, t); }
+          else later(() => show(m), t);
+          t += 900;
         });
-      }, Math.max(total, 14000));
+        later(() => { const r = body.getBoundingClientRect(); if (document.hidden || r.bottom < 0 || r.top > innerHeight) later(() => play(false), 4000); else play(false); }, Math.max(t + 4500, 13000));
+      };
+      play(true);
     }
   }
 
   /* ---------- Móvil que sigue al ratón ---------- */
   const phone = $('.lphone .phone');
-  if (phone && hover && !reduce) {
+  if (phone && hover && !reduce && !mobile) {
     const hero = $('.lhero');
     hero.addEventListener('pointermove', e => {
       const r = hero.getBoundingClientRect();
@@ -59,103 +50,118 @@
   }
 
   /* ---------- Secciones claras: esquinas redondeadas donde empiezan y acaban ---------- */
-  const main = $('.bx--lnd');
   const isLight = el => el && el.classList && el.classList.contains('section-light');
   $$('.section-light', main).forEach(sec => {
     if (!isLight(sec.previousElementSibling)) sec.classList.add('lt-top');
     if (!isLight(sec.nextElementSibling)) sec.classList.add('lt-bot');
   });
 
-  if (!G || !ST || reduce) { $$('.lrv').forEach(e => e.classList.add('in')); return; }
-  G.registerPlugin(ST);
-
-  /* ---------- Titular del hero: palabra a palabra ---------- */
-  const h1 = $('.lhero h1');
-  if (h1) {
-    const wrap = node => [...node.childNodes].forEach(n => {
+  /* ---------- Palabras sueltas con el degradado continuo (no uno por palabra) ---------- */
+  const grads = [];
+  const paintGrad = () => grads.forEach(({ el, words }) => {
+    if (!words.length) return;
+    const rs = words.map(w => w.getBoundingClientRect()), L = Math.min(...rs.map(r => r.left)), W = Math.max(...rs.map(r => r.right)) - L;
+    if (W <= 0) return;
+    words.forEach((w, i) => { w.style.backgroundSize = `${W}px 100%`; w.style.backgroundPosition = `${-(rs[i].left - L)}px 0`; });
+  });
+  const splitWords = (root, cls) => {
+    const walk = node => [...node.childNodes].forEach(n => {
       if (n.nodeType === 3) {
         const f = document.createDocumentFragment();
-        n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; if (/^\s+$/.test(p)) f.appendChild(document.createTextNode(p)); else { const s = document.createElement('span'); s.className = 'lw'; s.innerHTML = `<span>${p}</span>`; f.appendChild(s); } });
+        n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; if (/^\s+$/.test(p)) f.appendChild(document.createTextNode(p)); else { const s = document.createElement('span'); s.className = cls; if (cls === 'lw') s.innerHTML = '<span></span>', s.firstChild.textContent = p; else s.textContent = p; f.appendChild(s); } });
         n.replaceWith(f);
-      } else if (n.nodeType === 1 && n.tagName !== 'BR') wrap(n);
+      } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
     });
-    wrap(h1);
-    G.from($$('.lw > span', h1), { yPercent: 110, rotate: 4, duration: 1.1, ease: 'expo.out', stagger: .045, delay: .15, onComplete: () => $$('.lw', h1).forEach(w => w.classList.add('done')) });
-  }
-  G.from('.lhero .bxcrumbs, .lhero .kicker, .lhero__lead, .lhero .hero__ctas, .lhero__kpis > div', { y: 26, opacity: 0, duration: 1, ease: 'expo.out', stagger: .07, delay: .45 });
-  G.from('.lphone', { y: 80, opacity: 0, rotateX: 12, duration: 1.4, ease: 'expo.out', delay: .3 });
-  if (!mobile) G.to('.lhero__in', { yPercent: -12, opacity: .2, ease: 'none', scrollTrigger: { trigger: '.lhero', start: 'top top', end: 'bottom top', scrub: true } });
-
-  /* ---------- Cifras que cuentan ---------- */
-  const countEl = el => {
-    const m = el.textContent.match(/^(\D*)([\d.]+)(.*)$/s); if (!m) return;
-    const end = parseFloat(m[2].replace(/\./g, '')); if (!isFinite(end)) return;
-    const o = { v: 0 }; el.textContent = m[1] + '0' + m[3];
-    G.to(o, { v: end, duration: 1.8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true }, onUpdate: () => el.textContent = m[1] + Math.round(o.v).toLocaleString('es-ES') + m[3] });
+    walk(root);
+    $$('.grad', root).forEach(g => { const words = $$(cls === 'lw' ? '.lw > span' : '.' + cls, g); words.forEach(w => w.classList.add('lgw')); g.classList.add('lgrad'); grads.push({ el: g, words }); });
   };
-  $$('.lhero__kpis b, .bx--lnd .stat__n, .lsedes__n').forEach(countEl);
+
+  if (!G || !ST || reduce) return;
+  G.registerPlugin(ST);
+  const once = (trigger, start = 'top 86%') => ({ trigger, start, once: true });
+
+  /* ---------- Hero ---------- */
+  const h1 = $('.lhero h1');
+  if (h1) {
+    splitWords(h1, 'lw'); paintGrad();
+    G.from($$('.lw > span', h1), { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: .045, delay: .15, onComplete: () => { $$('.lw', h1).forEach(w => w.classList.add('done')); paintGrad(); } });
+  }
+  G.from('.lhero .bxcrumbs, .lhero__eb, .lhero__lead, .lhero .hero__ctas, .lhero__kpis > div', { y: 26, opacity: 0, duration: 1, ease: 'expo.out', stagger: .07, delay: .4, clearProps: 'transform,opacity' });
+  G.from('.lphone', { y: 70, opacity: 0, duration: 1.4, ease: 'expo.out', delay: .3, clearProps: 'transform,opacity' });
+  if (!mobile) G.to('.lhero__in', { yPercent: -10, opacity: .15, ease: 'none', scrollTrigger: { trigger: '.lhero', start: 'top top', end: 'bottom top', scrub: true } });
+
+  /* ---------- Cifras que cuentan (solo cantidades; ni precios ni «24/7») ---------- */
+  $$('.lhero__kpis b, .bx--lnd .stat__n, .lsedes__n').forEach(el => {
+    const txt = el.textContent, m = txt.match(/^(\D*)([\d.]+)(.*)$/s); if (!m || /[\/€]/.test(txt)) return;
+    const end = parseFloat(m[2].replace(/\./g, '')); if (!isFinite(end) || end < 10) return;
+    const o = { v: 0 }; el.style.fontVariantNumeric = 'tabular-nums';
+    ST.create({ trigger: el, start: 'top 92%', once: true, onEnter: () => G.to(o, { v: end, duration: 1.6, ease: 'power3.out', onUpdate: () => el.textContent = m[1] + Math.round(o.v).toLocaleString('es-ES') + m[3], onComplete: () => el.textContent = txt }) });
+  });
 
   /* ---------- Frase grande que se ilumina al bajar ---------- */
   const st = $('.lstate__t');
   if (st) {
-    st.innerHTML = st.innerHTML.split(/(<[^>]+>)/).map(part => part.startsWith('<') ? part : part.split(/(\s+)/).map(w => /^\s+$/.test(w) || !w ? w : `<span class="lsw">${w}</span>`).join('')).join('');
-    G.to($$('.lsw', st), { opacity: 1, stagger: .08, ease: 'none', scrollTrigger: { trigger: '.lstate', start: 'top 75%', end: mobile ? 'bottom 75%' : 'bottom 55%', scrub: true } });
+    splitWords(st, 'lsw'); paintGrad();
+    G.to($$('.lsw', st), { opacity: 1, stagger: .08, ease: 'none', scrollTrigger: { trigger: '.lstate', start: 'top 78%', end: mobile ? 'center 55%' : 'center 45%', scrub: true } });
   }
 
   /* ---------- Foto del sector: zoom y paralaje ---------- */
   const band = $('.lband');
   if (band) {
-    G.fromTo($('img', band), { scale: 1.25, yPercent: -6 }, { scale: 1.02, yPercent: 6, ease: 'none', scrollTrigger: { trigger: band, start: 'top bottom', end: 'bottom top', scrub: true } });
-    G.from($$('.lband__in > *', band), { y: 50, opacity: 0, duration: 1.2, ease: 'expo.out', stagger: .1, scrollTrigger: { trigger: band, start: 'top 60%', once: true } });
-  }
-
-  /* ---------- Flujo: la línea avanza y cada paso se enciende ---------- */
-  const flow = $('.lflow');
-  if (flow) {
-    const steps = $$('.lflow__list li', flow);
-    const line = $('.lflow__line i', flow);
-    if (!mobile && line) {
-      G.timeline({ scrollTrigger: { trigger: flow, start: 'top 70%', end: 'bottom 70%', scrub: true } })
-        .fromTo(line, { scaleX: 0 }, { scaleX: 1, ease: 'none' }, 0);
-      steps.forEach((s, i) => ST.create({ trigger: flow, start: `top+=${i * 60} 70%`, onEnter: () => s.classList.add('on'), onLeaveBack: () => s.classList.remove('on') }));
-    } else steps.forEach(s => ST.create({ trigger: s, start: 'top 85%', once: true, onEnter: () => s.classList.add('on') }));
-    G.from(steps, { y: 40, opacity: 0, duration: 1, ease: 'expo.out', stagger: .08, scrollTrigger: { trigger: flow, start: 'top 75%', once: true } });
+    G.fromTo($('img', band), { scale: 1.2, yPercent: -5 }, { scale: 1.04, yPercent: 5, ease: 'none', scrollTrigger: { trigger: band, start: 'top bottom', end: 'bottom top', scrub: true } });
+    G.from($$('.lband__in > *', band), { y: 44, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: .1, scrollTrigger: once(band, 'top 55%') });
   }
 
   /* ---------- Todas las sedes a la vez: la cuadrícula se enciende ---------- */
   const sedes = $('.lsedes');
   if (sedes) {
-    const dots = $$('.lsedes__grid i', sedes);
+    const dots = $$('.lsedes__grid i', sedes).filter(d => d.offsetParent !== null);
     const order = dots.map((_, i) => i).sort(() => Math.random() - .5);
-    ST.create({ trigger: sedes, start: 'top 75%', end: 'bottom 60%', scrub: true, onUpdate: self => {
+    ST.create({ trigger: $('.lsedes__grid', sedes), start: 'top 85%', end: 'bottom 55%', scrub: true, onUpdate: self => {
       const n = Math.round(self.progress * dots.length);
       order.forEach((d, k) => dots[d].classList.toggle('on', k < n));
     } });
   }
 
-  /* ---------- Tarjetas y bloques: entrada escalonada ---------- */
-  const batch = (sel, opts = {}) => $$(sel).forEach(grid => {
-    const items = grid.children.length ? [...grid.children] : [grid];
-    G.from(items, Object.assign({ y: 60, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: .09, scrollTrigger: { trigger: grid, start: 'top 82%', once: true } }, opts));
+  /* ---------- Flujo: la línea avanza y cada paso se enciende cuando llega a su punto ---------- */
+  const flow = $('.lflow');
+  if (flow) {
+    const steps = $$('.lflow__list li', flow), line = $('.lflow__line i', flow), rail = $('.lflow__rail', flow);
+    G.from(steps, { opacity: 0, duration: .9, ease: 'power2.out', stagger: .1, scrollTrigger: once(rail || flow, 'top 84%') });
+    if (!mobile && line && rail) {
+      G.set(line, { scaleX: 0 });
+      ST.create({ trigger: rail, start: 'top 80%', end: 'top 34%', scrub: .4, onUpdate: self => {
+        G.set(line, { scaleX: self.progress });
+        const w = rail.offsetWidth * self.progress;
+        steps.forEach(s => s.classList.toggle('on', w >= s.offsetLeft + 28));
+      } });
+    } else steps.forEach(s => ST.create({ trigger: s, start: 'top 82%', once: true, onEnter: () => s.classList.add('on') }));
+  }
+
+  /* ---------- Titulares, tarjetas y bloques: entrada escalonada ---------- */
+  const rise = (els, opts = {}) => { if (els.length) G.from(els, Object.assign({ y: 44, opacity: 0, duration: 1.05, ease: 'expo.out', stagger: .08, clearProps: 'transform,opacity' }, opts)); };
+  $$('.bx--lnd .kicker, .bx--lnd .h2, .bx--lnd .lead, .lsedes__cap, .lnd__stats ~ p').forEach(el => { if (el.closest('.lhero, .lband, .bxcta')) return; rise([el], { y: 32, scrollTrigger: once(el, 'top 90%') }); });
+  $$('.bx--lnd .sectors__grid, .bx--lnd .lnd__stats').forEach(g => rise([...g.children], { y: 56, scrollTrigger: once(g, 'top 84%') }));
+  $$('.bx--lnd .win__grid').forEach(g => rise([...g.children], Object.assign({ y: 56, scrollTrigger: once(g, 'top 84%') }, mobile ? {} : { rotateX: 16, transformPerspective: 900, transformOrigin: '50% 100%' })));
+  $$('.lblk').forEach(b => {
+    rise($$('.lblk__h > *', b), { y: 28, stagger: .07, scrollTrigger: once(b, 'top 84%') });
+    $$('.lblk__b .lprose', b).forEach(p => rise([...p.children], { y: 26, stagger: .06, scrollTrigger: once(p, 'top 88%') }));
+    $$('.lcards, .lchecks, .lfaq', b).forEach(g => rise([...g.children], { y: 36, stagger: .07, scrollTrigger: once(g, 'top 88%') }));
   });
-  batch('.bx--lnd .sectors__grid');
-  batch('.bx--lnd .win__grid', mobile ? {} : { rotateX: 18, transformPerspective: 900, transformOrigin: '50% 100%' });
-  batch('.bx--lnd .lnd__stats');
-  batch('.bx--lnd .bxfaq');
-  $$('.bx--lnd .h2, .bx--lnd .bxprose > h2, .bx--lnd .lead, .bx--lnd .kicker--dark').forEach(el => G.from(el, { y: 36, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } }));
 
-  /* ---------- Problema: el titular se queda fijo mientras se lee ---------- */
-  $$('.lnd--split .bxprose > p, .lnd--split .bxprose > ul').forEach(p => G.from(p, { y: 30, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: p, start: 'top 88%', once: true } }));
-
-  /* ---------- Llamada final: el titular entra palabra a palabra ---------- */
-  const cta = $('.bxcta h2');
-  if (cta) G.from(cta, { y: 60, opacity: 0, scale: .96, duration: 1.3, ease: 'expo.out', scrollTrigger: { trigger: cta, start: 'top 85%', once: true } });
+  /* ---------- Llamada final ---------- */
+  const cta = $('.bxcta__in');
+  if (cta) rise([...cta.children], { y: 40, stagger: .09, scrollTrigger: once(cta, 'top 82%') });
 
   /* ---------- Las secciones claras suben como una hoja (solo ordenador) ---------- */
   if (!mobile) $$('.section-light.lt-top', main).forEach(sec => {
     sec.classList.add('lsheet');
-    G.fromTo(sec, { scale: .93, y: 60 }, { scale: 1, y: 0, ease: 'none', scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top 25%', scrub: true } });
+    G.fromTo(sec, { scale: .94, y: 50 }, { scale: 1, y: 0, ease: 'none', scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top 45%', scrub: true } });
   });
 
-  addEventListener('load', () => ST.refresh());
+  /* ---------- Recalcula medidas cuando cargan fuentes e imágenes o cambia el tamaño ---------- */
+  const refresh = () => { paintGrad(); ST.refresh(); };
+  addEventListener('load', refresh);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(paintGrad, 150); });
 })();

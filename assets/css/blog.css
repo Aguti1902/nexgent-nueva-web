@@ -257,3 +257,8 @@
 .bxprose .bxcalc__out span{font-size:14px;color:#a1a1a6}
 .bxprose .bxcalc__note{position:relative;margin:4px 0 0;font-size:14px;line-height:1.5;color:#d2d2d7}
 @media (max-width:760px){.bxprose .bxcalc{grid-template-columns:1fr}.bxprose .bxcalc__in,.bxprose .bxcalc__out{padding:22px}}
+
+/* Páginas sin foto de portada (calculadora…): la cabecera oscura acaba en limpio y el contenido claro empieza debajo */
+.bxah+.bxread{margin-top:0;padding-top:clamp(56px,6vw,88px);border-radius:clamp(28px,3.4vw,44px) clamp(28px,3.4vw,44px) 0 0;position:relative;z-index:1}
+.bxah:has(+.bxread){padding-bottom:clamp(72px,8vw,112px)}
+.bxah+.bxread .bxprose>p:first-of-type::first-letter{float:none;font-size:inherit;line-height:inherit;font-weight:inherit;margin:0;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:inherit;font-family:inherit}

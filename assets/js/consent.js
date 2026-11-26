@@ -15,6 +15,7 @@
     ".ngc.on{transform:none;opacity:1}.ngc p{margin:0 0 14px}.ngc a{color:#82cbd6}.ngc__b{display:flex;gap:10px;flex-wrap:wrap}"+
     ".ngc button{height:40px;padding:0 18px;border-radius:999px;border:0;cursor:pointer;font:600 14px Inter,-apple-system,system-ui,sans-serif}"+
     ".ngc__ok{background:linear-gradient(100deg,#b8eef2 0%,#6fcad8 40%,#3b82f6 100%);color:#05050a}.ngc__no{background:rgba(255,255,255,.08);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}"+
+    "@media (max-width:600px){.ngc{left:10px;right:10px;bottom:10px;padding:14px 16px;border-radius:18px;font-size:13px;line-height:1.4}.ngc p{margin:0 0 10px}.ngc button{height:36px;padding:0 16px;font-size:13.5px;flex:1}}"+
     "@media (prefers-reduced-motion:reduce){.ngc{transition:none}}";
     document.head.appendChild(s);
   }
